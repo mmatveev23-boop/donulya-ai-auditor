@@ -1,0 +1,32 @@
+# Бэкапы (огромные, не нужны в истории)
+*.bak
+*.bak-*
+*.bak_*
+
+# macOS
+.DS_Store
+._*
+
+# Архивы
+*.zip
+*.tar.gz
+
+# Node / build (на всякий)
+node_modules/
+dist/
+build/
+
+# Временные
+tmp/
+.tmp/
+*.log
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Claude Code state (не launch.json — он нужен)
+.claude/state/
+.claude/cache/
+.claude/worktrees/

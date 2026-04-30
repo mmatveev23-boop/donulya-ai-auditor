@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>ДоНуля · AI-Аудитор · v2 · Single Deal Object</title>
+<style>
+  :root {
+    --bg-0: #0d1410; --bg-1: #121a14; --bg-2: #17211a; --bg-3: #1d2a21;
+    --border: #232f27; --border-2: #2d3b32;
+    --text-1: #e8f0ea; --text-2: #8b9590; --text-3: #5e6860;
+    --green: #00d584; --green-2: #00f29d;
+    --green-bg: rgba(0, 213, 132, 0.1);
+    --green-bg-2: rgba(0, 213, 132, 0.18);
+    --green-border: rgba(0, 213, 132, 0.35);
+    --green-glow: 0 0 24px rgba(0, 213, 132, 0.2);
+    --red: #ef5353;
+    --red-bg: rgba(239, 83, 83, 0.1);
+    --red-bg-2: rgba(239, 83, 83, 0.18);
+    --red-border: rgba(239, 83, 83, 0.35);
+    --yellow: #f5c84b;
+    --yellow-bg: rgba(245, 200, 75, 0.1);
+    --yellow-bg-2: rgba(245, 200, 75, 0.18);
+    --yellow-border: rgba(245, 200, 75, 0.35);
+    --blue: #52a7ff;
+    --blue-bg: rgba(82, 167, 255, 0.1);
+    --blue-border: rgba(82, 167, 255, 0.3);
+    --purple: #b084ff;
+    --purple-bg: rgba(176, 132, 255, 0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-0); color: var(--text-1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    font-size: 14px; line-height: 1.5;
+    font-feature-settings: "tnum";
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  .app { display: grid; grid-template-columns: 230px 1fr; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--bg-1); border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .brand-row { display: flex; align-items: center; gap: 10px; padding: 4px 8px; margin-bottom: 24px; }
+  .brand-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    display: flex; align-items: center; justify-content: center;
+    color: #0a120c; font-weight: 800; font-size: 14px;
+    box-shadow: var(--green-glow);
+  }
+  .brand-name { font-size: 15px; font-weight: 700; }
+  .brand-sub { color: var(--text-3); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .arch-badge {
+    margin: 4px 0 20px; padding: 8px 10px;
+    background: var(--purple-bg); border: 1px solid rgba(176, 132, 255, 0.3);
+    border-radius: 8px; font-size: 11px; color: var(--purple);
+    letter-spacing: 0.04em;
+  }
+  .nav-section {
+    font-size: 10px; font-weight: 600; color: var(--text-3);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 12px 10px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 8px;
+    color: var(--text-2); font-size: 13px; cursor: pointer;
+    margin-bottom: 2px; transition: all 0.15s;
+  }
+  .nav-item:hover { background: var(--bg-2); color: var(--text-1); }
+  .nav-item.active {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600;
+    box-shadow: var(--green-glow);
+  }
+  .nav-icon { font-size: 14px; width: 16px; }
+
+  /* MAIN */
+  .main { padding: 20px 28px; min-width: 0; max-width: 1280px; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px; color: var(--text-2); font-size: 13px;
+  }
+  .topbar b { color: var(--text-1); }
+  .topbar-right { margin-left: auto; display: flex; gap: 8px; }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-2);
+  }
+  .icon-btn:hover { background: var(--bg-3); color: var(--text-1); }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-2); font-size: 13px;
+    padding: 6px 10px; background: var(--bg-2); border-radius: 8px;
+  }
+  .back-link:hover { color: var(--text-1); background: var(--bg-3); }
+
+  .tabs {
+    display: flex; gap: 4px;
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 4px;
+    margin-bottom: 24px; width: fit-content;
+  }
+  .tab {
+    padding: 8px 16px; border-radius: 7px;
+    color: var(--text-2); font-size: 13px; font-weight: 500;
+  }
+  .tab:hover { color: var(--text-1); }
+  .tab.active {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600;
+    box-shadow: var(--green-glow);
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: 17px; font-weight: 600; }
+  h3 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+
+  .page-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 20px;
+  }
+  .page-sub { color: var(--text-2); font-size: 13px; margin-top: 4px; }
+  .period-switch { display: flex; gap: 4px; }
+  .period {
+    padding: 6px 12px; border-radius: 6px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    color: var(--text-2); font-size: 12px; cursor: pointer;
+  }
+  .period.active { background: var(--green); color: #0a120c; border-color: var(--green); font-weight: 600; }
+
+  /* KPI */
+  .kpi-stripe {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin-bottom: 20px;
+  }
+  .kpi {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    display: flex; align-items: center; gap: 16px;
+    cursor: pointer; transition: all 0.15s; position: relative;
+  }
+  .kpi:hover { transform: translateY(-2px); border-color: var(--border-2); }
+  .kpi.red { background: linear-gradient(135deg, var(--red-bg-2), var(--bg-1)); border-color: var(--red-border); }
+  .kpi.green { background: linear-gradient(135deg, var(--green-bg-2), var(--bg-1)); border-color: var(--green-border); box-shadow: var(--green-glow); }
+  .kpi-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .kpi.red .kpi-icon { background: var(--red); color: white; }
+  .kpi.green .kpi-icon { background: var(--green); color: #0a120c; }
+  .kpi.gray .kpi-icon { background: var(--bg-3); color: var(--text-2); }
+  .kpi-value { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+  .kpi-label { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+
+  /* SECTION */
+  .section { margin-bottom: 28px; }
+  .section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 16px; font-weight: 600;
+  }
+  .section-count {
+    background: var(--red-bg-2); color: var(--red);
+    padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  }
+  .section-count.green { background: var(--green-bg-2); color: var(--green); }
+  .section-count.gray { background: var(--bg-3); color: var(--text-2); }
+
+  /* BUTTONS */
+  .btn {
+    padding: 7px 14px; border-radius: 8px;
+    background: var(--bg-3); color: var(--text-1);
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+  }
+  .btn:hover { background: var(--bg-2); border-color: var(--border-2); }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600; border: none;
+  }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .btn.danger {
+    background: var(--red-bg-2); color: var(--red); border: 1px solid var(--red-border);
+  }
+  .btn.sm { padding: 5px 10px; font-size: 11px; }
+  .btn.disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ═══════ СКВОЗНАЯ ВОРОНКА (РОП view) ═══════ */
+  .cross-funnel {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 20px;
+  }
+  .cross-funnel-head { margin-bottom: 16px; }
+  .cross-funnel-title {
+    font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  }
+  .cross-funnel-sub { color: var(--text-3); font-size: 12px; }
+
+  .funnel-line {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .funnel-stage {
+    padding: 14px 10px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    position: relative;
+    text-align: center;
+  }
+  .funnel-stage:first-child { border-radius: 10px 0 0 10px; }
+  .funnel-stage:last-child { border-radius: 0 10px 10px 0; }
+  .funnel-stage.owner-hunter { border-top: 3px solid var(--blue); }
+  .funnel-stage.owner-closer { border-top: 3px solid var(--green); }
+  .funnel-stage.owner-mos { border-top: 3px solid var(--purple); }
+  .funnel-stage-num { font-size: 22px; font-weight: 700; color: var(--text-1); letter-spacing: -0.02em; }
+  .funnel-stage-label { font-size: 11px; color: var(--text-2); margin-top: 4px; line-height: 1.3; }
+  .funnel-stage-conv {
+    position: absolute; right: -14px; top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-3); color: var(--text-1);
+    padding: 3px 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+    z-index: 2; border: 1px solid var(--border);
+  }
+  .funnel-stage:last-child .funnel-stage-conv { display: none; }
+  .funnel-legend {
+    display: flex; gap: 18px; margin-top: 12px;
+    font-size: 11px; color: var(--text-2);
+  }
+  .funnel-legend-dot {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+    margin-right: 5px; vertical-align: middle;
+  }
+
+  /* ═══════ PROBLEM CARD ═══════ */
+  .problem-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    border-radius: 12px; padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .problem-card.yellow { border-left-color: var(--yellow); }
+  .problem-card.green { border-left-color: var(--green); }
+  .problem-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .problem-reason { color: var(--text-2); font-size: 13px; margin-bottom: 4px; }
+  .problem-meta { color: var(--text-3); font-size: 12px; margin-bottom: 10px; }
+  .problem-actions { display: flex; gap: 8px; }
+
+  /* ═══════ DEAL LIST ═══════ */
+  .list {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .list-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border); background: var(--bg-2);
+  }
+  .list-head h2 { font-size: 14px; font-weight: 600; }
+  .list-head-right { display: flex; gap: 8px; align-items: center; }
+  .filter {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 7px; padding: 5px 10px;
+    color: var(--text-2); font-size: 12px;
+  }
+
+  .deal-row {
+    display: grid;
+    grid-template-columns: 32px 80px 1fr 180px 140px 40px;
+    align-items: center; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .deal-row:last-child { border-bottom: none; }
+  .deal-row:hover { background: var(--bg-2); }
+
+  .deal-status-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    margin: 0 auto;
+  }
+  .deal-status-dot.red { background: var(--red); box-shadow: 0 0 8px rgba(239,83,83,0.6); }
+  .deal-status-dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(245,200,75,0.6); }
+  .deal-status-dot.green { background: var(--green); box-shadow: 0 0 8px rgba(0,213,132,0.6); }
+  .deal-status-dot.gray { background: var(--text-3); }
+  .deal-id {
+    color: var(--text-3); font-size: 12px; font-family: ui-monospace, monospace;
+  }
+  .deal-client { color: var(--text-1); font-weight: 500; font-size: 13px; }
+  .deal-info { color: var(--text-3); font-size: 12px; margin-top: 2px; }
+
+  .deal-stage-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600;
+    background: var(--bg-3); color: var(--text-1);
+  }
+  .deal-stage-pill.st-lead { background: var(--blue-bg); color: var(--blue); }
+  .deal-stage-pill.st-99 { background: var(--purple-bg); color: var(--purple); }
+  .deal-stage-pill.st-handoff { background: rgba(245, 200, 75, 0.15); color: var(--yellow); }
+  .deal-stage-pill.st-meet { background: rgba(245, 200, 75, 0.15); color: var(--yellow); }
+  .deal-stage-pill.st-sold { background: var(--green-bg-2); color: var(--green); }
+  .deal-stage-pill.st-lost { background: var(--red-bg-2); color: var(--red); }
+  .deal-stage-pill.st-mos { background: var(--purple-bg); color: var(--purple); }
+
+  .deal-team { display: flex; gap: 4px; }
+  .deal-team-badge {
+    font-size: 10px; font-weight: 600;
+    padding: 3px 7px; border-radius: 5px;
+    background: var(--bg-3); color: var(--text-2);
+  }
+  .deal-team-badge.hunter { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .deal-team-badge.closer { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .deal-team-badge.mos { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(176, 132, 255, 0.3); }
+
+  .deal-arrow { color: var(--text-3); text-align: right; }
+
+  /* ═══════ DEAL PAGE (главная карточка) ═══════ */
+  .deal-header {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 16px;
+  }
+  .deal-header-top {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+  }
+  .deal-header-id {
+    font-family: ui-monospace, monospace; color: var(--text-3); font-size: 13px;
+  }
+  .deal-header-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 12px; font-weight: 600;
+    background: var(--red-bg-2); color: var(--red);
+  }
+  .deal-header-status.green { background: var(--green-bg-2); color: var(--green); }
+  .deal-header-status.yellow { background: var(--yellow-bg-2); color: var(--yellow); }
+  .deal-client-big { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .deal-meta-row {
+    display: flex; gap: 20px; margin-top: 10px;
+    color: var(--text-2); font-size: 13px; flex-wrap: wrap;
+  }
+  .deal-meta-row b { color: var(--text-1); }
+
+  .deal-team-row {
+    display: flex; gap: 8px; margin-top: 14px;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .team-member {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; background: var(--bg-2); border-radius: 8px;
+    font-size: 12px;
+  }
+  .team-member-role {
+    font-size: 10px; color: var(--text-3); letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .team-member-name { color: var(--text-1); font-weight: 500; margin-top: 1px; }
+  .team-role-hunter .team-member-role { color: var(--blue); }
+  .team-role-closer .team-member-role { color: var(--green); }
+  .team-role-mos .team-member-role { color: var(--purple); }
+
+  /* ═══════ TIMELINE ═══════ */
+  .timeline {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 16px;
+  }
+  .timeline-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .timeline-list { position: relative; padding-left: 20px; }
+  .timeline-list::before {
+    content: ""; position: absolute; left: 7px; top: 4px; bottom: 4px;
+    width: 2px; background: var(--border);
+  }
+  .tl-event {
+    position: relative; margin-bottom: 16px;
+    padding-left: 8px;
+  }
+  .tl-event::before {
+    content: ""; position: absolute; left: -20px; top: 6px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg-1); border: 2px solid var(--text-3);
+  }
+  .tl-event.green::before { border-color: var(--green); background: var(--green); }
+  .tl-event.red::before { border-color: var(--red); background: var(--red); }
+  .tl-event.yellow::before { border-color: var(--yellow); background: var(--yellow); }
+  .tl-event.blue::before { border-color: var(--blue); background: var(--blue); }
+  .tl-event.purple::before { border-color: var(--purple); background: var(--purple); }
+  .tl-event-head {
+    display: flex; gap: 10px; align-items: baseline;
+    margin-bottom: 2px;
+  }
+  .tl-event-time { font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .tl-event-title { font-size: 14px; font-weight: 600; color: var(--text-1); }
+  .tl-event-owner {
+    font-size: 10px; padding: 2px 6px; border-radius: 4px;
+    letter-spacing: 0.04em; font-weight: 600;
+  }
+  .tl-event-owner.hunter { background: var(--blue-bg); color: var(--blue); }
+  .tl-event-owner.closer { background: var(--green-bg); color: var(--green); }
+  .tl-event-owner.mos { background: var(--purple-bg); color: var(--purple); }
+  .tl-event-body {
+    color: var(--text-2); font-size: 13px;
+  }
+  .tl-event-body a { color: var(--green); cursor: pointer; }
+  .tl-event-body a:hover { text-decoration: underline; }
+
+  /* ═══════ ACCORDION (блоки сделки) ═══════ */
+  .deal-block {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .deal-block.closed .deal-block-body { display: none; }
+  .deal-block-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; cursor: pointer;
+    gap: 12px;
+  }
+  .deal-block-head:hover { background: var(--bg-2); }
+  .deal-block-head-left {
+    display: flex; align-items: center; gap: 12px; flex: 1;
+  }
+  .deal-block-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .deal-block-icon.blue { background: var(--blue-bg); color: var(--blue); }
+  .deal-block-icon.green { background: var(--green-bg); color: var(--green); }
+  .deal-block-icon.red { background: var(--red-bg); color: var(--red); }
+  .deal-block-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .deal-block-icon.purple { background: var(--purple-bg); color: var(--purple); }
+  .deal-block-title { font-size: 14px; font-weight: 600; color: var(--text-1); }
+  .deal-block-sub { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+
+  .deal-block-badge {
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+  }
+  .deal-block-badge.ok { background: var(--green-bg-2); color: var(--green); }
+  .deal-block-badge.bad { background: var(--red-bg-2); color: var(--red); }
+  .deal-block-badge.warn { background: var(--yellow-bg-2); color: var(--yellow); }
+  .deal-block-badge.neutral { background: var(--bg-3); color: var(--text-2); }
+
+  .deal-block-chev {
+    color: var(--text-3); font-size: 14px; transition: transform 0.2s;
+    margin-left: 6px;
+  }
+  .deal-block:not(.closed) .deal-block-chev { transform: rotate(180deg); }
+  .deal-block-body {
+    padding: 0 20px 20px;
+  }
+
+  /* ═══════ HANDOFF CARD ═══════ */
+  .handoff-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px;
+    margin-bottom: 16px;
+  }
+  .handoff-field {
+    padding: 12px 14px; background: var(--bg-2);
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .handoff-field.required {
+    border-left: 3px solid var(--green);
+  }
+  .handoff-field-label {
+    font-size: 11px; color: var(--text-3); letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .handoff-field-star { color: var(--green); font-size: 14px; }
+  .handoff-field-value { font-size: 14px; color: var(--text-1); font-weight: 500; }
+  .handoff-field-sub { color: var(--text-3); font-size: 11px; margin-top: 3px; }
+  .handoff-field-ai {
+    display: inline-block; padding: 2px 6px; border-radius: 4px;
+    font-size: 10px; font-weight: 600;
+    background: rgba(176, 132, 255, 0.15); color: var(--purple);
+    margin-left: 6px;
+  }
+  .handoff-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; border-top: 1px solid var(--border);
+  }
+  .handoff-gate {
+    color: var(--text-2); font-size: 12px;
+  }
+  .handoff-gate b { color: var(--green); }
+
+  /* ═══════ REJECTION BLOCK ═══════ */
+  .rejection-card {
+    background: linear-gradient(135deg, var(--red-bg-2), var(--bg-1));
+    border: 1px solid var(--red-border);
+    border-left: 4px solid var(--red);
+    border-radius: 12px; padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .rejection-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 600; color: var(--red);
+    margin-bottom: 10px;
+  }
+  .rejection-category {
+    display: inline-block; padding: 4px 12px;
+    background: var(--red); color: white;
+    border-radius: 6px; font-size: 12px; font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .rejection-comment {
+    color: var(--text-1); font-size: 13px; line-height: 1.5;
+    padding: 10px 12px; background: var(--bg-2);
+    border-radius: 8px; margin-top: 8px;
+  }
+
+  /* ═══════ SCORE / RULES ═══════ */
+  .score-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    margin-bottom: 14px;
+  }
+  .score-pill {
+    padding: 10px 12px; background: var(--bg-2);
+    border: 1px solid var(--border); border-radius: 8px;
+    text-align: center;
+  }
+  .score-pill-label {
+    font-size: 10px; color: var(--text-3); letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 4px;
+  }
+  .score-pill-value { font-size: 16px; font-weight: 700; color: var(--text-1); }
+  .score-pill-value.green { color: var(--green); }
+  .score-pill-value.yellow { color: var(--yellow); }
+  .score-pill-value.red { color: var(--red); }
+
+  /* ═══════ PLAYER / TRANSCRIPT (упрощённый) ═══════ */
+  .mini-player {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; background: var(--bg-2);
+    border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 14px;
+  }
+  .play-btn-sm {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--green); color: #0a120c;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .mini-player-middle { flex: 1; }
+  .mini-player-time {
+    color: var(--text-2); font-size: 12px; font-variant-numeric: tabular-nums;
+    margin-bottom: 4px;
+  }
+  .mini-progress {
+    height: 4px; background: var(--bg-3); border-radius: 2px; position: relative;
+  }
+  .mini-progress::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 18%; background: var(--green); border-radius: 2px;
+  }
+  .mini-speed {
+    display: flex; gap: 4px;
+  }
+  .mini-speed-btn {
+    padding: 5px 8px; font-size: 11px; border-radius: 6px;
+    background: var(--bg-3); color: var(--text-2);
+  }
+  .mini-speed-btn.active { background: var(--green); color: #0a120c; font-weight: 600; }
+
+  .moments-compact {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 14px;
+  }
+  .moment-mini {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; background: var(--bg-2);
+    border-radius: 8px; cursor: pointer;
+    border-left: 3px solid var(--text-3);
+  }
+  .moment-mini:hover { background: var(--bg-3); }
+  .moment-mini.red { border-left-color: var(--red); }
+  .moment-mini.yellow { border-left-color: var(--yellow); }
+  .moment-mini.green { border-left-color: var(--green); }
+  .moment-mini-time {
+    background: var(--bg-3); padding: 3px 8px; border-radius: 5px;
+    font-size: 11px; font-weight: 700; color: var(--text-1);
+    font-variant-numeric: tabular-nums;
+  }
+  .moment-mini-icon { font-size: 14px; }
+  .moment-mini-text { font-size: 13px; color: var(--text-1); flex: 1; }
+  .moment-mini-reason { font-size: 11px; color: var(--text-2); }
+
+  /* ═══════ FEEDBACK BAR (HITL) ═══════ */
+  .feedback-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+  .feedback-label { font-size: 13px; color: var(--text-2); flex: 1; }
+  .feedback-btn {
+    padding: 6px 12px; border-radius: 8px;
+    background: var(--bg-1); color: var(--text-2);
+    font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .feedback-btn.ok:hover { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+  .feedback-btn.no:hover { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+
+  /* ═══════ CLOSER PAGE ═══════ */
+  .closer-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+  .closer-avatar {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--red-bg-2), var(--red-bg));
+    color: var(--red); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700;
+  }
+  .closer-info h1 { margin-bottom: 4px; }
+  .closer-info-sub { color: var(--text-2); font-size: 13px; }
+
+  /* Rejection breakdown (для страницы клоузера) */
+  .rej-bars-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 16px;
+  }
+  .rej-bars-row {
+    display: grid; grid-template-columns: 260px 1fr 60px;
+    align-items: center; gap: 12px; padding: 8px 0;
+  }
+  .rej-bars-label {
+    color: var(--text-1); font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rej-bars-track {
+    height: 8px; background: var(--bg-3); border-radius: 4px; position: relative;
+  }
+  .rej-bars-fill {
+    height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, var(--red), #ff7b7b);
+  }
+  .rej-bars-fill.yellow { background: linear-gradient(90deg, var(--yellow), #ffdb7a); }
+  .rej-bars-fill.blue { background: linear-gradient(90deg, var(--blue), #7cb9ff); }
+  .rej-bars-fill.gray { background: linear-gradient(90deg, var(--text-3), #8a918c); }
+  .rej-bars-val {
+    font-size: 13px; font-weight: 700; text-align: right;
+    color: var(--text-1);
+  }
+
+  /* AI-METRICS (сводный блок) */
+  .ai-metrics {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .ai-metrics-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  }
+  .ai-metrics-head h3 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-2); margin: 0;
+  }
+  .ai-metrics-period {
+    margin-left: auto; color: var(--text-3); font-size: 12px;
+  }
+  .ai-metrics-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .ai-metric {
+    border-left: 1px solid var(--border); padding-left: 16px;
+  }
+  .ai-metric:first-child { border-left: none; padding-left: 0; }
+  .ai-metric-label {
+    color: var(--text-3); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .ai-metric-value {
+    font-size: 20px; font-weight: 700; color: var(--text-1);
+    letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .ai-metric-value small { font-size: 12px; color: var(--text-2); font-weight: 500; }
+  .ai-metric-value.red { color: var(--red); }
+  .ai-metric-value.green { color: var(--green); }
+  .ai-metric-value.yellow { color: var(--yellow); }
+  .ai-metric-sub { color: var(--text-3); font-size: 11px; margin-top: 4px; }
+
+  /* ═══════ MODAL ═══════ */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 0;
+    width: 540px; max-width: 90vw;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px; border-bottom: 1px solid var(--border);
+  }
+  .modal-head h2 { font-size: 16px; }
+  .modal-close { color: var(--text-3); font-size: 20px; line-height: 1; }
+  .modal-body { padding: 20px; }
+  .modal-foot {
+    display: flex; justify-content: flex-end; gap: 10px;
+    padding: 16px 20px; border-top: 1px solid var(--border);
+  }
+  .field { margin-bottom: 16px; }
+  .field-label {
+    font-size: 12px; color: var(--text-2); margin-bottom: 6px;
+    display: block; font-weight: 500;
+  }
+  .input, .textarea, .select {
+    width: 100%; padding: 9px 12px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    color: var(--text-1); font: inherit; font-size: 13px;
+    outline: none;
+  }
+  .textarea { resize: vertical; min-height: 80px; }
+  .radio-row, .checkbox-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 0; font-size: 13px; color: var(--text-1); cursor: pointer;
+  }
+
+  /* INFO HINT */
+  .info-hint {
+    padding: 10px 14px; background: var(--bg-2); border-radius: 8px;
+    border-left: 3px solid var(--green); color: var(--text-2); font-size: 12px;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="brand-logo">Д₀</div>
+      <div>
+        <div class="brand-name">ДоНуля</div>
+        <div class="brand-sub">AI Аудитор · v2</div>
+      </div>
+    </div>
+
+    <div class="arch-badge">🔗 Single Deal Object · всё вокруг сделки из amoCRM</div>
+
+    <div class="nav-section">Основное</div>
+    <div class="nav-item active" data-page="summary">
+      <span class="nav-icon">📊</span>Сводка РОПа
+    </div>
+    <div class="nav-item" data-page="deal">
+      <span class="nav-icon">💼</span>Карточка сделки
+    </div>
+    <div class="nav-item" data-page="closer">
+      <span class="nav-icon">👤</span>Страница клоузера
+    </div>
+
+    <div class="nav-section">Личный</div>
+    <div class="nav-item" data-page="personal">
+      <span class="nav-icon">👋</span>Мой кабинет
+    </div>
+
+    <div class="nav-section">Управление</div>
+    <div class="nav-item" data-page="analytics">
+      <span class="nav-icon">📈</span>Аналитика
+    </div>
+    <div class="nav-item" data-page="calibration">
+      <span class="nav-icon">⚙️</span>Калибровка промпта
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <span>Дашборд</span><span>/</span><b class="js-crumb">Сводка РОПа</b>
+      <div class="topbar-right">
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">⚙</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="summary">Сводка</div>
+      <div class="tab" data-tab="deal">Сделка</div>
+      <div class="tab" data-tab="closer">Клоузер</div>
+      <div class="tab" data-tab="personal">Мой кабинет</div>
+      <div class="tab" data-tab="analytics">Аналитика</div>
+      <div class="tab" data-tab="calibration">Калибровка</div>
+    </div>
+
+    <!-- ═══════════════ PAGE 1: СВОДКА РОПа ═══════════════ -->
+    <section class="page active" data-page-content="summary">
+      <div class="page-header">
+        <div>
+          <h1>Сегодня · 25 апреля</h1>
+          <div class="page-sub">РОП Скоробогатый · 18 активных сделок · команда клоузеров</div>
+        </div>
+        <div class="period-switch">
+          <div class="period active">День</div>
+          <div class="period">Неделя</div>
+          <div class="period">Месяц</div>
+        </div>
+      </div>
+
+      <!-- KPI -->
+      <div class="kpi-stripe">
+        <div class="kpi red">
+          <div class="kpi-icon">🔴</div>
+          <div><div class="kpi-value">8</div><div class="kpi-label">БРАКов</div></div>
+        </div>
+        <div class="kpi green">
+          <div class="kpi-icon">🟢</div>
+          <div><div class="kpi-value">3</div><div class="kpi-label">Продаж</div></div>
+        </div>
+        <div class="kpi gray">
+          <div class="kpi-icon">💼</div>
+          <div><div class="kpi-value">18</div><div class="kpi-label">Активных сделок</div></div>
+        </div>
+      </div>
+
+      <!-- СКВОЗНАЯ ВОРОНКА -->
+      <div class="cross-funnel">
+        <div class="cross-funnel-head">
+          <div class="cross-funnel-title">🎯 Сквозная воронка сделки</div>
+          <div class="cross-funnel-sub">от лида до МОС · 3 ответственные роли</div>
+        </div>
+        <div class="funnel-line">
+          <div class="funnel-stage owner-hunter">
+            <div class="funnel-stage-num">1 284</div>
+            <div class="funnel-stage-label">Лидов</div>
+            <div class="funnel-stage-conv">32%</div>
+          </div>
+          <div class="funnel-stage owner-hunter">
+            <div class="funnel-stage-num">412</div>
+            <div class="funnel-stage-label">Счёт<br>выставлен</div>
+            <div class="funnel-stage-conv">25%</div>
+          </div>
+          <div class="funnel-stage owner-hunter">
+            <div class="funnel-stage-num">104</div>
+            <div class="funnel-stage-label">Оплата 99₽</div>
+            <div class="funnel-stage-conv">73%</div>
+          </div>
+          <div class="funnel-stage owner-closer">
+            <div class="funnel-stage-num">76</div>
+            <div class="funnel-stage-label">Встреча<br>проведена</div>
+            <div class="funnel-stage-conv">55%</div>
+          </div>
+          <div class="funnel-stage owner-closer">
+            <div class="funnel-stage-num">42</div>
+            <div class="funnel-stage-label">Предоплата<br>14к</div>
+            <div class="funnel-stage-conv">69%</div>
+          </div>
+          <div class="funnel-stage owner-closer">
+            <div class="funnel-stage-num">29</div>
+            <div class="funnel-stage-label">Продажа</div>
+            <div class="funnel-stage-conv">76%</div>
+          </div>
+          <div class="funnel-stage owner-mos">
+            <div class="funnel-stage-num">22</div>
+            <div class="funnel-stage-label">В работе<br>МОС</div>
+          </div>
+        </div>
+        <div class="funnel-legend">
+          <div><span class="funnel-legend-dot" style="background:var(--blue)"></span>Охотник</div>
+          <div><span class="funnel-legend-dot" style="background:var(--green)"></span>Клоузер</div>
+          <div><span class="funnel-legend-dot" style="background:var(--purple)"></span>МОС</div>
+        </div>
+      </div>
+
+      <!-- AI-МЕТРИКИ -->
+      <div class="ai-metrics">
+        <div class="ai-metrics-head">
+          <h3>📊 AI-метрики команды клоузеров</h3>
+          <span class="ai-metrics-period">за день · 18 встреч</span>
+        </div>
+        <div class="ai-metrics-grid">
+          <div class="ai-metric">
+            <div class="ai-metric-label">AI-балл Ø</div>
+            <div class="ai-metric-value yellow">17.2<small>/27</small></div>
+            <div class="ai-metric-sub">▼ −0.3 vs вчера</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Закрытий / встреча</div>
+            <div class="ai-metric-value red">1.2</div>
+            <div class="ai-metric-sub">⚠ норма ≥2</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Talk:Listen Ø</div>
+            <div class="ai-metric-value yellow">71%<small>/29%</small></div>
+            <div class="ai-metric-sub">⚠ монолог</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Запрещёнок</div>
+            <div class="ai-metric-value red">2</div>
+            <div class="ai-metric-sub">Марченко · ОКК</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ТРЕБУЮТ РАЗБОРА -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">🚨 Требуют разбора</div>
+          <span class="section-count">3 критичных</span>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-title">Ляшенко · 4 БРАК подряд</div>
+          <div class="problem-reason">0 попыток закрытия, сам отговаривает клиента</div>
+          <div class="problem-meta">последняя сделка #2730601 · Альберт · 12 мин назад</div>
+          <div class="problem-actions">
+            <button class="btn primary" onclick="switchTab('deal')">Открыть сделку →</button>
+            <button class="btn" onclick="switchTab('closer')">Все сделки клоузера →</button>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-title">Марченко · запрещённые фразы</div>
+          <div class="problem-reason">«задним числом», «фиктивный чек» — штраф ОКК 1000₽</div>
+          <div class="problem-meta">сделка #2730608 · Сергей Петров · 47 мин назад</div>
+          <div class="problem-actions">
+            <button class="btn primary" onclick="switchTab('deal')">Открыть сделку →</button>
+            <button class="btn" onclick="openModal('send')">📨 Отправить клоузеру</button>
+          </div>
+        </div>
+
+        <div class="problem-card yellow">
+          <div class="problem-title">Куделькин · принимает «подумаю» без дожима</div>
+          <div class="problem-reason">5 из 7 встреч без повторной попытки закрытия</div>
+          <div class="problem-meta">сделка #2730545 · Данил · 2 часа назад</div>
+          <div class="problem-actions">
+            <button class="btn primary">Открыть сделку →</button>
+            <button class="btn">Все сделки →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЛЕНТА СДЕЛОК -->
+      <div class="section">
+        <div class="list">
+          <div class="list-head">
+            <h2>Лента сделок сегодня</h2>
+            <div class="list-head-right">
+              <select class="filter">
+                <option>Все статусы</option>
+                <option>Только БРАК</option>
+                <option>Продажи</option>
+                <option>В работе</option>
+              </select>
+              <select class="filter"><option>Все клоузеры</option><option>Камран</option><option>Марченко</option><option>Ляшенко</option></select>
+            </div>
+          </div>
+
+          <div class="deal-row" onclick="switchTab('deal')">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730608</div>
+            <div>
+              <div class="deal-client">Сергей Петров · долг 1.38М</div>
+              <div class="deal-info">РДГ · пришёл от Никитиной · встреча Марченко · 20:51</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-lost">🔴 Отказ</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">Н</span>
+              <span class="deal-team-badge closer">М</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730601</div>
+            <div>
+              <div class="deal-client">Альберт · долг 400к</div>
+              <div class="deal-info">Списание · встреча Ляшенко · 18:20</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-lost">🔴 Отказ</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">Г</span>
+              <span class="deal-team-badge closer">Л</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot green"></div>
+            <div class="deal-id">#2731234</div>
+            <div>
+              <div class="deal-client">Ильгиз · долг 2М</div>
+              <div class="deal-info">РДГ · оплата в звонке · Камран · 15:30</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-sold">🟢 Продажа</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">С</span>
+              <span class="deal-team-badge closer">К</span>
+              <span class="deal-team-badge mos">М</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot yellow"></div>
+            <div class="deal-id">#2730545</div>
+            <div>
+              <div class="deal-client">Данил · долг 450к</div>
+              <div class="deal-info">РДГ · встреча Куделькина · 16:45</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-meet">🟡 Думает</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">Р</span>
+              <span class="deal-team-badge closer">К</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot yellow"></div>
+            <div class="deal-id">#2731102</div>
+            <div>
+              <div class="deal-client">Юрий · долг 400к</div>
+              <div class="deal-info">РДГ · встреча Лим · 14:05</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-meet">🟡 Думает</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">П</span>
+              <span class="deal-team-badge closer">Л</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot green"></div>
+            <div class="deal-id">#2731056</div>
+            <div>
+              <div class="deal-client">Владимир · долг 1.5М</div>
+              <div class="deal-info">РДГ · Петрова · 12:30</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-sold">🟢 Договор</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">А</span>
+              <span class="deal-team-badge closer">П</span>
+              <span class="deal-team-badge mos">С</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot gray"></div>
+            <div class="deal-id">#2731289</div>
+            <div>
+              <div class="deal-client">Ольга · долг 620к</div>
+              <div class="deal-info">Только что пришла заявка · охотник не взял</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-lead">Лид</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge" style="background:var(--bg-3);color:var(--text-3)">—</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+
+          <div class="deal-row">
+            <div class="deal-status-dot gray"></div>
+            <div class="deal-id">#2731275</div>
+            <div>
+              <div class="deal-client">Светлана · долг 280к</div>
+              <div class="deal-info">Оплатила 99₽ 10 мин назад · ждёт передачу клоузеру</div>
+            </div>
+            <div>
+              <span class="deal-stage-pill st-handoff">🤝 Handoff</span>
+            </div>
+            <div class="deal-team">
+              <span class="deal-team-badge hunter">К</span>
+            </div>
+            <div class="deal-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 2: КАРТОЧКА СДЕЛКИ (главная новая страница) ═══════════════ -->
+    <section class="page" data-page-content="deal">
+      <a class="back-link" onclick="switchTab('summary'); return false;">← к сводке</a>
+
+      <div class="info-hint" style="margin-top: 14px;">
+        💡 Карточка сделки = всё о клиенте: звонок охотника, Handoff, встреча клоузера, вердикт, передача МОС. Обе роли видят одну и ту же страницу.
+      </div>
+
+      <!-- ШАПКА СДЕЛКИ -->
+      <div class="deal-header">
+        <div class="deal-header-top">
+          <div class="deal-header-id">#2730608</div>
+          <span class="deal-header-status">🔴 Отказ клоузера</span>
+          <span class="deal-stage-pill" style="margin-left:auto;font-size:11px;">amoCRM · воронка МПП2 · статус «Отказ»</span>
+        </div>
+        <div class="deal-client-big">Сергей Петров (жена Валентина за мужа)</div>
+        <div class="deal-meta-row">
+          <span>📞 <b>+7 989 278 13 58</b></span>
+          <span>📍 <b>Екатеринбург</b></span>
+          <span>💰 Долг: <b>1.38 млн</b></span>
+          <span>📊 Программа: <b>РДГ</b></span>
+          <span>📅 Создана: <b>20.04.2026</b></span>
+          <span>💵 Оплачено: <b>99₽</b> (20.04)</span>
+        </div>
+        <div class="deal-team-row">
+          <div class="team-member team-role-hunter">
+            <div>
+              <div class="team-member-role">Охотник</div>
+              <div class="team-member-name">Никитина Арина</div>
+            </div>
+          </div>
+          <div class="team-member team-role-closer">
+            <div>
+              <div class="team-member-role">Клоузер</div>
+              <div class="team-member-name">Марченко Светлана</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div>
+              <div class="team-member-role">МОС</div>
+              <div class="team-member-name" style="color:var(--text-3)">— не назначен (сделка без продажи)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ТАЙМЛАЙН -->
+      <div class="timeline">
+        <div class="timeline-head">
+          <h2>📅 Таймлайн сделки</h2>
+          <span style="color:var(--text-3);font-size:12px;">6 событий · с 20.04 до 24.04</span>
+        </div>
+        <div class="timeline-list">
+          <div class="tl-event blue">
+            <div class="tl-event-head">
+              <span class="tl-event-time">20.04 10:35</span>
+              <span class="tl-event-title">Заявка с сайта</span>
+              <span class="tl-event-owner hunter">Охотник</span>
+            </div>
+            <div class="tl-event-body">Источник: Яндекс.Директ → лендинг /bfl → форма</div>
+          </div>
+          <div class="tl-event blue">
+            <div class="tl-event-head">
+              <span class="tl-event-time">20.04 10:47</span>
+              <span class="tl-event-title">Звонок охотника (12 мин)</span>
+              <span class="tl-event-owner hunter">Никитина</span>
+            </div>
+            <div class="tl-event-body">AI-балл 18.0/24.5 · <a>открыть звонок ↓</a></div>
+          </div>
+          <div class="tl-event purple">
+            <div class="tl-event-head">
+              <span class="tl-event-time">20.04 11:02</span>
+              <span class="tl-event-title">💵 Оплата 99₽ (трипваер)</span>
+            </div>
+            <div class="tl-event-body">СБП · Тинькофф · подтверждено</div>
+          </div>
+          <div class="tl-event yellow">
+            <div class="tl-event-head">
+              <span class="tl-event-time">20.04 11:05</span>
+              <span class="tl-event-title">🤝 Handoff Card создан</span>
+              <span class="tl-event-owner hunter">AI + Никитина</span>
+            </div>
+            <div class="tl-event-body">Бриф заполнен: 7/7 полей · <a>открыть ↓</a></div>
+          </div>
+          <div class="tl-event green">
+            <div class="tl-event-head">
+              <span class="tl-event-time">24.04 20:51</span>
+              <span class="tl-event-title">Встреча клоузера (5:42)</span>
+              <span class="tl-event-owner closer">Марченко</span>
+            </div>
+            <div class="tl-event-body">AI-балл 14.0/27 · <a>открыть встречу ↓</a></div>
+          </div>
+          <div class="tl-event red">
+            <div class="tl-event-head">
+              <span class="tl-event-time">24.04 20:57</span>
+              <span class="tl-event-title">🔴 Отказ · причина: нет ЛПР</span>
+              <span class="tl-event-owner closer">Марченко</span>
+            </div>
+            <div class="tl-event-body">Клиент ушла «подумать с мужем» · <a>открыть rejection ↓</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ БЛОК 1: ЗВОНОК ОХОТНИКА ═══ -->
+      <div class="deal-block closed">
+        <div class="deal-block-head" onclick="this.parentElement.classList.toggle('closed')">
+          <div class="deal-block-head-left">
+            <div class="deal-block-icon blue">📞</div>
+            <div>
+              <div class="deal-block-title">Звонок охотника · Никитина · 12 мин</div>
+              <div class="deal-block-sub">20.04 10:47 · qa_hunter_v5.5 · балл 18.0/24.5</div>
+            </div>
+          </div>
+          <span class="deal-block-badge ok">✓ КВАЛ · 99₽ оплачен</span>
+          <span class="deal-block-chev">˅</span>
+        </div>
+        <div class="deal-block-body">
+          <div class="score-grid">
+            <div class="score-pill"><div class="score-pill-label">Приветствие</div><div class="score-pill-value green">2.0</div></div>
+            <div class="score-pill"><div class="score-pill-label">Квалификация</div><div class="score-pill-value green">4.5</div></div>
+            <div class="score-pill"><div class="score-pill-label">SPIN</div><div class="score-pill-value yellow">3.5</div></div>
+            <div class="score-pill"><div class="score-pill-label">Возражения</div><div class="score-pill-value yellow">3.0</div></div>
+            <div class="score-pill"><div class="score-pill-label">Закрытие 99₽</div><div class="score-pill-value green">5.0</div></div>
+          </div>
+          <div class="mini-player">
+            <button class="play-btn-sm">▶</button>
+            <div class="mini-player-middle">
+              <div class="mini-player-time">0:00 / 12:03</div>
+              <div class="mini-progress"></div>
+            </div>
+            <div class="mini-speed">
+              <button class="mini-speed-btn active">1×</button>
+              <button class="mini-speed-btn">1.5×</button>
+              <button class="mini-speed-btn">2×</button>
+            </div>
+          </div>
+          <div style="color:var(--text-2);font-size:12px;">
+            Полный разбор звонка охотника · транскрипт, ключевые моменты, AI-оценка → доступен при клике
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ БЛОК 2: HANDOFF CARD (новое) ═══ -->
+      <div class="deal-block">
+        <div class="deal-block-head" onclick="this.parentElement.classList.toggle('closed')">
+          <div class="deal-block-head-left">
+            <div class="deal-block-icon yellow">🤝</div>
+            <div>
+              <div class="deal-block-title">Handoff Card · бриф для клоузера</div>
+              <div class="deal-block-sub">20.04 11:05 · AI заполнил + охотник подтвердил · 7/7 полей</div>
+            </div>
+          </div>
+          <span class="deal-block-badge ok">✓ Валидный gate</span>
+          <span class="deal-block-chev">˅</span>
+        </div>
+        <div class="deal-block-body">
+          <div class="info-hint">
+            💡 Бриф заполняется AI автоматически из транскрипта звонка охотника. Охотник проверяет 7 обязательных полей + добавляет рекомендацию клоузеру. Без всех 7 полей кнопка «Передать» неактивна.
+          </div>
+
+          <div class="handoff-grid">
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Сумма долга <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">1 380 000 ₽</div>
+              <div class="handoff-field-sub">со слов клиента</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Типы кредиторов <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Сбер 1М + карта 180к · Тинькофф карта 200к</div>
+              <div class="handoff-field-sub">2 банка, кредит + кредитки</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Просрочки <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Пока нет, 2 дня до ближайшего платежа</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>ЛПР <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Решает ЖЕНА · муж не знает о долгах</div>
+              <div class="handoff-field-sub" style="color:var(--yellow)">⚠ Муж ЛПР, на встречу придёт жена</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Имущество <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Дом + 2 автомобиля + доля в квартире родителей</div>
+              <div class="handoff-field-sub">БФЛ не подходит — много имущества</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Сделки за 3 года <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Нет</div>
+            </div>
+            <div class="handoff-field required">
+              <div class="handoff-field-label"><span class="handoff-field-star">★</span>Доход <span class="handoff-field-ai">AI</span></div>
+              <div class="handoff-field-value">Муж не работает · жена 80к неофициально</div>
+              <div class="handoff-field-sub" style="color:var(--yellow)">⚠ Низкая способность платить</div>
+            </div>
+          </div>
+
+          <div style="padding: 14px; background: var(--bg-2); border-radius: 10px; border-left: 3px solid var(--green); margin-bottom: 12px;">
+            <div style="font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 6px;">💬 Рекомендация охотника клоузеру (свободный текст)</div>
+            <div style="font-size: 13px; color: var(--text-1);">
+              Клиент сомневается в компании — просил отзывы. Дать ссылку на телеграм-канал в начале встречи. Жена говорит за мужа, попросить на встрече подключить мужа — он реальный ЛПР. Ранее была в «Единый центр защиты» — расторгла договор, может пойти возражение «уже обжигалась».
+            </div>
+          </div>
+
+          <div class="handoff-footer">
+            <div class="handoff-gate">Gate: <b>7/7 полей</b> · охотник подтвердил · передача прошла</div>
+            <button class="btn primary sm">📨 Написать клоузеру</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ БЛОК 3: ВСТРЕЧА КЛОУЗЕРА (ОСНОВНОЙ) ═══ -->
+      <div class="deal-block">
+        <div class="deal-block-head" onclick="this.parentElement.classList.toggle('closed')">
+          <div class="deal-block-head-left">
+            <div class="deal-block-icon red">📞</div>
+            <div>
+              <div class="deal-block-title">Встреча клоузера · Марченко · 5:42</div>
+              <div class="deal-block-sub">24.04 20:51 · qa_closer_v1.4.2 · балл 14.0/27</div>
+            </div>
+          </div>
+          <span class="deal-block-badge bad">🔴 БРАК</span>
+          <span class="deal-block-chev">˅</span>
+        </div>
+        <div class="deal-block-body">
+          <div class="feedback-bar">
+            <div class="feedback-label">💬 Оценка AI корректная?</div>
+            <button class="feedback-btn ok">✓ Согласен</button>
+            <button class="feedback-btn no" onclick="openModal('dispute')">✗ Не согласен</button>
+          </div>
+
+          <h3 style="margin-bottom: 10px;">Ключевые моменты (3)</h3>
+          <div class="moments-compact">
+            <div class="moment-mini red">
+              <div class="moment-mini-time">▶ 2:34</div>
+              <div class="moment-mini-icon">🚨</div>
+              <div class="moment-mini-text">«переписать авто задним числом»</div>
+              <div class="moment-mini-reason">запрещёнка</div>
+            </div>
+            <div class="moment-mini red">
+              <div class="moment-mini-time">▶ 3:42</div>
+              <div class="moment-mini-icon">🚨</div>
+              <div class="moment-mini-text">«формируем чек как будто есть деньги»</div>
+              <div class="moment-mini-reason">запрещёнка</div>
+            </div>
+            <div class="moment-mini yellow">
+              <div class="moment-mini-time">▶ 5:15</div>
+              <div class="moment-mini-icon">⚠</div>
+              <div class="moment-mini-text">Клиент: «мы подумаем» — причина не спрошена</div>
+              <div class="moment-mini-reason">сдалась</div>
+            </div>
+          </div>
+
+          <div class="mini-player">
+            <button class="play-btn-sm">▶</button>
+            <div class="mini-player-middle">
+              <div class="mini-player-time">1:18 / 5:42</div>
+              <div class="mini-progress"></div>
+            </div>
+            <div class="mini-speed">
+              <button class="mini-speed-btn active">1×</button>
+              <button class="mini-speed-btn">1.5×</button>
+              <button class="mini-speed-btn">2×</button>
+            </div>
+          </div>
+
+          <div class="score-grid">
+            <div class="score-pill"><div class="score-pill-label">Приветствие</div><div class="score-pill-value green">2.0</div></div>
+            <div class="score-pill"><div class="score-pill-label">Анкета</div><div class="score-pill-value">5.5</div></div>
+            <div class="score-pill"><div class="score-pill-label">Презентация</div><div class="score-pill-value yellow">4.0</div></div>
+            <div class="score-pill"><div class="score-pill-label">Возражения</div><div class="score-pill-value red">2.5</div></div>
+            <div class="score-pill"><div class="score-pill-label">Закрытие</div><div class="score-pill-value red">0.0</div></div>
+          </div>
+
+          <div style="padding: 10px 14px; background: var(--red-bg); border-left: 3px solid var(--red); border-radius: 8px; color: var(--text-1); font-size: 13px; line-height: 1.5;">
+            <b style="color:var(--red)">Главная проблема:</b> 0 попыток закрытия за всю встречу + запрещённые фразы. Клоузер правильно отработала анкету, но на «мы подумаем» сдалась без единого дожима.
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ БЛОК 4: REJECTION (новое) ═══ -->
+      <div class="rejection-card">
+        <div class="rejection-head">🔴 Отказ клоузера</div>
+        <div class="rejection-category">👥 Нет ЛПР</div>
+        <div style="color: var(--text-1); font-size: 13px; margin-bottom: 10px;">
+          Решение принимает муж, на встречу пришла жена. Клиент ушла «посоветоваться».
+        </div>
+        <div class="rejection-comment">
+          <b style="color:var(--text-2);">Комментарий клоузера:</b> Жена сказала — муж точно откажется, он недавно обжёгся на другой юр.компании. Пробовала попросить позвонить мужу, она отказалась. Договорились что напишет сама через 3 дня, если передумают.
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 14px;">
+          <button class="btn danger sm">📅 Перезвонить через 3 дня</button>
+          <button class="btn sm">💰 Возврат 99₽</button>
+          <button class="btn sm">📥 В архив</button>
+        </div>
+      </div>
+
+      <!-- ═══ ДЕЙСТВИЯ ═══ -->
+      <div class="section" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn primary" onclick="openModal('send')">📨 Отправить клоузеру на разбор</button>
+        <button class="btn">📅 В разбор понедельника</button>
+        <button class="btn">⚠ Отправить в ОКК</button>
+        <button class="btn">📂 Открыть в amoCRM</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 3: СТРАНИЦА КЛОУЗЕРА ═══════════════ -->
+    <section class="page" data-page-content="closer">
+      <a class="back-link" onclick="switchTab('summary'); return false;">← к сводке</a>
+
+      <div class="closer-header" style="margin-top: 14px;">
+        <div class="closer-avatar">МС</div>
+        <div class="closer-info">
+          <h1>Марченко Светлана</h1>
+          <div class="closer-info-sub">старший юрист · 8 сделок за неделю · 1 продажа</div>
+        </div>
+      </div>
+
+      <!-- KPI -->
+      <div class="kpi-stripe">
+        <div class="kpi red">
+          <div class="kpi-icon">🔴</div>
+          <div><div class="kpi-value">7</div><div class="kpi-label">Отказов за неделю</div></div>
+        </div>
+        <div class="kpi green">
+          <div class="kpi-icon">🟢</div>
+          <div><div class="kpi-value">1</div><div class="kpi-label">Продажа</div></div>
+        </div>
+        <div class="kpi gray">
+          <div class="kpi-icon">📊</div>
+          <div><div class="kpi-value">12%</div><div class="kpi-label">Конверсия (норма 30%)</div></div>
+        </div>
+      </div>
+
+      <!-- AI-МЕТРИКИ ПЕРСОНАЛЬНЫЕ -->
+      <div class="ai-metrics">
+        <div class="ai-metrics-head">
+          <h3>📊 AI-метрики</h3>
+          <span class="ai-metrics-period">за неделю · 8 встреч</span>
+        </div>
+        <div class="ai-metrics-grid">
+          <div class="ai-metric">
+            <div class="ai-metric-label">AI-балл Ø</div>
+            <div class="ai-metric-value red">12.1<small>/27</small></div>
+            <div class="ai-metric-sub">▼ −3.2 за месяц</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Закрытий / встреча</div>
+            <div class="ai-metric-value red">0.75</div>
+            <div class="ai-metric-sub">топ-25% = 2.3</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">% спросила причину</div>
+            <div class="ai-metric-value red">25%</div>
+            <div class="ai-metric-sub">топ-25% = 80%</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Место в команде</div>
+            <div class="ai-metric-value red">8<small>/9</small></div>
+            <div class="ai-metric-sub">нижние 15%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REJECTION BREAKDOWN (главное!) -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">🔍 Почему клоузер теряет клиентов</div>
+          <span style="color:var(--text-3);font-size:12px;">причины отказов за неделю · по Rejection Taxonomy</span>
+        </div>
+        <div class="rej-bars-card">
+          <div class="info-hint">
+            💡 Клоузер выбирает причину после каждого отказа. Здесь — агрегация за неделю. Даёт фокус для коучинга.
+          </div>
+
+          <div class="rej-bars-row">
+            <div class="rej-bars-label">👥 Нет ЛПР на встрече</div>
+            <div class="rej-bars-track"><div class="rej-bars-fill" style="width: 43%"></div></div>
+            <div class="rej-bars-val">3/7</div>
+          </div>
+          <div class="rej-bars-row">
+            <div class="rej-bars-label">💰 Бюджет — клиент «нет денег»</div>
+            <div class="rej-bars-track"><div class="rej-bars-fill" style="width: 29%"></div></div>
+            <div class="rej-bars-val">2/7</div>
+          </div>
+          <div class="rej-bars-row">
+            <div class="rej-bars-label">🔥 Нет боли — «просто узнаю»</div>
+            <div class="rej-bars-track"><div class="rej-bars-fill yellow" style="width: 14%"></div></div>
+            <div class="rej-bars-val">1/7</div>
+          </div>
+          <div class="rej-bars-row">
+            <div class="rej-bars-label">⏳ Таймлайн — «думаю месяц»</div>
+            <div class="rej-bars-track"><div class="rej-bars-fill gray" style="width: 14%"></div></div>
+            <div class="rej-bars-val">1/7</div>
+          </div>
+          <div class="rej-bars-row">
+            <div class="rej-bars-label">⚖ Юр.блок (объективно)</div>
+            <div class="rej-bars-track"><div class="rej-bars-fill blue" style="width: 0%"></div></div>
+            <div class="rej-bars-val">0/7</div>
+          </div>
+
+          <div style="padding: 12px; background: var(--red-bg); border-radius: 8px; margin-top: 14px; color: var(--text-1); font-size: 13px;">
+            🎯 <b>Фокус коучинга:</b> 43% отказов — «нет ЛПР». Клоузер не переводит жену/дочь на реального ЛПР. Техника: «Давайте подключим мужа к звонку прямо сейчас» + сценарий на случай «он занят».
+          </div>
+        </div>
+      </div>
+
+      <!-- СПИСОК СДЕЛОК -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">💼 Все сделки за неделю</div>
+          <span style="color:var(--text-3);font-size:12px;">8 сделок</span>
+        </div>
+        <div class="list">
+          <div class="deal-row" onclick="switchTab('deal')">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730608</div>
+            <div><div class="deal-client">Сергей Петров</div><div class="deal-info">встреча 5:42 · 👥 нет ЛПР · 24.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730595</div>
+            <div><div class="deal-client">Татьяна Сидорова</div><div class="deal-info">встреча 6:20 · 💰 бюджет · 24.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot green"></div>
+            <div class="deal-id">#2730540</div>
+            <div><div class="deal-client">Галина Иванова</div><div class="deal-info">встреча 14:30 · продажа · 23.04</div></div>
+            <div><span class="deal-stage-pill st-sold">🟢 Продажа</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span><span class="deal-team-badge mos">С</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730521</div>
+            <div><div class="deal-client">Александр П.</div><div class="deal-info">встреча 7:10 · 👥 нет ЛПР · 23.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730487</div>
+            <div><div class="deal-client">Мария К.</div><div class="deal-info">встреча 5:55 · 💰 бюджет · 22.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730455</div>
+            <div><div class="deal-client">Андрей В.</div><div class="deal-info">встреча 8:40 · 🔥 нет боли · 22.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730421</div>
+            <div><div class="deal-client">Ольга С.</div><div class="deal-info">встреча 6:12 · 👥 нет ЛПР · 21.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+          <div class="deal-row">
+            <div class="deal-status-dot red"></div>
+            <div class="deal-id">#2730398</div>
+            <div><div class="deal-client">Дмитрий М.</div><div class="deal-info">встреча 4:58 · ⏳ таймлайн · 21.04</div></div>
+            <div><span class="deal-stage-pill st-lost">🔴 Отказ</span></div>
+            <div class="deal-team"><span class="deal-team-badge closer">М</span></div>
+            <div class="deal-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 4: ЛИЧНЫЙ КАБИНЕТ ═══════════════ -->
+    <section class="page" data-page-content="personal">
+      <h1 style="margin-bottom: 8px;">Привет, Светлана 👋</h1>
+      <div style="color: var(--text-2); margin-bottom: 24px;">твоя неделя · 8 встреч · 1 продажа</div>
+
+      <div class="kpi-stripe">
+        <div class="kpi gray">
+          <div class="kpi-icon">📞</div>
+          <div><div class="kpi-value">8</div><div class="kpi-label">Встреч</div></div>
+        </div>
+        <div class="kpi green">
+          <div class="kpi-icon">💰</div>
+          <div><div class="kpi-value">1</div><div class="kpi-label">Продажа</div></div>
+        </div>
+        <div class="kpi gray">
+          <div class="kpi-icon">📊</div>
+          <div><div class="kpi-value">12%</div><div class="kpi-label">Конверсия</div></div>
+        </div>
+      </div>
+
+      <div class="problem-card green" style="border-left-color:var(--green);background:linear-gradient(135deg,var(--green-bg-2),var(--bg-1));box-shadow:var(--green-glow);">
+        <div class="problem-title">💡 Рекомендация AI на этой неделе</div>
+        <div style="color:var(--text-1);font-size:14px;line-height:1.6;margin-top:6px;">
+          В <b>3 из 7 встреч</b> причина отказа — «нет ЛПР на встрече».<br><br>
+          Когда пришла жена вместо мужа — <b>не бойся попросить подключить</b>:<br>
+          <i style="color:var(--green);">«Валентина, важное решение — давайте я наберу Сергея прямо сейчас. 5 минут, и он решит с полной картиной. Готова?»</i>
+        </div>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-title">🎯 Эталон недели</div>
+        <div style="font-size:14px;margin:6px 0;">Камран · встреча #2731234 · Ильгиз (долг 2М)</div>
+        <div style="color:var(--text-2);font-size:13px;">4 прямых закрытия + активно подключал мужа клиента</div>
+        <button class="btn primary sm" style="margin-top: 10px;">▶ Послушать этот звонок</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 5: АНАЛИТИКА (заглушка) ═══════════════ -->
+    <section class="page" data-page-content="analytics">
+      <h1>Аналитика · управленческие метрики</h1>
+      <div style="color: var(--text-2); margin: 10px 0 20px;">5 под-вкладок: Воронка · Финансы · Потери · SLA · Качество скрипта</div>
+      <div class="problem-card">
+        <div class="problem-title">📊 Этот раздел уже был в v1</div>
+        <div class="problem-reason">Воронка клоузера, финансы, потери, SLA отклика, качество скрипта — всё осталось как в v1.</div>
+        <div class="problem-meta">В v2 добавятся: воронка сквозная (с handoff-точкой), rejection-breakdown по клоузерам, SLA handoff (охотник→клоузер время)</div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 6: КАЛИБРОВКА ═══════════════ -->
+    <section class="page" data-page-content="calibration">
+      <h1>Калибровка промпта</h1>
+      <div style="color: var(--text-2); margin: 10px 0 20px;">qa_closer v1.4.2 · HITL feedback loop</div>
+      <div class="problem-card">
+        <div class="problem-title">⚙️ Раздел калибровки из v1</div>
+        <div class="problem-reason">Статистика disputes от РОПов, разбор проблемных правил, экспорт CSV для правки промпта.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-send">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>📨 Отправить клоузеру</h2>
+      <button class="modal-close" onclick="closeModal('send')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <div class="field-label">Кому</div>
+        <div style="color:var(--text-1);"><b>Марченко Светлана</b> · MAX</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Сообщение</div>
+        <textarea class="textarea" rows="5">Светлана, разбери сделку #2730608 с Сергеем.
+AI заметил запрещённые фразы и 0 попыток закрытия.
+Детали: donulya-ai.ru/d/2730608
+Обсудим в понедельник в 10:00.</textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('send')">Отмена</button>
+      <button class="btn primary" onclick="closeModal('send')">📨 Отправить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-dispute">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>✗ Не согласен с оценкой AI</h2>
+      <button class="modal-close" onclick="closeModal('dispute')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <div class="field-label">AI оценил</div>
+        <div>🔴 <b>БРАК</b> · BRAK_MULTIPLE (запрещёнки)</div>
+      </div>
+      <div class="field">
+        <div class="field-label">По-моему</div>
+        <label class="radio-row"><input type="radio" name="dt"> Должно быть ПРИНЯТО</label>
+        <label class="radio-row"><input type="radio" name="dt" checked> БРАК верно, но причина другая</label>
+        <label class="radio-row"><input type="radio" name="dt"> AI упустил важный момент</label>
+      </div>
+      <div class="field">
+        <div class="field-label">Комментарий для калибровки</div>
+        <textarea class="textarea" rows="4" placeholder="Объясни что AI упустил или где ошибся"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('dispute')">Отмена</button>
+      <button class="btn primary" onclick="closeModal('dispute')">📋 Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item[data-page]').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.tab[data-tab="${name}"]`)?.classList.add('active');
+    document.querySelector(`.nav-item[data-page="${name}"]`)?.classList.add('active');
+    document.querySelector(`.page[data-page-content="${name}"]`)?.classList.add('active');
+    const titles = {
+      'summary': 'Сводка РОПа',
+      'deal': 'Карточка сделки',
+      'closer': 'Страница клоузера',
+      'personal': 'Мой кабинет',
+      'analytics': 'Аналитика',
+      'calibration': 'Калибровка промпта'
+    };
+    document.querySelector('.js-crumb').textContent = titles[name] || '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+  document.querySelectorAll('.nav-item[data-page]').forEach(nav => nav.addEventListener('click', () => switchTab(nav.dataset.page)));
+
+  function openModal(name) { document.getElementById('modal-' + name).classList.add('active'); }
+  function closeModal(name) { document.getElementById('modal-' + name).classList.remove('active'); }
+  document.querySelectorAll('.modal-overlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+  });
+</script>
+</body>
+</html>

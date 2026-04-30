@@ -1,0 +1,2894 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>ДоНуля · AI-Аудитор · единый дашборд v2</title>
+<style>
+  :root {
+    --bg-0: #0d1410; --bg-1: #121a14; --bg-2: #17211a; --bg-3: #1d2a21;
+    --border: #232f27; --border-2: #2d3b32;
+    --text-1: #e8f0ea; --text-2: #8b9590; --text-3: #5e6860;
+    --green: #00d584; --green-2: #00f29d;
+    --green-bg: rgba(0, 213, 132, 0.1);
+    --green-bg-2: rgba(0, 213, 132, 0.18);
+    --green-border: rgba(0, 213, 132, 0.35);
+    --green-glow: 0 0 24px rgba(0, 213, 132, 0.2);
+    --red: #ef5353;
+    --red-bg: rgba(239, 83, 83, 0.1);
+    --red-bg-2: rgba(239, 83, 83, 0.18);
+    --red-border: rgba(239, 83, 83, 0.35);
+    --yellow: #f5c84b;
+    --yellow-bg: rgba(245, 200, 75, 0.1);
+    --yellow-bg-2: rgba(245, 200, 75, 0.18);
+    --yellow-border: rgba(245, 200, 75, 0.35);
+    --blue: #52a7ff;
+    --blue-bg: rgba(82, 167, 255, 0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-0); color: var(--text-1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    font-size: 14px; line-height: 1.5;
+    font-feature-settings: "tnum";
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* LAYOUT */
+  .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--bg-1); border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .brand-row { display: flex; align-items: center; gap: 10px; padding: 4px 8px; margin-bottom: 28px; }
+  .brand-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    display: flex; align-items: center; justify-content: center;
+    color: #0a120c; font-weight: 800; font-size: 14px;
+    box-shadow: var(--green-glow);
+  }
+  .brand-name { font-size: 15px; font-weight: 700; }
+  .brand-sub { color: var(--text-3); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .nav-section {
+    font-size: 10px; font-weight: 600; color: var(--text-3);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 12px 10px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 8px;
+    color: var(--text-2); font-size: 13px; cursor: pointer;
+    margin-bottom: 2px; transition: all 0.15s;
+  }
+  .nav-item:hover { background: var(--bg-2); color: var(--text-1); }
+  .nav-item.active {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600;
+    box-shadow: var(--green-glow);
+  }
+  .nav-icon { font-size: 14px; width: 16px; }
+
+  /* MAIN */
+  .main { padding: 20px 28px; min-width: 0; max-width: 1200px; }
+
+  /* TOPBAR + BACK LINK */
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px; color: var(--text-2); font-size: 13px;
+  }
+  .topbar b { color: var(--text-1); }
+  .topbar-right { margin-left: auto; display: flex; gap: 8px; }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-2);
+  }
+  .icon-btn:hover { background: var(--bg-3); color: var(--text-1); }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-2); font-size: 13px;
+    padding: 6px 10px; background: var(--bg-2); border-radius: 8px;
+  }
+  .back-link:hover { color: var(--text-1); background: var(--bg-3); }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 4px;
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 4px;
+    margin-bottom: 24px; width: fit-content;
+  }
+  .tab {
+    padding: 8px 16px; border-radius: 7px;
+    color: var(--text-2); font-size: 13px; font-weight: 500;
+  }
+  .tab:hover { color: var(--text-1); }
+  .tab.active {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600;
+    box-shadow: var(--green-glow);
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: 17px; font-weight: 600; }
+  h3 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+
+  .page-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 20px;
+  }
+  .page-sub { color: var(--text-2); font-size: 13px; margin-top: 4px; }
+  .period-switch { display: flex; gap: 4px; }
+  .period {
+    padding: 6px 12px; border-radius: 6px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    color: var(--text-2); font-size: 12px; cursor: pointer;
+  }
+  .period.active { background: var(--green); color: #0a120c; border-color: var(--green); font-weight: 600; }
+
+  /* KPI STRIPE (3 числа) */
+  .kpi-stripe {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin-bottom: 24px;
+  }
+  .kpi {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    display: flex; align-items: center; gap: 16px;
+    cursor: pointer; transition: transform 0.1s, box-shadow 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .kpi:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+  .kpi.red:hover { border-color: var(--red); box-shadow: 0 4px 20px rgba(239, 83, 83, 0.25); }
+  .kpi.green:hover { border-color: var(--green); box-shadow: 0 4px 20px rgba(0, 213, 132, 0.35); }
+  .kpi::after {
+    content: "›"; position: absolute; top: 16px; right: 18px;
+    color: var(--text-3); font-size: 18px; font-weight: 600;
+    transition: transform 0.15s, color 0.15s;
+  }
+  .kpi:hover::after { transform: translateX(4px); color: var(--text-1); }
+
+  /* AI-МЕТРИКИ КОМАНДЫ (сводный блок) */
+  .ai-metrics {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .ai-metrics-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .ai-metrics-head h3 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-2); margin: 0;
+  }
+  .ai-metrics-period {
+    margin-left: auto; color: var(--text-3); font-size: 12px;
+  }
+  .ai-metrics-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;
+  }
+  .ai-metric {
+    border-left: 1px solid var(--border); padding-left: 16px;
+  }
+  .ai-metric:first-child { border-left: none; padding-left: 0; }
+  .ai-metric-label {
+    color: var(--text-3); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .ai-metric-value {
+    font-size: 20px; font-weight: 700; color: var(--text-1);
+    letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .ai-metric-value small { font-size: 12px; color: var(--text-2); font-weight: 500; }
+  .ai-metric-delta {
+    font-size: 11px; font-weight: 500; margin-top: 4px;
+  }
+  .ai-metric-delta.up { color: var(--green); }
+  .ai-metric-delta.down { color: var(--red); }
+  .ai-metric-delta.neutral { color: var(--text-3); }
+  .ai-metric-delta.warn { color: var(--yellow); }
+  .ai-metric-value.red { color: var(--red); }
+  .ai-metric-value.green { color: var(--green); }
+  .ai-metric-value.yellow { color: var(--yellow); }
+  .kpi.red { background: linear-gradient(135deg, var(--red-bg-2), var(--bg-1)); border-color: var(--red-border); }
+  .kpi.green { background: linear-gradient(135deg, var(--green-bg-2), var(--bg-1)); border-color: var(--green-border); box-shadow: var(--green-glow); }
+  .kpi-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .kpi.red .kpi-icon { background: var(--red); color: white; }
+  .kpi.green .kpi-icon { background: var(--green); color: #0a120c; }
+  .kpi.gray .kpi-icon { background: var(--bg-3); color: var(--text-2); }
+  .kpi-value { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+  .kpi-label { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+
+  /* SECTION */
+  .section { margin-bottom: 28px; }
+  .section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 16px; font-weight: 600;
+  }
+  .section-title-emoji { font-size: 18px; }
+  .section-count {
+    background: var(--red-bg-2); color: var(--red);
+    padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  }
+  .section-count.green { background: var(--green-bg-2); color: var(--green); }
+
+  /* PROBLEM CARD (на сводке) */
+  .problem-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    border-radius: 12px; padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .problem-card.yellow { border-left-color: var(--yellow); }
+  .problem-card.green { border-left-color: var(--green); }
+  .problem-title {
+    font-size: 15px; font-weight: 600; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .problem-reason { color: var(--text-2); font-size: 13px; margin-bottom: 4px; }
+  .problem-meta { color: var(--text-3); font-size: 12px; margin-bottom: 10px; }
+  .problem-actions { display: flex; gap: 8px; }
+  .btn {
+    padding: 7px 14px; border-radius: 8px;
+    background: var(--bg-3); color: var(--text-1);
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+  }
+  .btn:hover { background: var(--bg-2); border-color: var(--border-2); }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--green), var(--green-2));
+    color: #0a120c; font-weight: 600; border: none;
+  }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .btn.sm { padding: 5px 10px; font-size: 11px; }
+
+  /* CALLS LIST */
+  .list {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .list-row {
+    display: grid; grid-template-columns: 28px 70px 1fr 80px auto 30px;
+    align-items: center; gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .list-row:last-child { border-bottom: none; }
+  .list-row:hover { background: var(--bg-2); }
+  .list-status {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .list-status.red { background: var(--red); box-shadow: 0 0 8px rgba(239,83,83,0.6); }
+  .list-status.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(245,200,75,0.6); }
+  .list-status.green { background: var(--green); box-shadow: 0 0 8px rgba(0,213,132,0.6); }
+  .list-time { color: var(--text-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .list-name { color: var(--text-1); font-weight: 500; font-size: 13px; }
+  .list-sub { color: var(--text-3); font-size: 12px; margin-top: 2px; }
+  .list-duration { color: var(--text-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .list-reason { color: var(--text-2); font-size: 12px; text-align: right; }
+  .list-arrow { color: var(--text-3); }
+
+  .list-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border); background: var(--bg-2);
+  }
+  .list-head h2 { font-size: 14px; font-weight: 600; }
+  .list-head-right { display: flex; gap: 8px; align-items: center; }
+  .filter {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 7px; padding: 5px 10px;
+    color: var(--text-2); font-size: 12px;
+  }
+
+  /* ФИЛЬТР-БЭЙДЖ */
+  .filter-banner {
+    display: none;
+    align-items: center; gap: 10px;
+    padding: 10px 16px;
+    background: var(--green-bg-2);
+    border-bottom: 1px solid var(--green-border);
+    color: var(--text-1); font-size: 13px;
+  }
+  .filter-banner.active { display: flex; }
+  .filter-banner.red { background: var(--red-bg-2); border-bottom-color: var(--red-border); }
+  .filter-banner.yellow { background: var(--yellow-bg-2); border-bottom-color: var(--yellow-border); }
+  .filter-banner-label { flex: 1; }
+  .filter-banner-label b { font-weight: 600; }
+  .filter-banner-clear {
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--bg-1); color: var(--text-1);
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .filter-banner-clear:hover { background: var(--bg-3); }
+
+  /* CALL CARD */
+  .call-title {
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .call-title small { color: var(--text-3); font-weight: 500; font-size: 14px; }
+
+  .verdict-card {
+    background: linear-gradient(135deg, var(--red-bg-2), var(--bg-1));
+    border: 1px solid var(--red-border);
+    border-radius: 14px; padding: 24px;
+    margin-bottom: 20px;
+  }
+  .verdict-card.green {
+    background: linear-gradient(135deg, var(--green-bg-2), var(--bg-1));
+    border-color: var(--green-border);
+    box-shadow: var(--green-glow);
+  }
+  .verdict-top {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  }
+  .verdict-big {
+    font-size: 34px; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--red);
+  }
+  .verdict-card.green .verdict-big { color: var(--green); }
+  .verdict-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--red); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .verdict-card.green .verdict-icon { background: var(--green); color: #0a120c; }
+  .verdict-text {
+    font-size: 15px; color: var(--text-1); line-height: 1.5;
+    margin-bottom: 18px; max-width: 700px;
+  }
+  .verdict-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-wide { padding: 10px 18px; font-size: 13px; }
+
+  /* AI САММАРИ */
+  .summary-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .summary-title { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .summary-title h3 { margin: 0; }
+  .summary-text {
+    font-size: 14px; color: var(--text-1); line-height: 1.6;
+  }
+
+  /* МЕТРИКИ ДИАЛОГА (3 в ряд) */
+  .dialog-metrics {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .dmetric {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .dmetric-label {
+    color: var(--text-3); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 8px;
+  }
+  .dmetric-value { font-size: 20px; font-weight: 700; color: var(--text-1); }
+  .dmetric-value small { font-size: 12px; color: var(--text-2); font-weight: 500; }
+  .dmetric-value .red { color: var(--red); }
+  .dmetric-value .green { color: var(--green); }
+  .dmetric-value .yellow { color: var(--yellow); }
+  .dmetric-sub { color: var(--text-2); font-size: 12px; margin-top: 4px; }
+  .balance-bar {
+    display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 8px;
+  }
+  .balance-bar .left { background: var(--red); }
+  .balance-bar .right { background: var(--blue); }
+
+  /* ТОП ВОЗРАЖЕНИЙ / ОБЕЩАНИЯ */
+  .topbars-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+  }
+  .topbar-row {
+    display: grid; grid-template-columns: 1fr 40px 120px;
+    align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .topbar-label { color: var(--text-1); font-size: 13px; }
+  .topbar-count { color: var(--text-2); font-size: 13px; font-weight: 600; text-align: right; }
+  .topbar-track {
+    background: var(--bg-3); border-radius: 3px; height: 6px; position: relative;
+  }
+  .topbar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: linear-gradient(90deg, var(--green), var(--green-2));
+    border-radius: 3px;
+  }
+  .topbar-fill.red { background: linear-gradient(90deg, var(--red), #ff7b7b); }
+  .topbar-fill.yellow { background: linear-gradient(90deg, var(--yellow), #ffdb7a); }
+
+  /* ГРАФИК AI-БАЛЛА */
+  .chart-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 16px;
+  }
+  .chart-days {
+    display: flex; align-items: flex-end; gap: 3px;
+    height: 120px; margin-top: 10px;
+  }
+  .chart-col {
+    flex: 1; background: linear-gradient(180deg, var(--green) 0%, var(--green-bg) 100%);
+    border-radius: 3px 3px 0 0; min-height: 4px; transition: all 0.15s;
+    position: relative;
+  }
+  .chart-col:hover { filter: brightness(1.2); }
+  .chart-col.low { background: linear-gradient(180deg, var(--red) 0%, var(--red-bg) 100%); }
+  .chart-col.mid { background: linear-gradient(180deg, var(--yellow) 0%, var(--yellow-bg) 100%); }
+  .chart-xlabels {
+    display: flex; justify-content: space-between; margin-top: 8px;
+    color: var(--text-3); font-size: 10px;
+  }
+
+  /* PEER BENCHMARK */
+  .peer-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 16px;
+  }
+  .peer-row {
+    display: grid; grid-template-columns: 160px 1fr 70px 60px;
+    align-items: center; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .peer-row:last-child { border-bottom: none; }
+  .peer-label { color: var(--text-2); font-size: 12px; }
+  .peer-track {
+    background: var(--bg-3); border-radius: 4px; height: 8px;
+    position: relative;
+  }
+  .peer-you {
+    position: absolute; top: -4px; width: 14px; height: 14px;
+    background: var(--red); border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--bg-1);
+    transform: translateX(-50%);
+  }
+  .peer-top {
+    position: absolute; top: -4px; width: 14px; height: 14px;
+    background: var(--green); border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--bg-1);
+    transform: translateX(-50%);
+  }
+  .peer-you-label { font-size: 11px; color: var(--red); font-weight: 600; text-align: center; }
+  .peer-top-label { font-size: 11px; color: var(--green); font-weight: 600; text-align: center; }
+
+  /* ====== АНАЛИТИКА ====== */
+  .subtabs {
+    display: flex; gap: 4px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .subtab {
+    padding: 10px 18px; border-bottom: 2px solid transparent;
+    color: var(--text-2); font-size: 13px; font-weight: 500;
+    cursor: pointer; margin-bottom: -1px;
+  }
+  .subtab:hover { color: var(--text-1); }
+  .subtab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+
+  .subpage { display: none; }
+  .subpage.active { display: block; }
+
+  /* Большие цифры для аналитики */
+  .big-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin-bottom: 20px;
+  }
+  .big-stat {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .big-stat-label {
+    color: var(--text-3); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 10px;
+  }
+  .big-stat-value {
+    font-size: 28px; font-weight: 700; color: var(--text-1);
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .big-stat-value small { font-size: 14px; color: var(--text-2); font-weight: 500; }
+  .big-stat-value.red { color: var(--red); }
+  .big-stat-value.green { color: var(--green); }
+  .big-stat-value.yellow { color: var(--yellow); }
+  .big-stat-delta { font-size: 12px; margin-top: 6px; }
+  .big-stat-delta.up { color: var(--green); }
+  .big-stat-delta.down { color: var(--red); }
+  .big-stat-sub { color: var(--text-2); font-size: 12px; margin-top: 6px; }
+
+  /* ВОРОНКА */
+  .funnel-vis {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 20px; background: var(--bg-1);
+    border: 1px solid var(--border); border-radius: 12px;
+  }
+  .funnel-step {
+    display: grid; grid-template-columns: 180px 1fr 120px 80px;
+    align-items: center; gap: 16px;
+  }
+  .funnel-step-label { font-size: 13px; color: var(--text-1); font-weight: 500; }
+  .funnel-step-track {
+    height: 36px; background: var(--bg-3); border-radius: 8px; position: relative; overflow: hidden;
+  }
+  .funnel-step-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: linear-gradient(90deg, var(--green), var(--green-2));
+    border-radius: 8px;
+    display: flex; align-items: center; padding-left: 14px;
+    color: #0a120c; font-weight: 700; font-size: 14px;
+  }
+  .funnel-step-fill.red { background: linear-gradient(90deg, var(--red), #ff7b7b); color: white; }
+  .funnel-step-fill.yellow { background: linear-gradient(90deg, var(--yellow), #ffdb7a); color: #0a120c; }
+  .funnel-step-conv {
+    color: var(--text-1); font-size: 14px; font-weight: 700;
+    text-align: right;
+  }
+  .funnel-step-conv.red { color: var(--red); }
+  .funnel-step-conv.green { color: var(--green); }
+  .funnel-step-conv.yellow { color: var(--yellow); }
+  .funnel-step-delta {
+    font-size: 11px; text-align: right;
+  }
+
+  /* TABLE-LIKE LIST */
+  .metric-table {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .metric-row {
+    display: grid; grid-template-columns: 1fr 100px 120px 100px;
+    padding: 12px 18px;
+    align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-row.head {
+    background: var(--bg-2); color: var(--text-3);
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  }
+  .metric-row-label { color: var(--text-1); font-size: 13px; }
+  .metric-row-label b { color: var(--text-1); font-weight: 600; }
+  .metric-row-val { font-weight: 700; color: var(--text-1); text-align: right; }
+  .metric-row-val.red { color: var(--red); }
+  .metric-row-val.yellow { color: var(--yellow); }
+  .metric-row-val.green { color: var(--green); }
+  .metric-row-bar {
+    height: 6px; background: var(--bg-3); border-radius: 3px; position: relative;
+  }
+  .metric-row-bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--green), var(--green-2));
+  }
+  .metric-row-bar-fill.red { background: linear-gradient(90deg, var(--red), #ff7b7b); }
+  .metric-row-bar-fill.yellow { background: linear-gradient(90deg, var(--yellow), #ffdb7a); }
+  .metric-row-delta { font-size: 12px; text-align: right; }
+  .metric-row-delta.up { color: var(--green); }
+  .metric-row-delta.down { color: var(--red); }
+
+  /* FEEDBACK BAR (согласен/не согласен) */
+  .feedback-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .feedback-label {
+    font-size: 13px; color: var(--text-2); flex: 1;
+  }
+  .feedback-btn {
+    padding: 8px 14px; border-radius: 8px;
+    background: var(--bg-2); color: var(--text-2);
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .feedback-btn:hover { background: var(--bg-3); color: var(--text-1); }
+  .feedback-btn.ok.active {
+    background: var(--green-bg-2); color: var(--green);
+    border-color: var(--green-border);
+  }
+  .feedback-btn.no.active {
+    background: var(--red-bg-2); color: var(--red);
+    border-color: var(--red-border);
+  }
+
+  /* KEY MOMENTS */
+  .moments {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 20px;
+  }
+  .moments h3 { margin-bottom: 12px; }
+  .moment {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px; border-radius: 8px;
+    cursor: pointer; transition: background 0.15s;
+    margin-bottom: 4px;
+  }
+  .moment:hover { background: var(--bg-2); }
+  .moment-time {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 8px; border-radius: 6px;
+    background: var(--bg-3); color: var(--text-1);
+    font-size: 12px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .moment-time:hover { background: var(--green); color: #0a120c; }
+  .moment-icon { font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+  .moment-body { flex: 1; }
+  .moment-text { font-size: 14px; color: var(--text-1); line-height: 1.4; }
+  .moment-reason { font-size: 12px; color: var(--text-2); margin-top: 3px; }
+
+  /* PLAYER */
+  .player {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .play-btn {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--green); color: #0a120c;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700;
+    box-shadow: var(--green-glow);
+    transition: transform 0.1s;
+  }
+  .play-btn:hover { transform: scale(1.05); }
+  .player-middle { flex: 1; min-width: 0; }
+  .player-time-row {
+    display: flex; justify-content: space-between;
+    color: var(--text-2); font-size: 12px; font-variant-numeric: tabular-nums;
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    position: relative; height: 8px;
+    background: var(--bg-3); border-radius: 4px;
+    cursor: pointer;
+  }
+  .progress-bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 12%; background: var(--green); border-radius: 4px;
+    pointer-events: none;
+  }
+  .progress-bar-handle {
+    position: absolute; left: 12%; top: -4px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 3px var(--bg-1), 0 0 8px var(--green);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .progress-marker {
+    position: absolute; top: -2px; bottom: -2px;
+    width: 4px; border-radius: 2px;
+    pointer-events: none;
+  }
+  .progress-marker.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .progress-marker.yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+
+  .player-controls { display: flex; gap: 6px; }
+  .skip-btn, .speed-btn {
+    padding: 7px 12px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    color: var(--text-2); font-size: 12px; font-weight: 600;
+  }
+  .skip-btn:hover, .speed-btn:hover { background: var(--bg-3); color: var(--text-1); }
+  .speed-btn.active { background: var(--green); color: #0a120c; border-color: var(--green); }
+
+  /* TRANSCRIPT */
+  .transcript {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .transcript-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+  .transcript-body {
+    padding: 16px 20px;
+    max-height: 500px; overflow-y: auto;
+  }
+  .line {
+    display: grid; grid-template-columns: 64px auto 1fr;
+    gap: 10px; padding: 6px 8px; border-radius: 6px;
+    align-items: baseline;
+    cursor: pointer;
+  }
+  .line:hover { background: var(--bg-2); }
+  .line.current { background: var(--green-bg-2); }
+  .line.problem-red { border-left: 2px solid var(--red); padding-left: 10px; background: var(--red-bg); }
+  .line.problem-yellow { border-left: 2px solid var(--yellow); padding-left: 10px; background: var(--yellow-bg); }
+  .line-time {
+    color: var(--text-3); font-size: 12px; font-variant-numeric: tabular-nums;
+    font-family: ui-monospace, monospace;
+  }
+  .line:hover .line-time { color: var(--green); }
+  .line.current .line-time { color: var(--green); font-weight: 600; }
+  .line-author {
+    font-size: 12px; font-weight: 600;
+  }
+  .line.mng .line-author { color: var(--green); }
+  .line.cli .line-author { color: var(--blue); }
+  .line-text { color: var(--text-1); font-size: 13px; line-height: 1.5; }
+  .line-text .highlight-red { color: var(--red); font-weight: 600; }
+  .line-tag {
+    display: inline-block; margin-left: 6px; padding: 1px 6px;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 4px; font-weight: 600;
+  }
+  .line-tag.red { background: var(--red-bg-2); color: var(--red); }
+  .line-tag.yellow { background: var(--yellow-bg-2); color: var(--yellow); }
+
+  /* TECH DETAILS (accordion) */
+  .tech-details {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; margin-bottom: 20px;
+  }
+  .tech-toggle {
+    width: 100%; padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text-2); font-size: 13px;
+  }
+  .tech-toggle:hover { color: var(--text-1); }
+  .tech-body {
+    display: none; padding: 0 20px 20px;
+  }
+  .tech-details.open .tech-body { display: block; }
+  .tech-details.open .tech-toggle-chev { transform: rotate(180deg); }
+  .rules-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; }
+  .rule-row {
+    background: var(--bg-1);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; gap: 10px;
+  }
+  .rule-name { font-size: 12px; color: var(--text-2); font-family: ui-monospace, monospace; }
+  .rule-status-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; letter-spacing: 0.04em;
+  }
+  .rule-status-badge.ok { background: var(--green-bg-2); color: var(--green); }
+  .rule-status-badge.fail { background: var(--red-bg-2); color: var(--red); }
+  .rule-status-badge.undef { background: var(--yellow-bg-2); color: var(--yellow); }
+
+  /* CLOSER PAGE */
+  .closer-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+  .closer-avatar {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--red-bg-2), var(--red-bg));
+    color: var(--red); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700;
+  }
+  .closer-info h1 { margin-bottom: 4px; }
+  .closer-info-sub { color: var(--text-2); font-size: 13px; }
+
+  /* PERSONAL (мягкая версия) */
+  .greeting {
+    font-size: 24px; font-weight: 700; margin-bottom: 8px;
+  }
+  .greeting-sub { color: var(--text-2); font-size: 13px; margin-bottom: 24px; }
+  .soft-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 16px;
+  }
+  .tip-card {
+    background: linear-gradient(135deg, var(--green-bg-2), var(--bg-1));
+    border: 1px solid var(--green-border);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--green-glow);
+  }
+  .tip-title { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 600; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 14px; padding: 0;
+    width: 520px; max-width: 90vw;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px; border-bottom: 1px solid var(--border);
+  }
+  .modal-head h2 { font-size: 16px; }
+  .modal-close { color: var(--text-3); font-size: 20px; line-height: 1; }
+  .modal-body { padding: 20px; }
+  .modal-foot {
+    display: flex; justify-content: flex-end; gap: 10px;
+    padding: 16px 20px; border-top: 1px solid var(--border);
+  }
+  .field { margin-bottom: 16px; }
+  .field-label {
+    font-size: 12px; color: var(--text-2); margin-bottom: 6px;
+    display: block; font-weight: 500;
+  }
+  .field-value { color: var(--text-1); font-size: 13px; }
+  .input, .textarea, .select {
+    width: 100%; padding: 9px 12px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    color: var(--text-1); font: inherit; font-size: 13px;
+    outline: none;
+  }
+  .input:focus, .textarea:focus, .select:focus { border-color: var(--green-border); }
+  .textarea { resize: vertical; min-height: 80px; }
+  .radio-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; font-size: 13px; color: var(--text-1); cursor: pointer; }
+  .radio-row input { accent-color: var(--green); }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; font-size: 13px; color: var(--text-1); cursor: pointer; }
+  .checkbox-row input { accent-color: var(--green); }
+
+  /* CALIBRATION PAGE */
+  .calib-head {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-bottom: 24px;
+  }
+  .calib-stat {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+  }
+  .calib-stat h3 { color: var(--text-3); margin-bottom: 10px; font-size: 11px; }
+  .calib-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; color: var(--text-2); font-size: 13px;
+  }
+  .calib-row b { color: var(--text-1); }
+  .dispute-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+    margin-bottom: 10px;
+  }
+  .dispute-head { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .dispute-id { color: var(--text-3); font-size: 12px; font-family: ui-monospace, monospace; }
+  .dispute-name { font-size: 14px; font-weight: 600; }
+  .dispute-diff {
+    display: grid; grid-template-columns: auto 1fr; gap: 4px 12px;
+    font-size: 12px; margin-bottom: 8px;
+  }
+  .dispute-diff-label { color: var(--text-3); }
+  .dispute-comment {
+    font-size: 13px; color: var(--text-1); font-style: italic;
+    padding: 8px 12px; background: var(--bg-2); border-radius: 8px;
+    border-left: 2px solid var(--yellow);
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="brand-logo">Д₀</div>
+      <div>
+        <div class="brand-name">ДоНуля</div>
+        <div class="brand-sub">AI Аудитор</div>
+      </div>
+    </div>
+
+    <div class="nav-section">Дашборд</div>
+    <div class="nav-item active" data-page="summary">
+      <span class="nav-icon">📊</span>Сводка РОПа
+    </div>
+    <div class="nav-item" data-page="call">
+      <span class="nav-icon">📞</span>Карточка звонка
+    </div>
+    <div class="nav-item" data-page="closer">
+      <span class="nav-icon">👤</span>Страница клоузера
+    </div>
+
+    <div class="nav-section">Личный</div>
+    <div class="nav-item" data-page="personal">
+      <span class="nav-icon">👋</span>Мой кабинет
+    </div>
+
+    <div class="nav-section">Управление</div>
+    <div class="nav-item" data-page="analytics">
+      <span class="nav-icon">📈</span>Аналитика
+    </div>
+
+    <div class="nav-section">Калибровка</div>
+    <div class="nav-item" data-page="calibration">
+      <span class="nav-icon">⚙️</span>Калибровка промпта
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <span>Дашборд</span><span>/</span><b class="js-crumb">Сводка РОПа</b>
+      <div class="topbar-right">
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">⚙</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="summary">Сводка</div>
+      <div class="tab" data-tab="call">Звонок</div>
+      <div class="tab" data-tab="closer">Клоузер</div>
+      <div class="tab" data-tab="personal">Мой кабинет</div>
+      <div class="tab" data-tab="analytics">Аналитика</div>
+      <div class="tab" data-tab="calibration">Калибровка</div>
+    </div>
+
+    <!-- ═══════════════ PAGE 1: СВОДКА РОПа ═══════════════ -->
+    <section class="page active" data-page-content="summary">
+      <div class="page-header">
+        <div>
+          <h1>Сегодня · 24 апреля</h1>
+          <div class="page-sub">РОП Скоробогатый · команда клоузеров · 18 встреч</div>
+        </div>
+        <div class="period-switch">
+          <div class="period active">День</div>
+          <div class="period">Неделя</div>
+          <div class="period">Месяц</div>
+        </div>
+      </div>
+
+      <!-- KPI (кликабельные, фильтруют ленту ниже) -->
+      <div class="kpi-stripe">
+        <div class="kpi red" onclick="kpiFilter('brak')" title="Показать только БРАК">
+          <div class="kpi-icon">🔴</div>
+          <div>
+            <div class="kpi-value">8</div>
+            <div class="kpi-label">БРАКов</div>
+          </div>
+        </div>
+        <div class="kpi green" onclick="kpiFilter('etalon')" title="Показать эталоны (ПРИНЯТО)">
+          <div class="kpi-icon">🟢</div>
+          <div>
+            <div class="kpi-value">3</div>
+            <div class="kpi-label">Эталона</div>
+          </div>
+        </div>
+        <div class="kpi gray" onclick="kpiFilter('all')" title="Все встречи">
+          <div class="kpi-icon">📞</div>
+          <div>
+            <div class="kpi-value">18</div>
+            <div class="kpi-label">Встреч всего</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- СВОДНЫЕ AI-МЕТРИКИ КОМАНДЫ -->
+      <div class="ai-metrics">
+        <div class="ai-metrics-head">
+          <h3>📊 AI-метрики команды</h3>
+          <span class="ai-metrics-period">за день · 18 встреч</span>
+        </div>
+        <div class="ai-metrics-grid">
+          <div class="ai-metric">
+            <div class="ai-metric-label">AI-балл Ø</div>
+            <div class="ai-metric-value yellow">17.2<small>/27</small></div>
+            <div class="ai-metric-delta down">▼ −0.3 vs вчера</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Конверсия</div>
+            <div class="ai-metric-value">22%</div>
+            <div class="ai-metric-delta down">▼ −4% vs пн</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Закрытий / встреча</div>
+            <div class="ai-metric-value red">1.2</div>
+            <div class="ai-metric-delta warn">⚠ норма ≥2</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Talk:Listen Ø</div>
+            <div class="ai-metric-value yellow">71%<small>/29%</small></div>
+            <div class="ai-metric-delta warn">⚠ монолог</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Запрещёнок</div>
+            <div class="ai-metric-value red">2</div>
+            <div class="ai-metric-delta down">Марченко · ОКК</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Лиды КВАЛ</div>
+            <div class="ai-metric-value green">82%</div>
+            <div class="ai-metric-delta up">▲ +2% vs неделя</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЛЕНТА (главный рабочий инструмент — первой) -->
+      <div class="section" id="feed-section">
+        <div class="list">
+          <div class="list-head">
+            <h2 id="feed-title">Лента всех встреч сегодня</h2>
+            <div class="list-head-right">
+              <select class="filter" id="feed-filter" onchange="applyFilter(this.value)">
+                <option value="all">Все</option>
+                <option value="brak">Только БРАК</option>
+                <option value="etalon">Только ПРИНЯТО</option>
+              </select>
+              <select class="filter"><option>Все клоузеры</option><option>Камран</option><option>Марченко</option><option>Ляшенко</option></select>
+            </div>
+          </div>
+          <!-- Фильтр-баннер: показывается когда применён фильтр -->
+          <div class="filter-banner" id="feed-banner">
+            <span class="filter-banner-label">Фильтр: <b id="feed-banner-label">—</b> <span id="feed-banner-count" style="color: var(--text-2); margin-left: 6px;"></span></span>
+            <button class="filter-banner-clear" onclick="applyFilter('all')">✕ Показать все</button>
+          </div>
+
+          <div class="list-row" data-kind="brak" onclick="switchTab('call')">
+            <div class="list-status red"></div>
+            <div class="list-time">20:51</div>
+            <div>
+              <div class="list-name">Марченко → Сергей Петров</div>
+              <div class="list-sub">долг 1.38М · РДГ</div>
+            </div>
+            <div class="list-duration">5:42</div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>запрещёнки</div>
+            <div class="list-arrow">›</div>
+          </div>
+
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">18:20</div>
+            <div>
+              <div class="list-name">Ляшенко → Альберт</div>
+              <div class="list-sub">долг 400к · списание</div>
+            </div>
+            <div class="list-duration">9:37</div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>0 закрытий</div>
+            <div class="list-arrow">›</div>
+          </div>
+
+          <div class="list-row" data-kind="brak">
+            <div class="list-status yellow"></div>
+            <div class="list-time">16:45</div>
+            <div>
+              <div class="list-name">Куделькин → Данил</div>
+              <div class="list-sub">долг 450к · РДГ</div>
+            </div>
+            <div class="list-duration">6:15</div>
+            <div class="list-reason"><b style="color:var(--yellow)">БРАК</b><br>не спросил</div>
+            <div class="list-arrow">›</div>
+          </div>
+
+          <div class="list-row" data-kind="etalon">
+            <div class="list-status green"></div>
+            <div class="list-time">15:30</div>
+            <div>
+              <div class="list-name">Камран → Ильгиз</div>
+              <div class="list-sub">долг 2М · РДГ · оплата в звонке</div>
+            </div>
+            <div class="list-duration">31:20</div>
+            <div class="list-reason"><b style="color:var(--green)">ПРИНЯТО</b><br>продажа</div>
+            <div class="list-arrow">›</div>
+          </div>
+
+          <div class="list-row" data-kind="other">
+            <div class="list-status yellow"></div>
+            <div class="list-time">14:05</div>
+            <div>
+              <div class="list-name">Лим → Юрий</div>
+              <div class="list-sub">долг 400к · РДГ</div>
+            </div>
+            <div class="list-duration">10:46</div>
+            <div class="list-reason"><b style="color:var(--yellow)">думает</b><br>перезвон пн</div>
+            <div class="list-arrow">›</div>
+          </div>
+
+          <div class="list-row" data-kind="etalon">
+            <div class="list-status green"></div>
+            <div class="list-time">12:30</div>
+            <div>
+              <div class="list-name">Петрова → Владимир</div>
+              <div class="list-sub">долг 1.5М · РДГ</div>
+            </div>
+            <div class="list-duration">22:10</div>
+            <div class="list-reason"><b style="color:var(--green)">ПРИНЯТО</b><br>договор</div>
+            <div class="list-arrow">›</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ТРЕБУЮТ РАЗБОРА -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="section-title-emoji">🚨</span>
+            <span>Требуют разбора</span>
+          </div>
+          <span class="section-count">3 критичных</span>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-title">Ляшенко · 4 БРАК подряд</div>
+          <div class="problem-reason">0 попыток закрытия, сам отговаривает клиента</div>
+          <div class="problem-meta">последний: #2730601 · Альберт · 12 мин назад</div>
+          <div class="problem-actions">
+            <button class="btn primary" onclick="switchTab('call')">Разбор встречи →</button>
+            <button class="btn" onclick="switchTab('closer')">Все звонки клоузера →</button>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-title">Марченко · запрещённые фразы</div>
+          <div class="problem-reason">«задним числом», «фиктивный чек» — штраф ОКК 1000₽</div>
+          <div class="problem-meta">#2730608 · Сергей Петров · 47 мин назад</div>
+          <div class="problem-actions">
+            <button class="btn primary" onclick="switchTab('call')">Разбор встречи →</button>
+            <button class="btn" onclick="openModal('send')">📨 Отправить клоузеру</button>
+          </div>
+        </div>
+
+        <div class="problem-card yellow">
+          <div class="problem-title">Куделькин · принимает «подумаю» без дожима</div>
+          <div class="problem-reason">5 из 7 звонков без повторной попытки закрытия</div>
+          <div class="problem-meta">последний: #2730545 · Данил · 2 часа назад</div>
+          <div class="problem-actions">
+            <button class="btn primary">Разбор встречи →</button>
+            <button class="btn">Все звонки →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЭТАЛОНЫ -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="section-title-emoji">✅</span>
+            <span>Эталоны для обучения</span>
+          </div>
+          <span class="section-count green">3 эталона</span>
+        </div>
+
+        <div class="problem-card green">
+          <div class="problem-title">Камран · 4 закрытия, оплата в звонке</div>
+          <div class="problem-reason">Показательный дожим после «я подумаю», все правила пройдены</div>
+          <div class="problem-meta">#2731234 · Ильгиз · 3 часа назад</div>
+          <div class="problem-actions">
+            <button class="btn primary">▶ Послушать</button>
+            <button class="btn">📣 Отправить команде</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ТОП ВОЗРАЖЕНИЙ ЗА НЕДЕЛЮ -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="section-title-emoji">💬</span>
+            <span>Топ возражений клиентов за неделю</span>
+          </div>
+          <span style="color: var(--text-3); font-size: 12px;">помогает готовить клоузеров к частым кейсам</span>
+        </div>
+        <div class="topbars-card">
+          <div class="topbar-row">
+            <div class="topbar-label">«Мне надо подумать» / «с мужем / женой посоветуюсь»</div>
+            <div class="topbar-track"><div class="topbar-fill red" style="width: 95%"></div></div>
+            <div class="topbar-count">38</div>
+          </div>
+          <div class="topbar-row">
+            <div class="topbar-label">«Дорого» / «нет сейчас денег»</div>
+            <div class="topbar-track"><div class="topbar-fill yellow" style="width: 55%"></div></div>
+            <div class="topbar-count">22</div>
+          </div>
+          <div class="topbar-row">
+            <div class="topbar-label">«Уже в другой компании»</div>
+            <div class="topbar-track"><div class="topbar-fill yellow" style="width: 38%"></div></div>
+            <div class="topbar-count">15</div>
+          </div>
+          <div class="topbar-row">
+            <div class="topbar-label">«А вы не мошенники?» / «нет доверия»</div>
+            <div class="topbar-track"><div class="topbar-fill" style="width: 30%"></div></div>
+            <div class="topbar-count">12</div>
+          </div>
+          <div class="topbar-row">
+            <div class="topbar-label">«Боюсь банкротства из-за работы»</div>
+            <div class="topbar-track"><div class="topbar-fill" style="width: 20%"></div></div>
+            <div class="topbar-count">8</div>
+          </div>
+          <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-2);">
+            💡 «Подумать» — топовое возражение. Прямая рекомендация: тренинг «правило 2 вопросов» для всех клоузеров.
+          </div>
+        </div>
+      </div>
+
+      <!-- НЕВЫПОЛНЕННЫЕ ОБЕЩАНИЯ -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="section-title-emoji">⏰</span>
+            <span>Невыполненные обещания клоузеров</span>
+          </div>
+          <span class="section-count">7 нарушено</span>
+        </div>
+        <div class="list">
+          <div class="list-row">
+            <div class="list-status red"></div>
+            <div class="list-time">24.04</div>
+            <div>
+              <div class="list-name">Ляшенко → Евгения</div>
+              <div class="list-sub">обещал перезвонить в 15:00 — звонка нет</div>
+            </div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color:var(--red);">3 часа опоздания</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row">
+            <div class="list-status red"></div>
+            <div class="list-time">23.04</div>
+            <div>
+              <div class="list-name">Марченко → Татьяна</div>
+              <div class="list-sub">обещала скинуть ссылку в MAX — не скинула</div>
+            </div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color:var(--red);">1 день</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row">
+            <div class="list-status yellow"></div>
+            <div class="list-time">22.04</div>
+            <div>
+              <div class="list-name">Куделькин → Данил</div>
+              <div class="list-sub">обещал отправить договор — отправил через 2 дня</div>
+            </div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color:var(--yellow);">выполнено с опозданием</div>
+            <div class="list-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 2: КАРТОЧКА ЗВОНКА ═══════════════ -->
+    <section class="page" data-page-content="call">
+      <a class="back-link" onclick="switchTab('summary'); return false;">← к сводке</a>
+
+      <h1 class="call-title" style="margin-top: 14px;">
+        Встреча #2730608 <small>· Марченко Светлана → Сергей Петров · 5:42</small>
+      </h1>
+
+      <!-- ВЕРДИКТ БОЛЬШОЙ -->
+      <div class="verdict-card">
+        <div class="verdict-top">
+          <div class="verdict-icon">✗</div>
+          <div>
+            <div class="verdict-big">БРАК</div>
+            <div style="color: var(--text-2); font-size: 13px;">AI-оценка · qa_closer v1.4.2</div>
+          </div>
+        </div>
+        <div class="verdict-text">
+          Клоузер использовала <b style="color:var(--red)">запрещённые фразы</b> («задним числом», «фиктивный чек») и <b style="color:var(--red)">не пыталась закрыть клиента</b> — 0 прямых попыток закрытия за всю встречу.
+        </div>
+        <div class="verdict-actions">
+          <button class="btn primary btn-wide" onclick="openModal('send')">📨 Отправить клоузеру на разбор</button>
+          <button class="btn btn-wide">📅 В разбор понедельника</button>
+          <button class="btn btn-wide">⚠ Отправить в ОКК</button>
+        </div>
+      </div>
+
+      <!-- FEEDBACK BAR (HITL калибровка) -->
+      <div class="feedback-bar">
+        <div class="feedback-label">💬 Оценка AI корректная?</div>
+        <button class="feedback-btn ok" onclick="setFeedback(this, 'ok')">✓ Согласен</button>
+        <button class="feedback-btn no" onclick="openModal('dispute')">✗ Не согласен</button>
+      </div>
+
+      <!-- КРАТКОЕ САММАРИ -->
+      <div class="summary-card">
+        <div class="summary-title">
+          <span style="font-size:18px">📝</span>
+          <h3>Краткое саммари</h3>
+        </div>
+        <div class="summary-text">
+          Клиент 57 лет, долг 1.38 млн. Жена Валентина пришла за мужа Сергея. Имущество: 2 машины, дом, доля в квартире. Муж не работает.
+          Клоузер корректно квалифицировала под РДГ (списание невозможно из-за имущества), озвучила расчёт 19&nbsp;600₽ × 60 мес. Но дважды использовала запрещённые фразы
+          («задним числом», «фиктивный чек»), на «мы подумаем» не спросила причину — клиент ушёл без конкретики. Встреча провалена.
+        </div>
+      </div>
+
+      <!-- МЕТРИКИ ДИАЛОГА -->
+      <div class="dialog-metrics">
+        <div class="dmetric">
+          <div class="dmetric-label">Баланс диалога</div>
+          <div class="dmetric-value">
+            <span class="red">Клоузер 71%</span> <small>/ Клиент 29%</small>
+          </div>
+          <div class="balance-bar">
+            <div class="left" style="width: 71%"></div>
+            <div class="right" style="width: 29%"></div>
+          </div>
+          <div class="dmetric-sub">⚠ монолог клоузера — норма 40-60%</div>
+        </div>
+
+        <div class="dmetric">
+          <div class="dmetric-label">Самая длинная реплика</div>
+          <div class="dmetric-value"><span class="red">54 сек</span></div>
+          <div class="dmetric-sub" style="cursor:pointer" onclick="jumpTo(154)">▶ перейти на 2:34</div>
+        </div>
+
+        <div class="dmetric">
+          <div class="dmetric-label">Слова-паразиты</div>
+          <div class="dmetric-value"><span class="yellow">23</span> <small>за 5:42</small></div>
+          <div class="dmetric-sub">«ну», «как бы», «короче»</div>
+        </div>
+      </div>
+
+      <!-- КЛЮЧЕВЫЕ МОМЕНТЫ -->
+      <div class="moments">
+        <h3>Ключевые моменты (3)</h3>
+
+        <div class="moment" onclick="jumpTo(154)">
+          <button class="moment-time">▶ 2:34</button>
+          <div class="moment-icon">🚨</div>
+          <div class="moment-body">
+            <div class="moment-text">«переписать авто задним числом»</div>
+            <div class="moment-reason">запрещённая фраза · штраф ОКК 1000₽</div>
+          </div>
+        </div>
+
+        <div class="moment" onclick="jumpTo(222)">
+          <button class="moment-time">▶ 3:42</button>
+          <div class="moment-icon">🚨</div>
+          <div class="moment-body">
+            <div class="moment-text">«формируем чек как будто есть деньги»</div>
+            <div class="moment-reason">запрещённая фраза · фиктивный чек</div>
+          </div>
+        </div>
+
+        <div class="moment" onclick="jumpTo(315)">
+          <button class="moment-time">▶ 5:15</button>
+          <div class="moment-icon">⚠</div>
+          <div class="moment-body">
+            <div class="moment-text">Клиент: «Мы подумаем»</div>
+            <div class="moment-reason">клоузер не спросила причину, приняла и попрощалась</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ПЛЕЕР -->
+      <div class="player">
+        <button class="play-btn" onclick="togglePlay()">▶</button>
+        <div class="player-middle">
+          <div class="player-time-row">
+            <span class="js-cur">1:18</span>
+            <span>/ 5:42</span>
+          </div>
+          <div class="progress-bar" onclick="seekBar(event)">
+            <div class="progress-bar-fill"></div>
+            <div class="progress-bar-handle"></div>
+            <!-- red markers on 2:34, 3:42, 5:15 -->
+            <div class="progress-marker red" style="left: 45%"></div>
+            <div class="progress-marker red" style="left: 65%"></div>
+            <div class="progress-marker yellow" style="left: 92%"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="skip-btn" onclick="skip(-10)">−10с</button>
+          <button class="skip-btn" onclick="skip(10)">+10с</button>
+          <button class="speed-btn active" onclick="setSpeed(this, 1)">1×</button>
+          <button class="speed-btn" onclick="setSpeed(this, 1.5)">1.5×</button>
+          <button class="speed-btn" onclick="setSpeed(this, 2)">2×</button>
+        </div>
+      </div>
+
+      <!-- ТРАНСКРИПТ -->
+      <div class="transcript">
+        <div class="transcript-head">
+          <h2>Транскрипт</h2>
+          <div style="color: var(--text-3); font-size: 12px;">Yandex SpeechKit · 847 слов</div>
+        </div>
+        <div class="transcript-body">
+          <div class="line mng" onclick="jumpTo(2)"><div class="line-time">0:02</div><div class="line-author">М</div><div class="line-text">Добрый день. Меня зовут Светлана, старший юрист компании ДоНуля. Валентина?</div></div>
+          <div class="line cli" onclick="jumpTo(12)"><div class="line-time">0:12</div><div class="line-author">К</div><div class="line-text">Да, я за мужа, Сергея. Долг 1.38 миллиона.</div></div>
+          <div class="line mng" onclick="jumpTo(28)"><div class="line-time">0:28</div><div class="line-author">М</div><div class="line-text">Понятно. Давайте разбираться. Сколько банков?</div></div>
+          <div class="line cli" onclick="jumpTo(32)"><div class="line-time">0:32</div><div class="line-author">К</div><div class="line-text">Сбер 1 млн + карта 180, Тинькофф карта 200. Муж не работает.</div></div>
+          <div class="line mng" onclick="jumpTo(95)"><div class="line-time">1:35</div><div class="line-author">М</div><div class="line-text">Так, много имущества. Значит только реструктуризация...</div></div>
+          <div class="line mng current" onclick="jumpTo(100)"><div class="line-time">1:40</div><div class="line-author">М</div><div class="line-text">Расчёт: 1.18 млн / 60 месяцев = 19 600 рублей в месяц</div></div>
+          <div class="line cli" onclick="jumpTo(135)"><div class="line-time">2:15</div><div class="line-author">К</div><div class="line-text">А что с машинами? Их заберут?</div></div>
+          <div class="line mng problem-red" onclick="jumpTo(154)">
+            <div class="line-time">2:34</div><div class="line-author">М</div>
+            <div class="line-text">...мы можем автомобили <span class="highlight-red">переписать ну как-то задним числом</span>...
+              <span class="line-tag red">🚨 запрещёнка</span>
+            </div>
+          </div>
+          <div class="line cli" onclick="jumpTo(180)"><div class="line-time">3:00</div><div class="line-author">К</div><div class="line-text">А как? У нас же деньги не заплачены...</div></div>
+          <div class="line mng problem-red" onclick="jumpTo(222)">
+            <div class="line-time">3:42</div><div class="line-author">М</div>
+            <div class="line-text">...мы же физически деньги не проводим, <span class="highlight-red">просто формируем чек что как будто есть деньги</span>...
+              <span class="line-tag red">🚨 запрещёнка</span>
+            </div>
+          </div>
+          <div class="line mng" onclick="jumpTo(270)"><div class="line-time">4:30</div><div class="line-author">М</div><div class="line-text">Стоимость услуги 140 тысяч, рассрочка до 10 месяцев по 14 тысяч...</div></div>
+          <div class="line cli problem-yellow" onclick="jumpTo(315)">
+            <div class="line-time">5:15</div><div class="line-author">К</div>
+            <div class="line-text">Хорошо, мы подумаем.
+              <span class="line-tag yellow">⚠ возражение</span>
+            </div>
+          </div>
+          <div class="line mng problem-yellow" onclick="jumpTo(322)">
+            <div class="line-time">5:22</div><div class="line-author">М</div>
+            <div class="line-text">Угу, скажите, Валентин, есть на телефоне MAX... [не спросила причину, приняла «подумаем»]
+            </div>
+          </div>
+          <div class="line mng" onclick="jumpTo(335)"><div class="line-time">5:35</div><div class="line-author">М</div><div class="line-text">Хорошо. Всего доброго, до свидания.</div></div>
+        </div>
+      </div>
+
+      <!-- ТЕХНИЧЕСКИЕ ДЕТАЛИ (accordion) -->
+      <div class="tech-details" id="tech">
+        <button class="tech-toggle" onclick="document.getElementById('tech').classList.toggle('open')">
+          <span>⚙ Технические детали AI-оценки</span>
+          <span class="tech-toggle-chev">˅</span>
+        </button>
+        <div class="tech-body">
+          <div style="color: var(--text-3); font-size: 12px; margin-bottom: 12px;">
+            qa_closer_v1.4.2 · YandexGPT 5.1 Pro · schema qa_closer_v1.4
+          </div>
+          <div class="rules-list">
+            <div class="rule-row"><div class="rule-name">closing_attempts</div><div class="rule-status-badge fail">ПРОВАЛЕН</div></div>
+            <div class="rule-row"><div class="rule-name">calculator_rdg</div><div class="rule-status-badge ok">ПРОЙДЕН</div></div>
+            <div class="rule-row"><div class="rule-name">value_demonstration</div><div class="rule-status-badge ok">ПРОЙДЕН</div></div>
+            <div class="rule-row"><div class="rule-name">existential_conditions_disclosed</div><div class="rule-status-badge ok">ПРОЙДЕН</div></div>
+            <div class="rule-row"><div class="rule-name">cause_probing_required</div><div class="rule-status-badge fail">ПРОВАЛЕН</div></div>
+            <div class="rule-row"><div class="rule-name">script_compliance</div><div class="rule-status-badge fail">ПРОВАЛЕН</div></div>
+            <div class="rule-row"><div class="rule-name">no_lying</div><div class="rule-status-badge fail">ПРОВАЛЕН (запрещёнки)</div></div>
+            <div class="rule-row"><div class="rule-name">emotional_tone</div><div class="rule-status-badge ok">ПРОЙДЕН</div></div>
+            <div class="rule-row"><div class="rule-name">anketa_critical_blocks</div><div class="rule-status-badge ok">ПРОЙДЕН</div></div>
+          </div>
+          <div style="margin-top: 14px; font-size: 12px; color: var(--text-3);">
+            closing_attempts_count: <b style="color:var(--red)">0</b> (норма ≥2) ·
+            reason_code: <b>BRAK_MULTIPLE</b> ·
+            scores: 2.0/5.5/4.0/2.5/0.0 = 14.0/27
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 3: СТРАНИЦА КЛОУЗЕРА ═══════════════ -->
+    <section class="page" data-page-content="closer">
+      <a class="back-link" onclick="switchTab('summary'); return false;">← к сводке</a>
+
+      <div class="closer-header" style="margin-top: 14px;">
+        <div class="closer-avatar">МС</div>
+        <div class="closer-info">
+          <h1>Марченко Светлана</h1>
+          <div class="closer-info-sub">старший юрист · 8 встреч за неделю</div>
+        </div>
+      </div>
+
+      <!-- KPI (кликабельные — фильтруют звонки ниже) -->
+      <div class="kpi-stripe">
+        <div class="kpi red" onclick="closerFilter('brak')" title="Показать только БРАК">
+          <div class="kpi-icon">🔴</div>
+          <div><div class="kpi-value">7</div><div class="kpi-label">БРАК за неделю</div></div>
+        </div>
+        <div class="kpi green" onclick="closerFilter('etalon')" title="Показать ПРИНЯТО">
+          <div class="kpi-icon">🟢</div>
+          <div><div class="kpi-value">1</div><div class="kpi-label">ПРИНЯТО</div></div>
+        </div>
+        <div class="kpi gray" onclick="closerFilter('all')" title="Все звонки">
+          <div class="kpi-icon">📊</div>
+          <div><div class="kpi-value">12%</div><div class="kpi-label">Конверсия (норма 30%)</div></div>
+        </div>
+      </div>
+
+      <!-- AI-МЕТРИКИ ПЕРСОНАЛЬНЫЕ -->
+      <div class="ai-metrics">
+        <div class="ai-metrics-head">
+          <h3>📊 AI-метрики по Марченко</h3>
+          <span class="ai-metrics-period">за неделю · 8 встреч</span>
+        </div>
+        <div class="ai-metrics-grid">
+          <div class="ai-metric">
+            <div class="ai-metric-label">AI-балл Ø</div>
+            <div class="ai-metric-value red">12.1<small>/27</small></div>
+            <div class="ai-metric-delta down">▼ −3.2 за месяц</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Закрытий / встреча</div>
+            <div class="ai-metric-value red">0.75</div>
+            <div class="ai-metric-delta warn">⚠ топ-25% = 2.3</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">% где спросил причину</div>
+            <div class="ai-metric-value red">25%</div>
+            <div class="ai-metric-delta warn">⚠ топ-25% = 80%</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Talk:Listen Ø</div>
+            <div class="ai-metric-value yellow">75%<small>/25%</small></div>
+            <div class="ai-metric-delta warn">⚠ монолог</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Запрещёнок</div>
+            <div class="ai-metric-value red">2</div>
+            <div class="ai-metric-delta down">штраф ОКК</div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-label">Место в команде</div>
+            <div class="ai-metric-value red">8<small>/9</small></div>
+            <div class="ai-metric-delta warn">нижние 15%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ГРАФИК AI-БАЛЛА ЗА 30 ДНЕЙ -->
+      <div class="chart-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 4px;">
+          <div>
+            <h3 style="color: var(--text-1); font-size: 14px; text-transform: none; letter-spacing: 0;">Динамика AI-балла</h3>
+            <div style="color: var(--text-2); font-size: 12px; margin-top: 2px;">последние 30 дней · средний за день</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 22px; font-weight: 700;">12.1 <small style="color:var(--text-2); font-weight:500">/27</small></div>
+            <div style="color: var(--red); font-size: 12px;">▼ −3.2 за месяц</div>
+          </div>
+        </div>
+        <div class="chart-days">
+          <div class="chart-col" style="height: 70%"></div>
+          <div class="chart-col" style="height: 68%"></div>
+          <div class="chart-col" style="height: 72%"></div>
+          <div class="chart-col mid" style="height: 60%"></div>
+          <div class="chart-col" style="height: 66%"></div>
+          <div class="chart-col" style="height: 70%"></div>
+          <div class="chart-col" style="height: 65%"></div>
+          <div class="chart-col mid" style="height: 58%"></div>
+          <div class="chart-col mid" style="height: 55%"></div>
+          <div class="chart-col mid" style="height: 60%"></div>
+          <div class="chart-col mid" style="height: 52%"></div>
+          <div class="chart-col mid" style="height: 48%"></div>
+          <div class="chart-col mid" style="height: 50%"></div>
+          <div class="chart-col low" style="height: 42%"></div>
+          <div class="chart-col mid" style="height: 46%"></div>
+          <div class="chart-col low" style="height: 38%"></div>
+          <div class="chart-col low" style="height: 35%"></div>
+          <div class="chart-col low" style="height: 30%"></div>
+          <div class="chart-col mid" style="height: 44%"></div>
+          <div class="chart-col low" style="height: 36%"></div>
+          <div class="chart-col low" style="height: 40%"></div>
+          <div class="chart-col low" style="height: 32%"></div>
+          <div class="chart-col low" style="height: 28%"></div>
+          <div class="chart-col low" style="height: 34%"></div>
+          <div class="chart-col low" style="height: 30%"></div>
+          <div class="chart-col low" style="height: 25%"></div>
+          <div class="chart-col low" style="height: 32%"></div>
+          <div class="chart-col low" style="height: 28%"></div>
+          <div class="chart-col low" style="height: 26%"></div>
+          <div class="chart-col low" style="height: 30%"></div>
+        </div>
+        <div class="chart-xlabels">
+          <span>25.03</span><span>01.04</span><span>08.04</span><span>15.04</span><span>22.04</span><span>сегодня</span>
+        </div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--yellow);">
+          ⚠ Тренд падающий — регресс длится 3-ю неделю. Нужен индивидуальный разбор с РОПом.
+        </div>
+      </div>
+
+      <!-- СРАВНЕНИЕ С КОМАНДОЙ -->
+      <div class="peer-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+          <div>
+            <h3 style="color: var(--text-1); font-size: 14px; text-transform: none; letter-spacing: 0;">Сравнение с командой</h3>
+            <div style="color: var(--text-2); font-size: 12px; margin-top: 2px;">🔴 — ты · 🟢 — топ-25% команды</div>
+          </div>
+        </div>
+
+        <div class="peer-row">
+          <div class="peer-label">Попыток закрытия на встречу</div>
+          <div class="peer-track">
+            <div class="peer-you" style="left: 30%"></div>
+            <div class="peer-top" style="left: 85%"></div>
+          </div>
+          <div class="peer-you-label">0.75</div>
+          <div class="peer-top-label">2.3</div>
+        </div>
+
+        <div class="peer-row">
+          <div class="peer-label">% где спрошена причина</div>
+          <div class="peer-track">
+            <div class="peer-you" style="left: 25%"></div>
+            <div class="peer-top" style="left: 80%"></div>
+          </div>
+          <div class="peer-you-label">25%</div>
+          <div class="peer-top-label">80%</div>
+        </div>
+
+        <div class="peer-row">
+          <div class="peer-label">Баланс диалога (% клоузера)</div>
+          <div class="peer-track">
+            <div class="peer-you" style="left: 80%"></div>
+            <div class="peer-top" style="left: 50%"></div>
+          </div>
+          <div class="peer-you-label">75%</div>
+          <div class="peer-top-label">50%</div>
+        </div>
+
+        <div class="peer-row">
+          <div class="peer-label">Конверсия в оплату</div>
+          <div class="peer-track">
+            <div class="peer-you" style="left: 20%"></div>
+            <div class="peer-top" style="left: 75%"></div>
+          </div>
+          <div class="peer-you-label">12%</div>
+          <div class="peer-top-label">42%</div>
+        </div>
+
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-2);">
+          📊 Ты в нижних 25% по всем 4 метрикам. Топ-25% делают в 2-3 раза больше попыток и говорят меньше.
+        </div>
+      </div>
+
+      <!-- ПРОБЛЕМЫ -->
+      <div class="soft-card">
+        <h3 style="margin-bottom: 12px;">Основные проблемы</h3>
+        <div class="calib-row"><span>0-1 закрытие на встречу</span><b>6 из 8</b></div>
+        <div class="calib-row"><span>Не спрашивает причину возражения</span><b>5 из 8</b></div>
+        <div class="calib-row"><span>Запрещённые фразы</span><b style="color:var(--red)">2 из 8</b></div>
+      </div>
+
+      <!-- РЕКОМЕНДАЦИЯ -->
+      <div class="tip-card">
+        <div class="tip-title">💡 Что делать</div>
+        <div style="color: var(--text-1); font-size: 13px; line-height: 1.6;">
+          Срочный разбор запрещённых фраз (ОКК уже оштрафовал).<br>
+          + Тренинг по технике закрытия — минимум 2 попытки «Готовы? Работаем?» до отпускания клиента.
+        </div>
+        <div style="margin-top: 14px;">
+          <button class="btn primary" onclick="openModal('send')">📨 Отправить клоузеру сводку</button>
+        </div>
+      </div>
+
+      <!-- ЗВОНКИ -->
+      <div class="section" id="closer-feed">
+        <div class="section-head">
+          <div class="section-title"><span class="section-title-emoji">📞</span><span id="closer-feed-title">Все звонки за неделю</span></div>
+        </div>
+        <div class="list">
+          <!-- Фильтр-баннер -->
+          <div class="filter-banner" id="closer-banner">
+            <span class="filter-banner-label">Фильтр: <b id="closer-banner-label">—</b> <span id="closer-banner-count" style="color: var(--text-2); margin-left: 6px;"></span></span>
+            <button class="filter-banner-clear" onclick="closerFilter('all')">✕ Показать все</button>
+          </div>
+          <div class="list-row" data-kind="brak" onclick="switchTab('call')">
+            <div class="list-status red"></div>
+            <div class="list-time">24.04</div>
+            <div><div class="list-name">Сергей Петров</div><div class="list-sub">встреча · 5:42</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>запрещёнки</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">24.04</div>
+            <div><div class="list-name">Татьяна Сидорова</div><div class="list-sub">встреча · 6:20</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>0 закрытий</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="etalon">
+            <div class="list-status green"></div>
+            <div class="list-time">23.04</div>
+            <div><div class="list-name">Галина Иванова</div><div class="list-sub">встреча · 14:30</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--green)">ПРИНЯТО</b><br>договор</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">23.04</div>
+            <div><div class="list-name">Александр П.</div><div class="list-sub">встреча · 7:10</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>не спросила</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">22.04</div>
+            <div><div class="list-name">Мария К.</div><div class="list-sub">встреча · 5:55</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>0 закрытий</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">22.04</div>
+            <div><div class="list-name">Андрей В.</div><div class="list-sub">встреча · 8:40</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>запрещёнка</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">21.04</div>
+            <div><div class="list-name">Ольга С.</div><div class="list-sub">встреча · 6:12</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>не спросила</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row" data-kind="brak">
+            <div class="list-status red"></div>
+            <div class="list-time">21.04</div>
+            <div><div class="list-name">Дмитрий М.</div><div class="list-sub">встреча · 4:58</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason"><b style="color:var(--red)">БРАК</b><br>не спросила</div>
+            <div class="list-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE 4: ЛИЧНЫЙ КАБИНЕТ (мягкая версия) ═══════════════ -->
+    <section class="page" data-page-content="personal">
+      <div class="greeting">Привет, Светлана 👋</div>
+      <div class="greeting-sub">твоя неделя · 8 встреч · 1 продажа</div>
+
+      <!-- KPI -->
+      <div class="kpi-stripe">
+        <div class="kpi gray">
+          <div class="kpi-icon">📞</div>
+          <div><div class="kpi-value">8</div><div class="kpi-label">Встреч</div></div>
+        </div>
+        <div class="kpi green">
+          <div class="kpi-icon">💰</div>
+          <div><div class="kpi-value">1</div><div class="kpi-label">Продажа</div></div>
+        </div>
+        <div class="kpi gray">
+          <div class="kpi-icon">📊</div>
+          <div><div class="kpi-value">12%</div><div class="kpi-label">Конверсия</div></div>
+        </div>
+      </div>
+
+      <!-- РЕКОМЕНДАЦИЯ -->
+      <div class="tip-card">
+        <div class="tip-title">💡 Рекомендация от AI</div>
+        <div style="color: var(--text-1); font-size: 14px; line-height: 1.6;">
+          В <b>6 из 8 встреч</b> ты принимала «подумаю» без вопроса о причине.<br><br>
+          Попробуй одну фразу после возражения:<br>
+          <b style="color: var(--green); font-size: 15px;">«Что именно вас останавливает?»</b><br><br>
+          Эта фраза помогает вскрыть настоящее возражение — часто это не «думаю», а конкретное опасение (цена, страх, доверие), которое можно отработать.
+        </div>
+      </div>
+
+      <!-- ЭТАЛОН -->
+      <div class="soft-card">
+        <h3 style="margin-bottom: 10px;">🎯 Эталон недели</h3>
+        <div style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Камран · встреча #2731234</div>
+        <div style="color: var(--text-2); font-size: 13px; margin-bottom: 12px;">Как он делает: 4 прямых закрытия + всегда спрашивает причину</div>
+        <button class="btn primary">▶ Послушать этот звонок</button>
+      </div>
+
+      <!-- СВОИ ВСТРЕЧИ (без резких формулировок) -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title"><span class="section-title-emoji">📋</span><span>Мои встречи</span></div>
+        </div>
+        <div class="list">
+          <div class="list-row">
+            <div class="list-status red"></div>
+            <div class="list-time">24.04</div>
+            <div><div class="list-name">Сергей Петров</div><div class="list-sub">долг 1.38М</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color: var(--yellow);">Обсудить с РОПом</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row">
+            <div class="list-status green"></div>
+            <div class="list-time">23.04</div>
+            <div><div class="list-name">Галина Иванова</div><div class="list-sub">долг 800к</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color: var(--green);">Отлично 🎉 договор</div>
+            <div class="list-arrow">›</div>
+          </div>
+          <div class="list-row">
+            <div class="list-status yellow"></div>
+            <div class="list-time">22.04</div>
+            <div><div class="list-name">Мария К.</div><div class="list-sub">долг 340к</div></div>
+            <div class="list-duration"></div>
+            <div class="list-reason" style="color: var(--yellow);">Можно лучше</div>
+            <div class="list-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PAGE: АНАЛИТИКА ═══════════════ -->
+    <section class="page" data-page-content="analytics">
+      <div class="page-header">
+        <div>
+          <h1>Аналитика · управленческие метрики</h1>
+          <div class="page-sub">Команда клоузеров · РОП Скоробогатый</div>
+        </div>
+        <div class="period-switch">
+          <div class="period">Неделя</div>
+          <div class="period active">Месяц</div>
+          <div class="period">Квартал</div>
+        </div>
+      </div>
+
+      <!-- ПОДВКЛАДКИ -->
+      <div class="subtabs">
+        <div class="subtab active" data-sub="sub-funnel">Воронка и конверсия</div>
+        <div class="subtab" data-sub="sub-money">Финансы и продажи</div>
+        <div class="subtab" data-sub="sub-loss">Потери и риски</div>
+        <div class="subtab" data-sub="sub-sla">SLA и касания</div>
+        <div class="subtab" data-sub="sub-script">Качество скрипта</div>
+      </div>
+
+      <!-- ═══ SUB 1: ВОРОНКА (от клоузера, начиная с передачи от охотника) ═══ -->
+      <div class="subpage active" data-subpage="sub-funnel">
+        <div style="margin-bottom: 16px; padding: 10px 14px; background: var(--bg-2); border-radius: 8px; border-left: 3px solid var(--green); color: var(--text-2); font-size: 12px;">
+          💡 Воронка клоузера начинается с клиента, уже оплатившего 99₽ у охотника. Конверсия «Лид → 99₽» — в дашборде охотников.
+        </div>
+
+        <div class="big-stats">
+          <div class="big-stat">
+            <div class="big-stat-label">Передано клоузерам</div>
+            <div class="big-stat-value">104</div>
+            <div class="big-stat-sub">оплатили 99₽ у охотников</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Встреч проведено</div>
+            <div class="big-stat-value">76</div>
+            <div class="big-stat-sub">73% от лида</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Продаж</div>
+            <div class="big-stat-value green">29</div>
+            <div class="big-stat-sub">28% от лида</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Сумма сделок</div>
+            <div class="big-stat-value">4.06 млн<small>₽</small></div>
+            <div class="big-stat-delta up">▲ +8% vs месяц</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">🎯</span><span>Воронка клоузера</span></div>
+            <span style="color: var(--text-3); font-size: 12px;">все проценты — от базы (104 переданных лида)</span>
+          </div>
+          <div class="funnel-vis">
+            <div class="funnel-step">
+              <div class="funnel-step-label">Лид клоузера</div>
+              <div class="funnel-step-track"><div class="funnel-step-fill" style="width: 100%">104 клиента (оплатили 99₽)</div></div>
+              <div class="funnel-step-conv">100%</div>
+              <div class="funnel-step-delta"></div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">→ Явка / дозвон</div>
+              <div class="funnel-step-track"><div class="funnel-step-fill" style="width: 87%">90 клиентов</div></div>
+              <div class="funnel-step-conv">87%<small style="color:var(--text-2);font-weight:500"> от лида</small></div>
+              <div class="funnel-step-delta" style="color: var(--text-3);">=</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">→ Встреча проведена</div>
+              <div class="funnel-step-track"><div class="funnel-step-fill yellow" style="width: 73%">76 встреч</div></div>
+              <div class="funnel-step-conv yellow">73%<small style="color:var(--text-2);font-weight:500"> от лида</small></div>
+              <div class="funnel-step-delta" style="color: var(--red);">▼ −4%</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">→ Предоплата (14к)</div>
+              <div class="funnel-step-track"><div class="funnel-step-fill yellow" style="width: 40%">42 предоплаты</div></div>
+              <div class="funnel-step-conv yellow">40%<small style="color:var(--text-2);font-weight:500"> от лида</small></div>
+              <div class="funnel-step-delta" style="color: var(--green);">▲ +3%</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">→ Продажа (договор)</div>
+              <div class="funnel-step-track"><div class="funnel-step-fill red" style="width: 28%">29 продаж</div></div>
+              <div class="funnel-step-conv red">28%<small style="color:var(--text-2);font-weight:500"> от лида</small></div>
+              <div class="funnel-step-delta" style="color: var(--red);">▼ −5%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">📊</span><span>Конверсия по этапам клоузера (детали)</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Метрика</div><div style="text-align:right">Значение</div><div>тренд vs прошлый мес</div><div style="text-align:right">Норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Передача → Явка</b><br><span style="color:var(--text-3);font-size:11px">клиент ответил на звонок клоузера</span></div>
+              <div class="metric-row-val">87%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:97%"></div></div>
+              <div class="metric-row-val">≥90%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Явка → Встреча</b><br><span style="color:var(--text-3);font-size:11px">довели до полноценной встречи</span></div>
+              <div class="metric-row-val yellow">84%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:88%"></div></div>
+              <div class="metric-row-val">≥95%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Встреча → Предоплата</b><br><span style="color:var(--text-3);font-size:11px">внёс 14к первого платежа</span></div>
+              <div class="metric-row-val yellow">55%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:73%"></div></div>
+              <div class="metric-row-val">≥75%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Предоплата → Продажа</b><br><span style="color:var(--text-3);font-size:11px">подписали договор</span></div>
+              <div class="metric-row-val">69%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:86%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Встреча → Продажа (прямая)</b><br><span style="color:var(--text-3);font-size:11px">общий показатель клоузера</span></div>
+              <div class="metric-row-val red">38%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:63%"></div></div>
+              <div class="metric-row-val">≥60%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Передача → Продажа (глобальная)</b><br><span style="color:var(--text-3);font-size:11px">от 99₽ до договора</span></div>
+              <div class="metric-row-val red">28%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:60%"></div></div>
+              <div class="metric-row-val">≥45%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SUB 2: ФИНАНСЫ ═══ -->
+      <div class="subpage" data-subpage="sub-money">
+        <div class="big-stats">
+          <div class="big-stat">
+            <div class="big-stat-label">Внесено клиентами (МП)</div>
+            <div class="big-stat-value green">4.06 млн<small>₽</small></div>
+            <div class="big-stat-delta up">▲ +8% vs месяц</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Средний чек</div>
+            <div class="big-stat-value">140к<small>₽</small></div>
+            <div class="big-stat-sub">29 продаж</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Предоплат</div>
+            <div class="big-stat-value">42</div>
+            <div class="big-stat-sub">из 76 встреч · 55%</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Доплат (после сделки)</div>
+            <div class="big-stat-value yellow">18</div>
+            <div class="big-stat-sub">62% от продаж</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">💰</span><span>Продажи и оплаты</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Показатель</div><div style="text-align:right">Кол-во</div><div>% / доля</div><div style="text-align:right">vs прошлый мес</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Получено от охотников</b><br><span style="color:var(--text-3);font-size:11px">клиенты с оплаченным 99₽</span></div>
+              <div class="metric-row-val">104</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">база клоузера</div>
+              <div class="metric-row-delta up">▲ +12</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Всего продаж</b></div>
+              <div class="metric-row-val green">29</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">38% от встреч</div>
+              <div class="metric-row-delta down">▼ −3 сделки</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Предоплат (внесли 14к)</b></div>
+              <div class="metric-row-val">42</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">55% от встреч</div>
+              <div class="metric-row-delta up">▲ +7</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Доплаты после сделки</b></div>
+              <div class="metric-row-val yellow">18</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">62% от продаж · 1.2 млн ₽</div>
+              <div class="metric-row-delta up">▲ +4</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Продаж с видео + аудио</b></div>
+              <div class="metric-row-val green">24</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">83% от продаж</div>
+              <div class="metric-row-delta up">▲ +6%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Продаж только аудио</b></div>
+              <div class="metric-row-val">5</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">17% от продаж</div>
+              <div class="metric-row-delta down">▼ −2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SUB 3: ПОТЕРИ И РИСКИ ═══ -->
+      <div class="subpage" data-subpage="sub-loss">
+        <div class="big-stats">
+          <div class="big-stat">
+            <div class="big-stat-label">Расторгов клиентами</div>
+            <div class="big-stat-value red">7</div>
+            <div class="big-stat-sub">24% от продаж · норма ≤10%</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Красная зона</div>
+            <div class="big-stat-value red">11</div>
+            <div class="big-stat-sub">предрасторжение · требует разбора</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Расхождений анкеты</div>
+            <div class="big-stat-value yellow">19</div>
+            <div class="big-stat-sub">25% от встреч</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Слитых лидов</div>
+            <div class="big-stat-value red">47</div>
+            <div class="big-stat-sub">клоузером за месяц</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">💸</span><span>Потери по этапам</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Тип потери</div><div style="text-align:right">Кол-во</div><div>% от базы</div><div style="text-align:right">Норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Расторги клиентов</b><br><span style="color:var(--text-3);font-size:11px">от сделки до суда</span></div>
+              <div class="metric-row-val red">7</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:80%"></div></div>
+              <div class="metric-row-val">≤10% (2-3)</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Красная зона</b><br><span style="color:var(--text-3);font-size:11px">«говно передал в работу МОС»</span></div>
+              <div class="metric-row-val red">11</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:85%"></div></div>
+              <div class="metric-row-val">≤5% (1-2)</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Расхождения анкеты</b><br><span style="color:var(--text-3);font-size:11px">МПП заполнил не так как реально</span></div>
+              <div class="metric-row-val yellow">19</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:65%"></div></div>
+              <div class="metric-row-val">≤15%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Слитые лиды</b><br><span style="color:var(--text-3);font-size:11px">клоузер закрыл без дожима</span></div>
+              <div class="metric-row-val red">47</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:90%"></div></div>
+              <div class="metric-row-val">≤20</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Неквалов от охотника</b><br><span style="color:var(--text-3);font-size:11px">клиент объективно не подходит</span></div>
+              <div class="metric-row-val">14</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:18%"></div></div>
+              <div class="metric-row-val">≤18%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">🔥</span><span>Сделки в красной зоне</span></div>
+            <span class="section-count">11 требуют разбора</span>
+          </div>
+          <div class="list">
+            <div class="list-row">
+              <div class="list-status red"></div>
+              <div class="list-time">#2634</div>
+              <div><div class="list-name">Сделка Ермакова</div><div class="list-sub">клоузер Марченко · МОС обнаружил расхождение имущества</div></div>
+              <div class="list-duration"></div>
+              <div class="list-reason" style="color:var(--red)">пред-расторг</div>
+              <div class="list-arrow">›</div>
+            </div>
+            <div class="list-row">
+              <div class="list-status red"></div>
+              <div class="list-time">#2635</div>
+              <div><div class="list-name">Сделка Титова</div><div class="list-sub">клоузер Ляшенко · анкета не совпадает с реальностью</div></div>
+              <div class="list-duration"></div>
+              <div class="list-reason" style="color:var(--red)">пред-расторг</div>
+              <div class="list-arrow">›</div>
+            </div>
+            <div class="list-row">
+              <div class="list-status yellow"></div>
+              <div class="list-time">#2641</div>
+              <div><div class="list-name">Сделка Сергеева</div><div class="list-sub">клоузер Куделькин · клиент передумал после 1-го суда</div></div>
+              <div class="list-duration"></div>
+              <div class="list-reason" style="color:var(--yellow)">риск</div>
+              <div class="list-arrow">›</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SUB 4: SLA И КАСАНИЯ ═══ -->
+      <div class="subpage" data-subpage="sub-sla">
+        <div style="margin-bottom: 16px; padding: 10px 14px; background: var(--bg-2); border-radius: 8px; border-left: 3px solid var(--green); color: var(--text-2); font-size: 12px;">
+          💡 SLA клоузера — время от оплаты клиентом 99₽ до первого звонка клоузеру. Клиент «горячий» ~30 мин после оплаты.
+        </div>
+
+        <div class="big-stats">
+          <div class="big-stat">
+            <div class="big-stat-label">1-й звонок &lt; 15 мин</div>
+            <div class="big-stat-value green">34%</div>
+            <div class="big-stat-sub">35 клиентов из 104 · норма ≥40%</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">1-й звонок &lt; 30 мин</div>
+            <div class="big-stat-value yellow">58%</div>
+            <div class="big-stat-sub">60 клиентов · норма ≥70%</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Средняя задержка</div>
+            <div class="big-stat-value yellow">38<small> мин</small></div>
+            <div class="big-stat-delta down">▼ −12 мин vs неделя</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Не дозвонились</div>
+            <div class="big-stat-value red">14</div>
+            <div class="big-stat-sub">13% переданных · клиент остыл</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">⏱</span><span>SLA первого звонка клоузера</span></div>
+            <span style="color: var(--text-3); font-size: 12px;">от оплаты 99₽ → до первого звонка клоузером</span>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Интервал до 1-го звонка</div><div style="text-align:right">Кол-во</div><div>Доля</div><div style="text-align:right">Норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">&lt; 15 мин <span style="color:var(--green);font-size:11px">(оптимум)</span></div>
+              <div class="metric-row-val green">35</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:34%"></div></div>
+              <div class="metric-row-val">≥40%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">15 – 30 мин <span style="color:var(--yellow);font-size:11px">(приемлемо)</span></div>
+              <div class="metric-row-val">25</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:24%"></div></div>
+              <div class="metric-row-val">≤30%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">30 мин – 1 час <span style="color:var(--yellow);font-size:11px">(риск остывания)</span></div>
+              <div class="metric-row-val yellow">18</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:17%"></div></div>
+              <div class="metric-row-val">≤20%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">1 – 3 часа <span style="color:var(--red);font-size:11px">(плохо)</span></div>
+              <div class="metric-row-val red">12</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:12%"></div></div>
+              <div class="metric-row-val">≤10%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">&gt; 3 часов <span style="color:var(--red);font-size:11px">(клиент остыл)</span></div>
+              <div class="metric-row-val red">14</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:13%"></div></div>
+              <div class="metric-row-val">0</div>
+            </div>
+          </div>
+          <div style="margin-top: 12px; padding: 10px 12px; background: var(--red-bg); border-radius: 8px; color: var(--text-1); font-size: 12px;">
+            ⚠ 14 клиентов получили 1-й звонок &gt;3 часов — риск что они «остыли» за это время (закрыли тему мысленно, ушли в другую компанию). Требует разбора распределения нагрузки.
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">👤</span><span>SLA по клоузерам</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Клоузер</div><div style="text-align:right">1-й звонок Ø</div><div>% &lt; 30 мин</div><div style="text-align:right">не дозвонились</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Камран Алиев</b></div>
+              <div class="metric-row-val green">12 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:92%"></div></div>
+              <div class="metric-row-val green">0</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Петрова Дарья</b></div>
+              <div class="metric-row-val">22 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:75%"></div></div>
+              <div class="metric-row-val">1</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Лим Елена</b></div>
+              <div class="metric-row-val yellow">35 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:55%"></div></div>
+              <div class="metric-row-val">2</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Куделькин Егор</b></div>
+              <div class="metric-row-val yellow">48 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:45%"></div></div>
+              <div class="metric-row-val">3</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Марченко Светлана</b></div>
+              <div class="metric-row-val red">78 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:30%"></div></div>
+              <div class="metric-row-val red">4</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Ляшенко Андрей</b></div>
+              <div class="metric-row-val red">115 мин</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:18%"></div></div>
+              <div class="metric-row-val red">4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">📞</span><span>Касания с клиентами</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Тип касания</div><div style="text-align:right">Кол-во</div><div>% от общего</div><div style="text-align:right">Норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Звонки</b> (реальные, записанные)</div>
+              <div class="metric-row-val green">189</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">55%</div>
+              <div class="metric-row-val">≥60%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>СМС / MAX / Telegram</b></div>
+              <div class="metric-row-val">95</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">28%</div>
+              <div class="metric-row-val">норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>«Передвинул задачу»</b> (без контакта)</div>
+              <div class="metric-row-val red">58</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">17%</div>
+              <div class="metric-row-val">≤5%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Пропущенные задачи</b> (просрочка &gt; 1 день)</div>
+              <div class="metric-row-val red">23</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">—</div>
+              <div class="metric-row-val">0</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>НДЗ без звонка</b></div>
+              <div class="metric-row-val red">14</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">—</div>
+              <div class="metric-row-val">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SUB 5: КАЧЕСТВО СКРИПТА ═══ -->
+      <div class="subpage" data-subpage="sub-script">
+        <div class="big-stats">
+          <div class="big-stat">
+            <div class="big-stat-label">Структура скрипта</div>
+            <div class="big-stat-value yellow">74%</div>
+            <div class="big-stat-sub">средн. соблюдение 7 блоков</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Использование SPIN</div>
+            <div class="big-stat-value red">48%</div>
+            <div class="big-stat-sub">норма ≥70%</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Передача в МОС</div>
+            <div class="big-stat-value yellow">62%</div>
+            <div class="big-stat-sub">правильная структура</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-label">Попыток дожима Ø</div>
+            <div class="big-stat-value red">1.2</div>
+            <div class="big-stat-sub">норма ≥2</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">📋</span><span>Соблюдение скрипта МПП (по блокам)</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Блок скрипта</div><div style="text-align:right">% выполнения</div><div>визуализация</div><div style="text-align:right">норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">1. Приветствие + представление</div>
+              <div class="metric-row-val green">94%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:94%"></div></div>
+              <div class="metric-row-val">≥95%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">2. Анкета (14 блоков)</div>
+              <div class="metric-row-val yellow">78%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:78%"></div></div>
+              <div class="metric-row-val">≥90%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">3. Резюме ситуации + давление на боль</div>
+              <div class="metric-row-val yellow">65%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:65%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">4. Презентация + калькулятор</div>
+              <div class="metric-row-val green">82%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:82%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">5. О компании</div>
+              <div class="metric-row-val green">88%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:88%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">6. Презентация цены</div>
+              <div class="metric-row-val">79%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:79%"></div></div>
+              <div class="metric-row-val">≥85%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">7. Закрытие (≥2 попытки)</div>
+              <div class="metric-row-val red">34%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:34%"></div></div>
+              <div class="metric-row-val">≥75%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">🎯</span><span>Техника SPIN (ситуация / проблема / извлечение / направление)</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Этап SPIN</div><div style="text-align:right">% использования</div><div>визуализация</div><div style="text-align:right">норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>S — Situation</b> · ситуационные вопросы</div>
+              <div class="metric-row-val green">85%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:85%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>P — Problem</b> · проблемные вопросы</div>
+              <div class="metric-row-val yellow">62%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:62%"></div></div>
+              <div class="metric-row-val">≥75%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>I — Implication</b> · извлекающие вопросы</div>
+              <div class="metric-row-val red">38%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:38%"></div></div>
+              <div class="metric-row-val">≥70%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>N — Need-payoff</b> · направляющие вопросы</div>
+              <div class="metric-row-val red">29%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:29%"></div></div>
+              <div class="metric-row-val">≥60%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">🔁</span><span>Отработка возражений</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Метрика</div><div style="text-align:right">Значение</div><div>визуализация</div><div style="text-align:right">норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Всего возражений за месяц</b></div>
+              <div class="metric-row-val">97</div>
+              <div class="metric-row-label" style="color:var(--text-2);font-size:12px">1.27 на встречу в ср.</div>
+              <div class="metric-row-val">—</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Отработано</b> (≥1 попытка)</div>
+              <div class="metric-row-val yellow">58</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:60%"></div></div>
+              <div class="metric-row-val">≥80%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Отработано до конца</b> (≥2 попытки + причина)</div>
+              <div class="metric-row-val red">23</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:24%"></div></div>
+              <div class="metric-row-val">≥50%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label"><b>Слитых после возражения</b> (0 попыток)</div>
+              <div class="metric-row-val red">39</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:40%"></div></div>
+              <div class="metric-row-val">≤10%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title"><span class="section-title-emoji">🤝</span><span>Передача клиента в МОС</span></div>
+          </div>
+          <div class="metric-table">
+            <div class="metric-row head">
+              <div>Блок передачи</div><div style="text-align:right">% выполнения</div><div>визуализация</div><div style="text-align:right">норма</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">Представление МОС клиенту</div>
+              <div class="metric-row-val">72%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill" style="width:72%"></div></div>
+              <div class="metric-row-val">≥90%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">Резюме договорённостей</div>
+              <div class="metric-row-val yellow">58%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:58%"></div></div>
+              <div class="metric-row-val">≥85%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">Следующие шаги озвучены</div>
+              <div class="metric-row-val yellow">66%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill yellow" style="width:66%"></div></div>
+              <div class="metric-row-val">≥90%</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-row-label">Анкета передана без расхождений</div>
+              <div class="metric-row-val red">51%</div>
+              <div class="metric-row-bar"><div class="metric-row-bar-fill red" style="width:51%"></div></div>
+              <div class="metric-row-val">≥85%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════ PAGE 5: КАЛИБРОВКА ПРОМПТА ═══════════════ -->
+    <section class="page" data-page-content="calibration">
+      <div class="page-header">
+        <div>
+          <h1>Калибровка промпта</h1>
+          <div class="page-sub">qa_closer v1.4.2 · YandexGPT 5.1 Pro · для директора + ОКК</div>
+        </div>
+        <div>
+          <button class="btn primary">📥 Экспорт CSV для обновления</button>
+        </div>
+      </div>
+
+      <div class="calib-head">
+        <div class="calib-stat">
+          <h3>Статистика за неделю</h3>
+          <div class="calib-row"><span>Всего оценок AI</span><b>134</b></div>
+          <div class="calib-row"><span>Disputes от РОПов</span><b style="color:var(--yellow)">12 (9%)</b></div>
+          <div class="calib-row"><span>Эталонов помечено</span><b style="color:var(--green)">8</b></div>
+          <div class="calib-row"><span>Согласий</span><b>114 (85%)</b></div>
+        </div>
+
+        <div class="calib-stat">
+          <h3>Типы disputes</h3>
+          <div class="calib-row"><span>«AI слишком строг»</span><b>8</b></div>
+          <div class="calib-row"><span>«Причина неверная»</span><b>3</b></div>
+          <div class="calib-row"><span>«Упущен момент»</span><b>1</b></div>
+          <div class="calib-row"><span>«False positive»</span><b>0</b></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title"><span class="section-title-emoji">⚖️</span><span>Проблемные правила</span></div>
+          <span class="section-count">3 правила</span>
+        </div>
+
+        <div class="problem-card yellow">
+          <div class="problem-title">cause_probing_required · 5 disputes</div>
+          <div class="problem-reason">РОПы часто считают что AI слишком строго: клоузер мог не прямо «спросить причину», но вывел её из контекста</div>
+          <div class="problem-actions">
+            <button class="btn primary">Посмотреть disputes →</button>
+            <button class="btn">Предложить правку промпта</button>
+          </div>
+        </div>
+
+        <div class="problem-card yellow">
+          <div class="problem-title">anketa_critical_blocks · 3 disputes</div>
+          <div class="problem-reason">Гибридная логика v1.4.2 ок, но РОПы просят ещё мягче при этичных отказах</div>
+          <div class="problem-actions">
+            <button class="btn primary">Посмотреть disputes →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title"><span class="section-title-emoji">📋</span><span>Disputes на разбор</span></div>
+          <span class="section-count">4 не разобраны</span>
+        </div>
+
+        <div class="dispute-card">
+          <div class="dispute-head">
+            <div>
+              <div class="dispute-name">Марченко → Сергей</div>
+              <div class="dispute-id">#2730608 · 47 мин назад · РОП Скоробогатый</div>
+            </div>
+            <button class="btn sm">Открыть звонок →</button>
+          </div>
+          <div class="dispute-diff">
+            <div class="dispute-diff-label">AI:</div>
+            <div><b style="color:var(--red)">БРАК</b> — BRAK_MULTIPLE (запрещёнки)</div>
+            <div class="dispute-diff-label">РОП:</div>
+            <div><b style="color:var(--red)">БРАК</b>, но причина — 0 закрытий</div>
+          </div>
+          <div class="dispute-comment">
+            «Фразы «задним числом» были про юр.стратегию, не про обман суда. Главная проблема — 0 попыток закрытия. Штрафовать по closing_attempts.»
+          </div>
+        </div>
+
+        <div class="dispute-card">
+          <div class="dispute-head">
+            <div>
+              <div class="dispute-name">Ляшенко → Альберт</div>
+              <div class="dispute-id">#2730601 · 2 часа назад · РОП Скоробогатый</div>
+            </div>
+            <button class="btn sm">Открыть звонок →</button>
+          </div>
+          <div class="dispute-diff">
+            <div class="dispute-diff-label">AI:</div>
+            <div><b style="color:var(--red)">БРАК</b> — BRAK_SELF_TALKED_OUT</div>
+            <div class="dispute-diff-label">РОП:</div>
+            <div><b style="color:var(--green)">ПРИНЯТО</b> — ACCEPTED_ETHICAL_JURIDICAL</div>
+          </div>
+          <div class="dispute-comment">
+            «Юр.блок реальный: сделка 2023 года + авто не с учёта. Клиент объективно не подходит под БФЛ. Клоузер корректно отказал. Пометить как эталон этичного отказа.»
+          </div>
+        </div>
+
+        <div class="dispute-card">
+          <div class="dispute-head">
+            <div>
+              <div class="dispute-name">Куделькин → Данил</div>
+              <div class="dispute-id">#2730545 · вчера · РОП Скоробогатый</div>
+            </div>
+            <button class="btn sm">Открыть звонок →</button>
+          </div>
+          <div class="dispute-diff">
+            <div class="dispute-diff-label">AI:</div>
+            <div><b style="color:var(--red)">БРАК</b> — cause_probing_required</div>
+            <div class="dispute-diff-label">РОП:</div>
+            <div><b style="color:var(--red)">БРАК</b> — но cause_probing был</div>
+          </div>
+          <div class="dispute-comment">
+            «Клоузер спросил «что вас останавливает?» в 4:12, AI это упустил. Остальное правильно — closing_attempts действительно 1.»
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ═══════════════ MODAL: ОТПРАВИТЬ КЛОУЗЕРУ ═══════════════ -->
+<div class="modal-overlay" id="modal-send">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>📨 Отправить разбор клоузеру</h2>
+      <button class="modal-close" onclick="closeModal('send')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <div class="field-label">Кому</div>
+        <div class="field-value"><b>Марченко Светлана</b></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Канал</div>
+        <label class="radio-row"><input type="radio" name="channel" checked> MAX</label>
+        <label class="radio-row"><input type="radio" name="channel"> Telegram</label>
+        <label class="radio-row"><input type="radio" name="channel"> SMS</label>
+      </div>
+      <div class="field">
+        <div class="field-label">Сообщение (можно отредактировать)</div>
+        <textarea class="textarea" rows="5">Светлана, разбери встречу #2730608 с Сергеем. AI заметил запрещённые фразы и 0 попыток закрытия.
+
+Детали: donulya-ai.ru/r/abc123xyz
+
+Обсудим в понедельник в 10:00.</textarea>
+      </div>
+      <label class="checkbox-row"><input type="checkbox" checked> Включить ссылку на страницу разбора</label>
+      <label class="checkbox-row"><input type="checkbox"> Добавить в план разборов понедельника</label>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('send')">Отмена</button>
+      <button class="btn primary" onclick="closeModal('send')">📨 Отправить</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: НЕ СОГЛАСЕН С AI (DISPUTE) ═══════════════ -->
+<div class="modal-overlay" id="modal-dispute">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>✗ Не согласен с оценкой AI</h2>
+      <button class="modal-close" onclick="closeModal('dispute')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <div class="field-label">AI оценил</div>
+        <div class="field-value">🔴 <b>БРАК</b> · BRAK_MULTIPLE (запрещёнки)</div>
+      </div>
+      <div class="field">
+        <div class="field-label">По-моему (выбери категорию)</div>
+        <label class="radio-row"><input type="radio" name="dispute-type"> Должно быть ПРИНЯТО</label>
+        <label class="radio-row"><input type="radio" name="dispute-type" checked> БРАК верно, но причина другая</label>
+        <label class="radio-row"><input type="radio" name="dispute-type"> Вердикт ок, AI упустил важный момент</label>
+        <label class="radio-row"><input type="radio" name="dispute-type"> AI нашёл проблему, где её нет (false positive)</label>
+      </div>
+      <div class="field">
+        <div class="field-label">Правильная причина (если знаешь)</div>
+        <select class="select">
+          <option>BRAK_NO_CLOSING · не было попыток закрытия</option>
+          <option>BRAK_SELF_TALKED_OUT · сам отговорил клиента</option>
+          <option>BRAK_NO_CAUSE_PROBING · не спросил причину</option>
+          <option>ACCEPTED_ETHICAL_JURIDICAL · этичный юр.отказ</option>
+          <option>ACCEPTED_ETHICAL_ECONOMIC · этичный эконом.отказ</option>
+          <option>другое — опишу в комментарии</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-label">Комментарий для калибровки промпта</div>
+        <textarea class="textarea" rows="4" placeholder="Объясни что AI упустил или где ошибся. Это пойдёт в базу для улучшения промпта."></textarea>
+      </div>
+      <label class="checkbox-row"><input type="checkbox"> 🎯 Пометить как эталон для обучения промпта</label>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('dispute')">Отмена</button>
+      <button class="btn primary" onclick="saveDispute()">📋 Сохранить для калибровки</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========== TABS ==========
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item[data-page]').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.tab[data-tab="${name}"]`)?.classList.add('active');
+    document.querySelector(`.nav-item[data-page="${name}"]`)?.classList.add('active');
+    document.querySelector(`.page[data-page-content="${name}"]`)?.classList.add('active');
+    const titles = {
+      'summary': 'Сводка РОПа',
+      'call': 'Карточка звонка',
+      'closer': 'Страница клоузера',
+      'personal': 'Мой кабинет',
+      'analytics': 'Аналитика',
+      'calibration': 'Калибровка промпта'
+    };
+    document.querySelector('.js-crumb').textContent = titles[name] || '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+  document.querySelectorAll('.nav-item[data-page]').forEach(nav => nav.addEventListener('click', () => switchTab(nav.dataset.page)));
+
+  // ========== SUBTABS (внутри Аналитики) ==========
+  document.querySelectorAll('.subtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const name = tab.dataset.sub;
+      document.querySelectorAll('.subtab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.subpage[data-subpage="${name}"]`)?.classList.add('active');
+    });
+  });
+
+  // ========== KPI CLICKABLE FILTER ==========
+  function kpiFilter(kind) {
+    // переключить значение фильтра в ленте
+    const sel = document.getElementById('feed-filter');
+    if (sel) { sel.value = kind; applyFilter(kind); }
+    // скроллить к ленте
+    const section = document.getElementById('feed-section');
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function applyFilter(kind) {
+    const rows = document.querySelectorAll('#feed-section .list-row');
+    let visible = 0;
+    rows.forEach(r => {
+      const k = r.dataset.kind;
+      const show = kind === 'all' || k === kind;
+      r.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const total = rows.length;
+    const title = document.getElementById('feed-title');
+    if (title) {
+      const titles = {
+        'all': 'Лента всех встреч сегодня',
+        'brak': '🔴 Только БРАКи за сегодня',
+        'etalon': '🟢 Эталоны (ПРИНЯТО) за сегодня'
+      };
+      title.textContent = titles[kind] || 'Лента';
+    }
+    // синхронизация select
+    const sel = document.getElementById('feed-filter');
+    if (sel) sel.value = kind;
+    // баннер
+    const banner = document.getElementById('feed-banner');
+    const label = document.getElementById('feed-banner-label');
+    const count = document.getElementById('feed-banner-count');
+    if (banner && label && count) {
+      banner.classList.remove('active', 'red', 'yellow');
+      if (kind !== 'all') {
+        banner.classList.add('active');
+        if (kind === 'brak') banner.classList.add('red');
+        if (kind === 'etalon') banner.classList.add('yellow');
+        const names = { 'brak': 'Только БРАКи', 'etalon': 'Только ПРИНЯТО' };
+        label.textContent = names[kind] || kind;
+        count.textContent = `· ${visible} из ${total}`;
+      }
+    }
+  }
+
+  function closerFilter(kind) {
+    const rows = document.querySelectorAll('#closer-feed .list-row');
+    let visible = 0;
+    rows.forEach(r => {
+      const k = r.dataset.kind;
+      const show = kind === 'all' || k === kind;
+      r.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const total = rows.length;
+    const title = document.getElementById('closer-feed-title');
+    if (title) {
+      const titles = {
+        'all': 'Все звонки за неделю',
+        'brak': '🔴 Только БРАКи за неделю',
+        'etalon': '🟢 Только ПРИНЯТО за неделю'
+      };
+      title.textContent = titles[kind] || 'Звонки';
+    }
+    // баннер
+    const banner = document.getElementById('closer-banner');
+    const label = document.getElementById('closer-banner-label');
+    const count = document.getElementById('closer-banner-count');
+    if (banner && label && count) {
+      banner.classList.remove('active', 'red', 'yellow');
+      if (kind !== 'all') {
+        banner.classList.add('active');
+        if (kind === 'brak') banner.classList.add('red');
+        if (kind === 'etalon') banner.classList.add('yellow');
+        const names = { 'brak': 'Только БРАКи', 'etalon': 'Только ПРИНЯТО' };
+        label.textContent = names[kind] || kind;
+        count.textContent = `· ${visible} из ${total}`;
+      }
+    }
+    const section = document.getElementById('closer-feed');
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ========== MODAL ==========
+  function openModal(name) {
+    document.getElementById('modal-' + name).classList.add('active');
+  }
+  function closeModal(name) {
+    document.getElementById('modal-' + name).classList.remove('active');
+  }
+  // click outside to close
+  document.querySelectorAll('.modal-overlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+  });
+
+  function saveDispute() {
+    alert('Dispute сохранён. Директор увидит на странице Калибровка.');
+    closeModal('dispute');
+    const no = document.querySelector('.feedback-btn.no');
+    if (no) { no.classList.add('active'); const ok = document.querySelector('.feedback-btn.ok'); if(ok) ok.classList.remove('active'); }
+  }
+
+  function setFeedback(btn, type) {
+    document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (type === 'ok') {
+      // шлём в БД: AI оценка подтверждена РОПом
+    }
+  }
+
+  // ========== PLAYER ==========
+  let isPlaying = false;
+  let currentSec = 78; // 1:18
+  const totalSec = 342; // 5:42
+  let speed = 1;
+
+  function format(s) {
+    const m = Math.floor(s / 60);
+    const ss = Math.floor(s % 60);
+    return `${m}:${String(ss).padStart(2, '0')}`;
+  }
+  function updatePlayer() {
+    const pct = (currentSec / totalSec) * 100;
+    const fill = document.querySelector('.progress-bar-fill');
+    const handle = document.querySelector('.progress-bar-handle');
+    if (fill) fill.style.width = pct + '%';
+    if (handle) handle.style.left = pct + '%';
+    const cur = document.querySelector('.js-cur');
+    if (cur) cur.textContent = format(currentSec);
+  }
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    const btn = document.querySelector('.play-btn');
+    if (btn) btn.textContent = isPlaying ? '❚❚' : '▶';
+    // если был бы реальный <audio>, тут audio.play()/pause()
+  }
+  function jumpTo(sec) {
+    currentSec = sec;
+    updatePlayer();
+    if (!isPlaying) togglePlay();
+    // mark current line
+    document.querySelectorAll('.line').forEach(l => l.classList.remove('current'));
+  }
+  function skip(delta) {
+    currentSec = Math.max(0, Math.min(totalSec, currentSec + delta));
+    updatePlayer();
+  }
+  function setSpeed(btn, s) {
+    speed = s;
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function seekBar(e) {
+    const bar = e.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    currentSec = Math.floor(pct * totalSec);
+    updatePlayer();
+  }
+  updatePlayer();
+</script>
+</body>
+</html>
