@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Control · Инструкция РОПа Клоузеров · ДоНуля</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-0: #000;
+      --bg-1: #0c0c0c;
+      --bg-2: #161616;
+      --bg-3: #1f1f1f;
+      --border: #1f1f1f;
+      --border-2: #2a2a2a;
+      --text-1: #fff;
+      --text-2: rgba(255,255,255,0.75);
+      --text-3: rgba(255,255,255,0.5);
+      --green: #30d158;
+      --red:   #ff453a;
+      --yellow: #ff9f0a;
+      --blue: #52a7ff;
+      --purple: #b084ff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg-0); color: var(--text-1); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    body { font-size: 15px; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 28px 80px; }
+    .h-eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 18px; }
+    h1 { font-size: 56px; font-weight: 200; letter-spacing: -0.03em; margin: 0 0 18px; line-height: 1.05; }
+    h1 b { font-weight: 700; }
+    .subtitle { font-size: 19px; color: var(--text-2); font-weight: 300; max-width: 720px; margin: 0 0 36px; }
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px; }
+    .pill { padding: 6px 14px; border-radius: 100px; background: var(--bg-2); border: 1px solid var(--border); font-size: 12px; color: var(--text-2); }
+    .pill.green { background: rgba(48,209,88,0.12); border-color: rgba(48,209,88,0.30); color: var(--green); }
+    .pill.purple { background: rgba(176,132,255,0.12); border-color: rgba(176,132,255,0.30); color: var(--purple); }
+
+    h2 { font-size: 36px; font-weight: 300; letter-spacing: -0.025em; margin: 80px 0 12px; }
+    h3 { font-size: 22px; font-weight: 600; margin: 36px 0 10px; }
+    h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin: 18px 0 10px; }
+    p { color: var(--text-2); margin: 0 0 14px; }
+    p b { color: var(--text-1); font-weight: 600; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .demo-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 22px; border-radius: 100px;
+      background: var(--green); color: #0a120c;
+      font-weight: 700; font-size: 14px;
+      transition: transform 0.12s, filter 0.12s;
+      margin: 8px 0 0;
+    }
+    .demo-cta:hover { transform: translateY(-1px); filter: brightness(1.08); text-decoration: none; }
+
+    /* ─── Bento mock ─── */
+    .bento {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;
+      margin: 32px 0;
+    }
+    @media (max-width: 900px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+    .card {
+      padding: 22px 24px;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+      border: 1px solid var(--border-2);
+      border-radius: 22px;
+      min-height: 150px;
+    }
+    .card.col-2 { grid-column: span 2; }
+    .card.col-3 { grid-column: span 3; }
+    .card.col-6 { grid-column: span 6; }
+    .card.row-2 { grid-row: span 2; }
+    .card.accent-blue   { background: radial-gradient(120% 100% at 0% 0%, rgba(82,167,255,0.14) 0%, var(--bg-1) 60%); border-color: rgba(82,167,255,0.25); }
+    .card.accent-red    { background: radial-gradient(120% 100% at 0% 0%, rgba(255,69,58,0.14)  0%, var(--bg-1) 60%); border-color: rgba(255,69,58,0.30); }
+    .card.accent-green  { background: radial-gradient(120% 100% at 0% 0%, rgba(48,209,88,0.13)  0%, var(--bg-1) 60%); border-color: rgba(48,209,88,0.28); }
+    .card.accent-orange { background: radial-gradient(120% 100% at 0% 0%, rgba(255,159,10,0.14) 0%, var(--bg-1) 60%); border-color: rgba(255,159,10,0.25); }
+    .card.accent-purple { background: radial-gradient(120% 100% at 0% 0%, rgba(176,132,255,0.13) 0%, var(--bg-1) 60%); border-color: rgba(176,132,255,0.25); }
+    .card .ic { font-size: 18px; margin-bottom: 12px; opacity: 0.9; }
+    .card .lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 6px; }
+    .card .val { font-size: 44px; font-weight: 200; letter-spacing: -0.03em; line-height: 1; color: var(--text-1); }
+    .card .val small { font-size: 12px; color: var(--text-3); margin-left: 6px; font-weight: 500; letter-spacing: 0; }
+    .card.accent-blue   .val { color: var(--blue); }
+    .card.accent-red    .val { color: var(--red); }
+    .card.accent-green  .val { color: var(--green); }
+    .card.accent-orange .val { color: var(--yellow); }
+    .card.accent-purple .val { color: var(--purple); }
+    .card .sub { font-size: 11.5px; color: var(--text-3); margin-top: 12px; line-height: 1.5; }
+    .card .sub b { color: var(--text-2); }
+
+    .stages { display: flex; gap: 6px; margin-top: 14px; }
+    .stages .st { flex: 1; text-align: center; }
+    .stages .st .n { font-size: 16px; font-weight: 700; color: var(--text-1); display: block; }
+    .stages .st .n.warn { color: var(--yellow); }
+    .stages .st .n.danger { color: var(--red); }
+    .stages .st .bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; margin: 4px 0 4px; }
+    .stages .st .bar .f { display: block; height: 100%; background: rgba(255,255,255,0.4); border-radius: 2px; }
+    .stages .st .bar.warn .f { background: var(--yellow); }
+    .stages .st .bar.danger .f { background: var(--red); }
+    .stages .st .l { font-size: 8.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* ─── Plate description ─── */
+    .plate {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 24px; padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+    .plate:last-child { border-bottom: 1px solid var(--border); }
+    @media (max-width: 700px) { .plate { grid-template-columns: 1fr; } }
+    .plate .left { color: var(--text-3); font-size: 12px; }
+    .plate .left .icon-big { font-size: 32px; line-height: 1; margin-bottom: 8px; display: block; }
+    .plate .left h3 { font-size: 18px; color: var(--text-1); margin: 0 0 4px; font-weight: 700; }
+    .plate .left .what { color: var(--text-3); font-size: 12px; }
+    .plate .right .triple { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .plate .triple .row { padding: 12px 14px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 10px; }
+    .plate .triple .row .h { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); margin-bottom: 6px; }
+    .plate .triple .row .h .em { color: var(--blue); }
+    .plate .triple .row .b { color: var(--text-1); font-size: 13.5px; line-height: 1.6; }
+    .plate .triple .row .b ul { margin: 0; padding: 0 0 0 18px; }
+    .plate .triple .row .b li { margin-bottom: 4px; }
+
+    /* ─── Workflow day ─── */
+    .day { display: grid; grid-template-columns: 100px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid var(--border); }
+    .day:last-of-type { border-bottom: 1px solid var(--border); }
+    .day .time {
+      font-size: 16px; font-weight: 700; color: var(--text-1);
+      font-feature-settings: "tnum"; letter-spacing: -0.01em;
+    }
+    .day .time small { display: block; font-size: 11px; color: var(--text-3); font-weight: 500; margin-top: 4px; }
+    .day .body h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; }
+    .day .body p { font-size: 14px; }
+    .day .body ul { padding-left: 18px; color: var(--text-2); font-size: 14px; }
+    .day .body ul li { margin-bottom: 6px; }
+    .day .body ul li b { color: var(--text-1); }
+
+    /* ─── Glossary ─── */
+    .gloss { display: grid; grid-template-columns: 200px 1fr; gap: 16px 28px; }
+    .gloss dt { color: var(--text-1); font-weight: 700; font-size: 14px; }
+    .gloss dd { margin: 0; color: var(--text-2); font-size: 13px; }
+
+    .quote-block {
+      padding: 20px 24px; margin: 20px 0;
+      border-left: 4px solid var(--purple);
+      background: rgba(176,132,255,0.06);
+      border-radius: 0 12px 12px 0;
+      font-style: italic; color: var(--text-1); font-size: 15px;
+    }
+    .quote-block .src {
+      display: block; font-style: normal;
+      font-size: 11px; color: var(--text-3); margin-top: 8px;
+      text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 80px; padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-3);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="h-eyebrow">ДоНуля · AI Аудитор v4 · РОП Клоузеров</div>
+  <h1>Mission Control · <b>Инструкция РОПа</b></h1>
+  <p class="subtitle">Как читать и управлять командой клоузеров через дашборд. Каждая плитка — конкретный рычаг управления, не «красивая цифра». Эта страница — ознакомительная: ниже описано что показывает каждая плитка, куда смотреть и как реагировать.</p>
+
+  <div class="pills">
+    <span class="pill green">⚡ Mission Control</span>
+    <span class="pill">9 плиток · 4 модалки</span>
+    <span class="pill purple">AI ловит слив в день звонка</span>
+    <span class="pill">По инструкции МПП v3.5</span>
+  </div>
+
+  <a class="demo-cta" href="./index-v4.html" target="_blank">🎮 Открыть живой дашборд →</a>
+
+  <!-- ═══ MOCK BENTO PREVIEW ═══ -->
+  <h2>Что РОП видит утром</h2>
+  <p>Один экран — 9 плиток. На каждой одна крупная цифра + контекст + если плохо — план действий и кнопка.</p>
+
+  <div class="bento">
+
+    <div class="card col-3 row-2 accent-blue">
+      <div class="ic">💼</div>
+      <div class="lbl">Сделок в работе · vs пред. неделя <span style="color:var(--green)">+3</span></div>
+      <div class="val">47<small>· 8 этапов</small></div>
+      <div class="stages">
+        <div class="st"><span class="n">8</span><div class="bar"><span class="f" style="width:100%"></span></div><div class="l">01 встр</div></div>
+        <div class="st"><span class="n warn">3</span><div class="bar warn"><span class="f" style="width:50%"></span></div><div class="l">02 реан</div></div>
+        <div class="st"><span class="n">11</span><div class="bar warn"><span class="f" style="width:80%"></span></div><div class="l">03 догр</div></div>
+        <div class="st"><span class="n">9</span><div class="bar"><span class="f" style="width:90%"></span></div><div class="l">04 счёт</div></div>
+        <div class="st"><span class="n danger">7</span><div class="bar danger"><span class="f" style="width:70%"></span></div><div class="l">05 дож</div></div>
+        <div class="st"><span class="n">2</span><div class="bar"><span class="f" style="width:30%"></span></div><div class="l">06 оплч</div></div>
+        <div class="st"><span class="n">1</span><div class="bar"><span class="f" style="width:15%"></span></div><div class="l">07 возв</div></div>
+        <div class="st"><span class="n">6</span><div class="bar"><span class="f" style="width:60%"></span></div><div class="l">08 отлж</div></div>
+      </div>
+      <div class="sub">🚨 Слабый этап: <b>05 Дожим</b> · конверсия <b style="color:var(--red)">38%</b> (норма 50%)</div>
+      <div class="sub">21 сделка требует касания · общая конверсия 01→06 = <b style="color:var(--green)">9.1%</b></div>
+    </div>
+
+    <div class="card col-3 accent-red">
+      <div class="ic">🔥</div>
+      <div class="lbl">Горящие 72 часа</div>
+      <div class="val">5<small>· уйдут в Котёл</small></div>
+      <div class="sub"><b>2</b> &lt; 2 часов · <b>1</b> &lt; 12 часов · <b>2</b> &lt; 24 часов · звони сейчас Иванову (Куделькин 290к)</div>
+    </div>
+
+    <div class="card col-3 accent-green">
+      <div class="ic">👥</div>
+      <div class="lbl">Команда · 9 клоузеров</div>
+      <div class="val" style="font-size: 22px; font-weight: 600;">3 над · 4 норма · 2 риск</div>
+      <div class="sub">①<b>Лим Олег</b> 142% · ②<b>Куделькин Е.</b> 118% · ③<b>Камран В.</b> 105% · ⚠ <b style="color:var(--red)">Иванов И.</b> 47%</div>
+    </div>
+
+    <div class="card col-3 accent-orange">
+      <div class="ic">♻️</div>
+      <div class="lbl">Общий Котёл сегодня</div>
+      <div class="val">12<small>· свободно</small></div>
+      <div class="sub">Сдал команда <b>6</b> → Подобрал <b>3</b> · котёл копится 7 дней подряд · топ-сдатчик: Иванов (4)</div>
+    </div>
+
+    <div class="card col-3 accent-purple">
+      <div class="ic">⏰</div>
+      <div class="lbl">Закрыть до 18:00 · <b style="color:var(--green)">2/6 закрыто</b></div>
+      <div class="val">4<small>· осталось</small></div>
+      <div class="sub">2-часовой звонок Куделькин Е. (−42 мин) · Догрев Лим день 14 (РОП-эскалация) · Дожим Марченко (−2ч)</div>
+    </div>
+
+    <div class="card col-3 accent-red">
+      <div class="ic">🔴</div>
+      <div class="lbl">Красные сделки · перехват <span style="color:rgba(255,255,255,0.4); font-size:10px;">↓ вчера 12 → сегодня 7</span></div>
+      <div class="val">7<small>· сегодня</small></div>
+      <div class="sub">3 «не предложили оплатить» · 2 «слив подумаю» · 1 «дорого без разбивки» · 1 «без след. шага»<br>🚨 7 не разобраны · до 18:00 4ч · топ-нарушитель Иванов И. (4)</div>
+    </div>
+
+    <div class="card col-2" style="border-color: rgba(255,69,58,0.40);">
+      <div class="ic">💸</div>
+      <div class="lbl">Оплат в звонке</div>
+      <div class="val" style="color:var(--red)">63%<small>· норма ≥80%</small></div>
+      <div class="sub"><b>12 / 19</b> оплат · ▼ −17 п.п. · 7 промахов «отправил ссылку, не дождался» · топ Силкин (4)</div>
+    </div>
+
+    <div class="card col-2 accent-orange" style="border-color: rgba(255,69,58,0.40);">
+      <div class="ic">⏰</div>
+      <div class="lbl">Продлений SLA</div>
+      <div class="val">9<small>· норма ≤5</small></div>
+      <div class="sub">▲ +4 к норме · конверсия после продления <b style="color:var(--yellow)">28%</b> · Иванов 4 · Петров 3 · Силкин 2</div>
+    </div>
+
+    <div class="card col-2 accent-purple">
+      <div class="ic">🤖</div>
+      <div class="lbl">AI · спасает деньги</div>
+      <div class="val">880<small>тыс ₽ за неделю</small></div>
+      <div class="sub">Поймал <b>47 красных</b> · РОП спас <b style="color:var(--green)">23</b> · средний чек <b>~38к ₽</b> · точность 86.9%</div>
+    </div>
+
+  </div>
+
+  <a class="demo-cta" href="./index-v4.html" target="_blank">🎮 Открыть живой дашборд →</a>
+
+  <!-- ═══ КАЖДАЯ ПЛИТКА ПОДРОБНО ═══ -->
+  <h2>Каждая плитка по полочкам</h2>
+  <p>На каждую плитку 3 вопроса: что показывает · куда смотришь · как управляешь.</p>
+
+  <!-- 1. HERO -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">💼</span>
+      <h3>1. Сделок в работе</h3>
+      <div class="what">HERO-плитка · общий pipeline команды</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Общее число активных сделок (47) · раскладка по 8 этапам с цветовой подсветкой проблемных · конверсии между этапами (01→04, 03→04, 04→05, 05→06, 06→07) · общая 01→06 (9.1%) · алерт «слабый этап» если конверсия упала ниже нормы.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>цветные цифры этапов</b> (красная 7 на 05 Дожим = провал) · на <b>конверсии в красном</b> (05→06 38% при норме 50% = клоузеры не дожимают) · на сравнение с прошлой неделей (+1 / −2 рядом с числом).</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на этап → popover с конкретными сделками · если конверсия 05→06 проседает → планёрка по дожиму, разбор записей лучших · если копится на 03 — клоузеры не справляются с возражениями, нужен тренинг скриптов.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Горящие -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🔥</span>
+      <h3>2. Горящие 72 часа</h3>
+      <div class="what">«Скорая помощь» — конкретные деньги ускользают</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок уйдёт в Котёл в ближайшие сутки если РОП не вмешается · разбивка по часам (2 < 2 ч · 1 < 12 ч · 2 < 24 ч).</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На число <b>&lt; 2 часов</b> — это критическая зона. Если их 0-1 — норма. Если 3+ за день — команда не держит ритм 72ч.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → popover с именами клоузеров и клиентами («Куделькин 290к — Иванов И. — осталось 1ч 18м»). Кнопка <b>📞 Иванову</b> → прямой звонок клоузеру. Если клоузер не справляется — РОП пишет клиенту в MaxBot сам.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Команда -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">👥</span>
+      <h3>3. Команда · 9 клоузеров</h3>
+      <div class="what">Кого хвалить, тренировать, увольнять</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Распределение команды по выполнению плана: 3 над планом · 4 в норме · 2 отстают. Топ-3 (Лим 142%, Куделькин Е. 118%, Камран 105%) и риск (Иванов 47%).</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>отстающих</b> — кому грозит увольнение или нужна помощь. На <b>топ-3</b> — кого хвалить + использовать как референс для команды. На <b>тренд</b> ▲▼ рядом с %.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на любое имя → drill-down карточка клоузера (его сделки, конверсия 04→06, AI-балл, продления SLA, котёл, что прокачивает). 1:1 встречи с отстающими (раз в неделю), шеринг записей: топ показывает отстающему как закрывать.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Котёл -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">♻️</span>
+      <h3>4. Общий Котёл</h3>
+      <div class="what">Финансовый двигатель команды</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок свободно для подбора (12) · сдал команда сегодня (6) · подобрала (3) · sparkline тренда вход/выход за 7 дней · алерт «N сделок &gt;24ч в котле».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">Если <b>сдают больше чем подбирают</b> → котёл копится → токсично для команды. Если sparkline ↗ оранжевая (вход) выше зелёной (выход) — РОП должен вмешаться.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Топ-сдатчиков (&gt;20%) — персональный разговор по инструкции (санкции к бонусу). Подбирающих — благодарность + бонус +2 000₽ за каждую. Если сделка &gt;24ч в котле — почти потеряна, нужен ручной перепас.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Закрыть до 18 -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">⏰</span>
+      <h3>5. Закрыть до 18:00</h3>
+      <div class="what">Action items РОПа на день</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Список 6 задач которые требуют именно РОПа: 2-часовые звонки, день 14 эскалаций, дожим день 14. Прогресс «2/6 закрыто», чекбоксы для отметки.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>−время</b> (просроченность) — что прям горит. На иконки приоритета (🔴 / 🟡 / 🔵). На прогресс 2/6 = к концу смены должно быть 6/6.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Просто <b>выполняешь задачи</b> по списку — это не аналитика, это рабочий чеклист. После выполнения → клик чекбокс → задача зачёркивается. К 18:00 все 6 → toast «🎉 Чистый дашборд» → скрин в чат директору.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Красные сделки -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🔴</span>
+      <h3>6. Красные сделки · перехват</h3>
+      <div class="what">Самая важная фича — AI ловит слив в день звонка</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок AI пометил как «красные» сегодня (7) · топ-причины (3 «не предложили оплатить» · 2 «слив подумаю» · 1 «дорого без разбивки» · 1 «без след.шага») · тренд «вчера 12 → сегодня 7».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>число</b> — норма к концу дня <b>0 не разобраны</b>. На <b>топ-нарушителя</b> (Иванов 4 красных за день). На <b>причины</b> — где системная проблема: 3 раза «не предложили оплатить» = вся команда плохо закрывает.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Очередь перехвата</b>. По каждой красной сделке РОП решает 3 действия:<ul><li><b>↩ Вернуть с задачей</b> (90% случаев — клоузер исправит)</li><li><b>→ Передать сильному</b> (Лим/Куделькин добьют)</li><li><b>× Закрыть как нецелевую</b> (если клиент не покупаемый)</li></ul>На каждой сделке AI даёт <b>подсказку «что сказать»</b> из эталонов лучших.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Оплат в звонке -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">💸</span>
+      <h3>7. Оплат в звонке</h3>
+      <div class="what">Поведенческий KPI · самый дисциплинирующий</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">% оплат прошедших прямо в звонке (норма ≥80%) · 12/19 оплат · ▼ −17 п.п. к прошлой неделе · разбивка промахов по клоузерам (Силкин 4, Иванов 2, Петров 1).</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>отклонение от нормы</b> — это поведенческий KPI, прямой проигрыш денег. Если &lt;70% — системная пассивность всей команды. Если у одного клоузера 4+ промаха — персональная проблема.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Плеер промахов</b> с 30-сек нарезками каждой сделки. Слушаешь где именно «слил момент». Тренировка скрипта: <b>«Откройте, я подожду на линии»</b> вместо «отправил, ждите». Назначаешь планёрку на завтра одной кнопкой.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Продления -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">⏰</span>
+      <h3>8. Продлений SLA</h3>
+      <div class="what">Watchdog · директор увидит превышение</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько раз РОП одобрил продление SLA за неделю (9 · норма ≤5) · конверсия после продления (28%) · распределение по клоузерам (Иванов 4, Петров 3, Силкин 2).</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На превышение нормы — это <b>watchdog</b>, директор видит на своём дашборде. На <b>конверсию после продления</b>: если &lt;50% — продления бесполезны, просто оттягивают слив.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Список 9 продлений</b> (кому, кто запросил, исход). Видишь Иванов 4 продления → разговор «не одобряю автоматом». Если конверсия плохая → жмёшь <b>⛔ Стоп-режим (неделя)</b> — не одобряешь никаких новых, команда учится держать SLA сама.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. AI -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🤖</span>
+      <h3>9. AI · спасает деньги</h3>
+      <div class="what">ROI системы перехвата в рублях</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько денег AI спас за неделю (880 тыс ₽) · поймал N красных, РОП спас M · средний чек спасения (~38к ₽) · точность v1.4.2 (86.9%) · 8 disputes ждут разбора.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>деньги</b> — это <b>оправдание системы</b> для тебя и для директора. Если AI спас 880к за неделю — он окупает свою стоимость в 30+ раз. На <b>точность</b> — если падает &lt;85%, AI начинает врать, красные сделки могут быть ложными.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Если точность OK — продолжаешь доверять AI-сигналам. Если падает — идёшь на страницу <b>«Промт клоузеров»</b> → калибруешь промт через disputes. Каждая исправленная неточность поднимает точность к 90%+.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WORKFLOW ДНЯ ═══ -->
+  <h2>Рабочий день РОПа</h2>
+  <p>Пошагово: как использовать дашборд от утра до закрытия смены.</p>
+
+  <div class="day">
+    <div class="time">09:00<small>Утренний обход</small></div>
+    <div class="body">
+      <h3>5-7 минут смотришь на 9 плиток</h3>
+      <ul>
+        <li>Сразу видишь <b>что горит</b> — красная плитка «Красные сделки 7» и «Горящие 5»</li>
+        <li>Замечаешь <b>топ-нарушителей</b> — Иванов в 3-х плитках (красные, котёл, продления)</li>
+        <li>Открываешь «Команда» → видишь Иванов 47% → 1:1 встреча на 15:30</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="time">09:30 — 13:00<small>Активная фаза</small></div>
+    <div class="body">
+      <h3>Перехват красных + горящих</h3>
+      <ul>
+        <li>Открываешь <b>Очередь перехвата</b> → решаешь 7 красных сделок (вернуть/передать/закрыть)</li>
+        <li>На каждой — AI-подсказка «что сказать клиенту» из эталонов</li>
+        <li>Параллельно — звонки клоузерам по горящим 72ч</li>
+        <li>На этапе 04 «Счёт» — клик показывает <b>4 нарушения регламента</b> (нет звонка в 15 мин · нет даты в CRM)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="time">13:00 — 17:00<small>Контроль метрик</small></div>
+    <div class="body">
+      <h3>Поведенческие KPI и команда</h3>
+      <ul>
+        <li><b>«Оплат в звонке 63%»</b> → клик → плеер 7 промахов → слушаешь Силкина (4 промаха) → планёрка завтра</li>
+        <li><b>Котёл копится 7 дней подряд</b> → разбор топ-сдатчиков (Иванов 4 · Петров 2)</li>
+        <li><b>Продлений 9 vs норма ≤5</b> → клик → список → стоп-режим на неделю если плохо</li>
+        <li>Параллельно — закрываешь чекбоксы «До 18:00» (2/6 → 4/6 → 6/6)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="time">17:30 — 18:00<small>Закрытие смены</small></div>
+    <div class="body">
+      <h3>Zero Dashboard</h3>
+      <ul>
+        <li><b>Все 7 красных</b> → разобраны (норма 100%)</li>
+        <li><b>«До 18:00» 6/6</b> → toast «🎉 Чистый дашборд»</li>
+        <li>Скрин Mission Control в чат «РОП → Директор»: «Сегодня: 7 красных закрыто, 4 спасены через возврат с задачей, 2 переданы Лиму, 1 закрыта как нецелевая»</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    Главное правило — <b>не «посмотрел и забыл»</b>, а «посмотрел → действие». Если на плитке красная окантовка, под значением будет блок с конкретным шагом и кнопка.
+    <span class="src">— Принцип Mission Control</span>
+  </div>
+
+  <!-- ═══ ГЛОССАРИЙ ═══ -->
+  <h2>Термины</h2>
+  <dl class="gloss">
+    <dt>Красная сделка</dt>
+    <dd>Сделка где AI после звонка увидел один из 8 сигналов слива (не предложил оплатить · «подумаю» без выяснения · «дорого» без разбивки · нет даты в CRM · пассивная продажа · нет предоплаты · без след.шага · «напишите когда решите»). По инструкции МПП v3.5 раздел 5.</dd>
+
+    <dt>Очередь перехвата</dt>
+    <dd>Список красных сделок которые РОП обязан разобрать до конца смены. 3 действия: вернуть клоузеру с задачей · передать сильному · закрыть как нецелевую.</dd>
+
+    <dt>Общий Котёл</dt>
+    <dd>Воронка свободных сделок. Если клоузер не делает касание 72ч на этапах 03/04/05 → сделка автоматически уходит в Котёл. Любой может подобрать (+2 000 ₽ бонус). Если &gt;20% сдач у одного клоузера — санкции к бонусу.</dd>
+
+    <dt>Правило 72 часа</dt>
+    <dd>На активных этапах (Догрев, Счёт, Дожим) клоузер обязан сделать касание не реже чем каждые 72 часа. Касание = двусторонняя связь (звонок ≥30 сек / входящий звонок / ответ в MaxBot). Если молчит — сделка уходит.</dd>
+
+    <dt>Продление SLA</dt>
+    <dd>Кнопка Salesbot «Запрос на продление» — если клиент назвал точную дату оплаты ≤7 рабочих дней. РОП одобряет/отклоняет. Максимум 1 раз на сделку.</dd>
+
+    <dt>Стоп-режим</dt>
+    <dd>Режим РОПа когда он временно не одобряет ни одно продление SLA (например на 7 дней). Команда учится держать дисциплину 14-дневного SLA.</dd>
+
+    <dt>Оплат в звонке</dt>
+    <dd>Поведенческий KPI: % сделок где оплата прошла прямо в звонке (а не «отправил ссылку, жди»). Норма ≥80%. Скрипт-замена «отправил» → «откройте, я подожду на линии».</dd>
+
+    <dt>Zero Dashboard</dt>
+    <dd>К концу смены у каждого клоузера в воронке должно быть 0 просроченных задач. Скрин чистого дашборда → в чат РОПу.</dd>
+
+    <dt>2-часовой звонок</dt>
+    <dd>Обязательное правило этапа 03 Догрев: после первой встречи клоузер обязан перезвонить клиенту через 2 часа («горячее окно» · клиент ещё помнит).</dd>
+
+    <dt>День 14</dt>
+    <dd>Финал каждого активного этапа (03/04/05). РОП лично делает финальную попытку — звонок клиенту. Если не помогает — сделка автоматически уходит в Отложенные.</dd>
+  </dl>
+
+  <div class="footer">
+    <p><b>ДоНуля · AI Аудитор v4 · Mission Control</b><br>
+    Регламент: МПП v3.5 (апрель 2026) · AI-промт qa_closer v1.4.2 (YandexGPT 5.1 Pro)<br>
+    Вопросы по регламенту → РОПу МПП2 · вопросы по дашборду → разработке.</p>
+  </div>
+
+</div>
+</body>
+</html>
