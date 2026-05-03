@@ -2565,8 +2565,8 @@
         text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
       }
       .mc-pot-trend .pot-spark { width: 100%; height: 28px; display: block; }
-      .mc-pot-trend .pot-spark .pot-in  { fill: none; stroke: #ff9f0a; stroke-width: 1.5; }
-      .mc-pot-trend .pot-spark .pot-out { fill: none; stroke: #30d158; stroke-width: 1.5; }
+      .mc-pot-trend .pot-spark .pot-in  { fill: none; stroke: #ff9f0a; stroke-width: 1.8; }
+      .mc-pot-trend .pot-spark .pot-out { fill: none; stroke: #30d158; stroke-width: 1.8; }
       .mc-pot-trend .pot-leg {
         display: flex; gap: 12px; margin-top: 4px;
         font-size: 10.5px; color: rgba(255,255,255,0.55); align-items: center;
@@ -5591,44 +5591,48 @@
                 </div>
               </div>
 
-              <!-- Котёл: flow за день -->
-              <div class="mc-card col-3 accent-orange status-warn" onclick="showToast('🔥 Открываем Общий Котёл')">
+              <!-- 🔄 Ротация сделок (автопередача за молчание 72ч) -->
+              <div class="mc-card col-3 accent-orange status-warn" onclick="showToast('Открываем журнал передач')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">♻️</div>
-                <div class="mc-card-label">Общий Котёл сегодня</div>
-                <div class="mc-card-value">12<small>· свободно</small></div>
-                <div class="mc-pot-flow">
-                  <div class="mc-pot-side in">
-                    <div class="lbl">Сдал я</div>
-                    <div class="num">2</div>
-                  </div>
-                  <div class="mc-pot-arrow">→</div>
-                  <div class="mc-pot-side out">
-                    <div class="lbl">Подобрал</div>
-                    <div class="num">3</div>
-                  </div>
-                </div>
+                <div class="mc-card-icon">🔄</div>
+                <div class="mc-card-label">Ротация сделок сегодня</div>
+                <div class="mc-card-value">12<small>· передано</small></div>
                 <div class="mc-card-sub">
-                  Net бонус: <b style="color: #30d158">+2 000 ₽</b> · <b style="color:#ff9f0a">3 сделки &gt;24ч в котле</b> — почти потеряны
+                  За молчание 72ч система автоматически передала другим клоузерам · клиенты не висят
+                </div>
+                <div class="mc-ext-by-closer">
+                  <div class="ext-row over">
+                    <span class="name">Иванов И. <small style="color:rgba(255,255,255,0.4)">потерял</small></span>
+                    <span class="bar"><span class="fill" style="width:100%"></span></span>
+                    <span class="cnt">4</span>
+                  </div>
+                  <div class="ext-row over">
+                    <span class="name">Петров П. <small style="color:rgba(255,255,255,0.4)">потерял</small></span>
+                    <span class="bar"><span class="fill" style="width:50%"></span></span>
+                    <span class="cnt">2</span>
+                  </div>
+                  <div class="ext-row" style="margin-top: 4px;">
+                    <span class="name" style="color:#30d158">Лим Олег <small style="color:rgba(255,255,255,0.4)">получил</small></span>
+                    <span class="bar"><span class="fill" style="background:#30d158;width:75%"></span></span>
+                    <span class="cnt" style="color:#30d158">3</span>
+                  </div>
                 </div>
                 <div class="mc-pot-trend">
-                  <div class="lbl">Тренд за 7 дней (вход / выход)</div>
+                  <div class="lbl">Тренд передач за 7 дней</div>
                   <svg class="pot-spark" viewBox="0 0 100 28" preserveAspectRatio="none">
-                    <polyline class="pot-in"  points="0,18 14,15 28,12 42,10 56,8 70,6 84,5 100,4" />
-                    <polyline class="pot-out" points="0,20 14,18 28,17 42,18 56,19 70,21 84,22 100,23" />
+                    <polyline class="pot-in"  points="0,20 14,18 28,15 42,13 56,11 70,9 84,7 100,5" />
                   </svg>
                   <div class="pot-leg">
-                    <span class="dot in"></span>сдают <b>↑</b>
-                    <span class="dot out"></span>подбирают <b>↓</b>
+                    <span class="dot in"></span>передач <b>↑ растёт</b> · команда теряет ритм 72ч
                   </div>
                 </div>
                 <div class="mc-card-action">
                   <div class="ic">⚠</div>
                   <div class="text">
-                    <b>Котёл копится 7 дней подряд</b>
-                    <span class="what">Топ-сдатчики: Иванов 4 · Петров 2 → разговор сейчас</span>
+                    <b>4 клоузера регулярно теряют сделки</b>
+                    <span class="what">Топ-теряющие: Иванов 4 · Петров 2 → тренинг дисциплины 72ч</span>
                   </div>
-                  <button class="cta" onclick="event.stopPropagation(); showToast('Топ-сдатчики · персональный разбор')">→ Разобрать</button>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Топ-теряющие · персональный разбор')">→ Разобрать</button>
                 </div>
               </div>
 
