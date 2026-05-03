@@ -2385,6 +2385,39 @@
       .mc-action .meta.danger { color: #ff453a; }
       .mc-action .meta.warn   { color: #ff9f0a; }
 
+      /* Бейджик источника задачи */
+      .mc-action {
+        grid-template-columns: 18px 1fr auto auto !important;
+        gap: 8px !important;
+      }
+      .task-source {
+        font-size: 9.5px; font-weight: 600;
+        padding: 2px 6px; border-radius: 4px;
+        white-space: nowrap; cursor: help;
+        background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6);
+        font-feature-settings: "tnum"; letter-spacing: 0.02em;
+      }
+      .task-source.mpp     { background: rgba(82,167,255,0.14);  color: #52a7ff; }
+      .task-source.day14   { background: rgba(255,159,10,0.14);  color: #ff9f0a; }
+      .task-source.team    { background: rgba(48,209,88,0.14);   color: #30d158; }
+      .task-source.watch   { background: rgba(255,159,10,0.10);  color: #ff9f0a; }
+      .task-source.red     { background: rgba(255,69,58,0.14);   color: #ff453a; }
+      .task-source.manual  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); }
+
+      .add-task-btn {
+        display: flex; align-items: center; gap: 8px;
+        margin-top: 8px; padding: 8px 12px;
+        background: transparent; border: 1px dashed rgba(255,255,255,0.18);
+        border-radius: 8px; color: rgba(255,255,255,0.55);
+        font-size: 12px; cursor: pointer; width: 100%;
+        transition: all 0.12s;
+      }
+      .add-task-btn:hover {
+        background: rgba(255,255,255,0.04);
+        border-color: rgba(255,255,255,0.35);
+        color: rgba(255,255,255,0.9);
+      }
+
       /* ── HERO карточка с раскладкой по 8 этапам ── */
       .mc-stages-row {
         display: flex; gap: 6px; margin-top: 14px; align-items: end;
@@ -5647,29 +5680,35 @@
                   <div class="mc-action" data-prio="danger">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
                     <div>2-часовой звонок Куделькин Е. (этап 03)</div>
+                    <span class="task-source mpp" title="Правило инструкции МПП v3.5: 2-часовой звонок после первой встречи (этап Догрев)">🤖 МПП</span>
                     <div class="meta danger">−42 мин</div>
                   </div>
                   <div class="mc-action" data-prio="danger">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
                     <div>Дожим Марченко (счёт +14ч)</div>
+                    <span class="task-source mpp" title="Правило инструкции МПП v3.5: дожим день 7-12 на этапе Счёт">🤖 МПП</span>
                     <div class="meta danger">−2ч</div>
                   </div>
                   <div class="mc-action" data-prio="warn">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
                     <div>Догрев Лим — 14-й день (РОП-эскалация)</div>
+                    <span class="task-source day14" title="Эскалация: день 14 любого активного этапа — финальный звонок РОПа">⚡ День 14</span>
                     <div class="meta warn">сегодня</div>
                   </div>
                   <div class="mc-action" data-prio="info">
                     <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
                     <div>1:1 с Иванов И. (план 47%)</div>
+                    <span class="task-source team" title="Watchdog: клоузер в красной зоне 2 недели подряд (47% плана)">📊 Команда</span>
                     <div class="meta">15:30 ✓</div>
                   </div>
                   <div class="mc-action" data-prio="info">
                     <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
                     <div>Разбор продлений Петрова</div>
+                    <span class="task-source watch" title="Watchdog: 3+ продлений SLA подряд от одного клоузера">⏰ Watchdog</span>
                     <div class="meta">12:10 ✓</div>
                   </div>
                 </div>
+                <button class="add-task-btn" onclick="event.stopPropagation(); addManualTask()">+ Добавить задачу вручную</button>
               </div>
 
               <!-- 🔴 Красные сделки · AI-перехват (главная фича) -->
@@ -11764,22 +11803,57 @@
       function toggleTask(input) {
         const action = input.closest(".mc-action");
         action.dataset.completed = input.checked ? "true" : "false";
-        const list = action.closest("#task-list");
+        refreshTaskProgress();
+        if (input.checked) {
+          const total = document.querySelectorAll("#task-list .mc-action").length;
+          const done = document.querySelectorAll('#task-list .mc-action[data-completed="true"]').length;
+          if (done === total) showToast("🎉 Все задачи закрыты! Чистый дашборд — пиши скрин директору");
+        }
+      }
+
+      function refreshTaskProgress() {
+        const list = document.getElementById("task-list");
+        if (!list) return;
         const total = list.querySelectorAll(".mc-action").length;
         const done = list.querySelectorAll('.mc-action[data-completed="true"]').length;
         const remaining = total - done;
-        const pct = (done / total) * 100;
+        const pct = total ? (done / total) * 100 : 0;
         const progressEl = document.getElementById("task-progress");
         const remainingEl = document.getElementById("task-remaining");
         const fillEl = document.getElementById("task-progress-fill");
+        // обновим текст в label плитки: "X/N закрыто"
+        const labelEl = document.querySelector('.mc-card .mc-card-label[id="task-progress-label"]') ||
+                        document.querySelector('#task-progress')?.parentElement;
         if (progressEl) progressEl.textContent = done;
+        // также обновим число "из N" если есть
+        if (labelEl && labelEl.innerHTML.includes("/")) {
+          labelEl.innerHTML = labelEl.innerHTML.replace(/\d+\/\d+ закрыто/, `${done}/${total} закрыто`);
+        }
         if (remainingEl) remainingEl.innerHTML = remaining + '<small>осталось</small>';
         if (fillEl) {
           fillEl.style.width = pct + "%";
           fillEl.style.background = pct === 100 ? "var(--green)" : pct >= 50 ? "var(--yellow)" : "var(--green)";
         }
-        // если все задачи сделаны — toast победы
-        if (remaining === 0) showToast("🎉 Все задачи закрыты! Чистый дашборд — пиши скрин директору");
+      }
+
+      function addManualTask() {
+        const text = prompt("Что закрыть до 18:00?", "");
+        if (!text || !text.trim()) return;
+        const time = prompt("Когда / дедлайн? (например: 16:00, сегодня, −1ч)", "сегодня");
+        const list = document.getElementById("task-list");
+        if (!list) return;
+        const div = document.createElement("div");
+        div.className = "mc-action";
+        div.dataset.prio = "info";
+        div.innerHTML = `
+          <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
+          <div>${text.trim()}</div>
+          <span class="task-source manual" title="Ручная задача РОПа">👤 Ручная</span>
+          <div class="meta">${(time || "сегодня").trim()}</div>
+        `;
+        list.appendChild(div);
+        refreshTaskProgress();
+        showToast(`✓ Задача добавлена: «${text.trim()}»`);
       }
 
       // ═══════════════ MISSION CONTROL · ПРОДЛЕНИЯ SLA ═══════════════
