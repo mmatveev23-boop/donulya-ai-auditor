@@ -2231,6 +2231,799 @@
       .metric-sparkline-values .sl-val.tier-mid  { color: var(--yellow); }
       .metric-sparkline-values .sl-val.tier-high { color: var(--green); }
 
+      /* ═══════════════════════════════════════════════════════════════
+         MISSION CONTROL · Apple Health стиль для всех ролей
+         ═══════════════════════════════════════════════════════════════ */
+      /* По умолчанию Mission Control блоки скрыты */
+      .mc-summary { display: none; }
+      /* Показываем только нужный для активной роли */
+      body[data-role="hunter"]   .mc-summary[data-mc="hunter"]   { display: block; }
+      body[data-role="closer"]   .mc-summary[data-mc="closer"]   { display: block; }
+      body[data-role="director"] .mc-summary[data-mc="director"] { display: block; }
+      /* Скрываем legacy summary блоки на любой роли когда показывается Mission Control */
+      body[data-role="hunter"]   .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="closer"]   .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="director"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+
+      .mc-summary {
+        margin-top: 4px;
+      }
+      .mc-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 14px;
+      }
+      @media (max-width: 1400px) { .mc-grid { grid-template-columns: repeat(4, 1fr); } }
+      @media (max-width: 900px)  { .mc-grid { grid-template-columns: repeat(2, 1fr); } }
+
+      .mc-card {
+        position: relative;
+        padding: 28px 30px;
+        background: linear-gradient(180deg, #161616 0%, #0c0c0c 100%);
+        border: 1px solid #1f1f1f;
+        border-radius: 22px;
+        cursor: pointer;
+        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.2s ease;
+        overflow: hidden;
+        min-height: 180px;
+        display: flex; flex-direction: column;
+      }
+      .mc-card:hover {
+        transform: translateY(-2px);
+        border-color: #2a2a2a;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+      }
+      .mc-card.col-2 { grid-column: span 2; }
+      .mc-card.col-3 { grid-column: span 3; }
+      .mc-card.col-4 { grid-column: span 4; }
+      .mc-card.col-6 { grid-column: span 6; }
+      .mc-card.row-2 { grid-row: span 2; }
+
+      .mc-card.accent-orange {
+        background: radial-gradient(120% 100% at 0% 0%, rgba(255,159,10,0.18) 0%, #0c0c0c 60%);
+        border-color: rgba(255,159,10,0.25);
+      }
+      .mc-card.accent-red {
+        background: radial-gradient(120% 100% at 0% 0%, rgba(255,69,58,0.18) 0%, #0c0c0c 60%);
+        border-color: rgba(255,69,58,0.30);
+      }
+      .mc-card.accent-green {
+        background: radial-gradient(120% 100% at 0% 0%, rgba(48,209,88,0.16) 0%, #0c0c0c 60%);
+        border-color: rgba(48,209,88,0.28);
+      }
+      .mc-card.accent-blue {
+        background: radial-gradient(120% 100% at 0% 0%, rgba(82,167,255,0.14) 0%, #0c0c0c 60%);
+        border-color: rgba(82,167,255,0.25);
+      }
+      .mc-card.accent-purple {
+        background: radial-gradient(120% 100% at 0% 0%, rgba(176,132,255,0.14) 0%, #0c0c0c 60%);
+        border-color: rgba(176,132,255,0.25);
+      }
+
+      .mc-card-icon {
+        font-size: 22px; line-height: 1; margin-bottom: 14px; opacity: 0.95;
+      }
+      .mc-card-label {
+        font-size: 11px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.1em;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 6px;
+      }
+      .mc-card-value {
+        font-size: 56px; font-weight: 200;
+        letter-spacing: -0.03em; line-height: 1;
+        color: #fff;
+      }
+      .mc-card-value small {
+        font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.5);
+        margin-left: 6px; letter-spacing: 0;
+      }
+      .mc-card.accent-orange .mc-card-value { color: #ff9f0a; }
+      .mc-card.accent-red    .mc-card-value { color: #ff453a; }
+      .mc-card.accent-green  .mc-card-value { color: #30d158; }
+      .mc-card.accent-blue   .mc-card-value { color: #52a7ff; }
+      .mc-card.accent-purple .mc-card-value { color: #b084ff; }
+
+      .mc-card-sub {
+        margin-top: auto; padding-top: 14px;
+        font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.45;
+      }
+      .mc-card-sub b { color: rgba(255,255,255,0.85); font-weight: 600; }
+      .mc-card-arrow {
+        position: absolute; top: 22px; right: 22px;
+        font-size: 14px; color: rgba(255,255,255,0.35);
+        transition: transform 0.15s ease, color 0.15s ease;
+      }
+      .mc-card:hover .mc-card-arrow {
+        transform: translateX(3px); color: rgba(255,255,255,0.75);
+      }
+
+      /* ── HERO: vs-сравнения на цифрах + weak-stage алерт ── */
+      .mc-stage-num .vs {
+        font-size: 9px; font-weight: 600; opacity: 0.7;
+        font-feature-settings: "tnum"; margin-left: 1px;
+      }
+      .mc-stage-num .vs.up   { color: #30d158; }
+      .mc-stage-num .vs.down { color: #ff453a; }
+      .mc-stage-num .vs.flat { color: rgba(255,255,255,0.35); }
+      .mc-weak-stage {
+        margin-top: 14px; padding: 8px 12px;
+        background: rgba(255,69,58,0.10);
+        border: 1px solid rgba(255,69,58,0.30); border-radius: 8px;
+        font-size: 12px; color: rgba(255,255,255,0.9);
+        display: flex; align-items: center; gap: 8px;
+      }
+      .mc-weak-stage .ic { font-size: 14px; }
+
+      /* ── Чекбоксы для задач "До 18:00" ── */
+      .mc-action .task-check {
+        position: relative; cursor: pointer; display: inline-block;
+        width: 18px; height: 18px;
+      }
+      .mc-action .task-check input { position: absolute; opacity: 0; cursor: pointer; }
+      .mc-action .task-check .cm {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: 5px; background: transparent;
+        border: 1.5px solid rgba(255,255,255,0.25);
+        transition: all 0.12s;
+      }
+      .mc-action .task-check:hover .cm { border-color: rgba(255,255,255,0.5); }
+      .mc-action .task-check input:checked ~ .cm {
+        background: var(--green); border-color: var(--green);
+      }
+      .mc-action .task-check input:checked ~ .cm::after {
+        content: '✓'; position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -52%); color: #0a120c;
+        font-size: 12px; font-weight: 700;
+      }
+      .mc-action[data-completed="true"] {
+        opacity: 0.4;
+      }
+      .mc-action[data-completed="true"] > div:nth-child(2) {
+        text-decoration: line-through;
+      }
+      .mc-action .meta.danger { color: #ff453a; }
+      .mc-action .meta.warn   { color: #ff9f0a; }
+
+      /* ── HERO карточка с раскладкой по 8 этапам ── */
+      .mc-stages-row {
+        display: flex; gap: 6px; margin-top: 14px; align-items: end;
+      }
+      .mc-stage {
+        position: relative;
+        flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+        padding: 6px 4px; border-radius: 8px;
+        transition: background 0.15s, transform 0.12s;
+        cursor: pointer;
+      }
+      .mc-stage:hover { background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+      .mc-stage.active { background: rgba(82,167,255,0.12); }
+
+      /* Popover со сделками этапа */
+      .mc-stage-popover {
+        position: absolute; top: calc(100% + 10px);
+        z-index: 200; min-width: 340px; max-width: 380px;
+        background: #1a1a1a; border: 1px solid #2e2e2e;
+        border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+        text-align: left;
+        animation: msp-fade-in 0.15s ease-out;
+        /* default: центрирован под этапом */
+        left: 50%; transform: translateX(-50%);
+      }
+      @keyframes msp-fade-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      /* Альтернативные позиции (выставляются JS-ом если popover вылезает) */
+      .mc-stage-popover.align-left  { left: 0;    transform: translateX(0); }
+      .mc-stage-popover.align-right { left: auto; right: 0; transform: translateX(0); }
+      .mc-stage-popover::before {
+        content: ''; position: absolute; bottom: 100%;
+        left: 50%; transform: translateX(-50%);
+        border: 6px solid transparent; border-bottom-color: #1a1a1a;
+      }
+      .mc-stage-popover.align-left::before  { left: 16px; transform: translateX(0); }
+      .mc-stage-popover.align-right::before { left: auto; right: 16px; transform: translateX(0); }
+      .mc-stage-popover-head {
+        padding: 12px 14px 8px;
+        display: flex; justify-content: space-between; align-items: baseline;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .mc-stage-popover-head .ttl {
+        font-size: 13px; font-weight: 700; color: #fff;
+      }
+      .mc-stage-popover-head .meta {
+        font-size: 10px; color: rgba(255,255,255,0.5);
+        text-transform: uppercase; letter-spacing: 0.06em;
+      }
+      .mc-stage-popover-head .close {
+        width: 22px; height: 22px; border-radius: 5px; border: 0;
+        background: transparent; color: rgba(255,255,255,0.5);
+        font-size: 14px; cursor: pointer; line-height: 1;
+      }
+      .mc-stage-popover-head .close:hover { background: rgba(255,255,255,0.06); color: #fff; }
+      .mc-stage-deals { max-height: 320px; overflow-y: auto; }
+      /* Кастомный scrollbar, видимый на тёмном фоне */
+      .mc-stage-deals::-webkit-scrollbar { width: 6px; }
+      .mc-stage-deals::-webkit-scrollbar-track { background: transparent; }
+      .mc-stage-deals::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.18); border-radius: 3px;
+      }
+      .mc-stage-deals::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.30); }
+      .mc-stage-deal {
+        display: grid; grid-template-columns: 1fr auto;
+        gap: 8px; align-items: center;
+        padding: 9px 14px; cursor: pointer;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        transition: background 0.12s;
+      }
+      .mc-stage-deal:last-child { border-bottom: 0; }
+      .mc-stage-deal:hover { background: rgba(255,255,255,0.04); }
+      .mc-stage-deal .name {
+        font-size: 13px; color: rgba(255,255,255,0.92); font-weight: 500;
+      }
+      .mc-stage-deal .sub {
+        font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;
+      }
+      .mc-stage-deal .timer {
+        font-size: 11px; font-weight: 600;
+        font-feature-settings: "tnum"; padding: 3px 7px;
+        border-radius: 5px; white-space: nowrap;
+      }
+      .mc-stage-deal .timer.danger { background: rgba(255,69,58,0.15); color: #ff453a; }
+      .mc-stage-deal .timer.warn   { background: rgba(255,159,10,0.15); color: #ff9f0a; }
+      .mc-stage-deal .timer.ok     { background: rgba(48,209,88,0.12); color: #30d158; }
+      .mc-stage-deal .timer.muted  { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+      .mc-stage-popover-foot {
+        padding: 10px 12px; border-top: 1px solid rgba(255,255,255,0.06);
+        display: flex; gap: 8px;
+      }
+      .mc-stage-popover-foot .btn-primary {
+        flex: 1; padding: 7px 12px; border-radius: 7px; border: 0;
+        background: var(--green); color: #0a120c; font-size: 12px; font-weight: 600;
+        cursor: pointer; transition: filter 0.12s;
+      }
+      .mc-stage-popover-foot .btn-primary:hover { filter: brightness(1.1); }
+      .mc-stage-popover-foot .btn-secondary {
+        padding: 7px 12px; border-radius: 7px;
+        background: transparent; border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.7); font-size: 12px;
+        cursor: pointer;
+      }
+      .mc-stage-popover-foot .btn-secondary:hover { background: rgba(255,255,255,0.06); color: #fff; }
+      .mc-stage-num {
+        font-size: 18px; font-weight: 700; color: #fff;
+        font-feature-settings: "tnum"; line-height: 1;
+      }
+      .mc-stage-num.danger { color: #ff453a; }
+      .mc-stage-num.warn { color: #ff9f0a; }
+      .mc-stage-bar {
+        width: 100%; height: 3px; border-radius: 2px;
+        background: rgba(255,255,255,0.08);
+      }
+      .mc-stage-bar .fill {
+        height: 100%; border-radius: 2px;
+        background: rgba(255,255,255,0.45);
+      }
+      .mc-stage.s-danger .mc-stage-bar .fill { background: #ff453a; }
+      .mc-stage.s-warn   .mc-stage-bar .fill { background: #ff9f0a; }
+      .mc-stage.s-ok     .mc-stage-bar .fill { background: #30d158; }
+      .mc-stage-label {
+        font-size: 9px; color: rgba(255,255,255,0.45); white-space: nowrap;
+        font-feature-settings: "tnum"; text-transform: uppercase; letter-spacing: 0.04em;
+      }
+      /* Конверсии — отдельная строка под этапами */
+      .mc-conv-row {
+        display: flex; flex-wrap: wrap; gap: 14px 22px;
+        margin-top: 16px; padding-top: 14px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .mc-conv-item {
+        display: flex; align-items: baseline; gap: 6px;
+        font-size: 11px; color: rgba(255,255,255,0.5);
+        font-feature-settings: "tnum";
+      }
+      .mc-conv-item .from-to {
+        text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;
+      }
+      .mc-conv-item .pct {
+        font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+        color: rgba(255,255,255,0.85);
+      }
+      .mc-conv-item.good  .pct { color: #30d158; }
+      .mc-conv-item.warn  .pct { color: #ff9f0a; }
+      .mc-conv-item.bad   .pct { color: #ff453a; }
+      .mc-conv-item.total {
+        margin-left: auto; padding-left: 18px;
+        border-left: 1px solid rgba(255,255,255,0.08);
+      }
+      .mc-conv-item.total .from-to { color: rgba(255,255,255,0.7); }
+      .mc-conv-item.total .pct { font-size: 18px; font-weight: 700; }
+
+      /* ── Котёл flow ── */
+      .mc-pot-flow {
+        display: grid; grid-template-columns: 1fr auto 1fr;
+        gap: 14px; align-items: center; margin-top: 14px;
+      }
+      .mc-pot-side .lbl {
+        font-size: 10px; color: rgba(255,255,255,0.5);
+        text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+      }
+      .mc-pot-side .num {
+        font-size: 28px; font-weight: 300; letter-spacing: -0.02em; line-height: 1;
+      }
+      .mc-pot-side.in .num { color: #ff9f0a; }
+      .mc-pot-side.out .num { color: #30d158; }
+      .mc-pot-arrow {
+        color: rgba(255,255,255,0.35); font-size: 18px;
+      }
+      /* Sparkline тренда котла */
+      .mc-pot-trend { margin-top: 12px; }
+      .mc-pot-trend .lbl {
+        font-size: 9.5px; color: rgba(255,255,255,0.45);
+        text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
+      }
+      .mc-pot-trend .pot-spark { width: 100%; height: 28px; display: block; }
+      .mc-pot-trend .pot-spark .pot-in  { fill: none; stroke: #ff9f0a; stroke-width: 1.5; }
+      .mc-pot-trend .pot-spark .pot-out { fill: none; stroke: #30d158; stroke-width: 1.5; }
+      .mc-pot-trend .pot-leg {
+        display: flex; gap: 12px; margin-top: 4px;
+        font-size: 10.5px; color: rgba(255,255,255,0.55); align-items: center;
+      }
+      .mc-pot-trend .pot-leg .dot {
+        display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+        margin-right: 4px;
+      }
+      .mc-pot-trend .pot-leg .dot.in  { background: #ff9f0a; }
+      .mc-pot-trend .pot-leg .dot.out { background: #30d158; }
+
+      /* ── Action items (compact list) ── */
+      .mc-actions-list {
+        display: flex; flex-direction: column; gap: 8px; margin-top: 14px;
+      }
+      .mc-action {
+        display: grid; grid-template-columns: 24px 1fr auto;
+        gap: 10px; align-items: center;
+        padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+        font-size: 12.5px; color: rgba(255,255,255,0.85);
+      }
+      .mc-action:last-child { border-bottom: 0; }
+      .mc-action .ic {
+        width: 24px; height: 24px; border-radius: 6px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px;
+      }
+      .mc-action .ic.danger { background: rgba(255,69,58,0.15); color: #ff453a; }
+      .mc-action .ic.warn   { background: rgba(255,159,10,0.15); color: #ff9f0a; }
+      .mc-action .ic.ok     { background: rgba(48,209,88,0.15); color: #30d158; }
+      .mc-action .ic.info   { background: rgba(82,167,255,0.15); color: #52a7ff; }
+      .mc-action .meta {
+        font-size: 11px; color: rgba(255,255,255,0.5); white-space: nowrap;
+        font-feature-settings: "tnum";
+      }
+
+      /* ── Mini progress bar для целей ── */
+      .mc-progress-bar {
+        height: 4px; background: rgba(255,255,255,0.08);
+        border-radius: 2px; overflow: hidden; margin-top: 14px;
+      }
+      .mc-progress-bar .fill {
+        height: 100%; background: var(--green); border-radius: 2px;
+        transition: width 0.4s;
+      }
+      .mc-progress-bar.warn .fill { background: var(--yellow); }
+      .mc-progress-bar.danger .fill { background: var(--red); }
+
+      /* ── Action plan (что делать когда плохо) ── */
+      .mc-card-action {
+        margin-top: auto;
+        margin-top: 14px; padding: 10px 12px;
+        border-radius: 8px;
+        display: grid; grid-template-columns: 18px 1fr auto;
+        gap: 10px; align-items: center;
+        font-size: 11.5px; line-height: 1.4;
+        animation: mc-action-pulse 2.5s ease-in-out infinite;
+      }
+      @keyframes mc-action-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 transparent; }
+        50%      { box-shadow: 0 0 0 3px rgba(255,159,10,0.10); }
+      }
+      .mc-card.status-warn   .mc-card-action { background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.35); }
+      .mc-card.status-danger .mc-card-action { background: rgba(255,69,58,0.12);  border: 1px solid rgba(255,69,58,0.40); animation-name: mc-action-pulse-danger; }
+      @keyframes mc-action-pulse-danger {
+        0%, 100% { box-shadow: 0 0 0 0 transparent; }
+        50%      { box-shadow: 0 0 0 3px rgba(255,69,58,0.15); }
+      }
+      .mc-card-action .ic { font-size: 14px; line-height: 1; text-align: center; }
+      .mc-card.status-warn   .mc-card-action .ic { color: #ff9f0a; }
+      .mc-card.status-danger .mc-card-action .ic { color: #ff453a; }
+      .mc-card-action .text { color: rgba(255,255,255,0.9); }
+      .mc-card-action .text b { display: block; margin-bottom: 1px; color: #fff; }
+      .mc-card-action .text .what { color: rgba(255,255,255,0.6); font-size: 11px; }
+      .mc-card-action .cta {
+        padding: 5px 10px; border-radius: 6px;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+        color: #fff; font-size: 11px; font-weight: 600;
+        cursor: pointer; white-space: nowrap;
+        transition: all 0.12s;
+      }
+      .mc-card-action .cta:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.25); }
+      /* Скрываем обычный sub когда есть action plan */
+      .mc-card.status-warn   .mc-card-sub,
+      .mc-card.status-danger .mc-card-sub { display: none; }
+      /* Окантовка карточки в цвет статуса */
+      .mc-card.status-warn   { border-color: rgba(255,159,10,0.35); }
+      .mc-card.status-danger { border-color: rgba(255,69,58,0.40); }
+
+      /* ── Команда (3 над · 4 норм · 2 отстают) ── */
+      .mc-team-summary {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 8px; margin-top: 12px;
+      }
+      .mc-team-cat {
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        padding: 8px 4px; border-radius: 8px;
+      }
+      .mc-team-cat .num {
+        font-size: 24px; font-weight: 300; letter-spacing: -0.02em; line-height: 1;
+      }
+      .mc-team-cat .lbl {
+        font-size: 9.5px; color: rgba(255,255,255,0.5);
+        text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;
+      }
+      .mc-team-cat.over  { background: rgba(48,209,88,0.08); }
+      .mc-team-cat.over  .num { color: #30d158; }
+      .mc-team-cat.norm  { background: rgba(255,255,255,0.04); }
+      .mc-team-cat.norm  .num { color: rgba(255,255,255,0.85); }
+      .mc-team-cat.under { background: rgba(255,69,58,0.10); }
+      .mc-team-cat.under .num { color: #ff453a; }
+
+      .mc-team-list {
+        margin-top: 12px; display: flex; flex-direction: column; gap: 4px;
+      }
+      .mc-team-row {
+        display: grid; grid-template-columns: 18px 1fr auto;
+        gap: 8px; align-items: center;
+        padding: 4px 0;
+        font-size: 12px;
+      }
+      .mc-team-row .rank { color: rgba(255,255,255,0.4); font-size: 11px; }
+      .mc-team-row .name { color: rgba(255,255,255,0.85); }
+      .mc-team-row .pct {
+        font-weight: 700; font-feature-settings: "tnum"; font-size: 12px;
+      }
+      .mc-team-row .pct small { font-weight: 400; opacity: 0.7; }
+      .mc-team-row.over  .pct { color: #30d158; }
+      .mc-team-row.under .pct { color: #ff453a; }
+      .mc-team-row.under .name { color: rgba(255,255,255,0.65); }
+      .mc-team-row { cursor: pointer; padding: 4px 6px; border-radius: 6px; margin: 0 -6px; }
+      .mc-team-row:hover { background: rgba(255,255,255,0.04); }
+
+      /* Модалка drill-down клоузера */
+      #modal-closer-drill .modal { max-width: 700px; }
+      .closer-head {
+        padding: 16px 20px; background: linear-gradient(180deg, rgba(82,167,255,0.08), transparent);
+        border-bottom: 1px solid var(--border);
+      }
+      .closer-head .nm { font-size: 18px; font-weight: 700; color: var(--text-1); }
+      .closer-head .meta { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+      .closer-stats {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+        padding: 14px 18px;
+      }
+      .closer-stat {
+        padding: 10px 12px; background: var(--bg-2);
+        border-radius: 8px;
+      }
+      .closer-stat .lbl {
+        font-size: 9.5px; font-weight: 700; color: var(--text-3);
+        text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;
+      }
+      .closer-stat .val { font-size: 18px; font-weight: 700; }
+      .closer-stat .val.green { color: #30d158; }
+      .closer-stat .val.red { color: #ff453a; }
+      .closer-stat .val.yellow { color: #ff9f0a; }
+      .closer-section {
+        padding: 12px 18px; border-top: 1px solid var(--border);
+      }
+      .closer-section h4 {
+        font-size: 11px; font-weight: 700; color: var(--text-3);
+        text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px;
+      }
+      .closer-section .row {
+        display: flex; justify-content: space-between;
+        font-size: 12.5px; padding: 5px 0; color: var(--text-1);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      .closer-section .row:last-child { border-bottom: 0; }
+      .closer-section .row .lbl { color: var(--text-3); }
+
+      /* ── Продления SLA: распределение по клоузерам ── */
+      .mc-ext-by-closer {
+        margin-top: 12px; display: flex; flex-direction: column; gap: 6px;
+      }
+      .ext-row {
+        display: grid; grid-template-columns: 80px 1fr 22px;
+        gap: 10px; align-items: center;
+        font-size: 12px; color: rgba(255,255,255,0.85);
+        font-feature-settings: "tnum";
+      }
+      .ext-row .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .ext-row .bar {
+        height: 4px; background: rgba(255,255,255,0.06);
+        border-radius: 2px; overflow: hidden;
+      }
+      .ext-row .bar .fill {
+        display: block; height: 100%;
+        background: rgba(255,255,255,0.4); border-radius: 2px;
+      }
+      .ext-row.over .bar .fill { background: #ff453a; }
+      .ext-row .cnt { text-align: right; font-weight: 700; }
+      .ext-row.over .cnt { color: #ff453a; }
+
+      /* ── Модалка: список продлений ── */
+      #modal-extensions .modal { max-width: 760px; }
+      .ext-list { padding: 0; max-height: 60vh; overflow-y: auto; }
+      .ext-card {
+        padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: grid; grid-template-columns: 1fr auto;
+        gap: 12px; align-items: center;
+      }
+      .ext-card:last-child { border-bottom: 0; }
+      .ext-card .ext-info .nm {
+        font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;
+      }
+      .ext-card .ext-info .meta {
+        font-size: 11.5px; color: var(--text-3); line-height: 1.5;
+      }
+      .ext-card .ext-info .meta b { color: var(--text-2); }
+      .ext-card .ext-status {
+        padding: 4px 10px; border-radius: 6px;
+        font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+        text-transform: uppercase; white-space: nowrap;
+      }
+      .ext-card .ext-status.waiting { background: rgba(255,159,10,0.12); color: #ff9f0a; }
+      .ext-card .ext-status.paid    { background: rgba(48,209,88,0.12); color: #30d158; }
+      .ext-card .ext-status.failed  { background: rgba(255,69,58,0.12); color: #ff453a; }
+
+      /* ── Модалки burning + pay-misses ── */
+      .burn-card, .miss-card {
+        padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: grid; grid-template-columns: 1fr auto auto;
+        gap: 12px; align-items: center;
+      }
+      .burn-card:last-child, .miss-card:last-child { border-bottom: 0; }
+      .burn-card.danger { background: rgba(255,69,58,0.06); }
+      .burn-card.warn   { background: rgba(255,159,10,0.04); }
+      .burn-info .nm, .miss-info .nm {
+        font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;
+      }
+      .burn-info .meta, .miss-info .meta {
+        font-size: 11.5px; color: var(--text-3); line-height: 1.5;
+      }
+      .burn-info .meta b, .miss-info .meta b { color: var(--text-2); }
+      .burn-time {
+        font-size: 14px; font-weight: 800; font-feature-settings: "tnum";
+        padding: 6px 10px; border-radius: 7px; white-space: nowrap;
+      }
+      .burn-card.danger .burn-time { background: rgba(255,69,58,0.15); color: #ff453a; }
+      .burn-card.warn .burn-time   { background: rgba(255,159,10,0.15); color: #ff9f0a; }
+      .burn-card .burn-time:not(.danger):not(.warn),
+      .burn-card:not(.danger):not(.warn) .burn-time {
+        background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65);
+      }
+      .miss-card { grid-template-columns: 1fr auto; }
+
+      /* ── AI-подсказка «что сказать» в красной сделке ── */
+      .red-deal-ai-hint {
+        margin-top: 8px; padding: 10px 12px;
+        background: rgba(176,132,255,0.10);
+        border-left: 3px solid #b084ff;
+        border-radius: 0 8px 8px 0;
+        font-size: 12px;
+      }
+      .red-deal-ai-hint .lbl {
+        font-size: 9.5px; font-weight: 700; color: #b084ff;
+        text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;
+      }
+      .red-deal-ai-hint .quote {
+        color: rgba(255,255,255,0.92); font-style: italic; line-height: 1.5;
+      }
+      .red-deal-ai-hint .quote::before { content: '«'; color: #b084ff; }
+      .red-deal-ai-hint .quote::after  { content: '»'; color: #b084ff; }
+      .red-deal-ai-hint .source {
+        font-size: 10.5px; color: rgba(255,255,255,0.5); margin-top: 4px;
+      }
+
+      /* ── 📥 У меня в работе (РОП забрал) ── */
+      .mc-taken-list {
+        margin-top: 12px; display: flex; flex-direction: column; gap: 6px;
+        max-height: 110px; overflow: hidden;
+      }
+      .mc-taken-row {
+        display: grid; grid-template-columns: 8px 1fr auto;
+        gap: 8px; align-items: center;
+        font-size: 12px;
+      }
+      .mc-taken-row .dot {
+        width: 8px; height: 8px; border-radius: 50%; background: #52a7ff;
+      }
+      .mc-taken-row .dot.active { box-shadow: 0 0 6px rgba(82,167,255,0.6); }
+      .mc-taken-row .dot.won    { background: #30d158; box-shadow: 0 0 6px rgba(48,209,88,0.4); }
+      .mc-taken-row .dot.lost   { background: #ff453a; box-shadow: 0 0 6px rgba(255,69,58,0.4); }
+      .mc-taken-row .name { color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .mc-taken-row .age {
+        color: rgba(255,255,255,0.45); font-size: 10.5px;
+        font-feature-settings: "tnum"; white-space: nowrap;
+      }
+
+      /* Модалка «У меня в работе» (расширенный список) */
+      #modal-my-taken .modal { max-width: 700px; }
+      .my-taken-tabs {
+        display: flex; gap: 4px; padding: 4px;
+        background: var(--bg-2); border-radius: 8px;
+        margin: 14px 18px 0;
+      }
+      .my-taken-tab {
+        flex: 1; padding: 7px; border-radius: 6px;
+        font-size: 12px; font-weight: 600; color: var(--text-2);
+        cursor: pointer; text-align: center;
+        transition: all 0.12s;
+      }
+      .my-taken-tab:hover { color: var(--text-1); }
+      .my-taken-tab.active { background: var(--bg-1); color: var(--text-1); }
+      .my-taken-tab .cnt {
+        margin-left: 6px; padding: 1px 7px;
+        background: rgba(82,167,255,0.15); color: #52a7ff;
+        border-radius: 10px; font-size: 10.5px; font-weight: 700;
+      }
+      .my-taken-tab.active .cnt { background: var(--blue); color: #0a1424; }
+
+      .my-taken-list {
+        padding: 0 6px; max-height: 60vh; overflow-y: auto;
+      }
+      .my-taken-card {
+        padding: 12px 14px; margin: 6px 0;
+        background: var(--bg-2); border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      .my-taken-card .row1 {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 4px;
+      }
+      .my-taken-card .nm { font-size: 13px; font-weight: 700; color: var(--text-1); }
+      .my-taken-card .age2 { font-size: 11px; color: var(--text-3); }
+      .my-taken-card .reason {
+        font-size: 11.5px; color: var(--text-2); margin-bottom: 6px;
+      }
+      .my-taken-card .reason small { color: var(--text-3); display: block; margin-top: 2px; }
+      .my-taken-card .row3 {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-top: 8px; gap: 6px;
+      }
+      .my-taken-card .badge {
+        display: inline-block; padding: 2px 8px; border-radius: 6px;
+        font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .my-taken-card .badge.active { background: rgba(82,167,255,0.15); color: #52a7ff; }
+      .my-taken-card .badge.won    { background: var(--green-bg); color: var(--green); }
+      .my-taken-card .badge.lost   { background: var(--red-bg); color: var(--red); }
+      .my-taken-card .badge.returned { background: rgba(255,255,255,0.08); color: var(--text-2); }
+
+      /* ── 🔴 Красные сделки (AI-перехват) ── */
+      .mc-red-list {
+        margin-top: 14px; display: flex; flex-direction: column; gap: 8px;
+      }
+      .mc-red-row {
+        display: grid; grid-template-columns: 8px 1fr auto;
+        gap: 10px; align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255,69,58,0.10);
+        font-size: 12px;
+      }
+      .mc-red-row:last-child { border-bottom: 0; }
+      .mc-red-row .dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: #ff453a; box-shadow: 0 0 8px rgba(255,69,58,0.5);
+      }
+      .mc-red-row .reason {
+        color: rgba(255,255,255,0.85);
+      }
+      .mc-red-row .cnt {
+        color: #ff453a; font-weight: 700; font-size: 13px;
+        font-feature-settings: "tnum"; min-width: 20px; text-align: right;
+      }
+
+      /* ── Нарушения регламента (этап 04 popover) ── */
+      .mc-stage-violations {
+        padding: 10px 14px; background: rgba(255,69,58,0.06);
+        border-bottom: 1px solid rgba(255,69,58,0.18);
+        display: flex; flex-direction: column; gap: 6px;
+      }
+      .mc-stage-violations .vio-title {
+        font-size: 10px; font-weight: 700; color: #ff453a;
+        text-transform: uppercase; letter-spacing: 0.06em;
+      }
+      .mc-stage-violations .vio-row {
+        display: grid; grid-template-columns: 18px 1fr auto;
+        gap: 8px; align-items: center;
+        font-size: 12px; color: rgba(255,255,255,0.85);
+      }
+      .mc-stage-violations .vio-row .ic {
+        font-weight: 700; font-size: 13px;
+      }
+      .mc-stage-violations .vio-row .cnt {
+        font-weight: 700; font-feature-settings: "tnum"; min-width: 18px; text-align: right;
+      }
+
+      /* ── Модалка очереди перехвата ── */
+      #modal-red-queue .modal { max-width: 760px; }
+      .red-queue-head {
+        padding: 14px 18px; background: rgba(255,69,58,0.08);
+        border-bottom: 1px solid rgba(255,69,58,0.20);
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .red-queue-head .title {
+        font-size: 16px; font-weight: 700; color: #fff;
+      }
+      .red-queue-head .meta {
+        font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 3px;
+      }
+      .red-deal-card {
+        padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .red-deal-card:last-child { border-bottom: 0; }
+      .red-deal-head {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 6px;
+      }
+      .red-deal-name {
+        font-size: 13px; font-weight: 700; color: #fff;
+      }
+      .red-deal-meta {
+        font-size: 11px; color: rgba(255,255,255,0.5);
+        font-feature-settings: "tnum";
+      }
+      .red-deal-signal {
+        display: grid; grid-template-columns: auto 1fr;
+        gap: 8px; padding: 8px 12px; margin: 8px 0;
+        background: rgba(255,69,58,0.10); border-radius: 8px;
+        font-size: 12px;
+      }
+      .red-deal-signal .ic {
+        color: #ff453a; font-weight: 700;
+      }
+      .red-deal-signal .text {
+        color: rgba(255,255,255,0.92);
+      }
+      .red-deal-signal .text small {
+        display: block; color: rgba(255,255,255,0.5);
+        margin-top: 2px; font-size: 11px;
+      }
+      .red-deal-actions {
+        display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+      }
+      .red-deal-actions .btn {
+        font-size: 11.5px; padding: 6px 12px;
+      }
+      .red-deal-actions .btn.return  { border-color: #52a7ff; color: #52a7ff; }
+      .red-deal-actions .btn.take    { background: var(--green); color: #0a120c; border: 0; }
+      .red-deal-actions .btn.transfer{ border-color: #b084ff; color: #b084ff; }
+      .red-deal-actions .btn.close   { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+      /* Шапка для closer mission control — компактная */
+      body[data-role="closer"] .page[data-page-content="summary"] .page-header {
+        margin-bottom: 14px;
+      }
+      body[data-role="closer"] .page[data-page-content="summary"] .page-header h1 {
+        font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+      }
+      body[data-role="closer"] .page[data-page-content="summary"] .page-sub {
+        color: rgba(255,255,255,0.55);
+      }
+
       /* Axis labels снаружи SVG — компактно */
       .metric-sparkline-axis {
         display: flex; justify-content: space-between;
@@ -4640,6 +5433,573 @@
               <div class="period">Месяц</div>
             </div>
           </div>
+
+          <!-- ═══════════════ MISSION CONTROL · КЛОУЗЕР (Apple style) ═══════════════ -->
+          <div class="mc-summary" data-mc="closer">
+            <div class="mc-grid">
+
+              <!-- HERO: Сделок в работе с раскладкой по 8 этапам -->
+              <div class="mc-card col-3 row-2 accent-blue">
+                <div class="mc-card-arrow" onclick="switchTab('calls')">→</div>
+                <div class="mc-card-icon">💼</div>
+                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">vs пред. неделя <b style="color: #30d158">+3</b></span></div>
+                <div class="mc-card-value">47<small>· 8 этапов</small></div>
+                <div class="mc-weak-stage">
+                  <span class="ic">🚨</span>
+                  <span>Слабый этап: <b>05 Дожим</b> · конверсия <b style="color:#ff453a">38%</b> (норма 50%)</span>
+                </div>
+                <div class="mc-stages-row">
+                  <div class="mc-stage s-ok" data-stage="01" onclick="event.stopPropagation(); showStagePopover(this, '01')" title="Клик → сделки этапа 01">
+                    <div class="mc-stage-num">8 <span class="vs up">+1</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:100%"></div></div>
+                    <div class="mc-stage-label">01 встр</div>
+                  </div>
+                  <div class="mc-stage s-warn" data-stage="02" onclick="event.stopPropagation(); showStagePopover(this, '02')" title="Клик → сделки этапа 02">
+                    <div class="mc-stage-num warn">3 <span class="vs flat">0</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:50%"></div></div>
+                    <div class="mc-stage-label">02 реан</div>
+                  </div>
+                  <div class="mc-stage s-warn" data-stage="03" onclick="event.stopPropagation(); showStagePopover(this, '03')" title="Клик → сделки этапа 03">
+                    <div class="mc-stage-num">11 <span class="vs up">+2</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:80%"></div></div>
+                    <div class="mc-stage-label">03 догр</div>
+                  </div>
+                  <div class="mc-stage s-ok" data-stage="04" onclick="event.stopPropagation(); showStagePopover(this, '04')" title="Клик → сделки этапа 04">
+                    <div class="mc-stage-num">9 <span class="vs up">+1</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:90%"></div></div>
+                    <div class="mc-stage-label">04 счёт</div>
+                  </div>
+                  <div class="mc-stage s-danger" data-stage="05" onclick="event.stopPropagation(); showStagePopover(this, '05')" title="Клик → сделки этапа 05">
+                    <div class="mc-stage-num danger">7 <span class="vs down">−2</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:70%"></div></div>
+                    <div class="mc-stage-label">05 дож</div>
+                  </div>
+                  <div class="mc-stage s-ok" data-stage="06" onclick="event.stopPropagation(); showStagePopover(this, '06')" title="Клик → сделки этапа 06">
+                    <div class="mc-stage-num">2 <span class="vs up">+1</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:30%"></div></div>
+                    <div class="mc-stage-label">06 оплч</div>
+                  </div>
+                  <div class="mc-stage" data-stage="07" onclick="event.stopPropagation(); showStagePopover(this, '07')" title="Клик → сделки этапа 07">
+                    <div class="mc-stage-num">1 <span class="vs flat">0</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:15%"></div></div>
+                    <div class="mc-stage-label">07 возв</div>
+                  </div>
+                  <div class="mc-stage" data-stage="08" onclick="event.stopPropagation(); showStagePopover(this, '08')" title="Клик → сделки этапа 08">
+                    <div class="mc-stage-num">6 <span class="vs up">+1</span></div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:60%"></div></div>
+                    <div class="mc-stage-label">08 отлж</div>
+                  </div>
+                </div>
+                <div class="mc-conv-row">
+                  <div class="mc-conv-item good">
+                    <span class="from-to">01→04</span>
+                    <span class="pct">62%</span>
+                  </div>
+                  <div class="mc-conv-item good">
+                    <span class="from-to">03→04</span>
+                    <span class="pct">54%</span>
+                  </div>
+                  <div class="mc-conv-item good">
+                    <span class="from-to">04→05</span>
+                    <span class="pct">71%</span>
+                  </div>
+                  <div class="mc-conv-item warn">
+                    <span class="from-to">05→06</span>
+                    <span class="pct">38%</span>
+                  </div>
+                  <div class="mc-conv-item bad">
+                    <span class="from-to">06→07</span>
+                    <span class="pct">7%</span>
+                  </div>
+                  <div class="mc-conv-item total good">
+                    <span class="from-to">общая 01→06</span>
+                    <span class="pct">9.1%</span>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  <b>21</b> сделка требует касания сегодня · этапы 03–05 горячие
+                </div>
+              </div>
+
+              <!-- Горящие 72ч -->
+              <div class="mc-card col-3 accent-red status-warn" onclick="openBurningList()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🔥</div>
+                <div class="mc-card-label">Горящие 72 часа</div>
+                <div class="mc-card-value">5<small>· уйдут в Котёл</small></div>
+                <div class="mc-card-sub">
+                  <b>2</b> &lt; 2 часов · <b>1</b> &lt; 12 часов · <b>2</b> &lt; 24 часов
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">⚠</div>
+                  <div class="text">
+                    <b>2 сделки уйдут через 2 часа</b>
+                    <span class="what">Звони сейчас: Куделькин 290к (Иванов) · Лим 380к (Силкин)</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); openBurningList()">→ Список</button>
+                </div>
+              </div>
+
+              <!-- Команда · 9 клоузеров -->
+              <div class="mc-card col-3 accent-green status-warn" onclick="showToast('Открываем разбор по команде клоузеров')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">👥</div>
+                <div class="mc-card-label">Команда · 9 клоузеров</div>
+                <div class="mc-team-summary">
+                  <div class="mc-team-cat over">
+                    <span class="num">3</span>
+                    <span class="lbl">над планом</span>
+                  </div>
+                  <div class="mc-team-cat norm">
+                    <span class="num">4</span>
+                    <span class="lbl">в норме</span>
+                  </div>
+                  <div class="mc-team-cat under">
+                    <span class="num">2</span>
+                    <span class="lbl">отстают</span>
+                  </div>
+                </div>
+                <div class="mc-team-list">
+                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
+                    <span class="rank">①</span>
+                    <span class="name">Лим Олег</span>
+                    <span class="pct">142% <small style="color:#30d158">▲</small></span>
+                  </div>
+                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('kudelkin')">
+                    <span class="rank">②</span>
+                    <span class="name">Куделькин Е.</span>
+                    <span class="pct">118% <small style="color:#30d158">▲</small></span>
+                  </div>
+                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('kamran')">
+                    <span class="rank">③</span>
+                    <span class="name">Камран В.</span>
+                    <span class="pct">105% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                  </div>
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('ivanov')">
+                    <span class="rank">⚠</span>
+                    <span class="name">Иванов И.</span>
+                    <span class="pct">47% <small style="color:#ff453a">▼</small></span>
+                  </div>
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">⚠</div>
+                  <div class="text">
+                    <b>2 клоузера отстают от плана</b>
+                    <span class="what">Назначь 1:1 · подбери шеринг записей с топ-3</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('1:1 с Иванов И. + Петров — назначить')">→ 1:1</button>
+                </div>
+              </div>
+
+              <!-- Котёл: flow за день -->
+              <div class="mc-card col-3 accent-orange status-warn" onclick="showToast('🔥 Открываем Общий Котёл')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">♻️</div>
+                <div class="mc-card-label">Общий Котёл сегодня</div>
+                <div class="mc-card-value">12<small>· свободно</small></div>
+                <div class="mc-pot-flow">
+                  <div class="mc-pot-side in">
+                    <div class="lbl">Сдал я</div>
+                    <div class="num">2</div>
+                  </div>
+                  <div class="mc-pot-arrow">→</div>
+                  <div class="mc-pot-side out">
+                    <div class="lbl">Подобрал</div>
+                    <div class="num">3</div>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  Net бонус: <b style="color: #30d158">+2 000 ₽</b> · <b style="color:#ff9f0a">3 сделки &gt;24ч в котле</b> — почти потеряны
+                </div>
+                <div class="mc-pot-trend">
+                  <div class="lbl">Тренд за 7 дней (вход / выход)</div>
+                  <svg class="pot-spark" viewBox="0 0 100 28" preserveAspectRatio="none">
+                    <polyline class="pot-in"  points="0,18 14,15 28,12 42,10 56,8 70,6 84,5 100,4" />
+                    <polyline class="pot-out" points="0,20 14,18 28,17 42,18 56,19 70,21 84,22 100,23" />
+                  </svg>
+                  <div class="pot-leg">
+                    <span class="dot in"></span>сдают <b>↑</b>
+                    <span class="dot out"></span>подбирают <b>↓</b>
+                  </div>
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">⚠</div>
+                  <div class="text">
+                    <b>Котёл копится 7 дней подряд</b>
+                    <span class="what">Топ-сдатчики: Иванов 4 · Петров 2 → разговор сейчас</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Топ-сдатчики · персональный разбор')">→ Разобрать</button>
+                </div>
+              </div>
+
+              <!-- Action items / Zero Dashboard -->
+              <div class="mc-card col-3 accent-purple">
+                <div class="mc-card-arrow" onclick="switchTab('calls')">→</div>
+                <div class="mc-card-icon">⏰</div>
+                <div class="mc-card-label">Закрыть до 18:00 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;"><b id="task-progress" style="color:#30d158">2</b>/6 закрыто</span></div>
+                <div class="mc-card-value" id="task-remaining">4<small>осталось</small></div>
+                <div class="mc-progress-bar"><div class="fill" id="task-progress-fill" style="width: 33%"></div></div>
+                <div class="mc-actions-list" id="task-list">
+                  <div class="mc-action" data-prio="danger">
+                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
+                    <div>2-часовой звонок Куделькин Е. (этап 03)</div>
+                    <div class="meta danger">−42 мин</div>
+                  </div>
+                  <div class="mc-action" data-prio="danger">
+                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
+                    <div>Дожим Марченко (счёт +14ч)</div>
+                    <div class="meta danger">−2ч</div>
+                  </div>
+                  <div class="mc-action" data-prio="warn">
+                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
+                    <div>Догрев Лим — 14-й день (РОП-эскалация)</div>
+                    <div class="meta warn">сегодня</div>
+                  </div>
+                  <div class="mc-action" data-prio="info">
+                    <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
+                    <div>1:1 с Иванов И. (план 47%)</div>
+                    <div class="meta">15:30 ✓</div>
+                  </div>
+                  <div class="mc-action" data-prio="info">
+                    <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
+                    <div>Разбор продлений Петрова</div>
+                    <div class="meta">12:10 ✓</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 🔴 Красные сделки · AI-перехват (главная фича) -->
+              <div class="mc-card col-3 accent-red status-danger" onclick="openRedQueue()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🔴</div>
+                <div class="mc-card-label">Красные сделки · перехват <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">↓ вчера 12 → сегодня 7</span></div>
+                <div class="mc-card-value">7<small>сегодня</small></div>
+                <div class="mc-red-list">
+                  <div class="mc-red-row">
+                    <span class="dot"></span>
+                    <span class="reason">Не предложили оплатить</span>
+                    <span class="cnt">3</span>
+                  </div>
+                  <div class="mc-red-row">
+                    <span class="dot"></span>
+                    <span class="reason">Слив «подумаю» без выяснения</span>
+                    <span class="cnt">2</span>
+                  </div>
+                  <div class="mc-red-row">
+                    <span class="dot"></span>
+                    <span class="reason">«Дорого» без разбивки цены</span>
+                    <span class="cnt">1</span>
+                  </div>
+                  <div class="mc-red-row">
+                    <span class="dot"></span>
+                    <span class="reason">Разговор без след. шага</span>
+                    <span class="cnt">1</span>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  AI ловит слив <b>в день звонка</b> · РОП решает сегодня
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">🚨</div>
+                  <div class="text">
+                    <b>7 не разобраны · до 18:00 осталось 4ч</b>
+                    <span class="what">Топ-нарушитель: Иванов И. (4 красных) · разбор сейчас</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Очередь</button>
+                </div>
+              </div>
+
+              <!-- 💸 Оплат в звонке (поведенческий KPI) -->
+              <div class="mc-card col-2 status-danger" onclick="openPayMissesList()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💸</div>
+                <div class="mc-card-label">Оплат в звонке</div>
+                <div class="mc-card-value">63%<small>· норма ≥80%</small></div>
+                <div class="mc-card-sub">
+                  <b>12 / 19</b> оплат · ▼ <b style="color: #ff453a">−17 п.п.</b>
+                </div>
+                <div class="mc-ext-by-closer">
+                  <div class="ext-row over">
+                    <span class="name">Силкин Д.</span>
+                    <span class="bar"><span class="fill" style="width:100%"></span></span>
+                    <span class="cnt">4</span>
+                  </div>
+                  <div class="ext-row over">
+                    <span class="name">Иванов И.</span>
+                    <span class="bar"><span class="fill" style="width:50%"></span></span>
+                    <span class="cnt">2</span>
+                  </div>
+                  <div class="ext-row">
+                    <span class="name">Петров П.</span>
+                    <span class="bar"><span class="fill" style="width:25%"></span></span>
+                    <span class="cnt">1</span>
+                  </div>
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">🎧</div>
+                  <div class="text">
+                    <b>7 промахов «отправил ссылку, не дождался»</b>
+                    <span class="what">Слушать нарезки → планёрка «откройте, я подожду»</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); openPayMissesList()">→ Слушать</button>
+                </div>
+              </div>
+
+              <!-- ⏰ Продления SLA (watchdog по инструкции v3.5) -->
+              <div class="mc-card col-2 accent-orange status-danger" onclick="openExtensionsList()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">⏰</div>
+                <div class="mc-card-label">Продлений SLA</div>
+                <div class="mc-card-value" style="color: #ff9f0a">9<small>норма ≤5</small></div>
+                <div class="mc-card-sub">
+                  За неделю · ▲ <b style="color: #ff453a">+4</b> к норме · конверсия после продления <b style="color: #ff9f0a">28%</b>
+                </div>
+                <div class="mc-ext-by-closer">
+                  <div class="ext-row over">
+                    <span class="name">Иванов И.</span>
+                    <span class="bar"><span class="fill" style="width:100%"></span></span>
+                    <span class="cnt">4</span>
+                  </div>
+                  <div class="ext-row over">
+                    <span class="name">Петров П.</span>
+                    <span class="bar"><span class="fill" style="width:75%"></span></span>
+                    <span class="cnt">3</span>
+                  </div>
+                  <div class="ext-row">
+                    <span class="name">Силкин Д.</span>
+                    <span class="bar"><span class="fill" style="width:50%"></span></span>
+                    <span class="cnt">2</span>
+                  </div>
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">🚨</div>
+                  <div class="text">
+                    <b>9 vs норма ≤5 · Директор увидит</b>
+                    <span class="what">Иванов 4 — разбор по кейсам · стоп-режим на неделю</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); openExtensionsList()">→ Список</button>
+                </div>
+              </div>
+
+              <!-- 🤖 AI ROI: связка с красными сделками -->
+              <div class="mc-card col-2 accent-purple" onclick="switchTab('prompt-closer')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🤖</div>
+                <div class="mc-card-label">AI · спасает деньги</div>
+                <div class="mc-card-value" style="color: #b084ff">880<small>тыс ₽ за неделю</small></div>
+                <div class="mc-card-sub">
+                  Поймал <b>47 красных</b> · РОП спас <b style="color: #30d158">23</b> · средний чек <b>~38к ₽</b><br>
+                  Точность v1.4.2 <b>86.9%</b> · 8 disputes ждут разбора
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- ═══════════════ /MISSION CONTROL · КЛОУЗЕР ═══════════════ -->
+
+          <!-- ═══════════════ MISSION CONTROL · ОХОТНИК (РОП Охотников) ═══════════════ -->
+          <div class="mc-summary" data-mc="hunter">
+            <div class="mc-grid">
+
+              <!-- HERO: До цели плана -->
+              <div class="mc-card col-3 row-2 accent-green" onclick="switchTab('plans')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🎯</div>
+                <div class="mc-card-label">До цели плана за неделю</div>
+                <div class="mc-card-value">68%<small>· 104 / 153 оплат</small></div>
+                <div class="mc-progress-bar">
+                  <div class="fill" style="width: 68%"></div>
+                </div>
+                <div class="mc-card-sub" style="margin-top: 18px;">
+                  Осталось <b>49 оплат · 3 дня</b> · нужен темп <b>17/день</b><br>
+                  <span style="color: rgba(255,255,255,0.4)">текущий темп 14.8/день — догоним если +2 хороших дня</span>
+                </div>
+              </div>
+
+              <!-- % дозвона -->
+              <div class="mc-card col-3 accent-blue" onclick="switchTab('analytics')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📞</div>
+                <div class="mc-card-label">Дозвон сегодня</div>
+                <div class="mc-card-value">65.5%<small>· норма ≥60%</small></div>
+                <div class="mc-card-sub">
+                  <b>1 497</b> уник. дозвонов из <b>2 287</b> номеров · ▲ <b style="color: #30d158">+2.7 п.п.</b> к вчерашнему
+                </div>
+              </div>
+
+              <!-- Оплат 99₽ -->
+              <div class="mc-card col-3 accent-orange" onclick="switchTab('calls')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💰</div>
+                <div class="mc-card-label">Оплат 99₽ сегодня</div>
+                <div class="mc-card-value">19<small>· шт</small></div>
+                <div class="mc-card-sub">
+                  Сумма: <b>1 881 ₽</b> · вчера <b>16 шт</b> · ▲ <b style="color: #30d158">+19%</b><br>
+                  Конверсия лид → 99₽: <b>2.2%</b>
+                </div>
+              </div>
+
+              <!-- Горящие звонки SLA -->
+              <div class="mc-card col-3 accent-red" onclick="switchTab('calls')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🔥</div>
+                <div class="mc-card-label">Горящие звонки SLA</div>
+                <div class="mc-card-value">12<small>· ≤ 30 мин</small></div>
+                <div class="mc-card-sub">
+                  Лиды с просроченным первым звонком · норма SLA <b>4-5 мин</b><br>
+                  Топ-нарушитель: <b>Силкин Денис</b> (4 лида)
+                </div>
+              </div>
+
+              <!-- AI точность -->
+              <div class="mc-card col-3" onclick="switchTab('prompt-hunter')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🤖</div>
+                <div class="mc-card-label">AI точность · охотники</div>
+                <div class="mc-card-value" style="color: #30d158">89.4%<small>v5.5</small></div>
+                <div class="mc-card-sub">
+                  За неделю <b>607 звонков</b> · 12 disputes от РОПов ждут разбора
+                </div>
+              </div>
+
+              <!-- Action items -->
+              <div class="mc-card col-3 accent-purple" onclick="switchTab('calls')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">⏰</div>
+                <div class="mc-card-label">Требуют разбора</div>
+                <div class="mc-card-value">7<small>· сегодня</small></div>
+                <div class="mc-actions-list">
+                  <div class="mc-action">
+                    <div class="ic danger">!</div>
+                    <div>3 БРАК-звонка Силкин Д. за час</div>
+                    <div class="meta">сейчас</div>
+                  </div>
+                  <div class="mc-action">
+                    <div class="ic warn">⚡</div>
+                    <div>Запрещёнка ОКК · Корчик Д.</div>
+                    <div class="meta">−15 мин</div>
+                  </div>
+                  <div class="mc-action">
+                    <div class="ic info">📋</div>
+                    <div>Q11 пропущен · 4 звонка Силкина</div>
+                    <div class="meta">сегодня</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- ═══════════════ /MISSION CONTROL · ОХОТНИК ═══════════════ -->
+
+          <!-- ═══════════════ MISSION CONTROL · ДИРЕКТОР ═══════════════ -->
+          <div class="mc-summary" data-mc="director">
+            <div class="mc-grid">
+
+              <!-- HERO: Выручка / цель -->
+              <div class="mc-card col-3 row-2 accent-green" onclick="switchTab('plans')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💰</div>
+                <div class="mc-card-label">Выручка за неделю</div>
+                <div class="mc-card-value">8.4<small>млн ₽</small></div>
+                <div class="mc-progress-bar">
+                  <div class="fill" style="width: 84%"></div>
+                </div>
+                <div class="mc-card-sub" style="margin-top: 14px;">
+                  84% от цели <b>10 млн ₽</b> · до конца <b>3 дня</b>
+                </div>
+                <div class="mc-stages-row" style="margin-top: 18px;">
+                  <div class="mc-stage s-ok">
+                    <div class="mc-stage-num" style="font-size: 14px;">2 178</div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:100%"></div></div>
+                    <div class="mc-stage-label">Лиды</div>
+                  </div>
+                  <div class="mc-stage s-ok">
+                    <div class="mc-stage-num" style="font-size: 14px;">104</div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:80%"></div></div>
+                    <div class="mc-stage-label">99₽ опл</div>
+                  </div>
+                  <div class="mc-stage s-ok">
+                    <div class="mc-stage-num" style="font-size: 14px;">76</div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:73%"></div></div>
+                    <div class="mc-stage-label">Встречи</div>
+                  </div>
+                  <div class="mc-stage s-warn">
+                    <div class="mc-stage-num" style="font-size: 14px; color:#ff9f0a">42</div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:55%; background:#ff9f0a;"></div></div>
+                    <div class="mc-stage-label">Договоры</div>
+                  </div>
+                  <div class="mc-stage s-ok">
+                    <div class="mc-stage-num" style="font-size: 14px; color:#30d158">€42к</div>
+                    <div class="mc-stage-bar"><div class="fill" style="width:84%; background:#30d158;"></div></div>
+                    <div class="mc-stage-label">ср.чек</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI ROI -->
+              <div class="mc-card col-3 accent-purple" onclick="switchTab('prompt-closer')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🤖</div>
+                <div class="mc-card-label">AI как ROI ОКК</div>
+                <div class="mc-card-value">87.4%<small>точность</small></div>
+                <div class="mc-card-sub">
+                  Заменил <b>18 ч</b> работы ОКК за месяц = <b>~24 000 ₽</b> экономии<br>
+                  qa_closer v1.4.2 · qa_hunter v5.5
+                </div>
+              </div>
+
+              <!-- LTV / CAC -->
+              <div class="mc-card col-3 accent-blue" onclick="switchTab('analytics')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📈</div>
+                <div class="mc-card-label">LTV / CAC</div>
+                <div class="mc-card-value">3.8<small>x</small></div>
+                <div class="mc-card-sub">
+                  LTV <b>180к ₽</b> · CAC <b>47к ₽</b> · норма <b>≥3</b><br>
+                  ▲ <b style="color: #30d158">+0.4x</b> к прошлому месяцу
+                </div>
+              </div>
+
+              <!-- Watchdog: продления / расторги -->
+              <div class="mc-card col-3 accent-red" onclick="switchTab('analytics')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">⚠️</div>
+                <div class="mc-card-label">Watchdog</div>
+                <div class="mc-card-value">14<small>сигналов</small></div>
+                <div class="mc-actions-list">
+                  <div class="mc-action">
+                    <div class="ic danger">⏱</div>
+                    <div>Продлений SLA: <b>9</b> · норма ≤5</div>
+                    <div class="meta">эта нед</div>
+                  </div>
+                  <div class="mc-action">
+                    <div class="ic warn">↩</div>
+                    <div>Расторгов: <b>3</b> · средн. <b>1.5</b></div>
+                    <div class="meta">−2 нед</div>
+                  </div>
+                  <div class="mc-action">
+                    <div class="ic info">♻️</div>
+                    <div>Котёл &gt;20%: <b>2 клоузера</b></div>
+                    <div class="meta">сегодня</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- РОПы по командам -->
+              <div class="mc-card col-3 accent-orange" onclick="showToast('Открываем разбор по РОПам')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">👥</div>
+                <div class="mc-card-label">Команды РОПов</div>
+                <div class="mc-card-value">2<small>РОПа</small></div>
+                <div class="mc-card-sub">
+                  <b>Иванов</b> (охотники 18 чел) · план <b style="color:#30d158">68%</b><br>
+                  <b>Скоробогатый</b> (клоузеры 9 чел) · план <b style="color:#ff9f0a">55%</b>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- ═══════════════ /MISSION CONTROL · ДИРЕКТОР ═══════════════ -->
 
           <!-- ═══ ВОРОНКА-ЯКОРЬ · ОХОТНИК (5 этапов с планом: Лид → Счёт → 99₽ → КП валидный → Продажа) ═══ -->
           <div class="funnel-anchor" data-roles="hunter">
@@ -9476,6 +10836,449 @@
     </div>
 
     <!-- ═══ МОДАЛКА · РЕЗУЛЬТАТ БЕНЧМАРКА (regression view, Pattern Braintrust) ═══ -->
+    <!-- ═══ МОДАЛКА · DRILL-DOWN КЛОУЗЕРА ═══ -->
+    <div class="modal-overlay" id="modal-closer-drill">
+      <div class="modal" style="max-height: 90vh; overflow: hidden; display: flex; flex-direction: column;">
+        <div class="modal-head" style="padding: 0;">
+          <div class="closer-head" style="flex: 1;">
+            <div class="nm" id="cd-name">Лим Олег · клоузер МПП2</div>
+            <div class="meta" id="cd-meta">9 месяцев в команде · топ-1 за неделю</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('closer-drill')" style="margin: 14px 16px;">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto;">
+          <div class="closer-stats">
+            <div class="closer-stat"><div class="lbl">План недели</div><div class="val green" id="cd-plan">142%</div></div>
+            <div class="closer-stat"><div class="lbl">Закрытий</div><div class="val" id="cd-deals">8</div></div>
+            <div class="closer-stat"><div class="lbl">Выручка</div><div class="val green" id="cd-rev">1.6 млн</div></div>
+            <div class="closer-stat"><div class="lbl">AI-балл</div><div class="val green" id="cd-ai">94%</div></div>
+          </div>
+          <div class="closer-section">
+            <h4>Текущие сделки в работе (<span id="cd-active">5</span>)</h4>
+            <div id="cd-deals-list">
+              <div class="row"><span>Лим продажа · 165к (этап 04)</span><span class="lbl">+8 дн</span></div>
+              <div class="row"><span>Лим Тамара · 380к (этап 03)</span><span class="lbl">+22ч</span></div>
+              <div class="row"><span>Лим Олег СВО · 165к (этап 06)</span><span class="lbl">сегодня ✓</span></div>
+            </div>
+          </div>
+          <div class="closer-section">
+            <h4>За неделю</h4>
+            <div class="row"><span class="lbl">Красных сделок (AI поймал)</span><span style="color:#30d158">0</span></div>
+            <div class="row"><span class="lbl">Сдал в Котёл</span><span style="color:#30d158">0</span></div>
+            <div class="row"><span class="lbl">Подобрал из Котла</span><span>2 (+4 000 ₽)</span></div>
+            <div class="row"><span class="lbl">Продлений SLA запросил</span><span>1</span></div>
+            <div class="row"><span class="lbl">Конверсия 04→06</span><span style="color:#30d158">82%</span></div>
+            <div class="row"><span class="lbl">Оплат в звонке</span><span style="color:#30d158">95%</span></div>
+          </div>
+          <div class="closer-section">
+            <h4>Что прокачивает</h4>
+            <div class="row"><span>Передача в МОС после оплаты — задержка 1.5ч в среднем</span><span class="lbl">в работе</span></div>
+            <div class="row"><span>Поделиться записью продажи Камран 165к с командой</span><span class="lbl">to-do</span></div>
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;" id="cd-status">
+            ✓ Образцовый клоузер · использовать как референс для команды
+          </div>
+          <button class="btn" onclick="showToast('1:1 встреча назначена')">📅 1:1 встреча</button>
+          <button class="btn" onclick="closeModal('closer-drill')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · ГОРЯЩИЕ 72ч (кому звонить сейчас) ═══ -->
+    <div class="modal-overlay" id="modal-burning">
+      <div class="modal" style="max-width: 720px;">
+        <div class="modal-head" style="background: rgba(255,69,58,0.06); border-bottom: 1px solid rgba(255,69,58,0.20);">
+          <div>
+            <div class="modal-title">🔥 Горящие 72 часа · 5 сделок</div>
+            <div class="modal-sub">эти сделки уйдут в Котёл если не сделать касание</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('burning')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0;">
+          <div class="burn-card danger">
+            <div class="burn-info">
+              <div class="nm">Куделькин Любовь · 290к</div>
+              <div class="meta">Клоузер: <b>Иванов И.</b> · этап 04 Счёт · последнее касание <b>пн 21.04 · 16:08</b></div>
+            </div>
+            <div class="burn-time">−1ч 18м</div>
+            <button class="btn primary sm" onclick="showToast('Звонок Иванову на горящую сделку')">📞 Иванову</button>
+          </div>
+          <div class="burn-card danger">
+            <div class="burn-info">
+              <div class="nm">Лим Тамара · 380к</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · этап 03 Догрев · последнее касание <b>пн 21.04 · 09:42</b></div>
+            </div>
+            <div class="burn-time">−1ч 45м</div>
+            <button class="btn primary sm" onclick="showToast('Звонок Силкину')">📞 Силкину</button>
+          </div>
+          <div class="burn-card warn">
+            <div class="burn-info">
+              <div class="nm">Марченко · 270к</div>
+              <div class="meta">Клоузер: <b>Иванов И.</b> · этап 05 Дожим · последнее касание <b>вт 22.04 · 11:30</b></div>
+            </div>
+            <div class="burn-time">+8ч</div>
+            <button class="btn sm" onclick="showToast('Напоминание Иванову через 2 часа')">⏰ Напомнить</button>
+          </div>
+          <div class="burn-card">
+            <div class="burn-info">
+              <div class="nm">Куделькин Куликов · 110к</div>
+              <div class="meta">Клоузер: <b>Иванов И.</b> · этап 05 Дожим · последнее касание <b>вт 22.04 · 16:50</b></div>
+            </div>
+            <div class="burn-time">+18ч</div>
+            <button class="btn sm" onclick="showToast('Напоминание Иванову завтра утром')">⏰ Напомнить</button>
+          </div>
+          <div class="burn-card">
+            <div class="burn-info">
+              <div class="nm">Камран В. · 165к</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · этап 04 Счёт · последнее касание <b>ср 23.04 · 09:15</b></div>
+            </div>
+            <div class="burn-time">+22ч</div>
+            <button class="btn sm" onclick="showToast('Напоминание Силкину завтра')">⏰ Напомнить</button>
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            🔥 2 критичных (&lt;2ч) · разбери сейчас или потеряешь
+          </div>
+          <button class="btn" onclick="closeModal('burning')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · ПЛЕЕР ПРОМАХОВ (Оплат в звонке) ═══ -->
+    <div class="modal-overlay" id="modal-pay-misses">
+      <div class="modal" style="max-width: 720px;">
+        <div class="modal-head" style="background: rgba(255,69,58,0.06); border-bottom: 1px solid rgba(255,69,58,0.20);">
+          <div>
+            <div class="modal-title">🎧 Промахи оплат · 7 за неделю</div>
+            <div class="modal-sub">«отправил ссылку, не дождался» · нарезки по 30 сек · после прослушивания → планёрка</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('pay-misses')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0;">
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Куделькин Куликов · 110к · вчера 14:32</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · «Отправляю ссылку на ЛК» (15:08) → положил трубку (15:08:42)</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Лим Тамара · 380к · вчера 11:15</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · «Я СМС отправил, проверьте» (11:18) → нет повторного звонка</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Марченко · 270к · сегодня 09:42</div>
+              <div class="meta">Клоузер: <b>Иванов И.</b> · «Вечером оплатите, как удобно» (09:50)</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Куделькин Е. · 290к · сегодня 13:00</div>
+              <div class="meta">Клоузер: <b>Иванов И.</b> · «Жду оплату, скажите когда» (13:10)</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Петрова · 280к · вчера 16:48</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · «Свяжемся завтра» — клиент ждёт оплаты</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Лим Олег · 165к · сегодня 10:22</div>
+              <div class="meta">Клоузер: <b>Силкин Д.</b> · «Когда удобно — оплатите»</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+          <div class="miss-card">
+            <div class="miss-info">
+              <div class="nm">Ляшенко · 320к · сегодня 12:15</div>
+              <div class="meta">Клоузер: <b>Петров П.</b> · «Решайте, я отправил всё»</div>
+            </div>
+            <button class="btn primary sm" onclick="showToast('▶ Воспроизводим нарезку 30 сек')">▶ Слушать</button>
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            💡 Скрипт-замена: <b style="color: #fff">«Откройте, я подожду на линии»</b> вместо «отправил, ждите»
+          </div>
+          <button class="btn" onclick="showToast('Создан слот планёрки на завтра 09:00')">📅 Назначить планёрку</button>
+          <button class="btn" onclick="closeModal('pay-misses')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · ПРОДЛЕНИЯ SLA (watchdog) ═══ -->
+    <div class="modal-overlay" id="modal-extensions">
+      <div class="modal" style="max-height: 90vh; overflow: hidden; display: flex; flex-direction: column;">
+        <div class="modal-head" style="background: rgba(255,159,10,0.06); border-bottom: 1px solid rgba(255,159,10,0.20);">
+          <div>
+            <div class="modal-title">⏰ Продления SLA · 9 за неделю</div>
+            <div class="modal-sub">норма ≤5 · превышение = директор увидит · конверсия после продления 28%</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('extensions')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto;">
+          <div class="ext-list">
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Куделькин Любовь · 290к</div>
+                <div class="meta">Клоузер: <b>Иванов И.</b> · этап 04 Счёт · продлено на <b>+5 дней</b><br>Запрошено пн 21.04 · одобрено · клиент назвал дату пт 25.04</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Лим Тамара · 380к</div>
+                <div class="meta">Клоузер: <b>Иванов И.</b> · этап 05 Дожим · продлено на <b>+7 дней</b><br>Запрошено вт 22.04 · одобрено · «жду зарплату 28-го»</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Куделькин Куликов · 110к</div>
+                <div class="meta">Клоузер: <b>Иванов И.</b> · этап 05 Дожим · продлено на <b>+5 дней</b><br>Запрошено пн 21.04 · одобрено · отказ оплаты</div>
+              </div>
+              <div class="ext-status failed">Не оплатил</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Силкин → Лим (Олег СВО) · 165к</div>
+                <div class="meta">Клоузер: <b>Иванов И.</b> · этап 04 Счёт · продлено на <b>+3 дня</b><br>Запрошено вт 22.04 · одобрено · клиент в командировке</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Ляшенко продажа · 400к</div>
+                <div class="meta">Клоузер: <b>Петров П.</b> · этап 04 Счёт · продлено на <b>+7 дней</b><br>Запрошено ср 23.04 · одобрено · оплачено вчера ✓</div>
+              </div>
+              <div class="ext-status paid">Оплачено</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Куделькин Е. · 290к</div>
+                <div class="meta">Клоузер: <b>Петров П.</b> · этап 05 Дожим · продлено на <b>+4 дня</b><br>Запрошено ср 23.04 · одобрено · клиент молчит 3 дня</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Корчик → Ляшенко · 320к</div>
+                <div class="meta">Клоузер: <b>Петров П.</b> · этап 04 Счёт · продлено на <b>+5 дней</b><br>Запрошено вт 22.04 · одобрено · ждёт ответа от жены</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Марченко · 270к</div>
+                <div class="meta">Клоузер: <b>Силкин Д.</b> · этап 05 Дожим · продлено на <b>+6 дней</b><br>Запрошено чт 24.04 · одобрено · оплачено сегодня ✓</div>
+              </div>
+              <div class="ext-status paid">Оплачено</div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-info">
+                <div class="nm">Камран В. · 165к</div>
+                <div class="meta">Клоузер: <b>Силкин Д.</b> · этап 04 Счёт · продлено на <b>+4 дня</b><br>Запрошено пт 25.04 · одобрено · клиент завтра</div>
+              </div>
+              <div class="ext-status waiting">Ждём оплату</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            ✓ Оплачено: <b style="color: var(--green)">2</b> · ⏳ Ждём: <b style="color: var(--yellow)">6</b> · ✗ Не оплатил: <b style="color: var(--red)">1</b> · конверсия <b>22%</b>
+          </div>
+          <button class="btn" onclick="toggleStopMode()">⛔ Стоп-режим (неделя)</button>
+          <button class="btn" onclick="closeModal('extensions')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · ОЧЕРЕДЬ ПЕРЕХВАТА (красные сделки от AI) ═══ -->
+    <div class="modal-overlay" id="modal-red-queue">
+      <div class="modal" style="max-height: 90vh; overflow: hidden; display: flex; flex-direction: column;">
+        <div class="modal-head red-queue-head">
+          <div>
+            <div class="title">🔴 Очередь перехвата · сегодня</div>
+            <div class="meta">7 красных сделок · AI поймал слив в день звонка · РОП обязан решить до конца смены</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('red-queue')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto;">
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Куделькин Куликов · 110к ₽ · этап 05 Дожим</div>
+                <div class="red-deal-meta">встреча сегодня 11:42 · клоузер: <b style="color:#fff">Иванов И.</b> · −2ч 18м после звонка</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Не предложили оплатить»
+                <small>Клиент квалифицирован, готов внести часть, но клоузер не предложил предоплату от 2 000 ₽ · потеря входа в Дожим</small>
+              </div>
+            </div>
+            <div class="red-deal-ai-hint">
+              <div class="lbl">🤖 AI-подсказка · что сказать клиенту (из эталона Камрана 165к)</div>
+              <div class="quote">Понимаю что сумма серьёзная. Давайте сделаем так: внесите 2 000 ₽ сейчас как символ намерения — я закрепляю за вами цену и юриста. Через 5 дней доплачиваете остаток.</div>
+              <div class="source">Эталон A · ACCEPTED_SALE · схема используется в 87% успешных дожимов</div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Куделькин Куликов')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Куликов')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Куделькин Куликов')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Силкин Денис → Лим Тамара · 380к ₽ · этап 03 Догрев</div>
+                <div class="red-deal-meta">встреча сегодня 09:15 · клоузер: <b style="color:#fff">Иванов И.</b> · −5ч после звонка</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Слив "подумаю" без выяснения»
+                <small>Клиент сказал «подумаю», а клоузер не выяснил что именно · правило <code>cause_probing_required</code> провален</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Лим Тамара')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Лим Тамара')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Лим Тамара')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Корчик → Ляшенко · 320к ₽ · этап 04 Счёт</div>
+                <div class="red-deal-meta">счёт отправлен 1ч 22м назад · клоузер: <b style="color:#fff">Силкин Д.</b> · НЕТ касания в первые 15 мин</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Пассивная продажа»
+                <small>Счёт отправлен, но не было звонка в первые 15 минут · потеря инициативы</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Ляшенко')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Ляшенко')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Ляшенко')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Силкин → Куделькин Е. · 290к ₽ · этап 03 Догрев</div>
+                <div class="red-deal-meta">встреча сегодня 13:00 · клоузер: <b style="color:#fff">Иванов И.</b> · −1ч 5м после звонка</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «"Дорого" без разбивки цены»
+                <small>Клиент сказал «дорого», но клоузер не показал разбивку цены / рассрочку / ценность · не отработали деньги</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Куделькин Е.')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Е.')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Куделькин Е.')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Короткова → Лим (Олег СВО) · 165к ₽ · этап 04 Счёт</div>
+                <div class="red-deal-meta">встреча сегодня 14:30 · клоузер: <b style="color:#fff">Силкин Д.</b> · −45 мин</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Разговор закончился без следующего шага»
+                <small>Клоузер не назначил конкретное следующее действие (звонок / оплата / договор) · сделка зависнет</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Лим Олег')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Лим Олег')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Лим Олег')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Силкин → Марченко · 270к ₽ · этап 03 Догрев</div>
+                <div class="red-deal-meta">встреча сегодня 10:18 · клоузер: <b style="color:#fff">Силкин Д.</b> · −3ч 45м</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Не предложили оплатить»
+                <small>Клиент квалифицирован, но не получил предложение оплатить · клоузер не закрыл</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Марченко')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Марченко')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Марченко')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+          <div class="red-deal-card">
+            <div class="red-deal-head">
+              <div>
+                <div class="red-deal-name">Корчик → Куделькин Любовь · 290к ₽ · этап 02 Реанимация</div>
+                <div class="red-deal-meta">встреча вчера 17:45 · клоузер: <b style="color:#fff">Иванов И.</b> · −1 день</div>
+              </div>
+            </div>
+            <div class="red-deal-signal">
+              <div class="ic">⚠</div>
+              <div class="text">
+                «Прямой слив»
+                <small>Клоузер сказал «напишите, когда решите» · потеря контроля над сделкой</small>
+              </div>
+            </div>
+            <div class="red-deal-actions">
+              <button class="btn return" onclick="resolveRed('return', 'Куделькин Любовь')">↩ Вернуть с задачей</button>
+              <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Любовь')">→ Передать сильному</button>
+              <button class="btn close" onclick="resolveRed('close', 'Куделькин Любовь')">× Закрыть как нецелевую</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            ⏰ <b style="color: var(--text-1)">До конца смены 4ч 15м</b> · разобрано <b style="color: var(--green)">0 / 7</b> · топ-нарушитель: <b>Иванов И.</b> (4 красных)
+          </div>
+          <button class="btn" onclick="closeModal('red-queue')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-overlay" id="modal-bench">
       <div class="modal" style="max-width: 1100px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column;">
         <div class="modal-head">
@@ -9839,6 +11642,354 @@
       }
       document.querySelectorAll(".ar-tab").forEach((t) => {
         t.addEventListener("click", () => { setAnalyticsTab(t.dataset.arole); redrawAnalyticsSparklines(); });
+      });
+
+      // ═══════════════ MISSION CONTROL · CLOSER DRILL-DOWN ═══════════════
+      const CLOSERS = {
+        lim: {
+          name: "Лим Олег · клоузер МПП2",
+          meta: "9 месяцев в команде · топ-1 за неделю",
+          plan: "142%", planCls: "green",
+          deals: "8", rev: "1.6 млн", revCls: "green",
+          ai: "94%", aiCls: "green",
+          activeCount: "5",
+          activeDeals: [
+            { name: "Лим продажа · 165к (04)", age: "+8 дн" },
+            { name: "Лим Тамара · 380к (03)", age: "+22ч" },
+            { name: "Лим Олег СВО · 165к (06)", age: "сегодня ✓" },
+          ],
+          weekStats: { red: "0", red_cls: "#30d158", potIn: "0 ✓", potOut: "2 (+4 000 ₽)", ext: "1", conv46: "82%", conv46_cls: "#30d158", inCallPay: "95%", inCallPay_cls: "#30d158" },
+          improving: [
+            { what: "Передача в МОС после оплаты — задержка 1.5ч", status: "в работе" },
+            { what: "Поделиться записью Камран 165к с командой", status: "to-do" },
+          ],
+          status: "✓ Образцовый клоузер · использовать как референс для команды",
+        },
+        kudelkin: {
+          name: "Куделькин Е. · клоузер МПП2",
+          meta: "1 год в команде · топ-2 за неделю",
+          plan: "118%", planCls: "green",
+          deals: "7", rev: "1.4 млн", revCls: "green",
+          ai: "89%", aiCls: "green",
+          activeCount: "6",
+          activeDeals: [
+            { name: "Куделькин Любовь 290к (04)", age: "+5 дн" },
+            { name: "Куделькин Е. продажа (06)", age: "сегодня ✓" },
+            { name: "Куделькин Куликов (05)", age: "+18ч" },
+          ],
+          weekStats: { red: "1", red_cls: "#ff9f0a", potIn: "1", potOut: "1 (+2 000 ₽)", ext: "0", conv46: "75%", conv46_cls: "#30d158", inCallPay: "82%", inCallPay_cls: "#30d158" },
+          improving: [
+            { what: "1 красная за неделю — разобрать кейс", status: "to-do" },
+          ],
+          status: "✓ Стабильно над планом · даём VIP-сделки",
+        },
+        kamran: {
+          name: "Камран В. · клоузер МПП2",
+          meta: "8 месяцев в команде · в норме",
+          plan: "105%", planCls: "green",
+          deals: "5", rev: "1.0 млн", revCls: "green",
+          ai: "87%", aiCls: "green",
+          activeCount: "4",
+          activeDeals: [
+            { name: "Камран продажа 165к (04)", age: "+6 дн" },
+            { name: "Камран В. (03)", age: "+3 дн" },
+          ],
+          weekStats: { red: "2", red_cls: "#ff9f0a", potIn: "0", potOut: "0", ext: "1", conv46: "68%", conv46_cls: "#ff9f0a", inCallPay: "78%", inCallPay_cls: "#ff9f0a" },
+          improving: [
+            { what: "Конверсия 04→06 ниже среднего", status: "в работе" },
+            { what: "Записи топ-1 (Лим Олег) — посмотреть", status: "to-do" },
+          ],
+          status: "→ В норме · можно повысить дисциплину дожима",
+        },
+        ivanov: {
+          name: "Иванов И. · клоузер МПП2",
+          meta: "3 месяца в команде · 2 недели подряд в красной зоне ⚠",
+          plan: "47%", planCls: "red",
+          deals: "2", rev: "420к", revCls: "red",
+          ai: "78%", aiCls: "yellow",
+          activeCount: "4",
+          activeDeals: [
+            { name: "Куделькин Любовь 290к (02)", age: "+1 день · моя · РОП забрал" },
+            { name: "Лим Тамара 380к (03)", age: "+3ч · моя · РОП забрал" },
+            { name: "Куделькин Куликов (05)", age: "−2 дн · просрочено!" },
+          ],
+          weekStats: { red: "4", red_cls: "#ff453a", potIn: "4 ⚠", potOut: "0", ext: "4 ⚠", conv46: "32%", conv46_cls: "#ff453a", inCallPay: "45%", inCallPay_cls: "#ff453a" },
+          improving: [
+            { what: "4 красных за неделю — разбор каждого кейса с РОПом", status: "критично" },
+            { what: "Шеринг записей с Лимом и Куделькиным (топ-1, топ-2)", status: "назначено пт" },
+            { what: "Тренировка дожима — скрипт «откройте, я подожду»", status: "обязательно" },
+            { what: "1:1 РОП → разговор о соответствии", status: "сегодня 15:30" },
+          ],
+          status: "🚨 Риск увольнения если третья неделя ниже плана",
+        },
+      };
+
+      function openCloserDrilldown(id) {
+        const d = CLOSERS[id];
+        if (!d) return;
+        document.getElementById("cd-name").textContent = d.name;
+        document.getElementById("cd-meta").textContent = d.meta;
+        document.getElementById("cd-plan").textContent = d.plan;
+        document.getElementById("cd-plan").className = "val " + d.planCls;
+        document.getElementById("cd-deals").textContent = d.deals;
+        document.getElementById("cd-rev").textContent = d.rev;
+        document.getElementById("cd-rev").className = "val " + d.revCls;
+        document.getElementById("cd-ai").textContent = d.ai;
+        document.getElementById("cd-ai").className = "val " + d.aiCls;
+        document.getElementById("cd-active").textContent = d.activeCount;
+        document.getElementById("cd-deals-list").innerHTML = d.activeDeals.map(x => `<div class="row"><span>${x.name}</span><span class="lbl">${x.age}</span></div>`).join("");
+        // week stats — обновлю ручно пробежавшись по DOM
+        const sec = document.querySelectorAll("#modal-closer-drill .closer-section");
+        if (sec[1]) sec[1].innerHTML = `<h4>За неделю</h4>
+          <div class="row"><span class="lbl">Красных сделок (AI поймал)</span><span style="color:${d.weekStats.red_cls}">${d.weekStats.red}</span></div>
+          <div class="row"><span class="lbl">Сдал в Котёл</span><span>${d.weekStats.potIn}</span></div>
+          <div class="row"><span class="lbl">Подобрал из Котла</span><span>${d.weekStats.potOut}</span></div>
+          <div class="row"><span class="lbl">Продлений SLA запросил</span><span>${d.weekStats.ext}</span></div>
+          <div class="row"><span class="lbl">Конверсия 04→06</span><span style="color:${d.weekStats.conv46_cls}">${d.weekStats.conv46}</span></div>
+          <div class="row"><span class="lbl">Оплат в звонке</span><span style="color:${d.weekStats.inCallPay_cls}">${d.weekStats.inCallPay}</span></div>`;
+        if (sec[2]) sec[2].innerHTML = `<h4>Что прокачивает</h4>` + d.improving.map(x => `<div class="row"><span>${x.what}</span><span class="lbl">${x.status}</span></div>`).join("");
+        document.getElementById("cd-status").innerHTML = d.status;
+        openModal("closer-drill");
+      }
+
+      // ═══════════════ MISSION CONTROL · BURNING / PAY-MISSES / TASKS ═══════════════
+      function openBurningList()  { openModal("burning"); }
+      function openPayMissesList() { openModal("pay-misses"); }
+
+      // Чекбоксы задач "До 18:00"
+      function toggleTask(input) {
+        const action = input.closest(".mc-action");
+        action.dataset.completed = input.checked ? "true" : "false";
+        const list = action.closest("#task-list");
+        const total = list.querySelectorAll(".mc-action").length;
+        const done = list.querySelectorAll('.mc-action[data-completed="true"]').length;
+        const remaining = total - done;
+        const pct = (done / total) * 100;
+        const progressEl = document.getElementById("task-progress");
+        const remainingEl = document.getElementById("task-remaining");
+        const fillEl = document.getElementById("task-progress-fill");
+        if (progressEl) progressEl.textContent = done;
+        if (remainingEl) remainingEl.innerHTML = remaining + '<small>осталось</small>';
+        if (fillEl) {
+          fillEl.style.width = pct + "%";
+          fillEl.style.background = pct === 100 ? "var(--green)" : pct >= 50 ? "var(--yellow)" : "var(--green)";
+        }
+        // если все задачи сделаны — toast победы
+        if (remaining === 0) showToast("🎉 Все задачи закрыты! Чистый дашборд — пиши скрин директору");
+      }
+
+      // ═══════════════ MISSION CONTROL · ПРОДЛЕНИЯ SLA ═══════════════
+      function openExtensionsList() { openModal("extensions"); }
+      function toggleStopMode() {
+        showToast("⛔ Стоп-режим включён · 7 дней · никаких новых одобрений · команда учится сама закрывать в SLA");
+        closeModal("extensions");
+      }
+
+      // ═══════════════ MISSION CONTROL · КРАСНЫЕ СДЕЛКИ + ПЕРЕХВАТ ═══════════════
+      function openRedQueue() { openModal("red-queue"); }
+      function resolveRed(action, dealName) {
+        const labels = {
+          return: "↩ возвращена клоузеру с задачей",
+          transfer: "→ передана сильному клоузеру",
+          close: "× закрыта как нецелевая",
+        };
+        showToast(`✓ "${dealName}" · ${labels[action]}`);
+        const card = event.target.closest(".red-deal-card");
+        if (card) {
+          card.style.opacity = "0.4";
+          card.style.pointerEvents = "none";
+          const footEl = document.querySelector("#modal-red-queue .modal-foot > div");
+          if (footEl) {
+            const resolved = document.querySelectorAll("#modal-red-queue .red-deal-card[style*='opacity: 0.4']").length;
+            footEl.innerHTML = footEl.innerHTML.replace(/разобрано <b[^>]*>\d+/, `разобрано <b style="color: var(--green)">${resolved}`);
+          }
+        }
+      }
+
+      // ═══════════════ MISSION CONTROL · STAGE POPOVER (mock сделки этапа) ═══════════════
+      const STAGE_DEALS = {
+        "01": {
+          title: "01 Встреча назначена",
+          meta: "SLA 24ч · 8 сделок",
+          deals: [
+            { name: "Куделькин Любовь · 290к", sub: "встреча сегодня 16:00 · Контур.Толк",        timer: "−2ч 14м",  cls: "warn" },
+            { name: "Лим Тамара · 380к",       sub: "встреча завтра 11:00 · Контур.Толк",        timer: "+19ч",    cls: "ok" },
+            { name: "Камран Велозов · 165к",   sub: "встреча сегодня 18:30 · Sipuni",            timer: "−4ч 48м",  cls: "warn" },
+            { name: "Куделькин Егор",          sub: "перенос 1/2 · клиент в командировке",       timer: "+38ч",    cls: "ok" },
+            { name: "Ляшенко Альберт · 400к",  sub: "встреча завтра 14:00 · видео",              timer: "+22ч",    cls: "ok" },
+          ],
+        },
+        "02": {
+          title: "02 Реанимация",
+          meta: "SLA 7 дней · работает Savi Bot · 3 сделки",
+          deals: [
+            { name: "Сидоров А. · 220к",  sub: "Savi: «Котик грустит» · день 1",     timer: "+6 дн",  cls: "ok" },
+            { name: "Иванов И. · 450к",   sub: "Savi: финал · «завтра автозакрытие»",timer: "+24ч",   cls: "warn" },
+            { name: "Петров П. · 180к",   sub: "Savi: личный заход · день 3",        timer: "+4 дн",  cls: "ok" },
+          ],
+        },
+        "03": {
+          title: "03 Догрев",
+          meta: "SLA 14 дней · 11 сделок · 4 горящих",
+          deals: [
+            { name: "Куделькин Е. · 290к",      sub: "2-часовой звонок ОБЯЗАТЕЛЕН",          timer: "−42 мин",  cls: "danger" },
+            { name: "Лим Олег СВО · 165к",      sub: "день 14 · РОП эскалация",              timer: "сегодня",  cls: "danger" },
+            { name: "Ляшенко · 320к",           sub: "касание 70ч назад · горит",            timer: "−2ч",      cls: "danger" },
+            { name: "Куделькин 450к",           sub: "касание 68ч назад · скоро горит",      timer: "+4ч",      cls: "warn" },
+            { name: "Куделькин Куликов · 110к", sub: "день 7 · плановый звонок",             timer: "+18ч",     cls: "warn" },
+            { name: "Петрова · 280к",           sub: "день 4 · ежедневный звонок",           timer: "+6ч",      cls: "ok" },
+            { name: "Силкин Денис · 230к",      sub: "день 5 · клиент думает",               timer: "+22ч",     cls: "ok" },
+            { name: "Корчик Даниил · 180к",     sub: "день 6 · возражение «дорого»",         timer: "+30ч",     cls: "ok" },
+            { name: "Иванов Андрей · 380к",     sub: "день 3 · ждём договор",                timer: "+2 дн",    cls: "ok" },
+            { name: "Сидоров Д. · 210к",        sub: "день 2 · обещал перезвон",             timer: "+3 дн",    cls: "ok" },
+            { name: "Петров Михаил · 290к",     sub: "день 8 · долгий путь",                 timer: "+4 дн",    cls: "ok" },
+          ],
+        },
+        "04": {
+          title: "04 Счёт выставлен",
+          meta: "SLA 14 дней · макс 9 касаний · 9 сделок",
+          violations: [
+            { ic: "✗", text: "НЕ было звонка в первые 15 мин", cnt: 4 },
+            { ic: "✗", text: "НЕТ даты оплаты в CRM",          cnt: 2 },
+            { ic: "⚠", text: "Касание >48ч назад",              cnt: 3 },
+            { ic: "✓", text: "По регламенту",                   cnt: 5 },
+          ],
+          deals: [
+            { name: "Камран продажа · 165к", sub: "день 6 · клиент назвал дату оплаты пятница", timer: "+72ч",  cls: "ok" },
+            { name: "Ляшенко продажа · 400к",sub: "день 12 · ✓ продление SLA одобрено",         timer: "+5 дн", cls: "warn" },
+            { name: "Лим продажа",            sub: "день 3 · ждём подпись договора",            timer: "+8 дн", cls: "ok" },
+            { name: "Куделькин Любовь",       sub: "день 10 · клиент молчит >48ч",              timer: "−12ч",  cls: "warn" },
+          ],
+        },
+        "05": {
+          title: "05 Дожим",
+          meta: "SLA 14 дней · 7 сделок · 3 критичных",
+          deals: [
+            { name: "Куделькин Куликов · 110к",sub: "предоплата 50к · доплата 60к · день 12",   timer: "−2 дн",  cls: "danger" },
+            { name: "Марченко продажа · 250к", sub: "день 14 · ФИНАЛ · РОП звонит",             timer: "сегодня", cls: "danger" },
+            { name: "Ляшенко · 180к",          sub: "предоплата 30к · день 6 · звонок дожима",  timer: "+8 дн",   cls: "ok" },
+            { name: "Лим Тамара дожим",        sub: "предоплата 20к · день 9",                  timer: "+5 дн",   cls: "warn" },
+          ],
+        },
+        "06": {
+          title: "06 Договор оплачен",
+          meta: "SLA 3 рабочих часа · передать в сопровождение · 2 сделки",
+          deals: [
+            { name: "Лим продажа (Олег) · 165к",   sub: "оплачено 2ч назад · нужна передача юристу!", timer: "−1ч 5м", cls: "warn" },
+            { name: "Ляшенко продажа 1 · 400к",    sub: "оплачено 30 мин назад · в работу",          timer: "+2ч 30м", cls: "ok" },
+          ],
+        },
+        "07": {
+          title: "07 Возврат трипваера",
+          meta: "SLA 24ч · ОКК проверяет записи · 1 сделка",
+          deals: [
+            { name: "Куделькин 290к (отказ)", sub: "ОКК: вердикт ETHICAL · возврат согласован", timer: "+12ч", cls: "ok" },
+          ],
+        },
+        "08": {
+          title: "08 Отложенные · реактивация",
+          meta: "SLA до 90 дней · работает Savi Bot · 6 сделок",
+          deals: [
+            { name: "Силкин Денис · 220к",   sub: "Savi: «расчёт долга» · +42 дня",   timer: "+28 дн", cls: "muted" },
+            { name: "Корчик Даниил · 180к",  sub: "Savi: «2 месяца» · +56 дней",      timer: "+14 дн", cls: "muted" },
+            { name: "Короткова Арина · 350к",sub: "Savi: «две недели» · +14 дней",    timer: "+56 дн", cls: "muted" },
+          ],
+        },
+      };
+
+      function showStagePopover(stageEl, stageId) {
+        closeStagePopover();
+        const data = STAGE_DEALS[stageId];
+        if (!data) return;
+
+        // mark active + временно убрать title-tooltip чтобы он не накрывал popover
+        stageEl.parentElement.querySelectorAll(".mc-stage").forEach((s) => s.classList.remove("active"));
+        stageEl.classList.add("active");
+        if (stageEl.title) {
+          stageEl.dataset.savedTitle = stageEl.title;
+          stageEl.removeAttribute("title");
+        }
+
+        const popover = document.createElement("div");
+        popover.className = "mc-stage-popover";
+        const dealsHtml = data.deals.map((d) => `
+          <div class="mc-stage-deal" onclick="openDealFromStage('${stageId}', '${d.name.replace(/'/g, "\\'")}')">
+            <div>
+              <div class="name">${d.name}</div>
+              <div class="sub">${d.sub}</div>
+            </div>
+            <div class="timer ${d.cls}">${d.timer}</div>
+          </div>
+        `).join("");
+        // блок «нарушения регламента» — только для этапов где он определён (например 04)
+        const violationsHtml = data.violations ? `
+          <div class="mc-stage-violations">
+            <div class="vio-title">Нарушения регламента (AI)</div>
+            ${data.violations.map(v => `
+              <div class="vio-row">
+                <div class="ic" style="color: ${v.ic === '✓' ? '#30d158' : v.ic === '⚠' ? '#ff9f0a' : '#ff453a'}">${v.ic}</div>
+                <div>${v.text}</div>
+                <div class="cnt" style="color: ${v.ic === '✓' ? '#30d158' : v.ic === '⚠' ? '#ff9f0a' : '#ff453a'}">${v.cnt}</div>
+              </div>
+            `).join("")}
+          </div>
+        ` : "";
+        popover.innerHTML = `
+          <div class="mc-stage-popover-head">
+            <div>
+              <div class="ttl">${data.title}</div>
+              <div class="meta">${data.meta}</div>
+            </div>
+            <button class="close" onclick="closeStagePopover()">✕</button>
+          </div>
+          ${violationsHtml}
+          <div class="mc-stage-deals">${dealsHtml}</div>
+          <div class="mc-stage-popover-foot">
+            <button class="btn-primary" onclick="openStageInCalls('${stageId}')">→ Открыть в «Встречах» · фильтр</button>
+            <button class="btn-secondary" onclick="closeStagePopover()">Закрыть</button>
+          </div>
+        `;
+        stageEl.appendChild(popover);
+
+        // Smart positioning: проверяем не вылез ли popover за края карточки HERO
+        const card = stageEl.closest(".mc-card");
+        if (!card) return;
+        const cardRect = card.getBoundingClientRect();
+        const popRect = popover.getBoundingClientRect();
+        if (popRect.left < cardRect.left + 4) {
+          popover.classList.add("align-left");
+        } else if (popRect.right > cardRect.right - 4) {
+          popover.classList.add("align-right");
+        }
+      }
+
+      function closeStagePopover() {
+        document.querySelectorAll(".mc-stage-popover").forEach((p) => p.remove());
+        document.querySelectorAll(".mc-stage.active").forEach((s) => {
+          s.classList.remove("active");
+          // вернуть title (если был сохранён)
+          if (s.dataset.savedTitle) { s.title = s.dataset.savedTitle; delete s.dataset.savedTitle; }
+        });
+      }
+
+      function openDealFromStage(stageId, dealName) {
+        closeStagePopover();
+        showToast(`📂 Открываем сделку "${dealName}" (этап ${stageId}) · в проде → карточка amoCRM`);
+        switchTab("call-detail");
+      }
+
+      function openStageInCalls(stageId) {
+        closeStagePopover();
+        const data = STAGE_DEALS[stageId];
+        showToast(`🔍 Фильтр по этапу "${data.title}" · ${data.deals.length}+ сделок`);
+        switchTab("calls");
+      }
+
+      // Закрыть popover при клике вне него
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".mc-stage") && !e.target.closest(".mc-stage-popover")) {
+          closeStagePopover();
+        }
       });
 
       // ═══════════════ АНАЛИТИКА · ДИНАМИЧЕСКИЕ SPARKLINE ═══════════════
