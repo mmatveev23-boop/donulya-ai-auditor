@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mission Control · Инструкция РОПа Клоузеров · ДоНуля</title>
+  <title>РОП Клоузеров · Полное руководство с нуля · ДоНуля</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
       --purple: #b084ff;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: var(--bg-0); color: var(--text-1); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    html, body { margin: 0; padding: 0; background: var(--bg-0); color: var(--text-1); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
     body { font-size: 15px; }
     .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 28px 80px; }
     .h-eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 18px; }
@@ -37,11 +37,15 @@
     .pill.green { background: rgba(48,209,88,0.12); border-color: rgba(48,209,88,0.30); color: var(--green); }
     .pill.purple { background: rgba(176,132,255,0.12); border-color: rgba(176,132,255,0.30); color: var(--purple); }
 
-    h2 { font-size: 36px; font-weight: 300; letter-spacing: -0.025em; margin: 80px 0 12px; }
+    h2 { font-size: 36px; font-weight: 300; letter-spacing: -0.025em; margin: 80px 0 12px; line-height: 1.15; }
+    h2 .num { color: var(--text-3); font-weight: 200; margin-right: 14px; }
     h3 { font-size: 22px; font-weight: 600; margin: 36px 0 10px; }
-    h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin: 18px 0 10px; }
+    h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin: 24px 0 10px; }
     p { color: var(--text-2); margin: 0 0 14px; }
     p b { color: var(--text-1); font-weight: 600; }
+    ul, ol { color: var(--text-2); padding-left: 22px; margin: 8px 0 16px; }
+    li { margin-bottom: 6px; }
+    li b { color: var(--text-1); }
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
@@ -54,6 +58,65 @@
       margin: 8px 0 0;
     }
     .demo-cta:hover { transform: translateY(-1px); filter: brightness(1.08); text-decoration: none; }
+
+    /* ─── TOC (navigation) ─── */
+    .toc {
+      padding: 24px 28px; border-radius: 16px;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+      border: 1px solid var(--border-2);
+      margin: 24px 0 36px;
+    }
+    .toc-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 14px;
+    }
+    .toc ol {
+      column-count: 2; column-gap: 32px;
+      padding: 0; margin: 0; list-style: none;
+      counter-reset: tocnum;
+    }
+    @media (max-width: 700px) { .toc ol { column-count: 1; } }
+    .toc ol li {
+      break-inside: avoid;
+      padding: 4px 0;
+      counter-increment: tocnum;
+      color: var(--text-2);
+      font-size: 14px;
+    }
+    .toc ol li::before {
+      content: counter(tocnum, decimal-leading-zero) ". ";
+      color: var(--text-3); font-feature-settings: "tnum"; margin-right: 6px;
+    }
+    .toc ol li a { color: var(--text-1); }
+    .toc ol li a:hover { color: var(--green); }
+
+    /* ─── Status table ─── */
+    .stab {
+      display: grid; grid-template-columns: 140px 1fr 1fr;
+      gap: 0; margin: 18px 0 28px;
+      border: 1px solid var(--border-2); border-radius: 14px; overflow: hidden;
+    }
+    .stab .h, .stab .c {
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+      font-size: 13.5px; line-height: 1.5;
+    }
+    .stab .h {
+      background: var(--bg-2); color: var(--text-3);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px;
+    }
+    .stab .c { color: var(--text-2); }
+    .stab .c b { color: var(--text-1); }
+    .stab .c.k { color: var(--text-1); font-weight: 700; }
+    .stab .c.k.ok    { color: var(--green); }
+    .stab .c.k.warn  { color: var(--yellow); }
+    .stab .c.k.info  { color: var(--blue); }
+    .stab .c.k.muted { color: var(--text-3); }
+    .stab > *:nth-last-child(-n+3) { border-bottom: 0; }
+
+    .stab.cols-2 { grid-template-columns: 200px 1fr; }
+    .stab.cols-2 > *:nth-last-child(-n+2) { border-bottom: 0; }
+    .stab.cols-4 { grid-template-columns: 180px 1fr 90px 130px; }
+    .stab.cols-4 > *:nth-last-child(-n+4) { border-bottom: 0; }
 
     /* ─── Bento mock ─── */
     .bento {
@@ -89,16 +152,20 @@
     .card .sub { font-size: 11.5px; color: var(--text-3); margin-top: 12px; line-height: 1.5; }
     .card .sub b { color: var(--text-2); }
 
-    .stages { display: flex; gap: 6px; margin-top: 14px; }
-    .stages .st { flex: 1; text-align: center; }
-    .stages .st .n { font-size: 16px; font-weight: 700; color: var(--text-1); display: block; }
-    .stages .st .n.warn { color: var(--yellow); }
-    .stages .st .n.danger { color: var(--red); }
-    .stages .st .bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; margin: 4px 0 4px; }
-    .stages .st .bar .f { display: block; height: 100%; background: rgba(255,255,255,0.4); border-radius: 2px; }
-    .stages .st .bar.warn .f { background: var(--yellow); }
-    .stages .st .bar.danger .f { background: var(--red); }
-    .stages .st .l { font-size: 8.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+    .mini {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 12px;
+    }
+    .mini .cell {
+      padding: 8px 10px; border-radius: 8px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .mini .cell .n { font-size: 18px; font-weight: 700; color: var(--text-1); line-height: 1; }
+    .mini .cell .l { font-size: 10px; color: var(--text-3); margin-top: 3px; }
+    .mini .cell.ok    { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.18); }
+    .mini .cell.warn  { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.18); }
+    .mini .cell.muted { background: rgba(255,255,255,0.04); }
+    .mini .cell.ok    .n { color: var(--green); }
+    .mini .cell.warn  .n { color: var(--yellow); }
 
     /* ─── Plate description ─── */
     .plate {
@@ -135,7 +202,7 @@
     .day .body ul li b { color: var(--text-1); }
 
     /* ─── Glossary ─── */
-    .gloss { display: grid; grid-template-columns: 200px 1fr; gap: 16px 28px; }
+    .gloss { display: grid; grid-template-columns: 220px 1fr; gap: 16px 28px; }
     .gloss dt { color: var(--text-1); font-weight: 700; font-size: 14px; }
     .gloss dd { margin: 0; color: var(--text-2); font-size: 13px; }
 
@@ -152,6 +219,54 @@
       text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
     }
 
+    .data-block {
+      padding: 16px 20px; margin: 14px 0 20px;
+      background: rgba(82,167,255,0.06);
+      border: 1px solid rgba(82,167,255,0.18);
+      border-radius: 12px;
+      font-size: 13px; color: var(--text-2);
+    }
+    .data-block b { color: var(--text-1); }
+    .data-block .src {
+      display: block; margin-top: 8px;
+      font-size: 11px; color: var(--text-3); font-style: italic;
+    }
+
+    .script {
+      padding: 20px 24px; margin: 14px 0 20px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      border-left: 4px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      font-size: 14px; color: var(--text-1);
+      font-family: 'Inter', sans-serif;
+    }
+    .script .lbl {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--green); margin-bottom: 10px;
+    }
+    .script p { color: var(--text-2); }
+    .script p b { color: var(--text-1); }
+
+    .vs-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin: 18px 0 24px;
+    }
+    @media (max-width: 700px) { .vs-grid { grid-template-columns: 1fr; } }
+    .vs-grid .col {
+      padding: 18px 22px; border-radius: 14px;
+      border: 1px solid var(--border-2);
+      background: var(--bg-1);
+    }
+    .vs-grid .col h4 {
+      margin: 0 0 10px;
+    }
+    .vs-grid .col.bad  { border-color: rgba(255,69,58,0.24); background: rgba(255,69,58,0.04); }
+    .vs-grid .col.bad  h4 { color: var(--red); }
+    .vs-grid .col.good { border-color: rgba(48,209,88,0.24); background: rgba(48,209,88,0.04); }
+    .vs-grid .col.good h4 { color: var(--green); }
+    .vs-grid .col p { font-size: 13.5px; }
+
     .footer {
       margin-top: 80px; padding-top: 32px;
       border-top: 1px solid var(--border);
@@ -163,171 +278,411 @@
 <div class="wrap">
 
   <div class="h-eyebrow">ДоНуля · AI Аудитор v4 · РОП Клоузеров</div>
-  <h1>Mission Control · <b>Инструкция РОПа</b></h1>
-  <p class="subtitle">Как читать и управлять командой клоузеров через дашборд. Каждая плитка — конкретный рычаг управления, не «красивая цифра». Эта страница — ознакомительная: ниже описано что показывает каждая плитка, куда смотреть и как реагировать.</p>
+  <h1>Mission Control · <b>Полное руководство</b></h1>
+  <p class="subtitle">Это руководство для нового РОПа клоузеров с нуля. Прочитай за 1 час — и будешь знать всё: что за компания, кто такие клоузеры, что показывает дашборд, какие метрики мерим, как влияем и что говорить команде.</p>
 
   <div class="pills">
     <span class="pill green">⚡ Mission Control</span>
-    <span class="pill">9 плиток · 4 модалки</span>
-    <span class="pill purple">AI ловит слив в день звонка</span>
-    <span class="pill">По инструкции МПП v3.5</span>
+    <span class="pill">D0-trigger system</span>
+    <span class="pill purple">Главный KPI: конверсия Д0</span>
+    <span class="pill">МПП v3.5</span>
   </div>
 
   <a class="demo-cta" href="./index-v4.html" target="_blank">🎮 Открыть живой дашборд →</a>
 
-  <!-- ═══ MOCK BENTO PREVIEW ═══ -->
-  <h2>Что РОП видит утром</h2>
-  <p>Один экран — 9 плиток. На каждой одна крупная цифра + контекст + если плохо — план действий и кнопка.</p>
+  <!-- ═══ TOC ═══ -->
+  <div class="toc">
+    <div class="toc-title">Содержание</div>
+    <ol>
+      <li><a href="#about">Что такое ДоНуля</a></li>
+      <li><a href="#funnel">Воронка продаж: МПП-1 и МПП-2</a></li>
+      <li><a href="#you">Кто такой РОП клоузеров и зона ответственности</a></li>
+      <li><a href="#990">Что такое 990₽ и почему это веха</a></li>
+      <li><a href="#d0">Что такое встреча Д0</a></li>
+      <li><a href="#before-after">Раньше vs Сейчас: главный сдвиг</a></li>
+      <li><a href="#statuses">3 финальных статуса встречи</a></li>
+      <li><a href="#a2-no-date">Особый случай: A2 без даты</a></li>
+      <li><a href="#control">3 точки контроля системы</a></li>
+      <li><a href="#dashboard">Дашборд: что видишь утром</a></li>
+      <li><a href="#tiles">Каждая плитка по полочкам</a></li>
+      <li><a href="#tasks">Откуда задачи в списке «До 18:00»</a></li>
+      <li><a href="#metrics">Метрики и нормы</a></li>
+      <li><a href="#influence">Как влиять на метрики</a></li>
+      <li><a href="#workflow">Рабочий день РОПа</a></li>
+      <li><a href="#scripts">Скрипты для команды</a></li>
+      <li><a href="#bonus">Бонусная схема (предложение)</a></li>
+      <li><a href="#glossary">Глоссарий</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══ 01 ═══ -->
+  <h2 id="about"><span class="num">01</span>Что такое ДоНуля</h2>
+
+  <p><b>ДоНуля</b> — компания, которая помогает физлицам списать долги через банкротство и юридическую защиту. Клиент приходит, например, с долгом 850 тыс ₽ от банков и МФО — мы выводим его «до нуля» через судебные процедуры.</p>
+
+  <p>Услуга платная. Клиент платит за юридическое сопровождение — это и есть продажа. Бизнес-модель завязана на качестве работы менеджеров продаж, которые этих клиентов закрывают. Главное узкое место воронки — <b>скорость закрытия</b>.</p>
+
+  <p>Чем быстрее клиент принимает решение и платит — тем больше клиентов компания обработает за месяц. Чем дольше клоузер «думает» и «дожимает» — тем меньше денег и больше потерь (клиенты уходят к конкурентам, передумывают, забывают).</p>
+
+  <!-- ═══ 02 ═══ -->
+  <h2 id="funnel"><span class="num">02</span>Воронка продаж: МПП-1 и МПП-2</h2>
+
+  <p>В компании 2 уровня менеджеров продаж:</p>
+
+  <div class="stab cols-2">
+    <div class="h">Уровень</div>
+    <div class="h">Что делает</div>
+
+    <div class="c k info">МПП-1 (Охотник)</div>
+    <div class="c">Берёт холодного лида, проводит первичную консультацию. Задача — квалифицировать клиента и получить от него <b>990₽</b> как «билет в МПП-2». Это <b>квалификационный платёж</b>: клиент готов работать с нами всерьёз.</div>
+
+    <div class="c k ok">МПП-2 (Клоузер)</div>
+    <div class="c">Берёт квалифицированного клиента после 990₽, проводит <b>встречу Д0</b>. Задача — закрыть на полную услугу (от 50 до 150 тыс ₽). Это и есть <b>продажа</b>.</div>
+  </div>
+
+  <p><b>Ты управляешь клоузерами (МПП-2).</b> Охотники — другая команда, у них свой РОП. Не путай.</p>
+
+  <!-- ═══ 03 ═══ -->
+  <h2 id="you"><span class="num">03</span>Кто такой РОП клоузеров и зона ответственности</h2>
+
+  <p>РОП клоузеров (ты) — это руководитель отдела продаж, в подчинении которого 8 клоузеров (МПП-2). Они проводят встречи Д0 с квалифицированными клиентами и продают.</p>
+
+  <p>Главное, что от тебя зависит:</p>
+  <ul>
+    <li><b>Скорость закрытия команды</b> — % сделок в день встречи (Конверсия Д0). Сейчас 34%, цель ≥50%.</li>
+    <li><b>Дисциплина регламента</b> — клоузеры не «дожимают», а закрывают по системе.</li>
+    <li><b>Подбор и развитие команды</b> — кого хвалить, кого учить, кого увольнять.</li>
+    <li><b>Качество встреч</b> — что говорят клоузеры в звонке, какие скрипты используют.</li>
+  </ul>
+
+  <p>Ты <b>не</b> отвечаешь за:</p>
+  <ul>
+    <li>Лидогенерацию (это маркетинг)</li>
+    <li>Работу охотников (МПП-1)</li>
+    <li>Юридическую часть (это юристы после продажи)</li>
+    <li>Финансы и бухгалтерию</li>
+  </ul>
+
+  <!-- ═══ 04 ═══ -->
+  <h2 id="990"><span class="num">04</span>Что такое 990₽ и почему это веха</h2>
+
+  <p><b>990₽</b> — это первый платёж клиента, после которого он попадает в воронку МПП-2 (твою команду). Это <b>квалификационный платёж</b>: клиент уже не «холодный любопытный», а готов платить за решение проблемы.</p>
+
+  <p>Платёж 990₽ — это <b>точка отсчёта</b> SLA «990 → Успешно реализовано». От момента 990 до момента «клоузер пометил сделку как закрытую успехом» — это и есть длина цикла продажи МПП-2.</p>
+
+  <p>Реальная статистика по нашим 209 сделкам за прошлый период:</p>
+
+  <div class="data-block">
+    📊 <b>SLA «Оплачено 990 → Успешно реализовано» (МПП-2):</b><br>
+    • <b>≤ 4 часа</b> (закрылось на той же встрече) — 19,5%<br>
+    • <b>4–24 часа</b> (в день встречи, но не в звонке) — 14,8%<br>
+    • <b>1–2 дня</b> — 10,5%<br>
+    • <b>3–5 дней</b> — 14,8%<br>
+    • <b>6–10 дней</b> — 13,8%<br>
+    • <b>11–30 дней</b> — 8,6%<br>
+    • <b>&gt; 30 дней</b> — 3,3%<br>
+    • <b>Цикл не зафиксирован</b> (переоткрытые) — 14,8%<br><br>
+    Median = <b>1,7 дня</b> · avg = 6,3 дня (длинный хвост тянет наверх)
+    <span class="src">Это база, на которой строится вся D0-модель. Цифры — не из головы.</span>
+  </div>
+
+  <p>Главный вывод из этих цифр:</p>
+  <ul>
+    <li><b>34% сделок закрывается в течение 24ч</b> от 990 (=A1, оплачено в день встречи)</li>
+    <li><b>73% за неделю</b> — короткое окно решающее</li>
+    <li><b>14,8% переоткрытых</b> — это зомби-сделки, которые тянутся бесконечно (главная дыра)</li>
+    <li>Между лучшим клоузером (Лим, median 21ч) и худшим (Петрова, 171ч) — <b>разница в 8,5 раз</b></li>
+  </ul>
+
+  <!-- ═══ 05 ═══ -->
+  <h2 id="d0"><span class="num">05</span>Что такое встреча Д0</h2>
+
+  <p><b>Встреча Д0</b> (произносится «Дэ-ноль») — это первая встреча клоузера с квалифицированным клиентом сразу после 990₽. «Д» = День, «0» = нулевой день, точка отсчёта.</p>
+
+  <p>Длительность встречи — обычно 40–55 минут. Идёт по скрипту МПП v3.5. Цель встречи — <b>закрыть на оплату прямо в звонке (A1)</b> или получить <b>конкретную дату оплаты от клиента (A2)</b>.</p>
+
+  <p>Ключевая мысль: <b>встреча Д0 — это и есть продажа</b>. После неё всё остальное — это либо ожидание оплаты по обещанию, либо сбор уже несостоявшейся сделки. Не надо «дожимать неделю» — на Д0 либо есть результат, либо его не будет.</p>
+
+  <p>Поэтому главная метрика РОПа — <b>Конверсия Д0</b>: % встреч, после которых клиент оплатил в течение 24 часов.</p>
+
+  <!-- ═══ 06 ═══ -->
+  <h2 id="before-after"><span class="num">06</span>Раньше vs Сейчас: главный сдвиг</h2>
+
+  <p>До D0-системы команда работала по принципу «дожима»: клоузер сам решал, когда позвонить, кому позвонить, сколько раз перезванивать, когда сдаваться. РОП видел провалы только в конце месяца.</p>
+
+  <div class="vs-grid">
+    <div class="col bad">
+      <h4>❌ Раньше</h4>
+      <p>«Я перезвоню через 3 дня и дожму»<br>
+      «Дам клиенту подумать неделю»<br>
+      «Может, он созреет, ещё разок попробую»<br>
+      «Перенесу дату на 4-й раз — вдруг заплатит»</p>
+      <p style="margin-top:14px;"><b>Результат:</b> клоузер тратит 50% времени на 17% денег (длинный хвост и зомби). Конверсия Д0 ~30%, нестабильная.</p>
+    </div>
+    <div class="col good">
+      <h4>✓ Сейчас</h4>
+      <p>«Каждая встреча выходит со статусом A1, A2 или C»<br>
+      «Дату называет клиент, не я»<br>
+      «A2 без даты — 1 контрольный звонок через 3-5 дней»<br>
+      «Лимит 1 перенос даты — после второй просрочки в C»</p>
+      <p style="margin-top:14px;"><b>Результат:</b> клоузер тратит время по делу, дашборд показывает где сбоит. Конверсия Д0 цель 50%, контролируется ежедневно.</p>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    Главный принцип: <b>«Система, а потом люди».</b> Раньше всё держалось на навыке клоузера и интуиции РОПа. Теперь — на дашборде и регламенте. Хороший клоузер становится сильнее (видит свои метрики). Слабый — заметен сразу (а не в конце квартала).
+    <span class="src">— Принцип D0-модели</span>
+  </div>
+
+  <!-- ═══ 07 ═══ -->
+  <h2 id="statuses"><span class="num">07</span>3 финальных статуса встречи</h2>
+
+  <p>Каждая встреча Д0 заканчивается <b>одним из 3 статусов</b>. Никаких «подумаю — позвоню завтра», «дай я ему пришлю расчёт и созвонимся». Клоузер обязан выйти со встречи с конкретным статусом — иначе AI пометит звонок как красный.</p>
+
+  <div class="stab">
+    <div class="h">Статус</div>
+    <div class="h">Условие</div>
+    <div class="h">Что дальше</div>
+
+    <div class="c k ok">A1 · Оплачен</div>
+    <div class="c">Платёж прошёл в день встречи (≤24ч от 990₽)</div>
+    <div class="c">Карточка → онбординг к юристам. <b>Сейчас 34%, цель 50%+.</b></div>
+
+    <div class="c k warn">A2 · Дата оплаты</div>
+    <div class="c">Клиент <b>сам</b> назвал дату оплаты (1–30 дней)</div>
+    <div class="c">Утром в день обещания клиенту автоматически уходит напоминание (TG/MAX/SMS).</div>
+
+    <div class="c k muted">C · Закрытие</div>
+    <div class="c">Не подходит ни под A1, ни под A2</div>
+    <div class="c">Архив. Через 30 дней — холодный лид заново.</div>
+  </div>
+
+  <h4>Примеры разговоров</h4>
+
+  <div class="script">
+    <div class="lbl">A1 — закрытие в звонке</div>
+    <p><b>Клиент:</b> «Всё понял, нравится, давайте оплачу».<br>
+    <b>Клоузер:</b> «Отлично, открываю Тинькофф / Сбер. Сейчас отправлю ссылку, <b>откройте её и я подожду на линии</b>».<br>
+    <i>Клиент оплачивает в звонке → A1 ✓</i></p>
+  </div>
+
+  <div class="script">
+    <div class="lbl">A2 — конкретная дата от клиента</div>
+    <p><b>Клиент:</b> «Сейчас не могу, зарплата 25-го».<br>
+    <b>Клоузер:</b> «Понял, 25-го получаете зарплату. <b>Когда планируете оплатить — 25-го или 26-го?</b>»<br>
+    <b>Клиент:</b> «Давайте 26-го».<br>
+    <i>Клоузер фиксирует дату → A2 ✓</i></p>
+  </div>
+
+  <div class="script">
+    <div class="lbl">C — закрытие, не зомбирование</div>
+    <p><b>Клиент:</b> «Я подумаю и сам наберу».<br>
+    <b>Клоузер:</b> «Иван, если сейчас не оплатим — через 30 дней цена пересчитается. Что вас держит?»<br>
+    <b>Клиент:</b> «Не уверен, что готов».<br>
+    <b>Клоузер:</b> «Хорошо, тогда не буду навязываться. Закрываю обращение. Если вернётесь — встречаемся как с новым клиентом».<br>
+    <i>Сделка → C ✓ (не зомби, не «может быть позже»)</i></p>
+  </div>
+
+  <!-- ═══ 08 ═══ -->
+  <h2 id="a2-no-date"><span class="num">08</span>Особый случай: A2 без даты</h2>
+
+  <p>Бывает, клиент на встрече говорит «не уверен / надо подумать с женой / не знаю когда смогу». Это <b>A2 без даты</b> — особый подтип, для которого есть отдельное правило.</p>
+
+  <p>По регламенту:</p>
+  <ol>
+    <li><b>1 контрольный звонок через 3–5 дней.</b> Клоузер задаёт прямой вопрос: «Иван, говорили на той неделе. Решили? Когда планируете оплатить?»</li>
+    <li>Если клиент <b>называет дату</b> → A2 (стандартный поток с лимитом 1 перенос).</li>
+    <li>Если клиент опять <b>«не знаю»</b> → C-закрытие. Через 30 дней может вернуться холодным лидом.</li>
+  </ol>
+
+  <p>Это не позволяет зомбировать сделку («буду перезванивать каждую неделю»), но даёт 1 шанс на «вызревание». Если клиент за 5 дней не созрел — он не клиент.</p>
+
+  <!-- ═══ 09 ═══ -->
+  <h2 id="control"><span class="num">09</span>3 точки контроля системы</h2>
+
+  <p>Между «встречей» и «оплатой» есть 3 уязвимых места, где раньше всё ломалось. Сейчас это <b>3 рычага</b>, которые контролируются автоматически + дашборд РОПа показывает где сбоит.</p>
+
+  <div class="stab">
+    <div class="h">Точка</div>
+    <div class="h">Что контролирует</div>
+    <div class="h">Как</div>
+
+    <div class="c k">1. Качество Д0</div>
+    <div class="c">Конверсия в день встречи (≤24ч от 990₽)</div>
+    <div class="c">AI-аудит каждой встречи + рейтинг клоузеров на дашборде. Цель ≥50%, &lt;30% — на разбор.</div>
+
+    <div class="c k">2. День обещания</div>
+    <div class="c">Платёж по A2 ≤ 7 дней</div>
+    <div class="c">Утром клиенту — автонапоминание. Вечером — дашборд РОПа показывает «не оплатил → звонок».</div>
+
+    <div class="c k">3. Просрочка / Reopen</div>
+    <div class="c">Не оплатил в день обещания / переоткрыли C</div>
+    <div class="c">Автоочередь у клоузера. <b>1 контрольный звонок. Лимит 1 перенос.</b> Reopen rate ≤5%.</div>
+  </div>
+
+  <p>Эти 3 точки + 3 статуса = вся D0-система. Если клоузер соблюдает 3 статуса, а РОП следит за 3 точками — продажа идёт по системе, а не «как получится у конкретного клоузера в конкретный день».</p>
+
+  <!-- ═══ 10 ═══ -->
+  <h2 id="dashboard"><span class="num">10</span>Дашборд: что видишь утром</h2>
+
+  <p>Дашборд РОПа клоузеров — это один экран с 9 плитками. Открывается при заходе на dashboard в роли «РОП Клоузеров». Главное наверху — рейтинг конверсии Д0 команды и median времени закрытия. Дальше — потоки A1/A2/C, очереди оплат, просрочек, переоткрытые сделки, AI-аудит встреч.</p>
+
+  <a class="demo-cta" href="./index-v4.html" target="_blank">🎮 Открыть живой дашборд →</a>
 
   <div class="bento">
 
-    <div class="card col-3 row-2 accent-blue">
-      <div class="ic">💼</div>
-      <div class="lbl">Сделок в работе · vs пред. неделя <span style="color:var(--green)">+3</span></div>
-      <div class="val">47<small>· 8 этапов</small></div>
-      <div class="stages">
-        <div class="st"><span class="n">8</span><div class="bar"><span class="f" style="width:100%"></span></div><div class="l">01 встр</div></div>
-        <div class="st"><span class="n warn">3</span><div class="bar warn"><span class="f" style="width:50%"></span></div><div class="l">02 реан</div></div>
-        <div class="st"><span class="n">11</span><div class="bar warn"><span class="f" style="width:80%"></span></div><div class="l">03 догр</div></div>
-        <div class="st"><span class="n">9</span><div class="bar"><span class="f" style="width:90%"></span></div><div class="l">04 счёт</div></div>
-        <div class="st"><span class="n danger">7</span><div class="bar danger"><span class="f" style="width:70%"></span></div><div class="l">05 дож</div></div>
-        <div class="st"><span class="n">2</span><div class="bar"><span class="f" style="width:30%"></span></div><div class="l">06 оплч</div></div>
-        <div class="st"><span class="n">1</span><div class="bar"><span class="f" style="width:15%"></span></div><div class="l">07 возв</div></div>
-        <div class="st"><span class="n">6</span><div class="bar"><span class="f" style="width:60%"></span></div><div class="l">08 отлж</div></div>
+    <div class="card col-3 row-2 accent-blue" style="border-color: rgba(255,159,10,0.40);">
+      <div class="ic">🏆</div>
+      <div class="lbl">Конверсия Д0 команды · ≤24ч от 990₽ · цель ≥50% · сейчас <span style="color:var(--yellow)">34%</span></div>
+      <div class="val">34%<small>· 8 клоузеров · median 1,7 дня</small></div>
+      <div class="sub">2 сильные ≥50% · 4 в норме 30–50% · <b style="color:var(--red)">2 просели &lt;30%</b></div>
+      <div class="sub" style="margin-top:14px; color:var(--text-2)">
+        ① Лим Елена <b style="color:var(--green)">58%</b> <small style="color:var(--text-3)">· 21ч</small><br>
+        ② Гальков Н. <b style="color:var(--green)">52%</b> <small style="color:var(--text-3)">· 20ч</small><br>
+        ③ Алиев Камран 47% <small style="color:var(--text-3)">· 26ч</small><br>
+        ④ Петрова Д. 40% <small style="color:var(--yellow)">· 171ч ⚠</small><br>
+        ⚠ Яковлева А. <b style="color:var(--red)">29%</b> <small style="color:var(--yellow)">· 94ч</small><br>
+        ⚠ Ляшенко А. <b style="color:var(--red)">23%</b> <small style="color:var(--text-3)">· 49ч</small>
       </div>
-      <div class="sub">🚨 Слабый этап: <b>05 Дожим</b> · конверсия <b style="color:var(--red)">38%</b> (норма 50%)</div>
-      <div class="sub">21 сделка требует касания · общая конверсия 01→06 = <b style="color:var(--green)">9.1%</b></div>
-    </div>
-
-    <div class="card col-3 accent-red">
-      <div class="ic">🔥</div>
-      <div class="lbl">Горящие 72 часа</div>
-      <div class="val">5<small>· уйдут в Котёл</small></div>
-      <div class="sub"><b>2</b> &lt; 2 часов · <b>1</b> &lt; 12 часов · <b>2</b> &lt; 24 часов · звони сейчас Иванову (Куделькин 290к)</div>
-    </div>
-
-    <div class="card col-3 accent-green">
-      <div class="ic">👥</div>
-      <div class="lbl">Команда · 9 клоузеров</div>
-      <div class="val" style="font-size: 22px; font-weight: 600;">3 над · 4 норма · 2 риск</div>
-      <div class="sub">①<b>Лим Олег</b> 142% · ②<b>Куделькин Е.</b> 118% · ③<b>Камран В.</b> 105% · ⚠ <b style="color:var(--red)">Иванов И.</b> 47%</div>
-    </div>
-
-    <div class="card col-3 accent-orange">
-      <div class="ic">🔄</div>
-      <div class="lbl">Ротация сделок сегодня</div>
-      <div class="val">12<small>· передано</small></div>
-      <div class="sub">За молчание 72ч система <b>автоматически назначила другого клоузера</b>. Топ-теряющий: <b>Иванов И. (4)</b> · Петров П. (2). Топ-получивший: <b style="color:var(--green)">Лим Олег (3)</b>.</div>
+      <div class="sub" style="margin-top:14px; padding:10px 12px; background:rgba(255,159,10,0.08); border:1px solid rgba(255,159,10,0.25); border-radius:8px;">
+        ⚠ <b>2 клоузера &lt;30% — главная просадка</b><br>
+        Ляшенко 23% / Яковлева 29% → AI-разбор + median &gt;90ч у Петровой/Яковлевой
+      </div>
     </div>
 
     <div class="card col-3 accent-purple">
-      <div class="ic">⏰</div>
-      <div class="lbl">Закрыть до 18:00 · <b style="color:var(--green)">2/6 закрыто</b></div>
-      <div class="val">4<small>· осталось</small></div>
-      <div class="sub">2-часовой звонок Куделькин Е. (−42 мин) · Догрев Лим день 14 (РОП-эскалация) · Дожим Марченко (−2ч)</div>
+      <div class="ic">💼</div>
+      <div class="lbl">Сделок в работе · 142 за неделю · 3 статуса</div>
+      <div class="val">142<small>· команда</small></div>
+      <div class="mini">
+        <div class="cell ok"><div class="n">48</div><div class="l">A1 · оплачено ≤24ч · 34%</div></div>
+        <div class="cell warn"><div class="n">68</div><div class="l">A2 · ждём оплату · 48%</div></div>
+        <div class="cell muted"><div class="n">26</div><div class="l">C · закрыто · 18%</div></div>
+      </div>
+      <div class="sub">Главная масса в <b>A2 (48%)</b> — ждём оплату по обещаниям</div>
     </div>
 
-    <div class="card col-3 accent-red">
-      <div class="ic">🔴</div>
-      <div class="lbl">Красные сделки · перехват <span style="color:rgba(255,255,255,0.4); font-size:10px;">↓ вчера 12 → сегодня 7</span></div>
-      <div class="val">7<small>· сегодня</small></div>
-      <div class="sub">3 «не предложили оплатить» · 2 «слив подумаю» · 1 «дорого без разбивки» · 1 «без след. шага»<br>🚨 7 не разобраны · до 18:00 4ч · топ-нарушитель Иванов И. (4)</div>
+    <div class="card col-3 accent-green">
+      <div class="ic">💰</div>
+      <div class="lbl">Оплаты сегодня · A2 дата = сегодня</div>
+      <div class="val">18<small>· ждём от клиентов</small></div>
+      <div class="sub" style="display:flex; gap:8px; margin-top:12px;">
+        <span style="flex:1; text-align:center; padding:8px; background:rgba(48,209,88,0.10); border-radius:8px;"><b style="color:var(--green); font-size:18px; display:block;">7</b>оплачено</span>
+        <span style="flex:1; text-align:center; padding:8px; background:rgba(82,167,255,0.08); border-radius:8px;"><b style="color:var(--blue); font-size:18px; display:block;">8</b>ждут до вечера</span>
+        <span style="flex:1; text-align:center; padding:8px; background:rgba(255,159,10,0.10); border-radius:8px;"><b style="color:var(--yellow); font-size:18px; display:block;">3</b>молчат</span>
+      </div>
+      <div class="sub">Утром автонапоминания клиентам ✓ · вечер — контроль платежей</div>
     </div>
 
-    <div class="card col-2" style="border-color: rgba(255,69,58,0.40);">
-      <div class="ic">💸</div>
-      <div class="lbl">Оплат в звонке</div>
-      <div class="val" style="color:var(--red)">63%<small>· норма ≥80%</small></div>
-      <div class="sub"><b>12 / 19</b> оплат · ▼ −17 п.п. · 7 промахов «отправил ссылку, не дождался» · топ Силкин (4)</div>
-    </div>
-
-    <div class="card col-2 accent-orange" style="border-color: rgba(255,69,58,0.40);">
-      <div class="ic">⏰</div>
-      <div class="lbl">Продлений SLA</div>
-      <div class="val">9<small>· норма ≤5</small></div>
-      <div class="sub">▲ +4 к норме · конверсия после продления <b style="color:var(--yellow)">28%</b> · Иванов 4 · Петров 3 · Силкин 2</div>
+    <div class="card col-2 accent-red" style="border-color: rgba(255,69,58,0.45);">
+      <div class="ic">🛑</div>
+      <div class="lbl">Просрочка обещаний</div>
+      <div class="val">7<small>· не оплатили вчера</small></div>
+      <div class="sub">Клоузеры должны звонить · <b style="color:var(--red)">3 не позвонили</b> уже 2 дня · Ляшенко 3 / Яковлева 2 / Марченко 2</div>
     </div>
 
     <div class="card col-2 accent-purple">
-      <div class="ic">🤖</div>
-      <div class="lbl">AI · спасает деньги</div>
-      <div class="val">880<small>тыс ₽ за неделю</small></div>
-      <div class="sub">Поймал <b>47 красных</b> · РОП спас <b style="color:var(--green)">23</b> · средний чек <b>~38к ₽</b> · точность 86.9%</div>
+      <div class="ic">⏰</div>
+      <div class="lbl">Закрыть до 18:00 · <b style="color:var(--green)">2/5 закрыто</b></div>
+      <div class="val">3<small>· осталось</small></div>
+      <div class="sub">1:1 с Ляшенко А. (Д0=23%) · Эскалация просрочки · Разбор переоткрытых · AI-аудит встреч</div>
+    </div>
+
+    <div class="card col-2 accent-red">
+      <div class="ic">🔴</div>
+      <div class="lbl">Красные встречи Д0 <span style="color:rgba(255,255,255,0.4); font-size:10px;">↓ вчера 11 → сегодня 7</span></div>
+      <div class="val">7<small>· сегодня</small></div>
+      <div class="sub">3 «не вышел со статусом A1/A2/C» · 2 «дата от клоузера» · 1 «A2 без контр. звонка» · 1 «подумаю»<br>🚨 Топ-нарушитель Ляшенко А. (4 кейса)</div>
+    </div>
+
+    <div class="card col-2 accent-blue">
+      <div class="ic">📅</div>
+      <div class="lbl">Оплаты на неделе</div>
+      <div class="val">42<small>· A2 ≤ 7 дней</small></div>
+      <div class="sub">Пн 9 · Вт 8 · Ср 7 · <b style="color:var(--blue)">Чт 6</b> · Пт 5 · Сб 4 · Вс 3<br>Платежи равномерно · автонапоминания идут утром</div>
+    </div>
+
+    <div class="card col-2 accent-orange" style="border-color: rgba(255,159,10,0.40);">
+      <div class="ic">📆</div>
+      <div class="lbl">Длинный хвост</div>
+      <div class="val">28<small>· A2 8–30 дней</small></div>
+      <div class="sub">Фикс. контакт: за 1 день + в день обещания · Петрова Д. <b style="color:var(--red)">12 (171ч)</b> · Яковлева А. 8 · Марченко С. 4<br>⚠ Аудит дат: &gt;30 дней должны быть C</div>
+    </div>
+
+    <div class="card col-2 accent-red" style="border-color: rgba(255,69,58,0.45);">
+      <div class="ic">🧟</div>
+      <div class="lbl">Переоткрытые сделки · 14,8% (норма ≤5%)</div>
+      <div class="val">31<small>· зомби-сделки</small></div>
+      <div class="sub">Цикл «990 → реализовано» не зафиксирован · Яковлева А. <b style="color:var(--red)">9</b> · Петрова Д. 7 · Ляшенко А. 5<br>🚨 В 3× выше нормы — лимит 1 перенос нарушается</div>
     </div>
 
   </div>
 
-  <a class="demo-cta" href="./index-v4.html" target="_blank">🎮 Открыть живой дашборд →</a>
+  <!-- ═══ 11 ═══ -->
+  <h2 id="tiles"><span class="num">11</span>Каждая плитка по полочкам</h2>
 
-  <!-- ═══ КАЖДАЯ ПЛИТКА ПОДРОБНО ═══ -->
-  <h2>Каждая плитка по полочкам</h2>
   <p>На каждую плитку 3 вопроса: что показывает · куда смотришь · как управляешь.</p>
 
-  <!-- 1. HERO -->
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🏆</span>
+      <h3>1. Конверсия Д0 команды</h3>
+      <div class="what">HERO · главный KPI РОПа</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">% встреч Д0 которые закрылись в течение 24 часов от платежа 990₽ (=A1) · цель ≥50%, сейчас 34% · средний median времени закрытия (1,7 дня) · 3 категории команды (сильные ≥50% / в норме 30–50% / просели &lt;30%) · топ и аутсайдеры с их median.<br><br><b>Почему 2 метрики (% и median):</b> можно иметь приличную конверсию, но тянуть. Петрова закрывает 40%, но median 171ч — длинный хвост. Гальков 52%, median 20ч — реально быстрый.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>среднюю команды</b> — если &lt;40% всю неделю → системная проблема. На <b>«просели &lt;30%»</b> — кто конкретно. На <b>median у каждого</b> — &gt;72ч (3 дня) флаг. Между лучшим и худшим разница 8,5× (20ч vs 171ч).</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на просевшего → drill-down → AI-разборы его встреч → конкретные ошибки скрипта. 1:1 на этой неделе. Шаринг записи топ-клоузера (Лим/Гальков) с просевшими — учатся на эталоне.</div></div>
+      </div>
+    </div>
+  </div>
+
   <div class="plate">
     <div class="left">
       <span class="icon-big">💼</span>
-      <h3>1. Сделок в работе</h3>
-      <div class="what">HERO-плитка · общий pipeline команды</div>
+      <h3>2. Сделок в работе</h3>
+      <div class="what">Поток команды по 3 статусам</div>
     </div>
     <div class="right">
       <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Общее число активных сделок (47) · раскладка по 8 этапам с цветовой подсветкой проблемных · конверсии между этапами (01→04, 03→04, 04→05, 05→06, 06→07) · общая 01→06 (9.1%) · алерт «слабый этап» если конверсия упала ниже нормы.</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>цветные цифры этапов</b> (красная 7 на 05 Дожим = провал) · на <b>конверсии в красном</b> (05→06 38% при норме 50% = клоузеры не дожимают) · на сравнение с прошлой неделей (+1 / −2 рядом с числом).</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на этап → popover с конкретными сделками · если конверсия 05→06 проседает → планёрка по дожиму, разбор записей лучших · если копится на 03 — клоузеры не справляются с возражениями, нужен тренинг скриптов.</div></div>
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Общее число сделок за период (142) · разбивка по статусам:<ul><li><b>A1</b> (48, 34%) — оплачено в день встречи (≤24ч)</li><li><b>A2</b> (68, 48%) — ждём оплату по обещанию</li><li><b>C</b> (26, 18%) — закрыто (не оплатил в 30 дней / переоткрытые)</li></ul></div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>долю A1</b> — главный показатель. Цель ≥50%, сейчас 34%. На <b>долю C</b> — если &gt;15% (как сейчас 18%), команда теряет потенциал. На <b>тренд недели</b> — растёт A1 или нет.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на ячейку → список сделок этого статуса. Если A1 проседает → планёрка «оплата в звонке: откройте, я подожду». Если C растёт → проверяй: возможно в C попадают те, кого можно было бы вытянуть в A2 через контрольный звонок.</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Горящие -->
   <div class="plate">
     <div class="left">
-      <span class="icon-big">🔥</span>
-      <h3>2. Горящие 72 часа</h3>
-      <div class="what">«Скорая помощь» — конкретные деньги ускользают</div>
+      <span class="icon-big">💰</span>
+      <h3>3. Оплаты сегодня</h3>
+      <div class="what">A2-сделки с датой оплаты = сегодня</div>
     </div>
     <div class="right">
       <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок уйдёт в Котёл в ближайшие сутки если РОП не вмешается · разбивка по часам (2 < 2 ч · 1 < 12 ч · 2 < 24 ч).</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На число <b>&lt; 2 часов</b> — это критическая зона. Если их 0-1 — норма. Если 3+ за день — команда не держит ритм 72ч.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → popover с именами клоузеров и клиентами («Куделькин 290к — Иванов И. — осталось 1ч 18м»). Кнопка <b>📞 Иванову</b> → прямой звонок клоузеру. Если клоузер не справляется — РОП пишет клиенту в MaxBot сам.</div></div>
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько клиентов обещали оплатить сегодня (18) · разбивка: <b>оплачено</b> (7) · <b>ждут до вечера</b> (8) · <b>молчат на звонки</b> (3). Утром клиентам ушли автонапоминания.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>«молчат»</b> — это будущая просрочка. Если &gt;3 — клоузеры не дозваниваются. На <b>«оплачено»</b> к концу дня → должно быть 80%+ (по статистике 73% платят в течение недели от обещания, 45% за 2 дня).</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → список с именами клоузеров. Если у одного 3+ «молчат» — звонок ему: «дозвонись или эскалируй». Вечером — финальная проверка: всё что не оплачено → утром в «Просрочку обещаний».</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 3. Команда -->
   <div class="plate">
     <div class="left">
-      <span class="icon-big">👥</span>
-      <h3>3. Команда · 9 клоузеров</h3>
-      <div class="what">Кого хвалить, тренировать, увольнять</div>
+      <span class="icon-big">🛑</span>
+      <h3>4. Просрочка обещаний</h3>
+      <div class="what">Главная дыра системы · теперь видно</div>
     </div>
     <div class="right">
       <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Распределение команды по выполнению плана: 3 над планом · 4 в норме · 2 отстают. Топ-3 (Лим 142%, Куделькин Е. 118%, Камран 105%) и риск (Иванов 47%).</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>отстающих</b> — кому грозит увольнение или нужна помощь. На <b>топ-3</b> — кого хвалить + использовать как референс для команды. На <b>тренд</b> ▲▼ рядом с %.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик на любое имя → drill-down карточка клоузера (его сделки, конверсия 04→06, AI-балл, продления SLA, котёл, что прокачивает). 1:1 встречи с отстающими (раз в неделю), шеринг записей: топ показывает отстающему как закрывать.</div></div>
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько клиентов не оплатили в день обещания (7) · сколько клоузеров не сделали контрольный звонок (3 уже 2 дня) · разбивка по клоузерам.<br><br><b>Раньше:</b> клиент молча уходил, никто не контролировал. <b>Сейчас:</b> утром Д+1 автоматически в очереди клоузера. 1 контрольный звонок обязателен.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>«не позвонили 2 дня»</b> — это нарушение регламента. Эскалация. На <b>распределение</b> — если у одного клоузера 3+ просрочек подряд, либо нет дисциплины, либо плохо отрабатывает Д0 (клиенты обещают и не платят).</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → список просрочек. РОП лично звонит клиенту по тем, где клоузер 2 дня молчит. <b>Лимит — 1 перенос даты</b>: после второй просрочки сделка идёт в C. Это убирает зомби-сделки.</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 4. Ротация сделок -->
-  <div class="plate">
-    <div class="left">
-      <span class="icon-big">🔄</span>
-      <h3>4. Ротация сделок</h3>
-      <div class="what">Автопередача за молчание 72ч</div>
-    </div>
-    <div class="right">
-      <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок за день автоматически передано другим клоузерам (12) · топ «теряющие» (Иванов 4 · Петров 2) и «получающие» (Лим 3) · sparkline тренда передач за 7 дней.<br><br><b>Важно:</b> сделки <b>не висят</b> в общем пуле. Если клоузер молчит 72ч — система <b>сразу назначает нового ответственного</b> (round-robin или по нагрузке). Клиент не остаётся без внимания.</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>топ-теряющих</b> — это клоузеры которые системно нарушают правило 72ч. Если у одного 4+ потери за день → нет дисциплины. На <b>тренд</b> — если передач становится больше с каждой неделей → команда теряет ритм.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Топ-теряющих (&gt;20% от всей передачи) — персональный разговор + санкции к бонусу по инструкции. Тренинг дисциплины 72ч. Если ритм проседает у всей команды — общая планёрка про систему касаний.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. Закрыть до 18 -->
   <div class="plate">
     <div class="left">
       <span class="icon-big">⏰</span>
@@ -336,157 +691,282 @@
     </div>
     <div class="right">
       <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Список задач которые требуют именно РОПа · прогресс «2/6 закрыто» · чекбоксы для отметки · бейджик источника на каждой задаче (🤖 МПП / ⚡ День 14 / 📊 Команда / ⏰ Watchdog / 👤 Ручная) · кнопка «+ Добавить задачу».</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>−время</b> (просроченность) — что прям горит. На <b>бейджик источника</b> — почему задача появилась (правило инструкции / watchdog / эскалация). На прогресс — к концу смены должно быть 100%.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Выполняешь задачи по списку → клик чекбокс → задача зачёркивается. Если задачи не хватает — <b>«+ Добавить задачу»</b> вписать своё. К 18:00 все → toast «🎉 Чистый дашборд» → скрин директору.</div></div>
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Список задач которые требуют именно РОПа · прогресс «2/5 закрыто» · чекбоксы · бейджик источника на каждой (📊 Команда / ⏰ Watchdog / 🤖 МПП / 👤 Ручная) · кнопка «+ Добавить задачу».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>срочные</b> (красные) — что прям горит. На <b>бейджик источника</b> — почему задача появилась (просадка Д0 / просрочка / переоткрытые). На прогресс — к концу смены 100%.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Выполняешь по списку → чекбокс. Не хватает — «+ Добавить задачу». К 18:00 все закрыты → toast «🎉 Чистый дашборд» → скрин директору.</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ СЕКЦИЯ: ОТКУДА БЕРУТСЯ ЗАДАЧИ ═══ -->
-  <h2>Откуда задачи в списке «До 18:00»</h2>
-  <p>Список формируется автоматически из 4 источников + ручные задачи РОПа. На каждой задаче бейджик показывает откуда она пришла — это делает систему прозрачной (РОП понимает почему задача появилась и может её обоснованно отклонить).</p>
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🔴</span>
+      <h3>6. Красные встречи Д0</h3>
+      <div class="what">AI ловит провал правила 3 статусов</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько встреч Д0 AI пометил как «красные» (7 сегодня) — провалившие правило 3 статусов. Топ-причины:<ul><li>Не вышел со статусом A1/A2/C</li><li>Дата оплаты <b>предложена клоузером</b>, не клиентом</li><li>A2 без даты — нет контрольного звонка через 3-5 дней</li><li>«Подумаю — наберу» вместо C-закрытия</li></ul>Тренд «вчера 11 → сегодня 7».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>число</b> — норма к концу дня <b>0 не разобраны</b>. На <b>топ-нарушителя</b> (Ляшенко 4 за день) — у него системно слабый Д0. На <b>причины</b> — где общая проблема: 3 раза «не вышел со статусом» = команда не освоила правило.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Очередь перехвата</b>. По каждой красной встрече 3 действия:<ul><li><b>↩ Вернуть с задачей</b> (90% — клоузер исправит: дозвонится клиенту и получит чёткий статус)</li><li><b>→ Передать сильному</b> (Лим/Гальков закроют)</li><li><b>× Закрыть как нецелевую</b></li></ul>На каждой — AI-подсказка «что сказать» из эталонов лучших клоузеров.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">📅</span>
+      <h3>7. Оплаты на неделе</h3>
+      <div class="what">A2 ≤ 7 дней · cash flow прогноз</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько клиентов обещали оплатить в каждый из ближайших 7 дней (всего 42). Полоски пропорциональны числу. Сегодня — выделено синим. <br><br>Это <b>прогноз cash flow</b> на неделю — РОП видит когда «густо», когда «пусто».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>равномерность</b> — если всё в один день, риск перегруза клоузеров. На <b>«пустые» дни</b> — это будущие провалы по cash flow, нужно усилить дожим Д0 в предыдущие дни.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → список A2-сделок по дням. Утром каждого дня клиентам автоматически уходит напоминание. Если день полностью провалится — разбор клоузеров на следующей планёрке.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">📆</span>
+      <h3>8. Длинный хвост</h3>
+      <div class="what">A2 8–30 дней · фикс. точки контакта</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сделки с обещанием оплаты в 8–30 дней (28 на команду) · разбивка по клоузерам с их median.<br><br><b>Регламент:</b> между Д0 и днём обещания — <b>2 фиксированные точки контакта</b>: за 1 день до даты + в день обещания. Между ними клоузер <b>не трогает</b>. Никаких «дай ещё разок позвоню».</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>топ-копящих</b> — кто складывает сделки вдаль. Норма ≤6 на клоузера. Петрова 12 (median 171ч) — флаг. На <b>дату &gt;30 дней</b> — это нарушение, должно быть C.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → аудит хвоста клоузера. Проверяешь: реально клиент назвал дату или клоузер «вытянул»? Реально дата ≤30 дней или больше? Если хвост раздут — у клоузера нет дисциплины правила 3 статусов.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="left">
+      <span class="icon-big">🧟</span>
+      <h3>9. Переоткрытые сделки</h3>
+      <div class="what">Зомби · нарушение системы</div>
+    </div>
+    <div class="right">
+      <div class="triple">
+        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок имеют незафиксированный цикл «990 → реализовано» (31, или 14,8% от 209). Норма ≤5%. Разбивка по клоузерам (Яковлева 9, Петрова 7, Ляшенко 5).<br><br><b>Что это:</b> сделки которые либо реоткрываются после C-закрытия, либо клоузер нарушает <b>лимит «1 перенос даты»</b> (переносит 2-3-4 раза). Это <b>зомби</b> — съедают время команды и не дают результата.</div></div>
+        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>14,8% vs норма ≤5%</b> — в 3× выше нормы. На <b>распределение</b> — у Яковлевой и Петровой больше всего, причём у обеих median &gt;90ч. Связь очевидна: они тянут, клиенты не платят, сделки реоткрываются.</div></div>
+        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → список переоткрытых. По каждой проверяешь: была ли уже C-категория? Сколько раз переносили дату? <b>Запреты:</b><ul><li>Реоткрытие C запрещено — должно быть «новая сделка», не та же</li><li>2-й перенос даты автоматически идёт в C</li></ul>Разбор с клоузером: почему обходит правила.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 12 ═══ -->
+  <h2 id="tasks"><span class="num">12</span>Откуда задачи в списке «До 18:00»</h2>
+
+  <p>Список формируется автоматически из 4 источников + ручные задачи РОПа. На каждой задаче бейджик источника — это делает систему прозрачной: РОП понимает почему задача появилась.</p>
 
   <div style="display: grid; grid-template-columns: 220px 1fr; gap: 16px 28px; margin: 24px 0;">
 
-    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(82,167,255,0.14); color: #52a7ff; border-radius: 8px; font-weight: 700; height: fit-content;">🤖 МПП v3.5</div>
-    <div>
-      <p style="margin: 0;"><b>Правила инструкции МПП v3.5</b> — система знает регламент и сама добавляет:</p>
-      <ul style="color: var(--text-2); margin: 8px 0 0; padding-left: 20px;">
-        <li><b>2-часовой звонок</b> после первой встречи (этап 03 Догрев) — клоузер не позвонил</li>
-        <li><b>Дожим день 7-12</b> на этапе 05 — плановое касание</li>
-        <li><b>Этап 06 +3ч</b> без передачи в сопровождение — алерт</li>
-        <li><b>2-й перенос встречи</b> клоузером — автотаск «проверить сделку»</li>
-      </ul>
-    </div>
-
-    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(255,159,10,0.14); color: var(--yellow); border-radius: 8px; font-weight: 700; height: fit-content;">⚡ День 14</div>
-    <div>
-      <p style="margin: 0;"><b>Эскалации этапов</b> — финальная попытка РОПа на 14-й день:</p>
-      <ul style="color: var(--text-2); margin: 8px 0 0; padding-left: 20px;">
-        <li>Догрев · день 14 — РОП лично звонит клиенту</li>
-        <li>Счёт · день 14 — РОП лично звонит клиенту</li>
-        <li>Дожим · день 14 — самое больное место воронки, РОП обязан вмешаться</li>
-      </ul>
-    </div>
-
     <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(48,209,88,0.14); color: var(--green); border-radius: 8px; font-weight: 700; height: fit-content;">📊 Команда</div>
     <div>
-      <p style="margin: 0;"><b>Watchdog по клоузерам</b> — задачи появляются когда клоузер в красной зоне:</p>
-      <ul style="color: var(--text-2); margin: 8px 0 0; padding-left: 20px;">
-        <li>Клоузер 2 недели &lt;60% плана — задача «1:1 встреча»</li>
-        <li>Клоузер 4+ красных за день — задача «персональный разбор»</li>
-        <li>Клоузер с 4+ потерями в Ротации — задача «тренинг 72ч»</li>
+      <p style="margin: 0;"><b>Watchdog по конверсии Д0:</b></p>
+      <ul style="color: var(--text-2); margin: 8px 0 0;">
+        <li>Конверсия Д0 &lt;30% за неделю — задача «1:1 встреча» + AI-разбор встреч</li>
+        <li>Median &gt;72ч — задача «аудит длинного хвоста»</li>
+        <li>Топ Д0 &gt;50% — задача «шаринг записи с командой»</li>
       </ul>
     </div>
 
     <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(255,159,10,0.10); color: var(--yellow); border-radius: 8px; font-weight: 700; height: fit-content;">⏰ Watchdog</div>
     <div>
-      <p style="margin: 0;"><b>Превышение норм процессов</b> — добавляются задачи разбора:</p>
-      <ul style="color: var(--text-2); margin: 8px 0 0; padding-left: 20px;">
-        <li>3+ продлений SLA от одного клоузера — задача «разбор по кейсам»</li>
-        <li>Котёл копится 7 дней — задача «персональный разговор с топ-теряющими»</li>
-        <li>Конверсия этапа упала — задача «планёрка по скриптам»</li>
+      <p style="margin: 0;"><b>Превышение норм процессов:</b></p>
+      <ul style="color: var(--text-2); margin: 8px 0 0;">
+        <li>Просрочка 2+ дня без контрольного звонка — эскалация РОПа</li>
+        <li>Reopen rate клоузера &gt;5% — задача «разбор переоткрытий»</li>
+        <li>2-й перенос даты на сделке — автотаск «закрытие в C»</li>
+      </ul>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(82,167,255,0.14); color: var(--blue); border-radius: 8px; font-weight: 700; height: fit-content;">🤖 МПП</div>
+    <div>
+      <p style="margin: 0;"><b>AI-аудит встреч:</b></p>
+      <ul style="color: var(--text-2); margin: 8px 0 0;">
+        <li>Встречи с AI-оценкой &lt;3/5 — задача «разбор красных»</li>
+        <li>Звонок без статуса A1/A2/C — автоматически красный</li>
+        <li>A2 без даты — контрольный звонок через 3-5 дней</li>
       </ul>
     </div>
 
     <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(255,69,58,0.14); color: var(--red); border-radius: 8px; font-weight: 700; height: fit-content;">🚨 Красные</div>
     <div>
-      <p style="margin: 0;"><b>Из очереди перехвата</b> — каждая красная сделка автоматически становится задачей:</p>
-      <ul style="color: var(--text-2); margin: 8px 0 0; padding-left: 20px;">
-        <li>«Разобрать 7 красных до 18:00» — собирательная задача из плитки</li>
-        <li>Если конкретная сделка горит (&lt;2ч) — отдельная задача</li>
-      </ul>
+      <p style="margin: 0;"><b>Из очереди перехвата</b> — каждая красная встреча становится задачей: «Разобрать N красных встреч до 18:00». Если у клоузера 4+ красных — отдельная задача «персональный разбор».</p>
     </div>
 
     <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(255,255,255,0.08); color: var(--text-2); border-radius: 8px; font-weight: 700; height: fit-content;">👤 Ручная</div>
     <div>
-      <p style="margin: 0;"><b>Задачи добавленные РОПом</b> — кнопка <b>«+ Добавить задачу»</b> внизу списка. Можно вписать что угодно: «Совещание с директором 16:00», «Подготовить отчёт по продлениям», и т.д. Помечается без автоисточника.</p>
+      <p style="margin: 0;"><b>Задачи добавленные РОПом</b> — кнопка «+ Добавить задачу». Можно вписать что угодно: «Совещание с директором», «Отчёт».</p>
     </div>
 
   </div>
 
-  <div class="quote-block">
-    Это превращает плитку из «магического списка» в <b>прозрачную систему</b>: РОП понимает почему задача появилась и может её обоснованно отклонить если несогласен с автоправилом. Если у задачи бейджик «🤖 МПП» — она добавлена системой, а не самим РОПом, и её нельзя «забыть».
-    <span class="src">— Принцип «без чёрных ящиков»</span>
+  <!-- ═══ 13 ═══ -->
+  <h2 id="metrics"><span class="num">13</span>Метрики и нормы</h2>
+
+  <h3>3 главных KPI РОПа</h3>
+  <p>Это <b>3 цифры, которые ты называешь директору ежедневно</b>. Если все 3 в норме — дашборд можно не открывать. Если хоть одна красная — открываем и копаем.</p>
+
+  <div class="stab cols-4">
+    <div class="h">Метрика</div>
+    <div class="h">Что значит</div>
+    <div class="h">Норма</div>
+    <div class="h">Сейчас</div>
+
+    <div class="c k">Конверсия Д0</div>
+    <div class="c">% встреч, закрытых ≤24ч</div>
+    <div class="c">≥50%</div>
+    <div class="c"><b style="color:var(--yellow)">34%</b></div>
+
+    <div class="c k">Median времени</div>
+    <div class="c">Медиана от 990 до закрытия</div>
+    <div class="c">≤24ч</div>
+    <div class="c"><b style="color:var(--yellow)">1,7 дня</b></div>
+
+    <div class="c k">Reopen rate</div>
+    <div class="c">% переоткрытых сделок</div>
+    <div class="c">≤5%</div>
+    <div class="c"><b style="color:var(--red)">14,8%</b></div>
   </div>
 
-  <!-- 6. Красные сделки -->
-  <div class="plate">
-    <div class="left">
-      <span class="icon-big">🔴</span>
-      <h3>6. Красные сделки · перехват</h3>
-      <div class="what">Самая важная фича — AI ловит слив в день звонка</div>
-    </div>
-    <div class="right">
-      <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько сделок AI пометил как «красные» сегодня (7) · топ-причины (3 «не предложили оплатить» · 2 «слив подумаю» · 1 «дорого без разбивки» · 1 «без след.шага») · тренд «вчера 12 → сегодня 7».</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>число</b> — норма к концу дня <b>0 не разобраны</b>. На <b>топ-нарушителя</b> (Иванов 4 красных за день). На <b>причины</b> — где системная проблема: 3 раза «не предложили оплатить» = вся команда плохо закрывает.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Очередь перехвата</b>. По каждой красной сделке РОП решает 3 действия:<ul><li><b>↩ Вернуть с задачей</b> (90% случаев — клоузер исправит)</li><li><b>→ Передать сильному</b> (Лим/Куделькин добьют)</li><li><b>× Закрыть как нецелевую</b> (если клиент не покупаемый)</li></ul>На каждой сделке AI даёт <b>подсказку «что сказать»</b> из эталонов лучших.</div></div>
-      </div>
-    </div>
+  <h3>Распределение команды (вторичные метрики)</h3>
+
+  <div class="stab cols-2">
+    <div class="h">Что мерим</div>
+    <div class="h">Норма / сигнал</div>
+
+    <div class="c k">Просели &lt;30% по Д0</div>
+    <div class="c">0 клоузеров. Если 2+ — главная просадка недели.</div>
+
+    <div class="c k">Длинный хвост у клоузера</div>
+    <div class="c">≤6 сделок. &gt;10 — аудит дат, скорее всего нарушение лимита 1 перенос.</div>
+
+    <div class="c k">Просрочка без звонка</div>
+    <div class="c">0 «не позвонивших 2+ дня». 3+ — срывается контрольный регламент.</div>
+
+    <div class="c k">Красные встречи</div>
+    <div class="c">0 к концу дня. &gt;5 не разобраны — РОП не сделал работу.</div>
   </div>
 
-  <!-- 7. Оплат в звонке -->
-  <div class="plate">
-    <div class="left">
-      <span class="icon-big">💸</span>
-      <h3>7. Оплат в звонке</h3>
-      <div class="what">Поведенческий KPI · самый дисциплинирующий</div>
-    </div>
-    <div class="right">
-      <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">% оплат прошедших прямо в звонке (норма ≥80%) · 12/19 оплат · ▼ −17 п.п. к прошлой неделе · разбивка промахов по клоузерам (Силкин 4, Иванов 2, Петров 1).</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>отклонение от нормы</b> — это поведенческий KPI, прямой проигрыш денег. Если &lt;70% — системная пассивность всей команды. Если у одного клоузера 4+ промаха — персональная проблема.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Плеер промахов</b> с 30-сек нарезками каждой сделки. Слушаешь где именно «слил момент». Тренировка скрипта: <b>«Откройте, я подожду на линии»</b> вместо «отправил, ждите». Назначаешь планёрку на завтра одной кнопкой.</div></div>
-      </div>
-    </div>
+  <h3>Личные метрики клоузера</h3>
+
+  <div class="stab cols-2">
+    <div class="h">Что</div>
+    <div class="h">Норма</div>
+
+    <div class="c k">Моя Конверсия Д0</div>
+    <div class="c">≥50% — главный личный KPI, влияет на бонус</div>
+
+    <div class="c k">Мой Median</div>
+    <div class="c">≤24ч — чтобы не накапливал хвост</div>
+
+    <div class="c k">Мои переоткрытые</div>
+    <div class="c">0–1 за неделю — не нарушаю «1 перенос»</div>
+
+    <div class="c k">Мои просрочки</div>
+    <div class="c">0 необработанных — дисциплина дня</div>
   </div>
 
-  <!-- 8. Продления -->
-  <div class="plate">
-    <div class="left">
-      <span class="icon-big">⏰</span>
-      <h3>8. Продлений SLA</h3>
-      <div class="what">Watchdog · директор увидит превышение</div>
-    </div>
-    <div class="right">
-      <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько раз РОП одобрил продление SLA за неделю (9 · норма ≤5) · конверсия после продления (28%) · распределение по клоузерам (Иванов 4, Петров 3, Силкин 2).</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На превышение нормы — это <b>watchdog</b>, директор видит на своём дашборде. На <b>конверсию после продления</b>: если &lt;50% — продления бесполезны, просто оттягивают слив.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Клик → <b>Список 9 продлений</b> (кому, кто запросил, исход). Видишь Иванов 4 продления → разговор «не одобряю автоматом». Если конверсия плохая → жмёшь <b>⛔ Стоп-режим (неделя)</b> — не одобряешь никаких новых, команда учится держать SLA сама.</div></div>
-      </div>
-    </div>
+  <!-- ═══ 14 ═══ -->
+  <h2 id="influence"><span class="num">14</span>Как влиять на метрики</h2>
+
+  <p>Каждый сигнал на дашборде → конкретное действие. Срок зафиксирован — если не уложился, задача автоматически попадает в «До 18:00» следующего дня с бейджиком ⏰ Watchdog. Не теряется.</p>
+
+  <div class="stab cols-4">
+    <div class="h">Сигнал</div>
+    <div class="h">Действие</div>
+    <div class="h">Срок</div>
+    <div class="h">Где</div>
+
+    <div class="c k">Д0 клоузера &lt;30%</div>
+    <div class="c">1:1 встреча + AI-разбор 5 встреч за неделю</div>
+    <div class="c">24 часа</div>
+    <div class="c">HERO</div>
+
+    <div class="c k">Median &gt;72ч</div>
+    <div class="c">Аудит длинного хвоста этого клоузера</div>
+    <div class="c">48 часов</div>
+    <div class="c">HERO + Длинный хвост</div>
+
+    <div class="c k">Reopen &gt;5%</div>
+    <div class="c">Жёсткий разбор: реоткрыл C? переносил даты &gt;1 раза?</div>
+    <div class="c">24 часа</div>
+    <div class="c">Переоткрытые</div>
+
+    <div class="c k">Просрочка 2+ дня</div>
+    <div class="c">РОП лично звонит клиенту</div>
+    <div class="c">Немедленно</div>
+    <div class="c">Просрочки</div>
+
+    <div class="c k">Длинный хвост &gt;10</div>
+    <div class="c">Аудит дат: всё что &gt;30 дней → перевести в C</div>
+    <div class="c">48 часов</div>
+    <div class="c">Длинный хвост</div>
+
+    <div class="c k">4+ красных у одного</div>
+    <div class="c">Стоп-режим клоузера + персональный разбор записей</div>
+    <div class="c">Сегодня</div>
+    <div class="c">Красные встречи</div>
+
+    <div class="c k">Топ Д0 &gt;55%</div>
+    <div class="c">Шаринг записи с командой на планёрке</div>
+    <div class="c">Эта неделя</div>
+    <div class="c">HERO</div>
   </div>
 
-  <!-- 9. AI -->
-  <div class="plate">
-    <div class="left">
-      <span class="icon-big">🤖</span>
-      <h3>9. AI · спасает деньги</h3>
-      <div class="what">ROI системы перехвата в рублях</div>
-    </div>
-    <div class="right">
-      <div class="triple">
-        <div class="row"><div class="h">📊 Что показывает</div><div class="b">Сколько денег AI спас за неделю (880 тыс ₽) · поймал N красных, РОП спас M · средний чек спасения (~38к ₽) · точность v1.4.2 (86.9%) · 8 disputes ждут разбора.</div></div>
-        <div class="row"><div class="h">👁 <span class="em">Куда смотришь</span></div><div class="b">На <b>деньги</b> — это <b>оправдание системы</b> для тебя и для директора. Если AI спас 880к за неделю — он окупает свою стоимость в 30+ раз. На <b>точность</b> — если падает &lt;85%, AI начинает врать, красные сделки могут быть ложными.</div></div>
-        <div class="row"><div class="h">🎮 Как управляешь</div><div class="b">Если точность OK — продолжаешь доверять AI-сигналам. Если падает — идёшь на страницу <b>«Промт клоузеров»</b> → калибруешь промт через disputes. Каждая исправленная неточность поднимает точность к 90%+.</div></div>
-      </div>
-    </div>
-  </div>
+  <h3>Подробнее: 6 главных рычагов управления</h3>
 
-  <!-- ═══ WORKFLOW ДНЯ ═══ -->
-  <h2>Рабочий день РОПа</h2>
+  <h4>① 1:1 с просевшим клоузером</h4>
+  <p>Когда: Конверсия Д0 &lt;30% за неделю.<br>
+  Длительность: 30 минут.<br>
+  Что делаешь: открываешь его 5 последних встреч в AI-аудиторе, слушаешь нарезки «момент закрытия» и «отработка возражений», вместе ищете точку слома. Не «ругаешь», а ищете <b>конкретный навык</b>, который западает: например, «не предлагает оплату в звонке», «соглашается на размытое "наберу"», «не вытягивает дату».</p>
+
+  <h4>② AI-разбор записей</h4>
+  <p>Когда: красная встреча в очереди перехвата.<br>
+  Что делаешь: открываешь карточку красной встречи. AI показывает оценку (1-5) и причину красности. Слушаешь конкретный фрагмент. Возвращаешь клоузеру с задачей: «Дозвонись клиенту, получи статус A1/A2/C к концу дня».</p>
+
+  <h4>③ Эскалация просрочки</h4>
+  <p>Когда: клиент не оплатил в день обещания, клоузер не позвонил 2+ дня.<br>
+  Что делаешь: <b>сам</b> звонишь клиенту. Не чтобы «дожать», а чтобы <b>зафиксировать статус</b>: либо новая дата (перенос — но это последний), либо «решили не платить» → C-закрытие.</p>
+
+  <h4>④ Аудит длинного хвоста</h4>
+  <p>Когда: у клоузера &gt;6 сделок в зоне 8–30 дней.<br>
+  Что делаешь: открываешь его список. Проверяешь по каждой:</p>
+  <ul>
+    <li>Реально клиент назвал дату, или клоузер «вытянул»?</li>
+    <li>Дата реально ≤30 дней или больше?</li>
+    <li>Сколько раз уже переносили?</li>
+  </ul>
+  <p>Всё что нарушает регламент → переводишь в C. Чистишь хвост клоузера.</p>
+
+  <h4>⑤ Стоп-режим клоузера</h4>
+  <p>Когда: 4+ красных встреч за день у одного клоузера.<br>
+  Что делаешь: <b>останавливаешь поток новых лидов</b> ему на сутки. Объясняешь команде: «Иван сегодня без новых лидов, разбираем его 4 красные встречи. Завтра вернётся в строй с правками». Это не наказание — это техническая остановка для калибровки.</p>
+
+  <h4>⑥ Шаринг записи топ-клоузера</h4>
+  <p>Когда: у топ-клоузера Конверсия Д0 &gt;55%.<br>
+  Что делаешь: на еженедельной планёрке (или в чате) выкладываешь его лучшую запись с пометкой «слушаем как Лим закрывает на этапе оплаты — обратите внимание на момент 32:14».</p>
+
+  <!-- ═══ 15 ═══ -->
+  <h2 id="workflow"><span class="num">15</span>Рабочий день РОПа</h2>
   <p>Пошагово: как использовать дашборд от утра до закрытия смены.</p>
 
   <div class="day">
     <div class="time">09:00<small>Утренний обход</small></div>
     <div class="body">
-      <h3>5-7 минут смотришь на 9 плиток</h3>
+      <h3>5–7 минут смотришь на 9 плиток</h3>
       <ul>
-        <li>Сразу видишь <b>что горит</b> — красная плитка «Красные сделки 7» и «Горящие 5»</li>
-        <li>Замечаешь <b>топ-нарушителей</b> — Иванов в 3-х плитках (красные, котёл, продления)</li>
-        <li>Открываешь «Команда» → видишь Иванов 47% → 1:1 встреча на 15:30</li>
+        <li>Главный взгляд — <b>«Конверсия Д0 команды»</b>. Среднее ≥40%? Кто &lt;30%?</li>
+        <li><b>Median у каждого</b> — &gt;72ч флаг. Петрова 171ч — серьёзно тянет.</li>
+        <li><b>«Просрочка обещаний»</b> — кто не позвонил клиенту вчера.</li>
+        <li><b>«Переоткрытые»</b> — есть всплеск? Reopen rate &gt;5%?</li>
+        <li>«До 18:00» — что висит с прошлой смены.</li>
       </ul>
     </div>
   </div>
@@ -494,25 +974,25 @@
   <div class="day">
     <div class="time">09:30 — 13:00<small>Активная фаза</small></div>
     <div class="body">
-      <h3>Перехват красных + горящих</h3>
+      <h3>Контроль точки 1 (Качество Д0) и точки 3 (Просрочка/Reopen)</h3>
       <ul>
-        <li>Открываешь <b>Очередь перехвата</b> → решаешь 7 красных сделок (вернуть/передать/закрыть)</li>
-        <li>На каждой — AI-подсказка «что сказать клиенту» из эталонов</li>
-        <li>Параллельно — звонки клоузерам по горящим 72ч</li>
-        <li>На этапе 04 «Счёт» — клик показывает <b>4 нарушения регламента</b> (нет звонка в 15 мин · нет даты в CRM)</li>
+        <li><b>Очередь перехвата</b> → 7 красных встреч → решение по каждой (вернуть / передать / закрыть)</li>
+        <li>1:1 с просевшим клоузером (Ляшенко 23%) → AI-разборы его встреч → конкретные ошибки</li>
+        <li>Эскалации просрочек — РОП лично звонит клиентам, где клоузер 2 дня молчит</li>
+        <li>Разбор переоткрытых — почему Яковлева 9 zombies? Реоткрывает C? Переносит даты больше 1 раза?</li>
       </ul>
     </div>
   </div>
 
   <div class="day">
-    <div class="time">13:00 — 17:00<small>Контроль метрик</small></div>
+    <div class="time">13:00 — 17:00<small>Контроль точки 2 (День обещания)</small></div>
     <div class="body">
-      <h3>Поведенческие KPI и команда</h3>
+      <h3>Платежи дня + длинный хвост</h3>
       <ul>
-        <li><b>«Оплат в звонке 63%»</b> → клик → плеер 7 промахов → слушаешь Силкина (4 промаха) → планёрка завтра</li>
-        <li><b>Котёл копится 7 дней подряд</b> → разбор топ-сдатчиков (Иванов 4 · Петров 2)</li>
-        <li><b>Продлений 9 vs норма ≤5</b> → клик → список → стоп-режим на неделю если плохо</li>
-        <li>Параллельно — закрываешь чекбоксы «До 18:00» (2/6 → 4/6 → 6/6)</li>
+        <li><b>«Оплаты сегодня»</b> — кто из 18 ещё не заплатил, у кого «молчат» 3+ → звонок клоузеру</li>
+        <li><b>«Длинный хвост»</b> → аудит Петровой (12 сделок, median 171ч) — проверка дат</li>
+        <li>Шаринг записи топ-клоузера (Лим 58% / Гальков 52%) с просевшими</li>
+        <li>Закрываешь чекбоксы «До 18:00» (2/5 → 4/5 → 5/5)</li>
       </ul>
     </div>
   </div>
@@ -522,55 +1002,170 @@
     <div class="body">
       <h3>Zero Dashboard</h3>
       <ul>
-        <li><b>Все 7 красных</b> → разобраны (норма 100%)</li>
-        <li><b>«До 18:00» 6/6</b> → toast «🎉 Чистый дашборд»</li>
-        <li>Скрин Mission Control в чат «РОП → Директор»: «Сегодня: 7 красных закрыто, 4 спасены через возврат с задачей, 2 переданы Лиму, 1 закрыта как нецелевая»</li>
+        <li><b>Все красные встречи</b> разобраны → норма 100%</li>
+        <li><b>«До 18:00» 5/5</b> → toast «🎉 Чистый дашборд»</li>
+        <li><b>«Оплаты сегодня»</b> финальная проверка → не оплаченные автоматически уйдут утром в «Просрочку»</li>
+        <li>Скрин Mission Control в чат «РОП → Директор»: «Сегодня: Д0=36% (▲2pp), median 1,5 дня, Reopen 12%»</li>
       </ul>
     </div>
   </div>
 
-  <div class="quote-block">
-    Главное правило — <b>не «посмотрел и забыл»</b>, а «посмотрел → действие». Если на плитке красная окантовка, под значением будет блок с конкретным шагом и кнопка.
-    <span class="src">— Принцип Mission Control</span>
+  <!-- ═══ 16 ═══ -->
+  <h2 id="scripts"><span class="num">16</span>Скрипты для команды</h2>
+
+  <h3>5 правил каждого клоузера (повесить в чат / на стену офиса)</h3>
+  <ol>
+    <li><b>Каждая встреча выходит со статусом A1, A2 или C.</b> Без статуса = красная встреча в AI-аудите.</li>
+    <li><b>Дату оплаты называет клиент, не ты.</b> «Давайте я перезвоню через 3 дня» — это твоё предложение, не работает. Должно быть: «Когда планируете оплатить?» → клиент сам говорит.</li>
+    <li><b>A2 без даты — 1 контрольный звонок через 3-5 дней.</b> Либо вытягиваешь дату → A2, либо C-закрытие. Третьего нет.</li>
+    <li><b>Реоткрытие C запрещено.</b> Если клиент через месяц вернулся — это новая сделка, не та же.</li>
+    <li><b>Лимит 1 перенос даты на сделку.</b> После второй просрочки — автоматически C. Не уговаривай РОПа на 3-й перенос.</li>
+  </ol>
+
+  <h3>Скрипт еженедельной планёрки (РОП → команде)</h3>
+  <div class="script">
+    <div class="lbl">Планёрка понедельника, 09:30, 20 минут</div>
+    <p><b>«Команда, главная метрика — Д0 (закрытие в течение 24 часов от 990₽). Цель 50%, средняя по команде 34% — мы ниже цели на 16 пунктов.</b></p>
+    <p><b>Лидеры:</b> Лим Елена 58% (median 21ч), Гальков 52% (20ч). Покажу запись Лим после планёрки — посмотрите, что она делает на этапе закрытия.</p>
+    <p><b>Аутсайдеры:</b> Ляшенко 23%, Яковлева 29% — на этой неделе у вас по 1:1 со мной + AI-разбор ваших встреч. Не наезд, ищем конкретную точку слома.</p>
+    <p><b>Reopen rate</b> — 14,8%. Это значит у нас 31 зомби-сделка. Норма 5%. Главные нарушители: Яковлева 9, Петрова 7. С завтра — реоткрытие C запрещено системой, второй перенос автоматически в C.</p>
+    <p><b>Просрочки</b> — 7 в работе, 3 без звонка 2+ дня. Утром делаем по списку: 1 контрольный звонок и решение — новая дата (макс 1 раз) или C.»</p>
   </div>
 
-  <!-- ═══ ГЛОССАРИЙ ═══ -->
-  <h2>Термины</h2>
+  <h3>Скрипт онбординга нового клоузера (первый день)</h3>
+  <div class="script">
+    <div class="lbl">Первая встреча с новым клоузером, 30 минут</div>
+    <p><b>«Главное правило: ты не решаешь когда позвонить — это решает система. Когда у тебя встреча — ты выходишь с одним из трёх статусов.</b></p>
+    <p><b>A1 — оплатил в звонке.</b> Задача — закрыть в моменте. Скрипт «откройте, я подожду на линии», не «отправлю ссылку, ждите».</p>
+    <p><b>A2 — клиент сам назвал дату 1-30 дней.</b> Ты ничего не делаешь до этой даты — система сама напомнит клиенту утром, тебе подсветит вечером если не оплатил.</p>
+    <p><b>C — закрытие.</b> Если клиент не A1 и не A2 — это C, не «давайте я подумаю и позвоню». Через 30 дней он вернётся новым лидом.</p>
+    <p>Это всё. Никаких "дожимов по дням", "горящих 72 часов", "котлов". Только 3 статуса и 3 даты.»</p>
+  </div>
+
+  <h3>Скрипт 1:1 с просевшим клоузером</h3>
+  <div class="script">
+    <div class="lbl">1:1, 30 минут, после AI-разбора 5 встреч</div>
+    <p><b>«Иван, у тебя на этой неделе Д0 = 23%. Команда — 34%, цель 50%. Открыли 5 твоих последних встреч в AI-аудиторе.</b></p>
+    <p><b>3 из 5</b> — ты соглашаешься на «я подумаю и наберу». Там нет статуса, нет даты от клиента. Это автоматически красные встречи.</p>
+    <p>Слушай нарезку 32:14 у себя и 28:50 у Лим Елены. Видишь разницу? Она в этот же момент задаёт прямой вопрос: <i>«Иван, когда планируете оплатить — сегодня или завтра?»</i>. Ты говоришь <i>«окей, наберу через пару дней»</i>.</p>
+    <p>На этой неделе задача: перед каждым закрытием встречи — <b>прямой вопрос с двумя датами</b>. Не «когда», а «сегодня или завтра / 25-го или 26-го». Послушаю 5 встреч на следующей 1:1.»</p>
+  </div>
+
+  <h3>Скрипт стоп-режима</h3>
+  <div class="script">
+    <div class="lbl">Стоп-режим клоузера, объявление команде</div>
+    <p><b>«Иван сегодня без новых лидов на сутки. Не наказание — техническая остановка для разбора.</b> У него 4 красных встречи за вчера, надо разобрать каждую и выработать правки скрипта. Завтра в 09:30 вернётся в строй. Лидов Ивана сегодня делим — Лим +1, Гальков +1, Камран +2.»</p>
+  </div>
+
+  <!-- ═══ 17 ═══ -->
+  <h2 id="bonus"><span class="num">17</span>Бонусная схема (предложение)</h2>
+
+  <p>Чтобы метрики работали, они должны влиять на деньги клоузера. Предложение:</p>
+
+  <div class="stab cols-4">
+    <div class="h">Метрика</div>
+    <div class="h">Вес</div>
+    <div class="h">Норма</div>
+    <div class="h">Бонус</div>
+
+    <div class="c k">Личная Конверсия Д0</div>
+    <div class="c">40%</div>
+    <div class="c">≥50%</div>
+    <div class="c">+50% к окладу</div>
+
+    <div class="c k">Personal median</div>
+    <div class="c">20%</div>
+    <div class="c">≤24ч</div>
+    <div class="c">+20%</div>
+
+    <div class="c k">Reopen rate</div>
+    <div class="c">20%</div>
+    <div class="c">≤5%</div>
+    <div class="c">+20%</div>
+
+    <div class="c k">Длинный хвост</div>
+    <div class="c">10%</div>
+    <div class="c">≤6</div>
+    <div class="c">+10%</div>
+
+    <div class="c k">Просрочки без звонка</div>
+    <div class="c">10%</div>
+    <div class="c">0</div>
+    <div class="c">+10%</div>
+  </div>
+
+  <p>Клоузер видит свои 5 цифр на личном экране каждый день — понимает, как далеко от полного бонуса. Это автоматически выправляет поведение: дисциплина 3 статусов = деньги.</p>
+
+  <p style="color: var(--text-3); font-style: italic;">⚠ Это <b>предложение</b>, не утверждённый регламент. Финальные веса и нормы согласовываются с финдиректором и собственником.</p>
+
+  <!-- ═══ 18 ═══ -->
+  <h2 id="glossary"><span class="num">18</span>Глоссарий</h2>
   <dl class="gloss">
-    <dt>Красная сделка</dt>
-    <dd>Сделка где AI после звонка увидел один из 8 сигналов слива (не предложил оплатить · «подумаю» без выяснения · «дорого» без разбивки · нет даты в CRM · пассивная продажа · нет предоплаты · без след.шага · «напишите когда решите»). По инструкции МПП v3.5 раздел 5.</dd>
+    <dt>МПП-1 (Охотник)</dt>
+    <dd>Менеджер первичной продажи. Берёт холодного лида, проводит первичную консультацию, получает с клиента 990₽. После 990 клиент уходит к МПП-2. Не твоя команда.</dd>
+
+    <dt>МПП-2 (Клоузер)</dt>
+    <dd>Менеджер вторичной продажи (closer). Берёт квалифицированного клиента после 990₽, закрывает на полную услугу. <b>Твоя команда.</b></dd>
+
+    <dt>990₽</dt>
+    <dd>Квалификационный платёж — клиент готов работать с нами всерьёз. Точка отсчёта SLA «990 → Успешно реализовано».</dd>
+
+    <dt>Д0 (встреча Д0)</dt>
+    <dd>Первая встреча клоузера с квалифицированным клиентом сразу после 990₽. Длительность 40-55 мин. Главное событие в воронке МПП-2.</dd>
+
+    <dt>3 финальных статуса Д0</dt>
+    <dd>Каждая встреча клоузера должна закончиться одним из 3 статусов: <b>A1</b> (оплачен ≤24ч от 990₽), <b>A2</b> (клиент назвал дату оплаты 1–30 дней), <b>C</b> (закрытие). Без статуса = звонок автоматически красный.</dd>
+
+    <dt>Конверсия Д0</dt>
+    <dd>Главный KPI РОПа — % встреч закрытых ≤24ч от 990₽. Цель ≥50%, текущая ~34%. Меньше 30% = клоузер просел, нужен AI-разбор и 1:1.</dd>
+
+    <dt>Median времени закрытия</dt>
+    <dd>Медиана длительности цикла «990 → реализовано» по клоузеру. Видна в HERO рядом с конверсией. Лидеры: Лим 21ч / Гальков 20ч. Аутсайдер: Петрова 171ч (8,5× к лучшему). &gt;72ч = флаг.</dd>
+
+    <dt>Дата оплаты (A2)</dt>
+    <dd>Слово <b>клиента</b>, не предложение клоузера. Клиент сам говорит «оплачу 5-го». Эта дата — единственный триггер следующего звонка.</dd>
+
+    <dt>A2 без даты</dt>
+    <dd>Подтип A2: клиент сказал «не уверен / надо подумать». Регламент: <b>1 контрольный звонок через 3-5 дней</b>. Либо дата → A2, либо C-закрытие.</dd>
+
+    <dt>3 точки контроля</dt>
+    <dd>3 рычага системы: <b>1)</b> качество Д0 (AI-аудит), <b>2)</b> день обещания (автонапоминание + дашборд), <b>3)</b> просрочка / reopen (автоочередь).</dd>
+
+    <dt>Просрочка обещания</dt>
+    <dd>Клиент не оплатил в день обещания. Утром Д+1 автоматически в очереди клоузера. <b>1 контрольный звонок обязателен.</b> Лимит — 1 перенос даты.</dd>
+
+    <dt>Длинный хвост</dt>
+    <dd>A2-сделки с обещанием оплаты в 8–30 дней. Регламент: 2 фиксированные точки контакта (за 1 день + в день обещания). Между ними клоузер не трогает. Норма ≤6 на клоузера.</dd>
+
+    <dt>Переоткрытые сделки</dt>
+    <dd>Сделки с незафиксированным циклом «990 → реализовано». Сейчас 14,8%, в 3× выше нормы (≤5%). Причины: реоткрытие C-сделок или нарушение лимита «1 перенос». Зомби.</dd>
+
+    <dt>Лимит 1 перенос даты</dt>
+    <dd>Клоузер может переназначить дату оплаты сделки <b>максимум 1 раз</b>. После второй просрочки — автоматически в C.</dd>
+
+    <dt>Красная встреча Д0</dt>
+    <dd>Встреча, где AI после звонка увидел нарушение правила 3 статусов: не вышел со статусом / дата от клоузера / A2 без контр. звонка / «подумаю» вместо C.</dd>
 
     <dt>Очередь перехвата</dt>
-    <dd>Список красных сделок которые РОП обязан разобрать до конца смены. 3 действия: вернуть клоузеру с задачей · передать сильному · закрыть как нецелевую.</dd>
+    <dd>Список красных встреч которые РОП обязан разобрать до конца смены. 3 действия: вернуть с задачей · передать сильному · закрыть как нецелевую.</dd>
 
-    <dt>Ротация сделок (Котёл)</dt>
-    <dd>Если клоузер не делает касание 72ч на этапах 03/04/05 → сделка <b>автоматически назначается новому клоузеру</b> (round-robin или по нагрузке). Сделки не висят в общем пуле — клиент сразу получает нового ответственного. На дашборде видно: сколько сделок за день потерял каждый клоузер и кто их получил. Если &gt;20% сдач у одного клоузера — санкции к бонусу.</dd>
+    <dt>Стоп-режим клоузера</dt>
+    <dd>РОП останавливает поток новых лидов клоузеру на сутки. Триггер: 4+ красных за день. Не наказание — техническая остановка для разбора.</dd>
 
-    <dt>Правило 72 часа</dt>
-    <dd>На активных этапах (Догрев, Счёт, Дожим) клоузер обязан сделать касание не реже чем каждые 72 часа. Касание = двусторонняя связь (звонок ≥30 сек / входящий звонок / ответ в MaxBot). Если молчит — сделка уходит.</dd>
+    <dt>Автонапоминание клиенту</dt>
+    <dd>Утром в день обещания клиенту автоматически уходит сообщение в TG/MAX/SMS со ссылкой на оплату. Снимает 5–10% потерь на «забыл».</dd>
 
-    <dt>Продление SLA</dt>
-    <dd>Кнопка Salesbot «Запрос на продление» — если клиент назвал точную дату оплаты ≤7 рабочих дней. РОП одобряет/отклоняет. Максимум 1 раз на сделку.</dd>
-
-    <dt>Стоп-режим</dt>
-    <dd>Режим РОПа когда он временно не одобряет ни одно продление SLA (например на 7 дней). Команда учится держать дисциплину 14-дневного SLA.</dd>
-
-    <dt>Оплат в звонке</dt>
-    <dd>Поведенческий KPI: % сделок где оплата прошла прямо в звонке (а не «отправил ссылку, жди»). Норма ≥80%. Скрипт-замена «отправил» → «откройте, я подожду на линии».</dd>
+    <dt>AI-аудит встречи</dt>
+    <dd>YandexGPT 5.1 Pro слушает запись звонка, оценивает по 5 критериям, ставит балл 1-5. &lt;3 = красная встреча. Промт: qa_closer v1.4.2.</dd>
 
     <dt>Zero Dashboard</dt>
-    <dd>К концу смены у каждого клоузера в воронке должно быть 0 просроченных задач. Скрин чистого дашборда → в чат РОПу.</dd>
-
-    <dt>2-часовой звонок</dt>
-    <dd>Обязательное правило этапа 03 Догрев: после первой встречи клоузер обязан перезвонить клиенту через 2 часа («горячее окно» · клиент ещё помнит).</dd>
-
-    <dt>День 14</dt>
-    <dd>Финал каждого активного этапа (03/04/05). РОП лично делает финальную попытку — звонок клиенту. Если не помогает — сделка автоматически уходит в Отложенные.</dd>
+    <dd>К концу смены: 0 красных встреч не разобранных, 0 просроченных задач, 5/5 чекбоксов «До 18:00». Скрин чистого дашборда → в чат директору.</dd>
   </dl>
 
   <div class="footer">
-    <p><b>ДоНуля · AI Аудитор v4 · Mission Control</b><br>
+    <p><b>ДоНуля · AI Аудитор v4 · Mission Control · D0-trigger system</b><br>
     Регламент: МПП v3.5 (апрель 2026) · AI-промт qa_closer v1.4.2 (YandexGPT 5.1 Pro)<br>
+    Источник статистики: SLA «Оплачено 990 → Успешно реализовано» (МПП-2)<br>
     Вопросы по регламенту → РОПу МПП2 · вопросы по дашборду → разработке.</p>
   </div>
 

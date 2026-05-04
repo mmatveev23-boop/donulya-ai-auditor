@@ -2991,6 +2991,80 @@
         font-weight: 700; font-feature-settings: "tnum"; min-width: 18px; text-align: right;
       }
 
+      /* ── D0 trigger system: статусы сделок (A1/A2/B/C) ── */
+      .mc-status-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 8px;
+      }
+      .ms-cell {
+        padding: 10px 12px; border-radius: 10px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      }
+      .ms-cell.ok    { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.18); }
+      .ms-cell.warn  { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.18); }
+      .ms-cell.info  { background: rgba(82,167,255,0.06); border-color: rgba(82,167,255,0.18); }
+      .ms-cell.muted { opacity: 0.7; }
+      .ms-num { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; font-feature-settings: "tnum"; }
+      .ms-cell.ok   .ms-num { color: #30d158; }
+      .ms-cell.warn .ms-num { color: #ff9f0a; }
+      .ms-cell.info .ms-num { color: #52a7ff; }
+      .ms-lbl { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; font-weight: 500; }
+      .ms-pct { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+      /* ── D0 trigger system: оплаты сегодня (3 ячейки) ── */
+      .mc-pay-row {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0;
+      }
+      .pay-cell {
+        text-align: center; padding: 10px 6px; border-radius: 10px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      }
+      .pay-cell.ok   { background: rgba(48,209,88,0.08);  border-color: rgba(48,209,88,0.22); }
+      .pay-cell.wait { background: rgba(82,167,255,0.06); border-color: rgba(82,167,255,0.18); }
+      .pay-cell.warn { background: rgba(255,159,10,0.08); border-color: rgba(255,159,10,0.22); }
+      .pay-cell .pn  { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; font-feature-settings: "tnum"; }
+      .pay-cell.ok   .pn { color: #30d158; }
+      .pay-cell.wait .pn { color: #52a7ff; }
+      .pay-cell.warn .pn { color: #ff9f0a; }
+      .pay-cell .pl  { font-size: 10.5px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+
+      /* ── D0 trigger system: оплаты на неделе (полоски по дням) ── */
+      .mc-week-bars {
+        display: grid; gap: 4px; margin: 8px 0;
+      }
+      .wb-row {
+        display: grid; grid-template-columns: 24px 1fr 28px;
+        align-items: center; gap: 8px; font-size: 11px;
+      }
+      .wb-row .wd  { color: rgba(255,255,255,0.55); font-weight: 600; }
+      .wb-row .bar {
+        height: 6px; background: rgba(255,255,255,0.08);
+        border-radius: 3px; overflow: hidden;
+      }
+      .wb-row .bar .fill {
+        display: block; height: 100%;
+        background: linear-gradient(90deg, rgba(82,167,255,0.55), rgba(82,167,255,1));
+        border-radius: 3px;
+      }
+      .wb-row .cnt { color: rgba(255,255,255,0.85); font-weight: 600; text-align: right; font-feature-settings: "tnum"; }
+      .wb-row.today .wd  { color: #52a7ff; }
+      .wb-row.today .cnt { color: #52a7ff; }
+
+      /* ── D0 trigger system: списки клиентов (унаследовано от Track B-разметки) ── */
+      .mc-tb-list {
+        display: grid; gap: 6px; margin: 8px 0;
+      }
+      .tb-row {
+        display: grid; grid-template-columns: 1fr auto auto;
+        gap: 10px; padding: 8px 10px; border-radius: 8px;
+        background: rgba(255,255,255,0.04);
+        font-size: 11.5px; align-items: center;
+      }
+      .tb-row .tb-client { color: rgba(255,255,255,0.85); font-weight: 500; }
+      .tb-row .tb-debt   { color: rgba(255,255,255,0.55); font-feature-settings: "tnum"; }
+      .tb-row .tb-crit   { color: #30d158; font-weight: 700; font-size: 11px; }
+      .tb-row.warn       { background: rgba(255,159,10,0.08); }
+      .tb-row.warn .tb-crit { color: #ff9f0a; }
+
       /* ── Модалка очереди перехвата ── */
       #modal-red-queue .modal { max-width: 760px; }
       .red-queue-head {
@@ -5467,372 +5541,313 @@
             </div>
           </div>
 
-          <!-- ═══════════════ MISSION CONTROL · КЛОУЗЕР (Apple style) ═══════════════ -->
+          <!-- ═══════════════ MISSION CONTROL · КЛОУЗЕР (D0 trigger system) ═══════════════ -->
           <div class="mc-summary" data-mc="closer">
             <div class="mc-grid">
 
-              <!-- HERO: Сделок в работе с раскладкой по 8 этапам -->
-              <div class="mc-card col-3 row-2 accent-blue">
-                <div class="mc-card-arrow" onclick="switchTab('calls')">→</div>
-                <div class="mc-card-icon">💼</div>
-                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">vs пред. неделя <b style="color: #30d158">+3</b></span></div>
-                <div class="mc-card-value">47<small>· 8 этапов</small></div>
-                <div class="mc-weak-stage">
-                  <span class="ic">🚨</span>
-                  <span>Слабый этап: <b>05 Дожим</b> · конверсия <b style="color:#ff453a">38%</b> (норма 50%)</span>
-                </div>
-                <div class="mc-stages-row">
-                  <div class="mc-stage s-ok" data-stage="01" onclick="event.stopPropagation(); showStagePopover(this, '01')" title="Клик → сделки этапа 01">
-                    <div class="mc-stage-num">8 <span class="vs up">+1</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:100%"></div></div>
-                    <div class="mc-stage-label">01 встр</div>
-                  </div>
-                  <div class="mc-stage s-warn" data-stage="02" onclick="event.stopPropagation(); showStagePopover(this, '02')" title="Клик → сделки этапа 02">
-                    <div class="mc-stage-num warn">3 <span class="vs flat">0</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:50%"></div></div>
-                    <div class="mc-stage-label">02 реан</div>
-                  </div>
-                  <div class="mc-stage s-warn" data-stage="03" onclick="event.stopPropagation(); showStagePopover(this, '03')" title="Клик → сделки этапа 03">
-                    <div class="mc-stage-num">11 <span class="vs up">+2</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:80%"></div></div>
-                    <div class="mc-stage-label">03 догр</div>
-                  </div>
-                  <div class="mc-stage s-ok" data-stage="04" onclick="event.stopPropagation(); showStagePopover(this, '04')" title="Клик → сделки этапа 04">
-                    <div class="mc-stage-num">9 <span class="vs up">+1</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:90%"></div></div>
-                    <div class="mc-stage-label">04 счёт</div>
-                  </div>
-                  <div class="mc-stage s-danger" data-stage="05" onclick="event.stopPropagation(); showStagePopover(this, '05')" title="Клик → сделки этапа 05">
-                    <div class="mc-stage-num danger">7 <span class="vs down">−2</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:70%"></div></div>
-                    <div class="mc-stage-label">05 дож</div>
-                  </div>
-                  <div class="mc-stage s-ok" data-stage="06" onclick="event.stopPropagation(); showStagePopover(this, '06')" title="Клик → сделки этапа 06">
-                    <div class="mc-stage-num">2 <span class="vs up">+1</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:30%"></div></div>
-                    <div class="mc-stage-label">06 оплч</div>
-                  </div>
-                  <div class="mc-stage" data-stage="07" onclick="event.stopPropagation(); showStagePopover(this, '07')" title="Клик → сделки этапа 07">
-                    <div class="mc-stage-num">1 <span class="vs flat">0</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:15%"></div></div>
-                    <div class="mc-stage-label">07 возв</div>
-                  </div>
-                  <div class="mc-stage" data-stage="08" onclick="event.stopPropagation(); showStagePopover(this, '08')" title="Клик → сделки этапа 08">
-                    <div class="mc-stage-num">6 <span class="vs up">+1</span></div>
-                    <div class="mc-stage-bar"><div class="fill" style="width:60%"></div></div>
-                    <div class="mc-stage-label">08 отлж</div>
-                  </div>
-                </div>
-                <div class="mc-conv-row">
-                  <div class="mc-conv-item good">
-                    <span class="from-to">01→04</span>
-                    <span class="pct">62%</span>
-                  </div>
-                  <div class="mc-conv-item good">
-                    <span class="from-to">03→04</span>
-                    <span class="pct">54%</span>
-                  </div>
-                  <div class="mc-conv-item good">
-                    <span class="from-to">04→05</span>
-                    <span class="pct">71%</span>
-                  </div>
-                  <div class="mc-conv-item warn">
-                    <span class="from-to">05→06</span>
-                    <span class="pct">38%</span>
-                  </div>
-                  <div class="mc-conv-item bad">
-                    <span class="from-to">06→07</span>
-                    <span class="pct">7%</span>
-                  </div>
-                  <div class="mc-conv-item total good">
-                    <span class="from-to">общая 01→06</span>
-                    <span class="pct">9.1%</span>
-                  </div>
-                </div>
-                <div class="mc-card-sub">
-                  <b>21</b> сделка требует касания сегодня · этапы 03–05 горячие
-                </div>
-              </div>
-
-              <!-- Горящие 72ч -->
-              <div class="mc-card col-3 accent-red status-warn" onclick="openBurningList()">
+              <!-- HERO: Рейтинг Д0 команды (главный KPI РОПа) -->
+              <div class="mc-card col-3 row-2 accent-blue status-warn">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🔥</div>
-                <div class="mc-card-label">Горящие 72 часа</div>
-                <div class="mc-card-value">5<small>· уйдут в Котёл</small></div>
-                <div class="mc-card-sub">
-                  <b>2</b> &lt; 2 часов · <b>1</b> &lt; 12 часов · <b>2</b> &lt; 24 часов
-                </div>
-                <div class="mc-card-action">
-                  <div class="ic">⚠</div>
-                  <div class="text">
-                    <b>2 сделки уйдут через 2 часа</b>
-                    <span class="what">Звони сейчас: Куделькин 290к (Иванов) · Лим 380к (Силкин)</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); openBurningList()">→ Список</button>
-                </div>
-              </div>
-
-              <!-- Команда · 9 клоузеров -->
-              <div class="mc-card col-3 accent-green status-warn" onclick="showToast('Открываем разбор по команде клоузеров')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">👥</div>
-                <div class="mc-card-label">Команда · 9 клоузеров</div>
+                <div class="mc-card-icon">🏆</div>
+                <div class="mc-card-label">Конверсия Д0 команды <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">≤24ч от 990₽ · цель ≥50% · сейчас <b style="color:#ff9f0a">34%</b></span></div>
+                <div class="mc-card-value">34%<small>· 8 клоузеров · median 1,7 дня</small></div>
                 <div class="mc-team-summary">
                   <div class="mc-team-cat over">
-                    <span class="num">3</span>
-                    <span class="lbl">над планом</span>
+                    <span class="num">2</span>
+                    <span class="lbl">сильные ≥50%</span>
                   </div>
                   <div class="mc-team-cat norm">
                     <span class="num">4</span>
-                    <span class="lbl">в норме</span>
+                    <span class="lbl">в норме 30–50%</span>
                   </div>
                   <div class="mc-team-cat under">
                     <span class="num">2</span>
-                    <span class="lbl">отстают</span>
+                    <span class="lbl">просели &lt;30%</span>
                   </div>
                 </div>
                 <div class="mc-team-list">
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
                     <span class="rank">①</span>
-                    <span class="name">Лим Олег</span>
-                    <span class="pct">142% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">21ч</small></span>
+                    <span class="pct">58% <small style="color:#30d158">▲</small></span>
                   </div>
-                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('kudelkin')">
+                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
                     <span class="rank">②</span>
-                    <span class="name">Куделькин Е.</span>
-                    <span class="pct">118% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
+                    <span class="pct">52% <small style="color:#30d158">▲</small></span>
                   </div>
-                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('kamran')">
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
                     <span class="rank">③</span>
-                    <span class="name">Камран В.</span>
-                    <span class="pct">105% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
+                    <span class="pct">47% <small style="color:rgba(255,255,255,0.4)">→</small></span>
                   </div>
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('ivanov')">
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
+                    <span class="rank">④</span>
+                    <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
+                    <span class="pct">40% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                  </div>
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
                     <span class="rank">⚠</span>
-                    <span class="name">Иванов И.</span>
-                    <span class="pct">47% <small style="color:#ff453a">▼</small></span>
+                    <span class="name">Яковлева А. <small style="color:#ff9f0a">94ч</small></span>
+                    <span class="pct">29% <small style="color:#ff453a">▼</small></span>
+                  </div>
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
+                    <span class="rank">⚠</span>
+                    <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
+                    <span class="pct">23% <small style="color:#ff453a">▼</small></span>
                   </div>
                 </div>
                 <div class="mc-card-action">
                   <div class="ic">⚠</div>
                   <div class="text">
-                    <b>2 клоузера отстают от плана</b>
-                    <span class="what">Назначь 1:1 · подбери шеринг записей с топ-3</span>
+                    <b>2 клоузера &lt;30% — главная просадка</b>
+                    <span class="what">Ляшенко 23% / Яковлева 29% → AI-разбор + median &gt;90ч у Петровой/Яковлевой</span>
                   </div>
-                  <button class="cta" onclick="event.stopPropagation(); showToast('1:1 с Иванов И. + Петров — назначить')">→ 1:1</button>
+                  <button class="cta" onclick="event.stopPropagation(); switchTab('prompt-closer')">→ Звонки</button>
                 </div>
               </div>
 
-              <!-- 🔄 Ротация сделок (автопередача за молчание 72ч) -->
-              <div class="mc-card col-3 accent-orange status-warn" onclick="showToast('Открываем журнал передач')">
+              <!-- 💼 Сделок в работе (по 3 статусам A1/A2/C) -->
+              <div class="mc-card col-3 accent-purple" onclick="switchTab('calls')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🔄</div>
-                <div class="mc-card-label">Ротация сделок сегодня</div>
-                <div class="mc-card-value">12<small>· передано</small></div>
+                <div class="mc-card-icon">💼</div>
+                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 3 статуса</span></div>
+                <div class="mc-card-value">142<small>· команда</small></div>
+                <div class="mc-status-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                  <div class="ms-cell ok">
+                    <div class="ms-num">48</div>
+                    <div class="ms-lbl">A1 · оплачено ≤24ч</div>
+                    <div class="ms-pct">34%</div>
+                  </div>
+                  <div class="ms-cell warn">
+                    <div class="ms-num">68</div>
+                    <div class="ms-lbl">A2 · ждём оплату</div>
+                    <div class="ms-pct">48%</div>
+                  </div>
+                  <div class="ms-cell muted">
+                    <div class="ms-num">26</div>
+                    <div class="ms-lbl">C · закрыто</div>
+                    <div class="ms-pct">18%</div>
+                  </div>
+                </div>
                 <div class="mc-card-sub">
-                  За молчание 72ч система автоматически передала другим клоузерам · клиенты не висят
-                </div>
-                <div class="mc-ext-by-closer">
-                  <div class="ext-row over">
-                    <span class="name">Иванов И. <small style="color:rgba(255,255,255,0.4)">потерял</small></span>
-                    <span class="bar"><span class="fill" style="width:100%"></span></span>
-                    <span class="cnt">4</span>
-                  </div>
-                  <div class="ext-row over">
-                    <span class="name">Петров П. <small style="color:rgba(255,255,255,0.4)">потерял</small></span>
-                    <span class="bar"><span class="fill" style="width:50%"></span></span>
-                    <span class="cnt">2</span>
-                  </div>
-                  <div class="ext-row" style="margin-top: 4px;">
-                    <span class="name" style="color:#30d158">Лим Олег <small style="color:rgba(255,255,255,0.4)">получил</small></span>
-                    <span class="bar"><span class="fill" style="background:#30d158;width:75%"></span></span>
-                    <span class="cnt" style="color:#30d158">3</span>
-                  </div>
-                </div>
-                <div class="mc-pot-trend">
-                  <div class="lbl">Тренд передач за 7 дней</div>
-                  <svg class="pot-spark" viewBox="0 0 100 28" preserveAspectRatio="none">
-                    <polyline class="pot-in"  points="0,20 14,18 28,15 42,13 56,11 70,9 84,7 100,5" />
-                  </svg>
-                  <div class="pot-leg">
-                    <span class="dot in"></span>передач <b>↑ растёт</b> · команда теряет ритм 72ч
-                  </div>
-                </div>
-                <div class="mc-card-action">
-                  <div class="ic">⚠</div>
-                  <div class="text">
-                    <b>4 клоузера регулярно теряют сделки</b>
-                    <span class="what">Топ-теряющие: Иванов 4 · Петров 2 → тренинг дисциплины 72ч</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); showToast('Топ-теряющие · персональный разбор')">→ Разобрать</button>
+                  Главная масса в <b>A2 (48%)</b> · A1 цель 50%+ · сейчас 34%
                 </div>
               </div>
 
-              <!-- Action items / Zero Dashboard -->
-              <div class="mc-card col-3 accent-purple">
+              <!-- 💰 Оплаты сегодня (A2 = сегодня) -->
+              <div class="mc-card col-3 accent-green" onclick="showToast('A2-сделки с датой оплаты = сегодня')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💰</div>
+                <div class="mc-card-label">Оплаты сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">A2 · дата = сегодня</span></div>
+                <div class="mc-card-value">18<small>· ждём от клиентов</small></div>
+                <div class="mc-pay-row">
+                  <div class="pay-cell ok">
+                    <div class="pn">7</div>
+                    <div class="pl">оплачено</div>
+                  </div>
+                  <div class="pay-cell wait">
+                    <div class="pn">8</div>
+                    <div class="pl">ждут до вечера</div>
+                  </div>
+                  <div class="pay-cell warn">
+                    <div class="pn">3</div>
+                    <div class="pl">молчат на звонки</div>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  Утром автонапоминания клиентам отправлены ✓ · вечер — контроль платежей
+                </div>
+              </div>
+
+              <!-- 🛑 Просрочка обещаний (DANGER · главная дыра системы) -->
+              <div class="mc-card col-2 accent-red status-danger" onclick="showToast('Очередь просрочек обещаний')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🛑</div>
+                <div class="mc-card-label">Просрочка обещаний</div>
+                <div class="mc-card-value">7<small>· не оплатили вчера</small></div>
+                <div class="mc-card-sub">
+                  Клоузеры должны звонить · 3 не позвонили уже 2 дня
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">🚨</div>
+                  <div class="text">
+                    <b>Ляшенко 3 · Яковлева 2 · Марченко 2</b>
+                    <span class="what">1 контрольный звонок: новая дата (макс 1 раз) / иначе C</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Эскалация — звонок РОПа')">→ Эскалация</button>
+                </div>
+              </div>
+
+              <!-- ⏰ Закрыть до 18:00 (action plan РОПа) -->
+              <div class="mc-card col-2 accent-purple">
                 <div class="mc-card-arrow" onclick="switchTab('calls')">→</div>
                 <div class="mc-card-icon">⏰</div>
-                <div class="mc-card-label">Закрыть до 18:00 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;"><b id="task-progress" style="color:#30d158">2</b>/6 закрыто</span></div>
-                <div class="mc-card-value" id="task-remaining">4<small>осталось</small></div>
-                <div class="mc-progress-bar"><div class="fill" id="task-progress-fill" style="width: 33%"></div></div>
+                <div class="mc-card-label">Закрыть до 18:00 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;"><b id="task-progress" style="color:#30d158">2</b>/5 закрыто</span></div>
+                <div class="mc-card-value" id="task-remaining">3<small>осталось</small></div>
+                <div class="mc-progress-bar"><div class="fill" id="task-progress-fill" style="width: 40%"></div></div>
                 <div class="mc-actions-list" id="task-list">
                   <div class="mc-action" data-prio="danger">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>2-часовой звонок Куделькин Е. (этап 03)</div>
-                    <span class="task-source mpp" title="Правило инструкции МПП v3.5: 2-часовой звонок после первой встречи (этап Догрев)">🤖 МПП</span>
-                    <div class="meta danger">−42 мин</div>
+                    <div>1:1 с Ляшенко А. (Д0 = 23%)</div>
+                    <span class="task-source team" title="Watchdog: клоузер просел на Д0 ниже 30%">📊 Команда</span>
+                    <div class="meta danger">срочно</div>
                   </div>
                   <div class="mc-action" data-prio="danger">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Дожим Марченко (счёт +14ч)</div>
-                    <span class="task-source mpp" title="Правило инструкции МПП v3.5: дожим день 7-12 на этапе Счёт">🤖 МПП</span>
-                    <div class="meta danger">−2ч</div>
+                    <div>Эскалация просрочки Куделькин 290к</div>
+                    <span class="task-source watch" title="Просрочка обещания клиента 2 дня без контрольного звонка">⏰ Watchdog</span>
+                    <div class="meta danger">−1 день</div>
                   </div>
                   <div class="mc-action" data-prio="warn">
                     <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Догрев Лим — 14-й день (РОП-эскалация)</div>
-                    <span class="task-source day14" title="Эскалация: день 14 любого активного этапа — финальный звонок РОПа">⚡ День 14</span>
+                    <div>Разбор переоткрытых · Яковлева 9</div>
+                    <span class="task-source watch" title="Reopen rate >5%: цикл 990→реализовано не зафиксирован">⏰ Watchdog</span>
                     <div class="meta warn">сегодня</div>
                   </div>
                   <div class="mc-action" data-prio="info">
                     <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>1:1 с Иванов И. (план 47%)</div>
-                    <span class="task-source team" title="Watchdog: клоузер в красной зоне 2 недели подряд (47% плана)">📊 Команда</span>
-                    <div class="meta">15:30 ✓</div>
+                    <div>AI-разбор красных встреч</div>
+                    <span class="task-source mpp" title="AI-аудит звонков с оценкой <3/5">🤖 МПП</span>
+                    <div class="meta">11:40 ✓</div>
                   </div>
                   <div class="mc-action" data-prio="info">
                     <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Разбор продлений Петрова</div>
-                    <span class="task-source watch" title="Watchdog: 3+ продлений SLA подряд от одного клоузера">⏰ Watchdog</span>
-                    <div class="meta">12:10 ✓</div>
+                    <div>Шаринг записи Лим Елены (Д0=58%)</div>
+                    <span class="task-source team" title="Топ-Д0 недели — обмен опытом">📊 Команда</span>
+                    <div class="meta">10:15 ✓</div>
                   </div>
                 </div>
                 <button class="add-task-btn" onclick="event.stopPropagation(); addManualTask()">+ Добавить задачу вручную</button>
               </div>
 
-              <!-- 🔴 Красные сделки · AI-перехват (главная фича) -->
-              <div class="mc-card col-3 accent-red status-danger" onclick="openRedQueue()">
+              <!-- 🔴 Красные встречи Д0 · AI-перехват -->
+              <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🔴</div>
-                <div class="mc-card-label">Красные сделки · перехват <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">↓ вчера 12 → сегодня 7</span></div>
+                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">↓ вчера 11 → сегодня 7</span></div>
                 <div class="mc-card-value">7<small>сегодня</small></div>
                 <div class="mc-red-list">
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">Не предложили оплатить</span>
+                    <span class="reason">Не вышел со статусом A1/A2/C</span>
                     <span class="cnt">3</span>
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">Слив «подумаю» без выяснения</span>
+                    <span class="reason">Дата оплаты предложена клоузером, не клиентом</span>
                     <span class="cnt">2</span>
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">«Дорого» без разбивки цены</span>
+                    <span class="reason">A2 без даты — нет контрольного звонка через 3-5 дней</span>
                     <span class="cnt">1</span>
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">Разговор без след. шага</span>
+                    <span class="reason">«Подумаю — наберу» вместо C-закрытия</span>
                     <span class="cnt">1</span>
                   </div>
-                </div>
-                <div class="mc-card-sub">
-                  AI ловит слив <b>в день звонка</b> · РОП решает сегодня
                 </div>
                 <div class="mc-card-action">
                   <div class="ic">🚨</div>
                   <div class="text">
-                    <b>7 не разобраны · до 18:00 осталось 4ч</b>
-                    <span class="what">Топ-нарушитель: Иванов И. (4 красных) · разбор сейчас</span>
+                    <b>7 встреч провалили правило 3 статусов</b>
+                    <span class="what">Топ-нарушитель: Ляшенко А. (4 кейса) — разбор сейчас</span>
                   </div>
                   <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Очередь</button>
                 </div>
               </div>
 
-              <!-- 💸 Оплат в звонке (поведенческий KPI) -->
-              <div class="mc-card col-2 status-danger" onclick="openPayMissesList()">
+              <!-- 📅 Оплаты на этой неделе (A2 ≤ 7 дней) -->
+              <div class="mc-card col-2 accent-blue" onclick="showToast('A2 ≤7 дней — даты по дням недели')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">💸</div>
-                <div class="mc-card-label">Оплат в звонке</div>
-                <div class="mc-card-value">63%<small>· норма ≥80%</small></div>
+                <div class="mc-card-icon">📅</div>
+                <div class="mc-card-label">Оплаты на неделе</div>
+                <div class="mc-card-value">42<small>· A2 ≤ 7 дней</small></div>
+                <div class="mc-week-bars">
+                  <div class="wb-row"><span class="wd">Пн</span><span class="bar"><span class="fill" style="width:90%"></span></span><span class="cnt">9</span></div>
+                  <div class="wb-row"><span class="wd">Вт</span><span class="bar"><span class="fill" style="width:80%"></span></span><span class="cnt">8</span></div>
+                  <div class="wb-row"><span class="wd">Ср</span><span class="bar"><span class="fill" style="width:70%"></span></span><span class="cnt">7</span></div>
+                  <div class="wb-row today"><span class="wd">Чт</span><span class="bar"><span class="fill" style="width:60%"></span></span><span class="cnt">6</span></div>
+                  <div class="wb-row"><span class="wd">Пт</span><span class="bar"><span class="fill" style="width:50%"></span></span><span class="cnt">5</span></div>
+                  <div class="wb-row"><span class="wd">Сб</span><span class="bar"><span class="fill" style="width:40%"></span></span><span class="cnt">4</span></div>
+                  <div class="wb-row"><span class="wd">Вс</span><span class="bar"><span class="fill" style="width:30%"></span></span><span class="cnt">3</span></div>
+                </div>
                 <div class="mc-card-sub">
-                  <b>12 / 19</b> оплат · ▼ <b style="color: #ff453a">−17 п.п.</b>
-                </div>
-                <div class="mc-ext-by-closer">
-                  <div class="ext-row over">
-                    <span class="name">Силкин Д.</span>
-                    <span class="bar"><span class="fill" style="width:100%"></span></span>
-                    <span class="cnt">4</span>
-                  </div>
-                  <div class="ext-row over">
-                    <span class="name">Иванов И.</span>
-                    <span class="bar"><span class="fill" style="width:50%"></span></span>
-                    <span class="cnt">2</span>
-                  </div>
-                  <div class="ext-row">
-                    <span class="name">Петров П.</span>
-                    <span class="bar"><span class="fill" style="width:25%"></span></span>
-                    <span class="cnt">1</span>
-                  </div>
-                </div>
-                <div class="mc-card-action">
-                  <div class="ic">🎧</div>
-                  <div class="text">
-                    <b>7 промахов «отправил ссылку, не дождался»</b>
-                    <span class="what">Слушать нарезки → планёрка «откройте, я подожду»</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); openPayMissesList()">→ Слушать</button>
+                  Платежи равномерно · автонапоминания клиентам идут утром
                 </div>
               </div>
 
-              <!-- ⏰ Продления SLA (watchdog по инструкции v3.5) -->
-              <div class="mc-card col-2 accent-orange status-danger" onclick="openExtensionsList()">
+              <!-- 📆 Длинный хвост (A2 8-30 дней) -->
+              <div class="mc-card col-2 accent-orange status-warn" onclick="showToast('A2 8-30 дней — фиксированные точки контакта')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">⏰</div>
-                <div class="mc-card-label">Продлений SLA</div>
-                <div class="mc-card-value" style="color: #ff9f0a">9<small>норма ≤5</small></div>
+                <div class="mc-card-icon">📆</div>
+                <div class="mc-card-label">Длинный хвост</div>
+                <div class="mc-card-value">28<small>· A2 8–30 дней</small></div>
                 <div class="mc-card-sub">
-                  За неделю · ▲ <b style="color: #ff453a">+4</b> к норме · конверсия после продления <b style="color: #ff9f0a">28%</b>
+                  Фикс. контакт: за 1 день до даты + в день обещания
                 </div>
                 <div class="mc-ext-by-closer">
                   <div class="ext-row over">
-                    <span class="name">Иванов И.</span>
+                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">median 171ч</small></span>
                     <span class="bar"><span class="fill" style="width:100%"></span></span>
-                    <span class="cnt">4</span>
+                    <span class="cnt">12</span>
                   </div>
                   <div class="ext-row over">
-                    <span class="name">Петров П.</span>
-                    <span class="bar"><span class="fill" style="width:75%"></span></span>
-                    <span class="cnt">3</span>
+                    <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">94ч</small></span>
+                    <span class="bar"><span class="fill" style="width:67%"></span></span>
+                    <span class="cnt">8</span>
                   </div>
                   <div class="ext-row">
-                    <span class="name">Силкин Д.</span>
-                    <span class="bar"><span class="fill" style="width:50%"></span></span>
-                    <span class="cnt">2</span>
+                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">72ч</small></span>
+                    <span class="bar"><span class="fill" style="width:33%"></span></span>
+                    <span class="cnt">4</span>
+                  </div>
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">⚠</div>
+                  <div class="text">
+                    <b>Петрова копит 12 (норма ≤6)</b>
+                    <span class="what">median 171ч — длинный хвост съедает время · аудит дат: &gt;30 дней = C, не A2</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Аудит хвоста Петровой')">→ Аудит</button>
+                </div>
+              </div>
+
+              <!-- 🧟 Переоткрытые сделки (зомби — нарушение системы) -->
+              <div class="mc-card col-2 accent-red status-danger" onclick="showToast('Список переоткрытых сделок')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🧟</div>
+                <div class="mc-card-label">Переоткрытые сделки</div>
+                <div class="mc-card-value">31<small>· 14,8% · норма ≤5%</small></div>
+                <div class="mc-card-sub">
+                  Цикл «990 → реализовано» не зафиксирован · клоузер либо нарушает 1-перенос, либо реоткрывает C
+                </div>
+                <div class="mc-ext-by-closer">
+                  <div class="ext-row over">
+                    <span class="name">Яковлева А.</span>
+                    <span class="bar"><span class="fill" style="width:100%"></span></span>
+                    <span class="cnt">9</span>
+                  </div>
+                  <div class="ext-row over">
+                    <span class="name">Петрова Д.</span>
+                    <span class="bar"><span class="fill" style="width:78%"></span></span>
+                    <span class="cnt">7</span>
+                  </div>
+                  <div class="ext-row">
+                    <span class="name">Ляшенко А.</span>
+                    <span class="bar"><span class="fill" style="width:55%"></span></span>
+                    <span class="cnt">5</span>
                   </div>
                 </div>
                 <div class="mc-card-action">
                   <div class="ic">🚨</div>
                   <div class="text">
-                    <b>9 vs норма ≤5 · Директор увидит</b>
-                    <span class="what">Иванов 4 — разбор по кейсам · стоп-режим на неделю</span>
+                    <b>14,8% — в 3 раза выше нормы</b>
+                    <span class="what">Яковлева 9 · Петрова 7 → разбор: реоткрытие C запрещено, лимит 1 перенос</span>
                   </div>
-                  <button class="cta" onclick="event.stopPropagation(); openExtensionsList()">→ Список</button>
-                </div>
-              </div>
-
-              <!-- 🤖 AI ROI: связка с красными сделками -->
-              <div class="mc-card col-2 accent-purple" onclick="switchTab('prompt-closer')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🤖</div>
-                <div class="mc-card-label">AI · спасает деньги</div>
-                <div class="mc-card-value" style="color: #b084ff">880<small>тыс ₽ за неделю</small></div>
-                <div class="mc-card-sub">
-                  Поймал <b>47 красных</b> · РОП спас <b style="color: #30d158">23</b> · средний чек <b>~38к ₽</b><br>
-                  Точность v1.4.2 <b>86.9%</b> · 8 disputes ждут разбора
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Аудит переоткрытий')">→ Разбор</button>
                 </div>
               </div>
 
