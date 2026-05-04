@@ -124,15 +124,15 @@
       }
       .role-tabs {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 3px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
       }
       .role-tab {
-        padding: 7px 2px;
+        padding: 7px 1px;
         border-radius: 6px;
         background: transparent;
         color: var(--text-2);
-        font-size: 10.5px;
+        font-size: 9.5px;
         font-weight: 500;
         text-align: center;
         cursor: pointer;
@@ -157,6 +157,12 @@
         color: #0a120c;
         font-weight: 600;
         box-shadow: var(--green-glow);
+      }
+      .role-tab.active.closer-personal {
+        background: linear-gradient(135deg, #00c7be, #00a39c);
+        color: #001f1d;
+        font-weight: 600;
+        box-shadow: 0 0 12px rgba(0, 199, 190, 0.35);
       }
       .role-tab.active.director {
         background: linear-gradient(135deg, var(--purple), #c99eff);
@@ -275,6 +281,11 @@
         color: var(--green);
         border: 1px solid var(--green-border);
       }
+      body[data-role="closer-personal"] .role-badge {
+        background: rgba(0, 199, 190, 0.10);
+        color: #00c7be;
+        border: 1px solid rgba(0, 199, 190, 0.30);
+      }
       body[data-role="director"] .role-badge {
         background: var(--purple-bg);
         color: var(--purple);
@@ -285,6 +296,9 @@
       }
       body[data-role="closer"] .role-badge::before {
         content: "💼 ";
+      }
+      body[data-role="closer-personal"] .role-badge::before {
+        content: "👤 ";
       }
       body[data-role="director"] .role-badge::before {
         content: "👑 ";
@@ -2237,13 +2251,15 @@
       /* По умолчанию Mission Control блоки скрыты */
       .mc-summary { display: none; }
       /* Показываем только нужный для активной роли */
-      body[data-role="hunter"]   .mc-summary[data-mc="hunter"]   { display: block; }
-      body[data-role="closer"]   .mc-summary[data-mc="closer"]   { display: block; }
-      body[data-role="director"] .mc-summary[data-mc="director"] { display: block; }
+      body[data-role="hunter"]            .mc-summary[data-mc="hunter"]          { display: block; }
+      body[data-role="closer"]            .mc-summary[data-mc="closer"]          { display: block; }
+      body[data-role="closer-personal"]   .mc-summary[data-mc="closer-personal"] { display: block; }
+      body[data-role="director"]          .mc-summary[data-mc="director"]        { display: block; }
       /* Скрываем legacy summary блоки на любой роли когда показывается Mission Control */
-      body[data-role="hunter"]   .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
-      body[data-role="closer"]   .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
-      body[data-role="director"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="hunter"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="closer"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="closer-personal"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="director"]        .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
 
       .mc-summary {
         margin-top: 4px;
@@ -5484,9 +5500,10 @@
         <div class="role-switcher">
           <div class="role-switcher-label">🔐 Роль</div>
           <div class="role-tabs">
-            <div class="role-tab hunter active" data-role-value="hunter" onclick="setRole('hunter')">Охотники</div>
-            <div class="role-tab closer" data-role-value="closer" onclick="setRole('closer')">Клоузеры</div>
-            <div class="role-tab director" data-role-value="director" onclick="setRole('director')">Директор</div>
+            <div class="role-tab hunter active" data-role-value="hunter" onclick="setRole('hunter')">Охот.</div>
+            <div class="role-tab closer" data-role-value="closer" onclick="setRole('closer')">РОП Клоуз.</div>
+            <div class="role-tab closer-personal" data-role-value="closer-personal" onclick="setRole('closer-personal')">Я · Клоузер</div>
+            <div class="role-tab director" data-role-value="director" onclick="setRole('director')">Дир.</div>
           </div>
           <div class="role-hint js-role-hint">РОП Иванов · команда охотников</div>
           <div class="role-sso-note">в проде: SSO через amoCRM по роли</div>
@@ -5854,6 +5871,239 @@
             </div>
           </div>
           <!-- ═══════════════ /MISSION CONTROL · КЛОУЗЕР ═══════════════ -->
+
+          <!-- ═══════════════ MISSION CONTROL · КЛОУЗЕР-ИСПОЛНИТЕЛЬ (личный экран) ═══════════════ -->
+          <div class="mc-summary" data-mc="closer-personal">
+            <div class="mc-grid">
+
+              <!-- HERO: Моя Конверсия Д0 + бонусные метрики (5 строк) -->
+              <div class="mc-card col-3 row-2 accent-green">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🏆</div>
+                <div class="mc-card-label">Моя Конверсия Д0 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">≤24ч от 990₽ · цель ≥50%</span></div>
+                <div class="mc-card-value">58%<small>· median 21ч · ▲ +6 пп к команде</small></div>
+                <div class="mc-card-sub" style="margin-top: 14px; padding: 10px 12px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.18); border-radius: 8px;">
+                  Мой ранг в команде: <b style="color:#30d158">① из 8</b> · быстрее всех закрываю
+                </div>
+                <div style="margin-top: 14px;">
+                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Мои 5 метрик для бонуса</div>
+                  <div style="display: grid; gap: 6px;">
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>🎯 Конверсия Д0 <small style="color:rgba(255,255,255,0.5)">· вес 40%</small></span>
+                      <span style="color:#30d158; font-weight:700">58%</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +50%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>⏱ Median времени <small style="color:rgba(255,255,255,0.5)">· вес 20%</small></span>
+                      <span style="color:#30d158; font-weight:700">21ч</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +20%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(255,159,10,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>🧟 Reopen rate <small style="color:rgba(255,255,255,0.5)">· вес 20%</small></span>
+                      <span style="color:#ff9f0a; font-weight:700">7%</span>
+                      <span style="color:#ff9f0a; font-size: 10px;">⚠ норма ≤5%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>📆 Длинный хвост <small style="color:rgba(255,255,255,0.5)">· вес 10%</small></span>
+                      <span style="color:#30d158; font-weight:700">4</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +10%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>🛑 Просрочки без звонка <small style="color:rgba(255,255,255,0.5)">· вес 10%</small></span>
+                      <span style="color:#30d158; font-weight:700">0</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +10%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mc-card-action status-warn-ish" style="margin-top: 14px; padding: 10px 12px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.30); border-radius: 8px; display: flex; gap: 10px; align-items: flex-start; font-size: 11.5px;">
+                  <div style="font-size: 14px; line-height: 1;">⚠</div>
+                  <div style="flex: 1; color: rgba(255,255,255,0.85);">
+                    <b style="color: #fff; display: block;">Бонус: 90% · до полного 10%</b>
+                    <span style="color: rgba(255,255,255,0.6); font-size: 11px;">Не хватает только Reopen ≤5% · сейчас 7% (1 переоткрытая лишняя)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 💼 Мои сделки в работе (по 3 статусам) -->
+              <div class="mc-card col-3 accent-purple" onclick="switchTab('calls')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💼</div>
+                <div class="mc-card-label">Мои сделки в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 3 статуса</span></div>
+                <div class="mc-card-value">22<small>· мой пул</small></div>
+                <div class="mc-status-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                  <div class="ms-cell ok">
+                    <div class="ms-num">12</div>
+                    <div class="ms-lbl">A1 · оплачено ≤24ч</div>
+                    <div class="ms-pct">55%</div>
+                  </div>
+                  <div class="ms-cell warn">
+                    <div class="ms-num">8</div>
+                    <div class="ms-lbl">A2 · ждём оплату</div>
+                    <div class="ms-pct">36%</div>
+                  </div>
+                  <div class="ms-cell muted">
+                    <div class="ms-num">2</div>
+                    <div class="ms-lbl">C · закрыто</div>
+                    <div class="ms-pct">9%</div>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  Сильный поток A1 (55%, выше команды на 21пп) · здоровая воронка
+                </div>
+              </div>
+
+              <!-- 💰 Мои оплаты сегодня -->
+              <div class="mc-card col-3 accent-green" onclick="showToast('Список A2 с датой = сегодня')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">💰</div>
+                <div class="mc-card-label">Мои оплаты сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">A2 · дата = сегодня</span></div>
+                <div class="mc-card-value">3<small>· ждём от клиентов</small></div>
+                <div class="mc-pay-row">
+                  <div class="pay-cell ok">
+                    <div class="pn">2</div>
+                    <div class="pl">оплачено</div>
+                  </div>
+                  <div class="pay-cell wait">
+                    <div class="pn">1</div>
+                    <div class="pl">ждёт до вечера</div>
+                  </div>
+                  <div class="pay-cell warn">
+                    <div class="pn">0</div>
+                    <div class="pl">молчат</div>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  Иванов оплатил 14:20 ✓ · Куделькин 16:05 ✓ · Марченко обещал до 18:00
+                </div>
+              </div>
+
+              <!-- 🛑 Мои просрочки -->
+              <div class="mc-card col-2 accent-red status-warn" onclick="showToast('Список просрочек')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🛑</div>
+                <div class="mc-card-label">Мои просрочки</div>
+                <div class="mc-card-value">1<small>· не оплатил вчера</small></div>
+                <div class="mc-card-sub">
+                  Петренко 380к — обещал 27.04, не оплатил
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">📞</div>
+                  <div class="text">
+                    <b>Контрольный звонок сегодня</b>
+                    <span class="what">Скрипт: «Решили? Когда планируете?» · если опять «не знаю» → C</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Открываю карточку Петренко')">→ Звонок</button>
+                </div>
+              </div>
+
+              <!-- 📅 Мои оплаты на неделе -->
+              <div class="mc-card col-2 accent-blue" onclick="showToast('A2 ≤7 дней — мои сделки по дням')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📅</div>
+                <div class="mc-card-label">Мои оплаты на неделе</div>
+                <div class="mc-card-value">8<small>· A2 ≤ 7 дней</small></div>
+                <div class="mc-week-bars">
+                  <div class="wb-row"><span class="wd">Пн</span><span class="bar"><span class="fill" style="width:60%"></span></span><span class="cnt">2</span></div>
+                  <div class="wb-row"><span class="wd">Вт</span><span class="bar"><span class="fill" style="width:30%"></span></span><span class="cnt">1</span></div>
+                  <div class="wb-row"><span class="wd">Ср</span><span class="bar"><span class="fill" style="width:30%"></span></span><span class="cnt">1</span></div>
+                  <div class="wb-row today"><span class="wd">Чт</span><span class="bar"><span class="fill" style="width:90%"></span></span><span class="cnt">3</span></div>
+                  <div class="wb-row"><span class="wd">Пт</span><span class="bar"><span class="fill" style="width:30%"></span></span><span class="cnt">1</span></div>
+                  <div class="wb-row"><span class="wd">Сб</span><span class="bar"><span class="fill" style="width:0%"></span></span><span class="cnt">0</span></div>
+                  <div class="wb-row"><span class="wd">Вс</span><span class="bar"><span class="fill" style="width:0%"></span></span><span class="cnt">0</span></div>
+                </div>
+                <div class="mc-card-sub">
+                  Чт самый плотный (3 сделки) · надо подтвердить утром
+                </div>
+              </div>
+
+              <!-- 📆 Мой длинный хвост -->
+              <div class="mc-card col-2 accent-orange" onclick="showToast('A2 8-30 дней — мои сделки')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📆</div>
+                <div class="mc-card-label">Мой длинный хвост</div>
+                <div class="mc-card-value">4<small>· A2 8–30 дней · норма ≤6 ✓</small></div>
+                <div class="mc-card-sub">
+                  Фикс. контакт: за 1 день + в день обещания · клиенты сами назвали даты
+                </div>
+                <div class="mc-tb-list" style="margin-top: 10px;">
+                  <div class="tb-row">
+                    <span class="tb-client">Алешин В.</span>
+                    <span class="tb-debt">450к</span>
+                    <span class="tb-crit" style="color:rgba(255,255,255,0.55)">5 мая</span>
+                  </div>
+                  <div class="tb-row">
+                    <span class="tb-client">Мирошник О.</span>
+                    <span class="tb-debt">680к</span>
+                    <span class="tb-crit" style="color:rgba(255,255,255,0.55)">8 мая</span>
+                  </div>
+                  <div class="tb-row">
+                    <span class="tb-client">Серов И.</span>
+                    <span class="tb-debt">320к</span>
+                    <span class="tb-crit" style="color:rgba(255,255,255,0.55)">12 мая</span>
+                  </div>
+                  <div class="tb-row">
+                    <span class="tb-client">Гуляев А.</span>
+                    <span class="tb-debt">540к</span>
+                    <span class="tb-crit" style="color:rgba(255,255,255,0.55)">17 мая</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 🧟 Мои переоткрытые -->
+              <div class="mc-card col-2 accent-orange status-warn" onclick="showToast('Мои переоткрытые сделки')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🧟</div>
+                <div class="mc-card-label">Мои переоткрытые</div>
+                <div class="mc-card-value">2<small>· 7% · норма ≤5%</small></div>
+                <div class="mc-card-sub">
+                  1 сделка лишняя для бонуса · разбор с РОПом
+                </div>
+                <div class="mc-card-action">
+                  <div class="ic">⚠</div>
+                  <div class="text">
+                    <b>Не реоткрывай C-сделки</b>
+                    <span class="what">Если клиент через месяц вернулся — это новая сделка, заводи отдельно</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Список переоткрытых')">→ Список</button>
+                </div>
+              </div>
+
+              <!-- 🔴 Мои красные встречи -->
+              <div class="mc-card col-2 accent-red" onclick="openRedQueue()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🔴</div>
+                <div class="mc-card-label">Мои красные встречи Д0</div>
+                <div class="mc-card-value">1<small>· сегодня</small></div>
+                <div class="mc-red-list">
+                  <div class="mc-red-row">
+                    <span class="dot"></span>
+                    <span class="reason">A2 без даты · нет контр. звонка</span>
+                    <span class="cnt">1</span>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  Петренко 380к · я взял A2 без даты · нужен звонок через 3-5 дней (до 30 апреля)
+                </div>
+              </div>
+
+              <!-- 🤖 AI-разбор моих звонков -->
+              <div class="mc-card col-2 accent-purple" onclick="switchTab('prompt-closer')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🤖</div>
+                <div class="mc-card-label">AI-разбор моих звонков</div>
+                <div class="mc-card-value" style="color: #b084ff">21,6<small>/27 · ОТЛИЧНО</small></div>
+                <div class="mc-card-sub">
+                  За неделю 12 встреч · средний балл <b style="color:#30d158">21,6/27</b> · 0 красных<br>
+                  Топ-3 моих фразы (рекомендация AI с эталона):<br>
+                  · «Откройте, я подожду на линии» — 9× ✓<br>
+                  · «Когда планируете — сегодня или завтра?» — 7× ✓<br>
+                  · «Что вас держит?» — 5× ✓
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- ═══════════════ /MISSION CONTROL · КЛОУЗЕР-ИСПОЛНИТЕЛЬ ═══════════════ -->
 
           <!-- ═══════════════ MISSION CONTROL · ОХОТНИК (РОП Охотников) ═══════════════ -->
           <div class="mc-summary" data-mc="hunter">
@@ -11539,6 +11789,19 @@
           aiMax: "27",
           aiBig: "17.2",
           aiVerdict: "ПРИНЯТО",
+        },
+        "closer-personal": {
+          label: "Клоузер · Я",
+          hint: "Лим Елена · мой день",
+          sub: "Лим Елена · 5 встреч сегодня · моя Конверсия Д0 = 58% · median 21ч",
+          fsub: "мой персональный поток (Встреча → Продажа) · клик по этапу = мои сделки",
+          asub: "мои метрики · моя динамика по неделям",
+          callsH1: "🤝 Мои встречи",
+          callsSub: "мои встречи Д0 за неделю · AI-оценка qa_closer · 12 встреч",
+          aiSub: "за неделю · 12 моих встреч · qa_closer v1.4.2",
+          aiMax: "27",
+          aiBig: "21.6",
+          aiVerdict: "ОТЛИЧНО",
         },
         director: {
           label: "Директор",
