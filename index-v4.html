@@ -5649,65 +5649,75 @@
           <div class="mc-summary" data-mc="closer">
             <div class="mc-grid">
 
-              <!-- HERO: Рейтинг Д0 команды (главный KPI РОПа) -->
-              <div class="mc-card col-3 row-2 accent-blue status-warn">
+              <!-- HERO: Финансовое закрепление Д0 команды (главный KPI РОПа) -->
+              <div class="mc-card col-3 row-2 accent-blue">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🏆</div>
-                <div class="mc-card-label">Конверсия Д0 команды <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">≤24ч от 990₽ · цель ≥50% · сейчас <b style="color:#ff9f0a">34%</b></span></div>
-                <div class="mc-card-value">34%<small>· 8 клоузеров · median 1,7 дня</small></div>
-                <div class="mc-team-summary">
+                <div class="mc-card-label">Финансовое закрепление в день встречи <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">Продажа + Частичка · цель ≥55%</span></div>
+                <div class="mc-card-value">57%<small>· 8 клоузеров · median 1,7 дня</small></div>
+
+                <!-- Двухметровый блок: Продажа + Частичка -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+                  <div style="padding: 10px 12px; border-radius: 10px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.20);">
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">📈 Продажа в звонке</div>
+                    <div style="font-size: 22px; font-weight: 700; color: #30d158; line-height: 1; margin-top: 4px; font-feature-settings: 'tnum';">34%</div>
+                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 3px;">норма ≥25% ✓</div>
+                  </div>
+                  <div style="padding: 10px 12px; border-radius: 10px; background: rgba(255,159,10,0.08); border: 1px solid rgba(255,159,10,0.25);">
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">💰 Частичка</div>
+                    <div style="font-size: 22px; font-weight: 700; color: #ff9f0a; line-height: 1; margin-top: 4px; font-feature-settings: 'tnum';">23%</div>
+                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 3px;">норма ≥30% ⚠</div>
+                  </div>
+                </div>
+
+                <div class="mc-team-summary" style="margin-top: 12px;">
                   <div class="mc-team-cat over">
                     <span class="num">2</span>
-                    <span class="lbl">сильные ≥50%</span>
+                    <span class="lbl">сильные ≥70%</span>
                   </div>
                   <div class="mc-team-cat norm">
                     <span class="num">4</span>
-                    <span class="lbl">в норме 30–50%</span>
+                    <span class="lbl">в норме 55–70%</span>
                   </div>
                   <div class="mc-team-cat under">
                     <span class="num">2</span>
-                    <span class="lbl">просели &lt;30%</span>
+                    <span class="lbl">просели &lt;55%</span>
                   </div>
                 </div>
                 <div class="mc-team-list">
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
                     <span class="rank">①</span>
-                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">21ч</small></span>
-                    <span class="pct">58% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">58 + 25</small></span>
+                    <span class="pct">83% <small style="color:#30d158">▲</small></span>
                   </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
                     <span class="rank">②</span>
-                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
-                    <span class="pct">52% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">52 + 22</small></span>
+                    <span class="pct">74% <small style="color:#30d158">▲</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
                     <span class="rank">③</span>
-                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
-                    <span class="pct">47% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">47 + 20</small></span>
+                    <span class="pct">67% <small style="color:rgba(255,255,255,0.4)">→</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
                     <span class="rank">④</span>
-                    <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
-                    <span class="pct">40% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">40 + 18</small></span>
+                    <span class="pct">58% <small style="color:rgba(255,255,255,0.4)">→</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
                     <span class="rank">⚠</span>
-                    <span class="name">Яковлева А. <small style="color:#ff9f0a">94ч</small></span>
-                    <span class="pct">29% <small style="color:#ff453a">▼</small></span>
+                    <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">29 + 15</small></span>
+                    <span class="pct">44% <small style="color:#ff453a">▼</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
                     <span class="rank">⚠</span>
-                    <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
-                    <span class="pct">23% <small style="color:#ff453a">▼</small></span>
+                    <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">23 + 12</small></span>
+                    <span class="pct">35% <small style="color:#ff453a">▼</small></span>
                   </div>
                 </div>
-                <div class="mc-card-action">
-                  <div class="ic">⚠</div>
-                  <div class="text">
-                    <b>2 клоузера &lt;30% — главная просадка</b>
-                    <span class="what">Ляшенко 23% / Яковлева 29% → AI-разбор + median &gt;90ч у Петровой/Яковлевой</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); switchTab('prompt-closer')">→ Звонки</button>
+                <div class="mc-card-sub" style="margin-top: 12px;">
+                  <b>Частичка 23% &lt; нормы 30%</b> — главная зона роста · 2 клоузера &lt;55% (Ляшенко 35% / Яковлева 44%)
                 </div>
               </div>
 
@@ -5950,50 +5960,71 @@
           <div class="mc-summary" data-mc="closer-personal">
             <div class="mc-grid">
 
-              <!-- HERO: Моя Конверсия Д0 + бонусные метрики (5 строк) -->
+              <!-- HERO: Моё финансовое закрепление Д0 + бонус -->
               <div class="mc-card col-3 row-2 accent-green">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🏆</div>
-                <div class="mc-card-label">Моя Конверсия Д0 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">≤24ч от 990₽ · цель ≥50%</span></div>
-                <div class="mc-card-value">58%<small>· median 21ч · ▲ +6 пп к команде</small></div>
-                <div class="mc-card-sub" style="margin-top: 14px; padding: 10px 12px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.18); border-radius: 8px;">
-                  Мой ранг в команде: <b style="color:#30d158">① из 8</b> · быстрее всех закрываю
+                <div class="mc-card-label">Моё закрепление в день встречи <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">Продажа + Частичка · цель ≥55%</span></div>
+                <div class="mc-card-value">83%<small>· median 21ч · ① из 8</small></div>
+
+                <!-- Двухметровый блок: моя Продажа + моя Частичка -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+                  <div style="padding: 10px 12px; border-radius: 10px; background: rgba(48,209,88,0.08); border: 1px solid rgba(48,209,88,0.25);">
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">📈 Продажа в звонке</div>
+                    <div style="font-size: 22px; font-weight: 700; color: #30d158; line-height: 1; margin-top: 4px; font-feature-settings: 'tnum';">58%</div>
+                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 3px;">норма ≥25% ✓ топ</div>
+                  </div>
+                  <div style="padding: 10px 12px; border-radius: 10px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.20);">
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">💰 Частичка</div>
+                    <div style="font-size: 22px; font-weight: 700; color: #30d158; line-height: 1; margin-top: 4px; font-feature-settings: 'tnum';">25%</div>
+                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 3px;">норма ≥30% ⚠</div>
+                  </div>
                 </div>
+
+                <div class="mc-card-sub" style="margin-top: 14px; padding: 10px 12px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.18); border-radius: 8px;">
+                  Мой ранг: <b style="color:#30d158">① из 8</b> · среднее команды 57% (я +26пп)
+                </div>
+
                 <div style="margin-top: 14px;">
-                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Мои 5 метрик для бонуса</div>
+                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Мои 6 метрик для бонуса</div>
                   <div style="display: grid; gap: 6px;">
                     <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
-                      <span>🎯 Конверсия Д0 <small style="color:rgba(255,255,255,0.5)">· вес 40%</small></span>
-                      <span style="color:#30d158; font-weight:700">58%</span>
-                      <span style="color:#30d158; font-size: 10px;">✓ +50%</span>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
-                      <span>⏱ Median времени <small style="color:rgba(255,255,255,0.5)">· вес 20%</small></span>
-                      <span style="color:#30d158; font-weight:700">21ч</span>
-                      <span style="color:#30d158; font-size: 10px;">✓ +20%</span>
+                      <span>🎯 Закрепление Д0 <small style="color:rgba(255,255,255,0.5)">· вес 40%</small></span>
+                      <span style="color:#30d158; font-weight:700">83%</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +40%</span>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(255,159,10,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
-                      <span>🧟 Reopen rate <small style="color:rgba(255,255,255,0.5)">· вес 20%</small></span>
-                      <span style="color:#ff9f0a; font-weight:700">7%</span>
-                      <span style="color:#ff9f0a; font-size: 10px;">⚠ норма ≤5%</span>
+                      <span>💰 Частичка <small style="color:rgba(255,255,255,0.5)">· вес 15%</small></span>
+                      <span style="color:#ff9f0a; font-weight:700">25%</span>
+                      <span style="color:#ff9f0a; font-size: 10px;">⚠ до 30%</span>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
-                      <span>📆 Длинный хвост <small style="color:rgba(255,255,255,0.5)">· вес 10%</small></span>
-                      <span style="color:#30d158; font-weight:700">4</span>
-                      <span style="color:#30d158; font-size: 10px;">✓ +10%</span>
+                      <span>⏱ Median времени <small style="color:rgba(255,255,255,0.5)">· вес 15%</small></span>
+                      <span style="color:#30d158; font-weight:700">21ч</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +15%</span>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
-                      <span>🛑 Просрочки без звонка <small style="color:rgba(255,255,255,0.5)">· вес 10%</small></span>
+                      <span>🔄 Reopen rate (Думают→Продажа) <small style="color:rgba(255,255,255,0.5)">· 15%</small></span>
+                      <span style="color:#30d158; font-weight:700">42%</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +15%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>🔁 Сделок с 3+ переносов <small style="color:rgba(255,255,255,0.5)">· 10%</small></span>
                       <span style="color:#30d158; font-weight:700">0</span>
                       <span style="color:#30d158; font-size: 10px;">✓ +10%</span>
                     </div>
+                    <div style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 8px; font-size: 12px; align-items: center;">
+                      <span>🛑 Просрочки без звонка <small style="color:rgba(255,255,255,0.5)">· 5%</small></span>
+                      <span style="color:#30d158; font-weight:700">0</span>
+                      <span style="color:#30d158; font-size: 10px;">✓ +5%</span>
+                    </div>
                   </div>
                 </div>
-                <div class="mc-card-action status-warn-ish" style="margin-top: 14px; padding: 10px 12px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.30); border-radius: 8px; display: flex; gap: 10px; align-items: flex-start; font-size: 11.5px;">
+                <div class="mc-card-action" style="margin-top: 14px; padding: 10px 12px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.30); border-radius: 8px; display: flex; gap: 10px; align-items: flex-start; font-size: 11.5px;">
                   <div style="font-size: 14px; line-height: 1;">⚠</div>
                   <div style="flex: 1; color: rgba(255,255,255,0.85);">
-                    <b style="color: #fff; display: block;">Бонус: 90% · до полного 10%</b>
-                    <span style="color: rgba(255,255,255,0.6); font-size: 11px;">Не хватает только Reopen ≤5% · сейчас 7% (1 переоткрытая лишняя)</span>
+                    <b style="color: #fff; display: block;">Бонус: 85% · до полного 15%</b>
+                    <span style="color: rgba(255,255,255,0.6); font-size: 11px;">Не хватает Частичка ≥30% (сейчас 25%) — берёшь редко · подтяни 1-2 в неделю</span>
                   </div>
                 </div>
               </div>
