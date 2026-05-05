@@ -6001,67 +6001,72 @@
               <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🔴</div>
-                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов</span></div>
-                <div class="mc-card-value">7<small>сегодня · ▼ −4 ко вчера</small></div>
+                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов · за неделю</span></div>
+                <div class="mc-card-value">18<small>за неделю · сегодня 7 · ▼ снижается</small></div>
 
-                <!-- Sparkline тренд за 7 дней -->
-                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">
-                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">
-                    <span>Тренд за 7 дней</span>
-                    <span><b style="color:#30d158;">▼ снижается</b></span>
-                  </div>
-                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" style="width: 100%; height: 24px;">
-                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,18" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
-                    <circle cx="100" cy="18" r="2.5" fill="#ff453a" />
-                    <circle cx="84" cy="16" r="1.5" fill="rgba(255,69,58,0.5)" />
-                    <circle cx="0" cy="4" r="1.5" fill="rgba(255,69,58,0.4)" />
+                <!-- Sparkline тренд за 7 дней (компактный) -->
+                <div style="margin-top: 8px; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                  <svg viewBox="0 0 100 18" preserveAspectRatio="none" style="width: 100%; height: 18px;">
+                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,16" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
+                    <circle cx="100" cy="16" r="2" fill="#ff453a" />
                   </svg>
-                  <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: rgba(255,255,255,0.4); margin-top: 2px;">
-                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span>сегодня <b style="color:rgba(255,255,255,0.7)">7</b></span>
+                  <div style="display: flex; justify-content: space-between; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: -2px;">
+                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span style="color:rgba(255,255,255,0.7)"><b>сегодня 7</b></span>
                   </div>
                 </div>
 
-                <!-- Топ-причины -->
-                <div class="mc-red-list" style="margin-top: 10px;">
-                  <div class="mc-red-row">
-                    <span class="dot"></span>
-                    <span class="reason">Не выбран финальный статус</span>
-                    <span class="cnt">3</span>
+                <!-- РЕЙТИНГ КЛОУЗЕРОВ ПО КРАСНЫМ -->
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
+                <div class="mc-team-list">
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
+                    <span class="rank">⚠</span>
+                    <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
+                    <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
                   </div>
-                  <div class="mc-red-row">
-                    <span class="dot"></span>
-                    <span class="reason">Дата от клоузера, не клиента</span>
-                    <span class="cnt">2</span>
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
+                    <span class="rank">⚠</span>
+                    <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
+                    <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
                   </div>
-                  <div class="mc-red-row">
-                    <span class="dot"></span>
-                    <span class="reason">«Думают» без причины</span>
-                    <span class="cnt">1</span>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
-                  <div class="mc-red-row">
-                    <span class="dot"></span>
-                    <span class="reason">«Подумаю — наберу» вместо «Отказ»</span>
-                    <span class="cnt">1</span>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">1 <small style="color:#30d158">▼-2</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
                 </div>
 
-                <!-- Распределение по клоузерам -->
-                <div style="margin-top: 10px;">
-                  <div style="font-size:9.5px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:0.04em; font-weight:600; margin-bottom: 4px;">Кто допустил</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: rgba(255,69,58,0.15); color: #ff8478; border-radius: 100px; font-size: 11px; font-weight: 600;">Ляшенко А. · 4</span>
-                    <span style="padding: 2px 8px; background: rgba(255,159,10,0.12); color: #ffb84a; border-radius: 100px; font-size: 11px; font-weight: 600;">Яковлева А. · 2</span>
-                    <span style="padding: 2px 8px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border-radius: 100px; font-size: 11px;">Марченко · 1</span>
-                  </div>
-                </div>
-
-                <div class="mc-card-action" style="margin-top: 10px;">
+                <div class="mc-card-action" style="margin-top: 12px;">
                   <div class="ic">🚨</div>
                   <div class="text">
-                    <b>7 встреч ждут разбора · до 18:00</b>
-                    <span class="what">Открой очередь · слушай записи · решай 3 действия</span>
+                    <b>Ляшенко А. растёт · ▲+3 за неделю</b>
+                    <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
                   </div>
-                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Очередь</button>
+                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
                 </div>
               </div>
 
