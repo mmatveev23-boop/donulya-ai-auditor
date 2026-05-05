@@ -3199,6 +3199,158 @@
       .tb-row.warn       { background: rgba(255,159,10,0.08); }
       .tb-row.warn .tb-crit { color: #ff9f0a; }
 
+      /* ── Модалка карточки звонка (AI-разбор Gong-style) ── */
+      #modal-call-card .modal { max-width: 820px; max-height: 92vh; display: flex; flex-direction: column; }
+      .call-card-head {
+        padding: 18px 22px; background: rgba(255,69,58,0.06);
+        border-bottom: 1px solid rgba(255,69,58,0.18);
+        display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+      }
+      .call-card-head .title { font-size: 17px; font-weight: 700; color: #fff; }
+      .call-card-head .meta { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+      .call-card-head .ai-score-badge {
+        text-align: center; padding: 10px 14px;
+        background: rgba(255,69,58,0.12);
+        border: 1px solid rgba(255,69,58,0.30);
+        border-radius: 10px; min-width: 90px;
+      }
+      .call-card-head .ai-score-badge .num {
+        font-size: 28px; font-weight: 700; color: #ff453a;
+        line-height: 1; font-feature-settings: "tnum";
+      }
+      .call-card-head .ai-score-badge .lbl {
+        font-size: 9.5px; color: rgba(255,255,255,0.55);
+        text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+        margin-top: 4px;
+      }
+
+      /* Аудиоплеер карточки */
+      .cc-player {
+        padding: 14px 22px; background: rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: flex; align-items: center; gap: 12px;
+      }
+      .cc-play-btn {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: #fff; color: #000; border: none;
+        font-size: 14px; cursor: pointer; flex-shrink: 0;
+      }
+      .cc-play-btn:hover { background: #f0f0f0; }
+      .cc-track {
+        flex: 1; height: 6px; background: rgba(255,255,255,0.10);
+        border-radius: 3px; position: relative; cursor: pointer;
+      }
+      .cc-track .progress {
+        height: 100%; background: linear-gradient(90deg, #52a7ff, #30d158);
+        border-radius: 3px; width: 32%;
+      }
+      .cc-track .marker {
+        position: absolute; top: -3px; width: 2px; height: 12px;
+        background: #ff9f0a; border-radius: 1px;
+      }
+      .cc-time {
+        font-size: 11px; color: rgba(255,255,255,0.65);
+        font-feature-settings: "tnum"; min-width: 80px; text-align: right;
+      }
+
+      /* Timeline AI-моментов */
+      .cc-timeline {
+        padding: 14px 22px;
+      }
+      .cc-timeline-title {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.06em; color: rgba(255,255,255,0.5);
+        margin-bottom: 10px;
+      }
+      .cc-moment {
+        display: grid; grid-template-columns: 60px 24px 1fr auto;
+        gap: 10px; padding: 10px 12px; align-items: flex-start;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px; margin-bottom: 6px;
+        cursor: pointer; transition: all 0.15s;
+      }
+      .cc-moment:hover { background: rgba(255,255,255,0.06); }
+      .cc-moment.warn   { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.22); }
+      .cc-moment.danger { background: rgba(255,69,58,0.06); border-color: rgba(255,69,58,0.25); }
+      .cc-moment.ok     { background: rgba(48,209,88,0.05); border-color: rgba(48,209,88,0.18); }
+      .cc-moment .time {
+        font-size: 13px; font-weight: 700; color: #fff;
+        font-feature-settings: "tnum";
+      }
+      .cc-moment .icon { font-size: 16px; line-height: 1.2; }
+      .cc-moment .body .quote {
+        font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.4;
+        font-style: italic;
+      }
+      .cc-moment .body .ai-note {
+        font-size: 11.5px; color: rgba(255,255,255,0.55); margin-top: 4px; line-height: 1.45;
+      }
+      .cc-moment .body .ai-note b { color: #ff8478; }
+      .cc-moment.ok .body .ai-note b { color: #30d158; }
+      .cc-moment .play-btn {
+        font-size: 12px; padding: 4px 10px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.14);
+        color: #fff; border-radius: 6px; cursor: pointer;
+        white-space: nowrap;
+      }
+      .cc-moment .play-btn:hover { background: rgba(255,255,255,0.16); }
+
+      /* AI-summary блок */
+      .cc-ai-summary {
+        margin: 0 22px 14px;
+        padding: 14px 18px;
+        background: rgba(82,167,255,0.06);
+        border-left: 3px solid #52a7ff;
+        border-radius: 0 10px 10px 0;
+      }
+      .cc-ai-summary .h {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.06em; color: #82baff; margin-bottom: 8px;
+      }
+      .cc-ai-summary .body {
+        font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55;
+      }
+      .cc-ai-summary .body b { color: #fff; }
+
+      /* Эталон-блок */
+      .cc-benchmark {
+        margin: 0 22px 14px;
+        padding: 14px 18px;
+        background: rgba(48,209,88,0.06);
+        border-left: 3px solid #30d158;
+        border-radius: 0 10px 10px 0;
+      }
+      .cc-benchmark .h {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.06em; color: #30d158; margin-bottom: 8px;
+      }
+      .cc-benchmark .quote {
+        font-size: 13px; color: rgba(255,255,255,0.9); font-style: italic;
+        padding: 8px 12px; background: rgba(255,255,255,0.04);
+        border-radius: 6px; margin: 6px 0;
+      }
+      .cc-benchmark .src {
+        font-size: 10.5px; color: rgba(255,255,255,0.5); margin-top: 4px;
+      }
+
+      .cc-actions {
+        padding: 12px 22px; display: flex; gap: 8px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .cc-actions .btn {
+        flex: 1; padding: 10px 14px; border-radius: 8px;
+        font-size: 12.5px; font-weight: 600; cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(255,255,255,0.06); color: #fff;
+        transition: all 0.15s;
+      }
+      .cc-actions .btn:hover { background: rgba(255,255,255,0.12); }
+      .cc-actions .btn.return   { border-color: rgba(82,167,255,0.40); background: rgba(82,167,255,0.10); }
+      .cc-actions .btn.transfer { border-color: rgba(48,209,88,0.40); background: rgba(48,209,88,0.10); }
+      .cc-actions .btn.close    { border-color: rgba(255,69,58,0.40);  background: rgba(255,69,58,0.10); }
+
       /* ── Модалка очереди перехвата ── */
       #modal-red-queue .modal { max-width: 760px; }
       .red-queue-head {
@@ -5849,9 +6001,28 @@
               <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🔴</div>
-                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">↓ вчера 11 → сегодня 7</span></div>
-                <div class="mc-card-value">7<small>сегодня</small></div>
-                <div class="mc-red-list">
+                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов</span></div>
+                <div class="mc-card-value">7<small>сегодня · ▼ −4 ко вчера</small></div>
+
+                <!-- Sparkline тренд за 7 дней -->
+                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">
+                    <span>Тренд за 7 дней</span>
+                    <span><b style="color:#30d158;">▼ снижается</b></span>
+                  </div>
+                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" style="width: 100%; height: 24px;">
+                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,18" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
+                    <circle cx="100" cy="18" r="2.5" fill="#ff453a" />
+                    <circle cx="84" cy="16" r="1.5" fill="rgba(255,69,58,0.5)" />
+                    <circle cx="0" cy="4" r="1.5" fill="rgba(255,69,58,0.4)" />
+                  </svg>
+                  <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: rgba(255,255,255,0.4); margin-top: 2px;">
+                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span>сегодня <b style="color:rgba(255,255,255,0.7)">7</b></span>
+                  </div>
+                </div>
+
+                <!-- Топ-причины -->
+                <div class="mc-red-list" style="margin-top: 10px;">
                   <div class="mc-red-row">
                     <span class="dot"></span>
                     <span class="reason">Не выбран финальный статус</span>
@@ -5859,25 +6030,36 @@
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">Дата оплаты предложена клоузером, не клиентом</span>
+                    <span class="reason">Дата от клоузера, не клиента</span>
                     <span class="cnt">2</span>
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">«Думают» без причины из справочника</span>
+                    <span class="reason">«Думают» без причины</span>
                     <span class="cnt">1</span>
                   </div>
                   <div class="mc-red-row">
                     <span class="dot"></span>
-                    <span class="reason">«Подумаю — наберу» вместо чёткого «Отказ»</span>
+                    <span class="reason">«Подумаю — наберу» вместо «Отказ»</span>
                     <span class="cnt">1</span>
                   </div>
                 </div>
-                <div class="mc-card-action">
+
+                <!-- Распределение по клоузерам -->
+                <div style="margin-top: 10px;">
+                  <div style="font-size:9.5px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:0.04em; font-weight:600; margin-bottom: 4px;">Кто допустил</div>
+                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: rgba(255,69,58,0.15); color: #ff8478; border-radius: 100px; font-size: 11px; font-weight: 600;">Ляшенко А. · 4</span>
+                    <span style="padding: 2px 8px; background: rgba(255,159,10,0.12); color: #ffb84a; border-radius: 100px; font-size: 11px; font-weight: 600;">Яковлева А. · 2</span>
+                    <span style="padding: 2px 8px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border-radius: 100px; font-size: 11px;">Марченко · 1</span>
+                  </div>
+                </div>
+
+                <div class="mc-card-action" style="margin-top: 10px;">
                   <div class="ic">🚨</div>
                   <div class="text">
-                    <b>7 встреч без финального статуса</b>
-                    <span class="what">Топ-нарушитель: Ляшенко А. (4 кейса) — разбор сейчас</span>
+                    <b>7 встреч ждут разбора · до 18:00</b>
+                    <span class="what">Открой очередь · слушай записи · решай 3 действия</span>
                   </div>
                   <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Очередь</button>
                 </div>
@@ -11629,6 +11811,7 @@
               <div class="source">Эталон A · ACCEPTED_SALE · схема используется в 87% успешных дожимов</div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Куделькин Куликов')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Куликов')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Куделькин Куликов')">× Закрыть как нецелевую</button>
@@ -11650,6 +11833,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Лим Тамара')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Лим Тамара')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Лим Тамара')">× Закрыть как нецелевую</button>
@@ -11671,6 +11855,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Ляшенко')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Ляшенко')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Ляшенко')">× Закрыть как нецелевую</button>
@@ -11692,6 +11877,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Куделькин Е.')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Е.')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Куделькин Е.')">× Закрыть как нецелевую</button>
@@ -11713,6 +11899,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Лим Олег')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Лим Олег')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Лим Олег')">× Закрыть как нецелевую</button>
@@ -11734,6 +11921,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Марченко')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Марченко')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Марченко')">× Закрыть как нецелевую</button>
@@ -11755,6 +11943,7 @@
               </div>
             </div>
             <div class="red-deal-actions">
+              <button class="btn" style="background:rgba(82,167,255,0.10); border-color:rgba(82,167,255,0.40); color:#fff;" onclick="event.stopPropagation(); openCallCard(this.closest('.red-deal-card').querySelector('.red-deal-name').innerText)">🎧 AI-разбор</button>
               <button class="btn return" onclick="resolveRed('return', 'Куделькин Любовь')">↩ Вернуть с задачей</button>
               <button class="btn transfer" onclick="resolveRed('transfer', 'Куделькин Любовь')">→ Передать сильному</button>
               <button class="btn close" onclick="resolveRed('close', 'Куделькин Любовь')">× Закрыть как нецелевую</button>
@@ -11767,6 +11956,119 @@
             ⏰ <b style="color: var(--text-1)">До конца смены 4ч 15м</b> · разобрано <b style="color: var(--green)">0 / 7</b> · топ-нарушитель: <b>Иванов И.</b> (4 красных)
           </div>
           <button class="btn" onclick="closeModal('red-queue')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · КАРТОЧКА ЗВОНКА (AI-разбор Gong-style) ═══ -->
+    <div class="modal-overlay" id="modal-call-card">
+      <div class="modal">
+        <div class="call-card-head">
+          <div>
+            <div class="title" id="cc-deal-name">Куделькин Куликов · 110к ₽</div>
+            <div class="meta">
+              Клоузер: <b style="color:#fff">Ляшенко А.</b> · встреча 25.04 11:42 · длительность <b>14 мин 28 сек</b><br>
+              Статус по итогу встречи: <b style="color:#ff453a">не выбран</b> ⚠
+            </div>
+          </div>
+          <div class="ai-score-badge">
+            <div class="num">1.8</div>
+            <div class="lbl">AI-балл / 5</div>
+          </div>
+        </div>
+
+        <!-- AI-summary -->
+        <div class="cc-ai-summary">
+          <div class="h">🤖 AI-вывод по встрече</div>
+          <div class="body">
+            Клоузер <b>не вытянул дату оплаты от клиента</b> — главная ошибка встречи.
+            Клиент дважды сказал <i>«надо подумать»</i>, клоузер не отработал возражения и не предложил частичку.
+            Встреча закрылась без финального статуса (A1/A2a/A2b/B/C) — автоматически красная по правилу 5 статусов.
+            <br><br>
+            <b>Топ-3 пропущенных момента:</b> 02:14 не отработал «надо подумать» · 06:45 не предложил частичку · 13:30 закрыл встречу без чёткого статуса.
+          </div>
+        </div>
+
+        <!-- Аудиоплеер -->
+        <div class="cc-player">
+          <button class="cc-play-btn" onclick="showToast('Воспроизведение записи (демо)')">▶</button>
+          <div class="cc-track" onclick="showToast('Перемотка по timeline')">
+            <div class="progress"></div>
+            <div class="marker" style="left: 16%;" title="02:14 — не отработал 'надо подумать'"></div>
+            <div class="marker" style="left: 47%;" title="06:45 — не предложил частичку"></div>
+            <div class="marker" style="left: 73%;" title="10:32 — клиент сказал 'наберу сам'"></div>
+            <div class="marker" style="left: 93%;" title="13:30 — закрыл без статуса"></div>
+          </div>
+          <div class="cc-time">04:38 / 14:28</div>
+        </div>
+
+        <!-- Timeline AI-моментов -->
+        <div class="cc-timeline" style="overflow-y: auto;">
+          <div class="cc-timeline-title">⏱ AI-таймлайн моментов</div>
+
+          <div class="cc-moment ok" onclick="showToast('Перемотка к 00:42')">
+            <span class="time">00:42</span>
+            <span class="icon">✓</span>
+            <div class="body">
+              <div class="quote">«Иван, расскажите про вашу ситуацию с долгами — что больше всего беспокоит?»</div>
+              <div class="ai-note"><b>AI:</b> Сильное открытие. Активное слушание, открытый вопрос — клиент раскрылся.</div>
+            </div>
+            <button class="play-btn" onclick="event.stopPropagation(); showToast('Перемотка 00:42')">▶ 0:42</button>
+          </div>
+
+          <div class="cc-moment warn" onclick="showToast('Перемотка к 02:14')">
+            <span class="time">02:14</span>
+            <span class="icon">⚠</span>
+            <div class="body">
+              <div class="quote">Клиент: «Понял всё, дайте мне подумать»</div>
+              <div class="ai-note"><b>Клоузер:</b> «Хорошо, я наберу через пару дней» <br><b>AI:</b> Не отработал возражение «подумаю». Не выяснил <b>что именно</b> вызывает сомнения. Правило <code>cause_probing_required</code> провален.</div>
+            </div>
+            <button class="play-btn" onclick="event.stopPropagation(); showToast('Перемотка 02:14')">▶ 2:14</button>
+          </div>
+
+          <div class="cc-moment danger" onclick="showToast('Перемотка к 06:45')">
+            <span class="time">06:45</span>
+            <span class="icon">🚨</span>
+            <div class="body">
+              <div class="quote">Клиент: «Денег прямо сейчас нет, оплата в конце месяца»</div>
+              <div class="ai-note"><b>Клоузер:</b> «Ок, тогда давайте созвонимся через пару недель» <br><b>AI:</b> <b>Не предложил частичку</b> — главная упущенная возможность для перевода в A2a. Должен был: «Иван, давайте закрепим намерение частичкой 1-2к — я фиксирую цену и юриста».</div>
+            </div>
+            <button class="play-btn" onclick="event.stopPropagation(); showToast('Перемотка 06:45')">▶ 6:45</button>
+          </div>
+
+          <div class="cc-moment warn" onclick="showToast('Перемотка к 10:32')">
+            <span class="time">10:32</span>
+            <span class="icon">⚠</span>
+            <div class="body">
+              <div class="quote">Клиент: «Я сам наберу когда решу»</div>
+              <div class="ai-note"><b>Клоузер:</b> «Хорошо, буду ждать» <br><b>AI:</b> Принял пассивную позицию. Должен был: «Иван, давайте я возьму инициативу и наберу сам — когда удобнее, во вторник или среду?»</div>
+            </div>
+            <button class="play-btn" onclick="event.stopPropagation(); showToast('Перемотка 10:32')">▶ 10:32</button>
+          </div>
+
+          <div class="cc-moment danger" onclick="showToast('Перемотка к 13:30')">
+            <span class="time">13:30</span>
+            <span class="icon">🚨</span>
+            <div class="body">
+              <div class="quote">Клоузер: «Хорошо, тогда до связи!»</div>
+              <div class="ai-note"><b>AI:</b> <b>Встреча закрылась без чёткого финального статуса.</b> Не назначил A1 (оплата), A2a/A2b (дата), B (думают с причиной) или C (отказ). Автоматически красная.</div>
+            </div>
+            <button class="play-btn" onclick="event.stopPropagation(); showToast('Перемотка 13:30')">▶ 13:30</button>
+          </div>
+        </div>
+
+        <!-- Эталон-блок -->
+        <div class="cc-benchmark">
+          <div class="h">🏆 Как сделала бы Лим Елена (топ команды · конверсия 92%)</div>
+          <div class="quote">«Иван, давайте сделаем так. Внесите 2 000 ₽ сейчас как символ намерения — я закрепляю за вами цену и юриста. Через 5 дней доплачиваете остаток. У вас 25-го зарплата — оплачиваем 26-го?»</div>
+          <div class="src">Эталонная техника · схема используется в 87% успешных дожимов · вес в промте AI: 0.8</div>
+        </div>
+
+        <!-- Действия РОПа -->
+        <div class="cc-actions">
+          <button class="btn return" onclick="closeModal('call-card'); showToast('Возврат с задачей: дозвонись клиенту, получи статус до 18:00')">↩ Вернуть с задачей</button>
+          <button class="btn transfer" onclick="closeModal('call-card'); showToast('Передача Лим Елене (топ-1 команды)')">→ Передать сильному</button>
+          <button class="btn close" onclick="closeModal('call-card'); showToast('Закрыть как нецелевую')">× Закрыть как нецелевую</button>
         </div>
       </div>
     </div>
@@ -12260,6 +12562,13 @@
       // ═══════════════ MISSION CONTROL · BURNING / PAY-MISSES / TASKS ═══════════════
       function openBurningList()  { openModal("burning"); }
       function openPayMissesList() { openModal("pay-misses"); }
+      function openCallCard(dealName) {
+        const nameEl = document.getElementById("cc-deal-name");
+        if (nameEl && dealName) {
+          nameEl.textContent = dealName;
+        }
+        openModal("call-card");
+      }
 
       // Чекбоксы задач "До 18:00"
       function toggleTask(input) {
