@@ -5793,48 +5793,6 @@
                 </div>
               </div>
 
-              <!-- ⏰ Закрыть до 18:00 (action plan РОПа) -->
-              <div class="mc-card col-2 accent-purple">
-                <div class="mc-card-arrow" onclick="switchTab('calls')">→</div>
-                <div class="mc-card-icon">⏰</div>
-                <div class="mc-card-label">Закрыть до 18:00 <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;"><b id="task-progress" style="color:#30d158">2</b>/5 закрыто</span></div>
-                <div class="mc-card-value" id="task-remaining">3<small>осталось</small></div>
-                <div class="mc-progress-bar"><div class="fill" id="task-progress-fill" style="width: 40%"></div></div>
-                <div class="mc-actions-list" id="task-list">
-                  <div class="mc-action" data-prio="danger">
-                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>1:1 с Ляшенко А. (Д0 = 23%)</div>
-                    <span class="task-source team" title="Watchdog: клоузер просел на Д0 ниже 30%">📊 Команда</span>
-                    <div class="meta danger">срочно</div>
-                  </div>
-                  <div class="mc-action" data-prio="danger">
-                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Эскалация просрочки Куделькин 290к</div>
-                    <span class="task-source watch" title="Просрочка обещания клиента 2 дня без контрольного звонка">⏰ Watchdog</span>
-                    <div class="meta danger">−1 день</div>
-                  </div>
-                  <div class="mc-action" data-prio="warn">
-                    <label class="task-check"><input type="checkbox" onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Разбор переоткрытых · Яковлева 9</div>
-                    <span class="task-source watch" title="Reopen rate >5%: цикл 990→реализовано не зафиксирован">⏰ Watchdog</span>
-                    <div class="meta warn">сегодня</div>
-                  </div>
-                  <div class="mc-action" data-prio="info">
-                    <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>AI-разбор красных встреч</div>
-                    <span class="task-source mpp" title="AI-аудит звонков с оценкой <3/5">🤖 МПП</span>
-                    <div class="meta">11:40 ✓</div>
-                  </div>
-                  <div class="mc-action" data-prio="info">
-                    <label class="task-check"><input type="checkbox" checked onchange="toggleTask(this)"><span class="cm"></span></label>
-                    <div>Шаринг записи Лим Елены (Д0=58%)</div>
-                    <span class="task-source team" title="Топ-Д0 недели — обмен опытом">📊 Команда</span>
-                    <div class="meta">10:15 ✓</div>
-                  </div>
-                </div>
-                <button class="add-task-btn" onclick="event.stopPropagation(); addManualTask()">+ Добавить задачу вручную</button>
-              </div>
-
               <!-- 🔴 Красные встречи Д0 · AI-перехват -->
               <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
                 <div class="mc-card-arrow">→</div>
@@ -5894,7 +5852,7 @@
               </div>
 
               <!-- 📞 A2 в работе (A2a + A2b с конверсиями) -->
-              <div class="mc-card col-2 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
+              <div class="mc-card col-3 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📞</div>
                 <div class="mc-card-label">A2 в работе</div>
@@ -5943,7 +5901,7 @@
               </div>
 
               <!-- 🤔 Думающие сделки (B) — причины + Reopen rate -->
-              <div class="mc-card col-2 accent-purple" onclick="showToast('Список B-сделок с причинами')">
+              <div class="mc-card col-3 accent-purple" onclick="showToast('Список B-сделок с причинами')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🤔</div>
                 <div class="mc-card-label">Думающие сделки <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">B · до 14 дней</span></div>
