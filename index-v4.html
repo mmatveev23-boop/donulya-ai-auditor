@@ -2749,6 +2749,37 @@
       .mc-team-row { cursor: pointer; padding: 4px 6px; border-radius: 6px; margin: 0 -6px; }
       .mc-team-row:hover { background: rgba(255,255,255,0.04); }
 
+      /* Компактный список с трендом + AI-кнопкой (8 клоузеров) */
+      .mc-team-list.compact-list .mc-team-row {
+        grid-template-columns: 16px 1fr 38px 38px 22px;
+        gap: 6px; padding: 3px 6px; font-size: 11.5px;
+      }
+      .mc-team-list.compact-list .mc-team-row .name { font-size: 11.5px; }
+      .mc-team-list.compact-list .mc-team-row .name small { font-size: 9.5px; margin-left: 4px; }
+      .mc-team-list.compact-list .trend {
+        font-size: 9.5px; font-weight: 600; font-feature-settings: "tnum";
+        text-align: right; opacity: 0.8;
+      }
+      .mc-team-list.compact-list .trend.up   { color: #30d158; }
+      .mc-team-list.compact-list .trend.down { color: #ff453a; }
+      .mc-team-list.compact-list .trend.flat { color: rgba(255,255,255,0.4); }
+      .mc-team-list.compact-list .pct { font-size: 12px; text-align: right; }
+      .ai-btn {
+        text-align: center; cursor: pointer; font-size: 13px;
+        opacity: 0.5; transition: all 0.15s;
+        padding: 2px 4px; border-radius: 4px;
+        line-height: 1;
+      }
+      .ai-btn:hover { opacity: 1; background: rgba(82,167,255,0.15); }
+      .ai-btn.pulse {
+        opacity: 0.95;
+        animation: ai-btn-pulse 2.5s ease-in-out infinite;
+      }
+      @keyframes ai-btn-pulse {
+        0%, 100% { background: rgba(255,159,10,0.10); transform: scale(1); }
+        50%      { background: rgba(255,159,10,0.22); transform: scale(1.08); }
+      }
+
       /* Модалка drill-down клоузера */
       #modal-closer-drill .modal { max-width: 700px; }
       .closer-head {
@@ -5653,23 +5684,19 @@
               <div class="mc-card col-3 row-2 accent-blue">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🎯</div>
-                <div class="mc-card-label">Конверсия лидов в продажу <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">план ≥30% · сейчас <b style="color:#30d158">30% ✓</b></span></div>
-                <div class="mc-card-value">30%<small>· 600 лидов / 179 продаж за неделю</small></div>
+                <div class="mc-card-label">Конверсия лидов в продажу <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · план ≥30% · сейчас <b style="color:#30d158">30% ✓</b></span></div>
+                <div class="mc-card-value">30%<small>· 600 лидов / 179 продаж · ▲ +2пп</small></div>
 
                 <!-- Скорость закрытия (детализация под главной) -->
                 <div style="margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
-                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Как закрывают (скорость)</div>
+                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Как закрывают за неделю</div>
                   <div style="display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 6px;">
                     <span>📈 В моменте встречи</span>
-                    <span><b style="color: #30d158; font-feature-settings: 'tnum';">57%</b> <small style="color:rgba(255,255,255,0.5)">(Продажа 34% + Частичка 23%)</small></span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 6px;">
-                    <span>🔥 За неделю</span>
-                    <span><b style="color: #fff; font-feature-settings: 'tnum';">73%</b></span>
+                    <span><b style="color: #30d158; font-feature-settings: 'tnum';">57%</b> <small style="color:rgba(255,255,255,0.5)">Продажа 34% + Частичка 23%</small></span>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.7);">
                     <span>⏱ Цикл сделки</span>
-                    <span><b style="color: rgba(255,255,255,0.85); font-feature-settings: 'tnum';">1,7 дня</b></span>
+                    <span><b style="color: rgba(255,255,255,0.85); font-feature-settings: 'tnum';">1,7 дня</b> <small style="color:rgba(255,255,255,0.5)">норма ≤24ч</small></span>
                   </div>
                 </div>
 
@@ -5687,41 +5714,73 @@
                     <span class="lbl">просели &lt;75%</span>
                   </div>
                 </div>
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия по клоузерам · от их пула лидов</div>
-                <div class="mc-team-list">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия по клоузерам · от их пула лидов · ▲▼ к прошлой неделе</div>
+                <div class="mc-team-list compact-list">
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
                     <span class="rank">①</span>
-                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">цикл 21ч</small></span>
-                    <span class="pct">92% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Лим Елена <small>21ч</small></span>
+                    <span class="trend up">▲+4</span>
+                    <span class="pct">92%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Лим Елена · 5 эталонных встреч (4.7/5)')" title="AI-разбор звонков">🎧</span>
                   </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
                     <span class="rank">②</span>
-                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
-                    <span class="pct">88% <small style="color:#30d158">▲</small></span>
+                    <span class="name">Гальков Н. <small>20ч</small></span>
+                    <span class="trend up">▲+2</span>
+                    <span class="pct">88%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Гальков Н. · средний балл 4.4/5')" title="AI-разбор звонков">🎧</span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
                     <span class="rank">③</span>
-                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
-                    <span class="pct">85% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                    <span class="name">Алиев Камран <small>26ч</small></span>
+                    <span class="trend flat">→0</span>
+                    <span class="pct">85%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Алиев Камран · 4.2/5')" title="AI-разбор звонков">🎧</span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
                     <span class="rank">④</span>
                     <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
-                    <span class="pct">83% <small style="color:rgba(255,255,255,0.4)">→</small></span>
+                    <span class="trend down">▼-2</span>
+                    <span class="pct">83%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Петрова Д. · цикл &gt;72ч — длинные дожимы. AI: «не закрепляет частичкой»')" title="AI-разбор звонков · длинный цикл">🎧</span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
+                    <span class="rank">⑤</span>
+                    <span class="name">Марченко С. <small>72ч</small></span>
+                    <span class="trend flat">→0</span>
+                    <span class="pct">80%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Марченко С. · 3.9/5')" title="AI-разбор звонков">🎧</span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
+                    <span class="rank">⑥</span>
+                    <span class="name">Мифтахов Р. <small>93ч</small></span>
+                    <span class="trend up">▲+1</span>
+                    <span class="pct">77%</span>
+                    <span class="ai-btn" onclick="event.stopPropagation(); showToast('AI-разбор: Мифтахов Р. · 3.7/5')" title="AI-разбор звонков">🎧</span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
                     <span class="rank">⚠</span>
-                    <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">94ч</small></span>
-                    <span class="pct">68% <small style="color:#ff453a">▼</small></span>
+                    <span class="name">Яковлева А. <small>94ч</small></span>
+                    <span class="trend down">▼-5</span>
+                    <span class="pct">68%</span>
+                    <span class="ai-btn pulse" onclick="event.stopPropagation(); showToast('AI-разбор: Яковлева А. · топ-ошибка: не отрабатывает «надо посоветоваться»')" title="AI-разбор · просадка">🎧</span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
                     <span class="rank">⚠</span>
-                    <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
-                    <span class="pct">53% <small style="color:#ff453a">▼</small></span>
+                    <span class="name">Ляшенко А. <small>49ч</small></span>
+                    <span class="trend down">▼-8</span>
+                    <span class="pct">53%</span>
+                    <span class="ai-btn pulse" onclick="event.stopPropagation(); showToast('AI-разбор: Ляшенко А. · топ-ошибка: не вытягивает дату от клиента (4 кейса)')" title="AI-разбор · просадка">🎧</span>
                   </div>
                 </div>
-                <div class="mc-card-sub" style="margin-top: 12px;">
-                  Команда: 30% ✓ план · но <b>2 клоузера &lt;75%</b> — Ляшенко 53% / Яковлева 68% на разбор
+
+                <!-- AI-комментарий: тонкая полоска внизу -->
+                <div style="margin-top: 12px; padding: 8px 10px; background: rgba(82,167,255,0.06); border-left: 3px solid #52a7ff; border-radius: 4px; font-size: 11px; color: rgba(255,255,255,0.75);">
+                  🤖 <b style="color:#fff">AI наблюдает</b> · 7 красных встреч за неделю · топ-причина: <b>«не вытянул дату от клиента»</b> (4 кейса, в основном Ляшенко)
+                </div>
+
+                <div class="mc-card-sub" style="margin-top: 10px;">
+                  Команда 30% ✓ план · 2 клоузера &lt;75% — Ляшенко 53% ▼-8пп · Яковлева 68% ▼-5пп
                 </div>
               </div>
 
