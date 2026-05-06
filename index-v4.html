@@ -3183,6 +3183,125 @@
       .reopen-bar .big.warn { color: #ff9f0a; }
       .reopen-bar .lbl { color: rgba(255,255,255,0.7); }
 
+      /* ── Баннер «5 финальных исходов» (правило системы) ── */
+      .d0-rule-banner {
+        display: none;
+        margin: 0 0 18px;
+        padding: 12px 18px;
+        background: linear-gradient(90deg, rgba(82,167,255,0.10) 0%, rgba(48,209,88,0.06) 100%);
+        border: 1px solid rgba(82,167,255,0.25);
+        border-left: 3px solid #52a7ff;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .d0-rule-banner:hover {
+        background: linear-gradient(90deg, rgba(82,167,255,0.14) 0%, rgba(48,209,88,0.08) 100%);
+      }
+      body[data-role="closer"] .d0-rule-banner,
+      body[data-role="closer-personal"] .d0-rule-banner {
+        display: block;
+      }
+      .d0-rule-banner .row {
+        display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      }
+      .d0-rule-banner .left {
+        display: flex; align-items: center; gap: 12px;
+        flex: 1;
+      }
+      .d0-rule-banner .icon { font-size: 18px; line-height: 1; }
+      .d0-rule-banner .title {
+        font-size: 12px; font-weight: 700; color: #fff;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        margin-bottom: 3px;
+      }
+      .d0-rule-banner .desc {
+        font-size: 12.5px; color: rgba(255,255,255,0.75);
+        line-height: 1.4;
+      }
+      .d0-rule-banner .desc b { color: #fff; }
+      .d0-rule-banner .outcomes {
+        display: flex; gap: 4px; flex-wrap: wrap;
+        margin-top: 4px;
+      }
+      .d0-rule-banner .pill {
+        padding: 2px 8px; border-radius: 100px;
+        font-size: 10.5px; font-weight: 600;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.10);
+        color: rgba(255,255,255,0.85);
+      }
+      .d0-rule-banner .pill.green { background: rgba(48,209,88,0.10); color: #30d158; border-color: rgba(48,209,88,0.30); }
+      .d0-rule-banner .pill.warn  { background: rgba(255,159,10,0.10); color: #ff9f0a; border-color: rgba(255,159,10,0.30); }
+      .d0-rule-banner .pill.info  { background: rgba(82,167,255,0.10); color: #52a7ff; border-color: rgba(82,167,255,0.30); }
+      .d0-rule-banner .pill.muted { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.55); }
+      .d0-rule-banner .more {
+        color: #52a7ff; font-size: 11px; font-weight: 600;
+        white-space: nowrap;
+      }
+
+      /* ── Модалка «5 финальных исходов» (правила) ── */
+      #modal-d0-rules .modal { max-width: 720px; }
+      .d0-rules-body {
+        padding: 18px 22px;
+      }
+      .d0-rules-body .lead {
+        font-size: 14px; color: rgba(255,255,255,0.85);
+        line-height: 1.6;
+        padding: 12px 16px;
+        background: rgba(255,69,58,0.06);
+        border-left: 3px solid #ff453a;
+        border-radius: 0 10px 10px 0;
+        margin-bottom: 18px;
+      }
+      .d0-rules-body .lead b { color: #fff; }
+      .d0-rule-card {
+        display: grid; grid-template-columns: 50px 1fr 110px;
+        gap: 14px; padding: 14px 16px; margin-bottom: 8px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        align-items: flex-start;
+      }
+      .d0-rule-card.ok    { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.20); }
+      .d0-rule-card.warn  { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.20); }
+      .d0-rule-card.info  { background: rgba(82,167,255,0.06); border-color: rgba(82,167,255,0.20); }
+      .d0-rule-card.muted { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+      .d0-rule-card .num {
+        font-size: 26px; font-weight: 700; line-height: 1;
+        color: #fff; text-align: center; padding-top: 4px;
+      }
+      .d0-rule-card.ok    .num { color: #30d158; }
+      .d0-rule-card.warn  .num { color: #ff9f0a; }
+      .d0-rule-card.info  .num { color: #52a7ff; }
+      .d0-rule-card.muted .num { color: rgba(255,255,255,0.45); }
+      .d0-rule-card .text .name {
+        font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px;
+      }
+      .d0-rule-card .text .desc {
+        font-size: 12.5px; color: rgba(255,255,255,0.75);
+        line-height: 1.5;
+      }
+      .d0-rule-card .text .desc b { color: #fff; }
+      .d0-rule-card .next {
+        font-size: 11px; color: rgba(255,255,255,0.55);
+        text-align: right;
+        line-height: 1.45;
+      }
+      .d0-rule-card .next b { color: rgba(255,255,255,0.85); display: block; margin-bottom: 2px; }
+
+      .d0-rules-body .footer-rule {
+        margin-top: 16px;
+        padding: 12px 16px;
+        background: rgba(176,132,255,0.06);
+        border-left: 3px solid #b084ff;
+        border-radius: 0 10px 10px 0;
+        font-size: 13px; color: rgba(255,255,255,0.85);
+        line-height: 1.55;
+        font-style: italic;
+      }
+      .d0-rules-body .footer-rule b { color: #fff; font-style: normal; }
+
       /* ── Счета под контролем: таблица по клоузерам ── */
       .bills-stats {
         display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px;
@@ -6062,6 +6181,27 @@
               <div class="period">День</div>
               <div class="period active">Неделя</div>
               <div class="period">Месяц</div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ БАННЕР: 5 финальных исходов (правило системы) ═══════════════ -->
+          <div class="d0-rule-banner" onclick="openModal('d0-rules')">
+            <div class="row">
+              <div class="left">
+                <div class="icon">⚖️</div>
+                <div>
+                  <div class="title">Главное правило · 5 финальных исходов встречи Д0</div>
+                  <div class="desc">Клоузер <b>не имеет права</b> закончить встречу без одного из 5 статусов. Любая встреча без статуса = красная.</div>
+                  <div class="outcomes">
+                    <span class="pill green">💰 Продажа в звонке</span>
+                    <span class="pill green">🤝 Частичка</span>
+                    <span class="pill warn">📅 Обещание</span>
+                    <span class="pill info">🤔 Думают (с причиной)</span>
+                    <span class="pill muted">❌ Отказ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="more">Подробнее →</div>
             </div>
           </div>
 
@@ -12424,6 +12564,87 @@
     </div>
 
     <!-- ═══ МОДАЛКА · КАРТОЧКА ЗВОНКА (AI-разбор Gong-style) ═══ -->
+    <!-- ═══ МОДАЛКА · 5 ФИНАЛЬНЫХ ИСХОДОВ ВСТРЕЧИ Д0 (правило системы) ═══ -->
+    <div class="modal-overlay" id="modal-d0-rules">
+      <div class="modal" style="max-width: 720px;">
+        <div class="modal-head" style="background: rgba(82,167,255,0.06); border-bottom: 1px solid rgba(82,167,255,0.20);">
+          <div>
+            <div class="modal-title">⚖️ Главный закон системы · 5 финальных исходов встречи Д0</div>
+            <div class="modal-sub">Каждая встреча клоузера ОБЯЗАНА закончиться одним из 5 статусов</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('d0-rules')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0;">
+          <div class="d0-rules-body">
+
+            <div class="lead">
+              <b>Правило:</b> клоузер не имеет права закончить встречу без одного из 5 финальных исходов. Если статус не назначен — встреча автоматически считается <b>красной</b> в AI-аудите. Это убирает «зомби-сделки» и ситуации «я вам перезвоню через пару дней».
+            </div>
+
+            <div class="d0-rule-card ok">
+              <div class="num">1</div>
+              <div class="text">
+                <div class="name">💰 Продажа в звонке</div>
+                <div class="desc">Полная оплата (15 000 ₽) прошла прямо на встрече. Лучший исход — клоузер закрыл финансово в моменте. Скрипт: <b>«Откройте, я подожду на линии»</b> вместо «отправлю ссылку, оплатите как сможете».</div>
+              </div>
+              <div class="next"><b>Что дальше</b>Карточка → онбординг к юристам</div>
+            </div>
+
+            <div class="d0-rule-card ok">
+              <div class="num">2</div>
+              <div class="text">
+                <div class="name">🤝 Частичка</div>
+                <div class="desc">Клоузер договорился о дате полной оплаты + взял <b>частичку (от 1000 ₽)</b> + запросили КИ. Сильная договорённость — клиент финансово закрепился. Юристы уже работают.</div>
+              </div>
+              <div class="next"><b>Что дальше</b>6 точек касания до даты оплаты · Конверсия в Продажу: норма ≥85%</div>
+            </div>
+
+            <div class="d0-rule-card warn">
+              <div class="num">3</div>
+              <div class="text">
+                <div class="name">📅 Обещание</div>
+                <div class="desc">Клиент назвал дату оплаты, но <b>без частички</b> — голое обещание. Слабее, риск пропасть. Главная задача потом — <b>взять частичку</b> и перевести в статус «Частичка». <b>Дата — слово клиента, не клоузера.</b></div>
+              </div>
+              <div class="next"><b>Что дальше</b>Дожим к дате · конверсия в Продажу: норма ≥50% · Обещание→Частичка ≥40%</div>
+            </div>
+
+            <div class="d0-rule-card info">
+              <div class="num">4</div>
+              <div class="text">
+                <div class="name">🤔 Думают (с причиной)</div>
+                <div class="desc">Клиент не закрылся в моменте. Клоузер выбирает <b>причину из справочника</b> (надо посоветоваться / не понимает банкротство / сравнивает с конкурентами / боится последствий / сомневается / нет денег). <b>Без причины — звонок красный.</b></div>
+              </div>
+              <div class="next"><b>Что дальше</b>1 контрольный дожим через 3-5 дней · до 14 дней потом C · Reopen rate (B→A) норма ≥30%</div>
+            </div>
+
+            <div class="d0-rule-card muted">
+              <div class="num">5</div>
+              <div class="text">
+                <div class="name">❌ Отказ</div>
+                <div class="desc">Клиент отказался или клоузер видит, что не подходит (нет долга / нет имущества / уже банкрот). Не «может быть позже», не «попробую через месяц». <b>Окончательно.</b></div>
+              </div>
+              <div class="next"><b>Что дальше</b>Архив · возврат — через охотников и 990 ₽ как новая сделка (не на этого клоузера)</div>
+            </div>
+
+            <div class="footer-rule">
+              <b>Если клиент не платит полностью</b> — предлагаем частичку.<br>
+              <b>Если частички нет</b> — фиксируем дату.<br>
+              <b>Если даты нет</b> — фиксируем причину «думает» и ставим один контрольный дожим.<br>
+              <b>Если клиент не готов</b> — закрываем в Отказ.<br>
+              Любая встреча без финального статуса считается <b>красной</b>.
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            ⚖️ Этот закон применяется автоматически: AI слушает звонок и ставит флаг если статус не назначен или причина не выбрана.
+          </div>
+          <button class="btn" onclick="closeModal('d0-rules')">Понятно</button>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-overlay" id="modal-call-card">
       <div class="modal">
         <div class="call-card-head">
