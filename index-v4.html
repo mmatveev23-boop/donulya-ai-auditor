@@ -2256,10 +2256,10 @@
       body[data-role="closer-personal"]   .mc-summary[data-mc="closer-personal"] { display: block; }
       body[data-role="director"]          .mc-summary[data-mc="director"]        { display: block; }
       /* Скрываем legacy summary блоки на любой роли когда показывается Mission Control */
-      body[data-role="hunter"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
-      body[data-role="closer"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
-      body[data-role="closer-personal"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
-      body[data-role="director"]        .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
+      body[data-role="hunter"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner):not(.bills-rule-banner) { display: none !important; }
+      body[data-role="closer"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner):not(.bills-rule-banner) { display: none !important; }
+      body[data-role="closer-personal"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner):not(.bills-rule-banner) { display: none !important; }
+      body[data-role="director"]        .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner):not(.bills-rule-banner) { display: none !important; }
 
       .mc-summary {
         margin-top: 4px;
@@ -3237,6 +3237,149 @@
       }
       .ai-check.pass .verdict { color: #30d158; }
       .ai-check.fail .verdict { color: #ff8478; }
+
+      /* ── Баннер «Правила работы со счетами» ── */
+      .bills-rule-banner {
+        display: none;
+        margin: 0 0 14px;
+        padding: 12px 18px;
+        background: linear-gradient(90deg, rgba(255,159,10,0.10) 0%, rgba(255,69,58,0.06) 100%);
+        border: 1px solid rgba(255,159,10,0.25);
+        border-left: 3px solid #ff9f0a;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .bills-rule-banner:hover {
+        background: linear-gradient(90deg, rgba(255,159,10,0.14) 0%, rgba(255,69,58,0.10) 100%);
+      }
+      body[data-role="closer"] .bills-rule-banner,
+      body[data-role="closer-personal"] .bills-rule-banner {
+        display: block;
+      }
+      .bills-rule-banner .row {
+        display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      }
+      .bills-rule-banner .left {
+        display: flex; align-items: center; gap: 12px;
+        flex: 1;
+      }
+      .bills-rule-banner .icon { font-size: 18px; line-height: 1; }
+      .bills-rule-banner .title {
+        font-size: 12px; font-weight: 700; color: #fff;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        margin-bottom: 3px;
+      }
+      .bills-rule-banner .desc {
+        font-size: 12.5px; color: rgba(255,255,255,0.75);
+        line-height: 1.4;
+      }
+      .bills-rule-banner .desc b { color: #fff; }
+      .bills-rule-banner .outcomes {
+        display: flex; gap: 4px; flex-wrap: wrap;
+        margin-top: 4px;
+      }
+      .bills-rule-banner .pill {
+        padding: 2px 8px; border-radius: 100px;
+        font-size: 10.5px; font-weight: 600;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.10);
+        color: rgba(255,255,255,0.85);
+      }
+      .bills-rule-banner .pill.warn   { background: rgba(255,159,10,0.10); color: #ff9f0a; border-color: rgba(255,159,10,0.30); }
+      .bills-rule-banner .pill.danger { background: rgba(255,69,58,0.10);  color: #ff453a; border-color: rgba(255,69,58,0.30); }
+      .bills-rule-banner .pill.purple { background: rgba(176,132,255,0.10); color: #b084ff; border-color: rgba(176,132,255,0.30); }
+      .bills-rule-banner .more {
+        color: #ff9f0a; font-size: 11px; font-weight: 600;
+        white-space: nowrap;
+      }
+
+      /* ── Модалка «Правила работы со счетами» (8 статусов + 5 железных правил) ── */
+      #modal-bills-rules .modal { max-width: 760px; }
+      .bills-rules-body {
+        padding: 18px 22px;
+      }
+      .bills-rules-body .lead {
+        font-size: 14px; color: rgba(255,255,255,0.85);
+        line-height: 1.6;
+        padding: 12px 16px;
+        background: rgba(255,159,10,0.06);
+        border-left: 3px solid #ff9f0a;
+        border-radius: 0 10px 10px 0;
+        margin-bottom: 18px;
+      }
+      .bills-rules-body .lead b { color: #fff; }
+      .bills-rules-body .section-title {
+        font-size: 11px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.55);
+        margin: 22px 0 10px;
+      }
+      .bill-status-card {
+        display: grid; grid-template-columns: 200px 1fr 130px;
+        gap: 12px; padding: 10px 14px; margin-bottom: 6px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        align-items: center;
+        font-size: 12.5px;
+      }
+      .bill-status-card.warn   { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.22); }
+      .bill-status-card.danger { background: rgba(255,69,58,0.06);  border-color: rgba(255,69,58,0.22); }
+      .bill-status-card.purple { background: rgba(176,132,255,0.06); border-color: rgba(176,132,255,0.22); }
+      .bill-status-card.ok     { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.22); }
+      .bill-status-card.muted  { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
+      .bill-status-card .name {
+        font-weight: 700; color: #fff;
+      }
+      .bill-status-card .desc {
+        color: rgba(255,255,255,0.75); line-height: 1.45;
+        font-size: 12px;
+      }
+      .bill-status-card .verdict {
+        text-align: right; font-size: 11px;
+        font-weight: 600;
+      }
+      .bill-status-card.warn   .verdict { color: #ff9f0a; }
+      .bill-status-card.danger .verdict { color: #ff453a; }
+      .bill-status-card.purple .verdict { color: #b084ff; }
+      .bill-status-card.ok     .verdict { color: #30d158; }
+      .bill-status-card.muted  .verdict { color: rgba(255,255,255,0.55); }
+
+      .bills-iron-rule {
+        display: grid; grid-template-columns: 30px 1fr;
+        gap: 12px; padding: 10px 14px; margin-bottom: 6px;
+        background: rgba(255,69,58,0.05);
+        border: 1px solid rgba(255,69,58,0.18);
+        border-radius: 10px;
+        align-items: flex-start;
+      }
+      .bills-iron-rule .num {
+        font-size: 18px; font-weight: 700; color: #ff453a;
+        text-align: center; line-height: 1.2;
+      }
+      .bills-iron-rule .text {
+        font-size: 12.5px; color: rgba(255,255,255,0.85);
+        line-height: 1.5;
+      }
+      .bills-iron-rule .text b { color: #fff; }
+
+      .bills-law-quote {
+        margin-top: 18px;
+        padding: 14px 18px;
+        background: rgba(176,132,255,0.06);
+        border-left: 3px solid #b084ff;
+        border-radius: 0 10px 10px 0;
+        font-size: 13.5px; color: #fff;
+        line-height: 1.55;
+        font-style: italic;
+      }
+      .bills-law-quote .src {
+        display: block; margin-top: 8px;
+        font-size: 11px; color: rgba(255,255,255,0.5);
+        font-style: normal;
+        text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+      }
 
       /* ── Баннер «5 финальных исходов» (правило системы) ── */
       .d0-rule-banner {
@@ -6528,6 +6671,27 @@
                 </div>
               </div>
 
+
+              <!-- 🧾 Баннер: Главное правило по счетам (виден только для closer / closer-personal) -->
+              <div class="bills-rule-banner" style="grid-column: span 6;" onclick="openModal('bills-rules')">
+                <div class="row">
+                  <div class="left">
+                    <div class="icon">🧾</div>
+                    <div>
+                      <div class="title">Главное правило · счёт ≠ финал работы клоузера</div>
+                      <div class="desc">Счёт должен <b>жить под контролем</b> до денег / частички / новой даты / отказа / решения РОПа. Никаких «отправил ссылку и ушёл».</div>
+                      <div class="outcomes">
+                        <span class="pill danger">⏰ Без даты — красный</span>
+                        <span class="pill warn">📞 Без касания 24ч</span>
+                        <span class="pill danger">🔥 Просрочен</span>
+                        <span class="pill purple">🚨 72ч+ → к РОПу</span>
+                        <span class="pill warn">🔁 Лимит 1 перенос</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">Подробнее →</div>
+                </div>
+              </div>
 
               <!-- 📑 Счета под контролем (col-6 — детальная таблица по клоузерам) -->
               <div class="mc-card col-6 accent-orange">
@@ -12619,6 +12783,123 @@
     </div>
 
     <!-- ═══ МОДАЛКА · КАРТОЧКА ЗВОНКА (AI-разбор Gong-style) ═══ -->
+    <!-- ═══ МОДАЛКА · ПРАВИЛА РАБОТЫ СО СЧЕТАМИ (8 статусов + 5 железных правил) ═══ -->
+    <div class="modal-overlay" id="modal-bills-rules">
+      <div class="modal" style="max-width: 760px;">
+        <div class="modal-head" style="background: rgba(255,159,10,0.06); border-bottom: 1px solid rgba(255,159,10,0.20);">
+          <div>
+            <div class="modal-title">🧾 Правила работы со счетами</div>
+            <div class="modal-sub">8 статусов счёта + 5 железных правил + AI-проверки в звонке</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('bills-rules')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto;">
+          <div class="bills-rules-body">
+
+            <div class="lead">
+              <b>Счёт ≠ финал работы клоузера.</b> Клоузер не отправляет счёт «оплатите как сможете» и не уходит. Каждый счёт обязан довестись до одного из финалов: <b>деньги</b>, <b>частичка</b>, <b>новая дата оплаты</b>, <b>отказ</b> или <b>передача РОПу</b>.
+            </div>
+
+            <div class="section-title">8 статусов счёта</div>
+
+            <div class="bill-status-card warn">
+              <div class="name">🔥 Ждём оплату сегодня</div>
+              <div class="desc">Счёт выставлен, дата оплаты = сегодня. Активный контроль.</div>
+              <div class="verdict">Горячий контроль</div>
+            </div>
+
+            <div class="bill-status-card">
+              <div class="name">📅 Дата завтра/позже</div>
+              <div class="desc">Счёт в ожидании — срок ещё не наступил. Плановые касания.</div>
+              <div class="verdict">Плановый контроль</div>
+            </div>
+
+            <div class="bill-status-card danger">
+              <div class="name">🔴 Просрочен 1 день</div>
+              <div class="desc">Дата оплаты прошла, денег нет. Срочный звонок клоузеру и клиенту.</div>
+              <div class="verdict">Красная задача</div>
+            </div>
+
+            <div class="bill-status-card purple">
+              <div class="name">🚨 Просрочен 2+ дня</div>
+              <div class="desc">Клоузер не дозвонился клиенту 2+ дня. Эскалация.</div>
+              <div class="verdict">РОП в разборе</div>
+            </div>
+
+            <div class="bill-status-card danger">
+              <div class="name">⏰ Без даты оплаты</div>
+              <div class="desc">Счёт выставлен, но дата не зафиксирована. «Оплатите как сможете» — нарушение клоузера.</div>
+              <div class="verdict">Нарушение клоузера</div>
+            </div>
+
+            <div class="bill-status-card warn">
+              <div class="name">📞 Без касания 24 часа</div>
+              <div class="desc">По счёту не было звонка, сообщения или другого действия за сутки.</div>
+              <div class="verdict">Нарушение SLA</div>
+            </div>
+
+            <div class="bill-status-card ok">
+              <div class="name">✅ Оплачен</div>
+              <div class="desc">Деньги поступили (полностью или частично). Сделка живёт.</div>
+              <div class="verdict">Продажа / частичка</div>
+            </div>
+
+            <div class="bill-status-card muted">
+              <div class="name">❌ Умер</div>
+              <div class="desc">Клиент отказался платить. Причина из справочника обязательна.</div>
+              <div class="verdict">Причина отказа</div>
+            </div>
+
+            <div class="section-title">5 железных правил для клоузеров</div>
+
+            <div class="bills-iron-rule">
+              <div class="num">1</div>
+              <div class="text"><b>Нельзя выставить счёт без даты оплаты.</b> Сценарий: «Иван, я выставляю счёт. Чтобы запустить процедуру, когда планируете оплатить — сегодня до вечера или завтра до обеда?» Клиент называет дату → счёт + задача на контроль. Если клиент не даёт дату — это не «счёт», а «думает без обязательства».</div>
+            </div>
+
+            <div class="bills-iron-rule">
+              <div class="num">2</div>
+              <div class="text"><b>Счёт без касания 24 часа = брошенная сделка.</b> Если по счёту не было звонка, сообщения или другого действия за сутки — флаг клоузеру и в очередь РОПа.</div>
+            </div>
+
+            <div class="bills-iron-rule">
+              <div class="num">3</div>
+              <div class="text"><b>Счёт живёт максимум 72 часа без решения.</b> За 72 часа должен стать одним из: оплачен, частично оплачен, перенесён с новой датой, закрыт в отказ, передан на разбор РОПу. Если счёт висит 5+ дней без решения — это не клиент думает, это клоузер потерял управление.</div>
+            </div>
+
+            <div class="bills-iron-rule">
+              <div class="num">4</div>
+              <div class="text"><b>Лимит переносов даты — максимум 1 раз.</b> Перенос на 2-й, 3-й, 4-й раз = клоузер скрывает просрочку. Каждый перенос виден РОПу. После 2 переносов сделка автоматически идёт в B (думает) или C (закрыта).</div>
+            </div>
+
+            <div class="bills-iron-rule">
+              <div class="num">5</div>
+              <div class="text"><b>Доступ к новым лидам зависит от чистоты счетов.</b> Если у клоузера есть «без даты», «72ч+» или много просрочек — поток новых трипваеров режется. «Сначала собери деньги, которые поднял в воздух». Не наказание — логика «не переваривает текущие, не получает новый поток».</div>
+            </div>
+
+            <div class="section-title">AI слушает каждый звонок</div>
+
+            <div class="bills-iron-rule" style="background: rgba(82,167,255,0.05); border-color: rgba(82,167,255,0.20);">
+              <div class="num" style="color: #52a7ff;">🤖</div>
+              <div class="text">AI отвечает на 7 вопросов: предложил оплату в моменте? выставил счёт? удерживал клиента до оплаты? получил дату? объяснил что после оплаты? договорился о следующем шаге? клиент подтвердил намерение? <br><br>Фраза «<i>я вам сейчас скину, посмотрите, оплатите как сможете</i>» = автоматически красный звонок.</div>
+            </div>
+
+            <div class="bills-law-quote">
+              Счёт не может существовать без даты оплаты или следующего действия. Если дата не указана — счёт сразу красный. Если дата указана, но оплата не поступила — счёт уходит в просрочку. Если счёт не получил решения за 72 часа — он автоматически уходит на разбор РОПу.
+              <span class="src">— Главный закон системы счетов</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            🧾 Все правила контролируются автоматически: AI слушает звонки, AMO ставит задачи, дашборд режет лиды нарушителям.
+          </div>
+          <button class="btn" onclick="closeModal('bills-rules')">Понятно</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ МОДАЛКА · 5 ФИНАЛЬНЫХ ИСХОДОВ ВСТРЕЧИ Д0 (правило системы) ═══ -->
     <div class="modal-overlay" id="modal-d0-rules">
       <div class="modal" style="max-width: 720px;">
