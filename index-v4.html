@@ -3249,6 +3249,7 @@
         border-radius: 10px;
         cursor: pointer;
         transition: background 0.15s;
+        position: relative;
       }
       .bills-rule-banner:hover {
         background: linear-gradient(90deg, rgba(255,159,10,0.14) 0%, rgba(255,69,58,0.10) 100%);
@@ -3392,6 +3393,56 @@
         border-radius: 10px;
         cursor: pointer;
         transition: background 0.15s;
+        position: relative;
+      }
+
+      /* ── Скрытие баннеров правил ── */
+      .d0-rule-banner.banner-hidden,
+      .bills-rule-banner.banner-hidden { display: none !important; }
+
+      .banner-close {
+        position: absolute;
+        top: 8px; right: 10px;
+        width: 22px; height: 22px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 6px;
+        color: rgba(255,255,255,0.55);
+        font-size: 14px; line-height: 1;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.12s, color 0.12s;
+        z-index: 2;
+      }
+      .banner-close:hover {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+      }
+
+      .banner-show-toggle {
+        display: none;
+        align-items: center; gap: 6px;
+        padding: 6px 10px;
+        background: rgba(255,255,255,0.04);
+        border: 1px dashed rgba(255,255,255,0.18);
+        border-radius: 6px;
+        color: rgba(255,255,255,0.65);
+        font-size: 11.5px;
+        cursor: pointer;
+        transition: background 0.12s, color 0.12s, border-color 0.12s;
+      }
+      .banner-show-toggle:hover {
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        border-color: rgba(255,255,255,0.30);
+      }
+      .banner-show-toggle .cnt {
+        background: rgba(82,167,255,0.20);
+        color: #52a7ff;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 8px;
+        font-size: 10.5px;
       }
       .d0-rule-banner:hover {
         background: linear-gradient(90deg, rgba(82,167,255,0.14) 0%, rgba(48,209,88,0.08) 100%);
@@ -6416,15 +6467,21 @@
               <h1 class="js-summary-h1">Сегодня · 25 апреля</h1>
               <div class="page-sub js-summary-sub">РОП Иванов · 18 охотников · 104 оплаты 99₽ за неделю</div>
             </div>
-            <div class="period-switch">
-              <div class="period">День</div>
-              <div class="period active">Неделя</div>
-              <div class="period">Месяц</div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button class="banner-show-toggle js-banner-toggle" onclick="showAllRuleBanners()" title="Вернуть скрытые баннеры правил">
+                📌 Скрытые правила <span class="cnt">0</span>
+              </button>
+              <div class="period-switch">
+                <div class="period">День</div>
+                <div class="period active">Неделя</div>
+                <div class="period">Месяц</div>
+              </div>
             </div>
           </div>
 
           <!-- ═══════════════ БАННЕР: 5 финальных исходов (правило системы) ═══════════════ -->
           <div class="d0-rule-banner" onclick="openModal('d0-rules')">
+            <button class="banner-close" onclick="event.stopPropagation(); hideRuleBanner('d0')" title="Скрыть баннер">×</button>
             <div class="row">
               <div class="left">
                 <div class="icon">⚖️</div>
@@ -6715,6 +6772,7 @@
 
               <!-- 🧾 Баннер: Главное правило по счетам (виден только для closer / closer-personal) -->
               <div class="bills-rule-banner" style="grid-column: span 6;" onclick="openModal('bills-rules')">
+                <button class="banner-close" onclick="event.stopPropagation(); hideRuleBanner('bills')" title="Скрыть баннер">×</button>
                 <div class="row">
                   <div class="left">
                     <div class="icon">🧾</div>
@@ -15664,17 +15722,79 @@
         }, 600);
       }
 
+      // ═══════════════ Скрытие баннеров правил (на 1 день) ═══════════════
+      // Клоузер скрыл крестиком → баннер не показывается до конца дня.
+      // На следующий день — баннер автоматически возвращается (запись в localStorage устаревает).
+      // В шапке появляется чип «📌 Скрытые правила (N)» — для возврата прямо сейчас, не дожидаясь завтра.
+
+      function todayKey() {
+        return new Date().toISOString().slice(0, 10); // "2026-05-06"
+      }
+
+      function isBannerHiddenToday(name) {
+        return localStorage.getItem(`rule-banner-${name}-hidden-date`) === todayKey();
+      }
+
+      function hideRuleBanner(name) {
+        const sel = name === 'd0' ? '.d0-rule-banner' : '.bills-rule-banner';
+        document.querySelectorAll(sel).forEach(el => el.classList.add('banner-hidden'));
+        localStorage.setItem(`rule-banner-${name}-hidden-date`, todayKey());
+        updateBannerToggle();
+      }
+
+      function showAllRuleBanners() {
+        ['d0', 'bills'].forEach(name => {
+          const sel = name === 'd0' ? '.d0-rule-banner' : '.bills-rule-banner';
+          document.querySelectorAll(sel).forEach(el => el.classList.remove('banner-hidden'));
+          localStorage.removeItem(`rule-banner-${name}-hidden-date`);
+        });
+        updateBannerToggle();
+      }
+
+      function applyRuleBannerState() {
+        ['d0', 'bills'].forEach(name => {
+          const sel = name === 'd0' ? '.d0-rule-banner' : '.bills-rule-banner';
+          // Если запись устарела (другой день) — чистим localStorage, баннер снова появится
+          const stored = localStorage.getItem(`rule-banner-${name}-hidden-date`);
+          if (stored && stored !== todayKey()) {
+            localStorage.removeItem(`rule-banner-${name}-hidden-date`);
+          }
+          const isHidden = isBannerHiddenToday(name);
+          document.querySelectorAll(sel).forEach(el => {
+            el.classList.toggle('banner-hidden', isHidden);
+          });
+        });
+        updateBannerToggle();
+      }
+
+      function updateBannerToggle() {
+        const role = document.body.getAttribute('data-role');
+        const showFor = role === 'closer' || role === 'closer-personal';
+        const count = (isBannerHiddenToday('d0') ? 1 : 0) + (isBannerHiddenToday('bills') ? 1 : 0);
+        document.querySelectorAll('.js-banner-toggle').forEach(btn => {
+          if (showFor && count > 0) {
+            btn.style.display = 'inline-flex';
+            const cnt = btn.querySelector('.cnt');
+            if (cnt) cnt.textContent = count;
+          } else {
+            btn.style.display = 'none';
+          }
+        });
+      }
+
       // Хук на смену роли — оборачиваем существующую setRole
       (function () {
         const origSetRole = window.setRole;
         window.setRole = function (role) {
           origSetRole(role);
           checkD0RulesDailyReminder();
+          applyRuleBannerState();
         };
       })();
 
       // Проверка при первой загрузке (если default-роль закроется на closer когда-нибудь)
       checkD0RulesDailyReminder();
+      applyRuleBannerState();
     </script>
 
     <!-- ═══════════════ ТЕКСТЫ ПРОМТОВ (хранятся как text/plain, JS подставляет в textarea) ═══════════════ -->
