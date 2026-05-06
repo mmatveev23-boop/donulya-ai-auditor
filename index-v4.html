@@ -3502,7 +3502,7 @@
 
       /* ── Счета под контролем: таблица по клоузерам ── */
       .bills-stats {
-        display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px;
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px;
       }
       .bills-stats .stat {
         padding: 10px 12px; border-radius: 8px;
@@ -3523,6 +3523,47 @@
       .bills-stats .stat.warn .num { color: #ff9f0a; }
       .bills-stats .stat.danger { background: rgba(255,69,58,0.06); border-color: rgba(255,69,58,0.20); }
       .bills-stats .stat.danger .num { color: #ff453a; }
+
+      /* ── Сегодня: денежная связка ждём → получили → осталось ── */
+      .bills-today {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, rgba(255,159,10,0.10) 0%, rgba(255,159,10,0.04) 100%);
+        border: 1px solid rgba(255,159,10,0.20);
+        display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+        font-feature-settings: "tnum";
+      }
+      .bills-today .head {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        color: #ff9f0a;
+        white-space: nowrap;
+      }
+      .bills-today .seg { display: flex; align-items: baseline; gap: 6px; }
+      .bills-today .seg .lbl {
+        font-size: 11px;
+        color: rgba(255,255,255,0.55);
+      }
+      .bills-today .seg .num {
+        font-size: 17px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1;
+      }
+      .bills-today .seg.win  .num { color: #30d158; }
+      .bills-today .seg.left .num { color: #ff9f0a; }
+      .bills-today .sep {
+        color: rgba(255,255,255,0.20);
+        font-size: 14px;
+      }
+      .bills-today .hint {
+        margin-left: auto;
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.40);
+      }
 
       .bills-table {
         margin-top: 12px;
@@ -6698,9 +6739,29 @@
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📑</div>
                 <div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">кто закрывает деньги, а кто рассылает счета как листовки</span></div>
-                <div class="mc-card-value">86<small>· счетов · 31 оплачено = 36% · сегодня 18 обязательств на 312к ₽</small></div>
+                <div class="mc-card-value">86<small>· счетов · 31 оплачено = 36%</small></div>
 
-                <!-- Сводная статистика команды -->
+                <!-- Сегодня: связка ждём → получили → осталось (то что РОП хочет видеть утром) -->
+                <div class="bills-today">
+                  <div class="head">📅 Сегодня</div>
+                  <div class="seg">
+                    <span class="lbl">ждём</span>
+                    <span class="num">312к ₽</span>
+                  </div>
+                  <span class="sep">·</span>
+                  <div class="seg win">
+                    <span class="lbl">получили</span>
+                    <span class="num">87к</span>
+                  </div>
+                  <span class="sep">·</span>
+                  <div class="seg left">
+                    <span class="lbl">осталось</span>
+                    <span class="num">225к</span>
+                  </div>
+                  <div class="hint">из 18 обязательств · 6 закрыто · 12 в работе</div>
+                </div>
+
+                <!-- Сводная статистика команды (структура портфеля счетов) -->
                 <div class="bills-stats">
                   <div class="stat">
                     <div class="lbl">Выставлено</div>
@@ -6709,10 +6770,6 @@
                   <div class="stat win">
                     <div class="lbl">Оплачено</div>
                     <div class="num">31</div>
-                  </div>
-                  <div class="stat">
-                    <div class="lbl">Ждём сегодня</div>
-                    <div class="num">18</div>
                   </div>
                   <div class="stat danger">
                     <div class="lbl">Просрочено</div>
