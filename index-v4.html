@@ -6244,51 +6244,36 @@
                 </div>
               </div>
 
-              <!-- 💰 Деньги сегодня (все денежные обязательства на день) -->
-              <div class="mc-card col-3 accent-green" onclick="showToast('Все денежные обязательства на сегодня')">
+
+              <!-- 💸 Деньги в воздухе (главный денежный индикатор) -->
+              <div class="mc-card col-3 accent-orange" onclick="showToast('Все неоплаченные счета по статусам')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">💰</div>
-                <div class="mc-card-label">Деньги сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">все обязательства · 312к ₽</span></div>
-                <div class="mc-card-value">18<small>· обязательств · 12 / 18 = 67% оплачено</small></div>
+                <div class="mc-card-icon">💸</div>
+                <div class="mc-card-label">Деньги в воздухе <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">сумма неоплаченных счетов</span></div>
+                <div class="mc-card-value" style="color: #ff9f0a">783к<small> ₽ висит · из 1290к выставлено</small></div>
 
-                <!-- Типы обязательств -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 12px;">
-                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7)">📄 Счёт сегодня</span>
-                    <span style="color:#fff; font-weight:600;">8</span>
+                <!-- Воронка денег: выставлено → оплачено → в воздухе -->
+                <div style="display: grid; gap: 5px; margin-top: 12px;">
+                  <div style="padding: 7px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.55);">Выставлено счетов</span>
+                    <span><b style="color:#fff;">86</b> <small style="color:rgba(255,255,255,0.5);">· 1 290к ₽</small></span>
                   </div>
-                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7)">💵 Доплата (после Частички)</span>
-                    <span style="color:#fff; font-weight:600;">4</span>
+                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.06); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7);">✓ Оплачено полностью</span>
+                    <span><b style="color:#30d158;">31</b> <small style="color:#30d158;">· 465к ₽</small></span>
                   </div>
-                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7)">🤝 Обещание сегодня</span>
-                    <span style="color:#fff; font-weight:600;">3</span>
+                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7);">▣ Частично оплачено</span>
+                    <span><b style="color:rgba(255,255,255,0.85);">14</b> <small style="color:rgba(255,255,255,0.5);">· 42к ₽ ✓ + 168к ₽ ждём</small></span>
                   </div>
-                  <div style="padding: 6px 10px; background: rgba(255,159,10,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7)">🔁 Перенос на сегодня</span>
-                    <span style="color:#ff9f0a; font-weight:600;">3</span>
-                  </div>
-                </div>
-
-                <!-- Состояния по времени дня -->
-                <div class="mc-pay-row" style="margin-top: 8px;">
-                  <div class="pay-cell ok">
-                    <div class="pn">12</div>
-                    <div class="pl">оплачено</div>
-                  </div>
-                  <div class="pay-cell wait">
-                    <div class="pn">3</div>
-                    <div class="pl">пора звонить</div>
-                  </div>
-                  <div class="pay-cell warn">
-                    <div class="pn">3</div>
-                    <div class="pl">молчат после касания</div>
+                  <div style="padding: 8px 10px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.25); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
+                    <span style="color:#fff; font-weight:600;">⚠ В воздухе</span>
+                    <span><b style="color:#ff9f0a; font-size:14px;">783к ₽</b></span>
                   </div>
                 </div>
 
                 <div class="mc-card-sub">
-                  <b style="color:#30d158">209к ₽ ✓</b> поступило · <b style="color:#ff9f0a">103к ₽</b> ждём до 18:00 · 3 переноса требуют звонка
+                  Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
                 </div>
               </div>
 
@@ -6348,154 +6333,13 @@
                 </div>
               </div>
 
-              <!-- 🚨 Счета без контроля (главная дыра системы) -->
-              <div class="mc-card col-2 accent-red status-danger" onclick="showToast('Список счетов без контроля')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🚨</div>
-                <div class="mc-card-label">Счета без контроля <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">потеряли управление</span></div>
-                <div class="mc-card-value">17<small>· счетов · 285к ₽ под угрозой</small></div>
-
-                <!-- 4 типа потери контроля -->
-                <div style="display: grid; gap: 5px; margin-top: 10px;">
-                  <div style="padding: 7px 10px; background: rgba(255,69,58,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:#fff;">🔴 Без даты оплаты</span>
-                    <span style="color:#ff453a; font-weight:700;">5 · 95к ₽</span>
-                  </div>
-                  <div style="padding: 7px 10px; background: rgba(255,159,10,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.85);">🟠 Без касания 24ч+</span>
-                    <span style="color:#ff9f0a; font-weight:700;">4 · 70к ₽</span>
-                  </div>
-                  <div style="padding: 7px 10px; background: rgba(255,69,58,0.10); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:#fff;">⏳ Просрочены</span>
-                    <span style="color:#ff453a; font-weight:700;">5 · 85к ₽</span>
-                  </div>
-                  <div style="padding: 7px 10px; background: rgba(176,132,255,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.85);">🟣 72ч+ без решения</span>
-                    <span style="color:#b084ff; font-weight:700;">3 · 35к ₽</span>
-                  </div>
-                </div>
-
-                <div class="mc-card-action" style="margin-top: 10px;">
-                  <div class="ic">🚨</div>
-                  <div class="text">
-                    <b>Ляшенко 7 · Яковлева 5 · Петрова 3</b>
-                    <span class="what">Счёт ≠ финал · должен жить до денег / частички / новой даты / отказа / РОПа</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); showToast('Очередь счетов без контроля')">→ Список</button>
-                </div>
-              </div>
-
-              <!-- 🔴 Красные встречи Д0 · AI-перехват -->
-              <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🔴</div>
-                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов · за неделю</span></div>
-                <div class="mc-card-value">18<small>за неделю · сегодня 7 · ▼ снижается</small></div>
-
-                <!-- Sparkline тренд за 7 дней (компактный) -->
-                <div style="margin-top: 8px; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
-                  <svg viewBox="0 0 100 18" preserveAspectRatio="none" style="width: 100%; height: 18px;">
-                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,16" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
-                    <circle cx="100" cy="16" r="2" fill="#ff453a" />
-                  </svg>
-                  <div style="display: flex; justify-content: space-between; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: -2px;">
-                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span style="color:rgba(255,255,255,0.7)"><b>сегодня 7</b></span>
-                  </div>
-                </div>
-
-                <!-- РЕЙТИНГ КЛОУЗЕРОВ ПО КРАСНЫМ -->
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
-                <div class="mc-team-list">
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
-                    <span class="rank">⚠</span>
-                    <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
-                    <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
-                  </div>
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
-                    <span class="rank">⚠</span>
-                    <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
-                    <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">1 <small style="color:#30d158">▼-2</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                </div>
-
-                <div class="mc-card-action" style="margin-top: 12px;">
-                  <div class="ic">🚨</div>
-                  <div class="text">
-                    <b>Ляшенко А. растёт · ▲+3 за неделю</b>
-                    <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
-                </div>
-              </div>
-
-              <!-- 💸 Деньги в воздухе (главный денежный индикатор) -->
-              <div class="mc-card col-2 accent-orange" onclick="showToast('Все неоплаченные счета по статусам')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">💸</div>
-                <div class="mc-card-label">Деньги в воздухе <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">сумма неоплаченных счетов</span></div>
-                <div class="mc-card-value" style="color: #ff9f0a">783к<small> ₽ висит · из 1290к выставлено</small></div>
-
-                <!-- Воронка денег: выставлено → оплачено → в воздухе -->
-                <div style="display: grid; gap: 5px; margin-top: 12px;">
-                  <div style="padding: 7px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.55);">Выставлено счетов</span>
-                    <span><b style="color:#fff;">86</b> <small style="color:rgba(255,255,255,0.5);">· 1 290к ₽</small></span>
-                  </div>
-                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.06); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7);">✓ Оплачено полностью</span>
-                    <span><b style="color:#30d158;">31</b> <small style="color:#30d158;">· 465к ₽</small></span>
-                  </div>
-                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7);">▣ Частично оплачено</span>
-                    <span><b style="color:rgba(255,255,255,0.85);">14</b> <small style="color:rgba(255,255,255,0.5);">· 42к ₽ ✓ + 168к ₽ ждём</small></span>
-                  </div>
-                  <div style="padding: 8px 10px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.25); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
-                    <span style="color:#fff; font-weight:600;">⚠ В воздухе</span>
-                    <span><b style="color:#ff9f0a; font-size:14px;">783к ₽</b></span>
-                  </div>
-                </div>
-
-                <div class="mc-card-sub">
-                  Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
-                </div>
-              </div>
 
               <!-- 📑 Счета под контролем (col-6 — детальная таблица по клоузерам) -->
               <div class="mc-card col-6 accent-orange">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📑</div>
                 <div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">кто закрывает деньги, а кто рассылает счета как листовки</span></div>
-                <div class="mc-card-value">86<small>· счетов выставлено · 31 оплачено = 36% конверсия</small></div>
+                <div class="mc-card-value">86<small>· счетов · 31 оплачено = 36% · сегодня 18 обязательств на 312к ₽</small></div>
 
                 <!-- Сводная статистика команды -->
                 <div class="bills-stats">
@@ -6629,8 +6473,83 @@
                 </div>
               </div>
 
+              <!-- 🔴 Красные встречи Д0 · AI-перехват -->
+              <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🔴</div>
+                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов · за неделю</span></div>
+                <div class="mc-card-value">18<small>за неделю · сегодня 7 · ▼ снижается</small></div>
+
+                <!-- Sparkline тренд за 7 дней (компактный) -->
+                <div style="margin-top: 8px; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                  <svg viewBox="0 0 100 18" preserveAspectRatio="none" style="width: 100%; height: 18px;">
+                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,16" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
+                    <circle cx="100" cy="16" r="2" fill="#ff453a" />
+                  </svg>
+                  <div style="display: flex; justify-content: space-between; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: -2px;">
+                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span style="color:rgba(255,255,255,0.7)"><b>сегодня 7</b></span>
+                  </div>
+                </div>
+
+                <!-- РЕЙТИНГ КЛОУЗЕРОВ ПО КРАСНЫМ -->
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
+                <div class="mc-team-list">
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
+                    <span class="rank">⚠</span>
+                    <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
+                    <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
+                  </div>
+                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
+                    <span class="rank">⚠</span>
+                    <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
+                    <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
+                  </div>
+                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
+                    <span class="rank">·</span>
+                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">1 <small style="color:#30d158">▼-2</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                  <div class="mc-team-row over">
+                    <span class="rank">✓</span>
+                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                  </div>
+                </div>
+
+                <div class="mc-card-action" style="margin-top: 12px;">
+                  <div class="ic">🚨</div>
+                  <div class="text">
+                    <b>Ляшенко А. растёт · ▲+3 за неделю</b>
+                    <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
+                  </div>
+                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
+                </div>
+              </div>
+
+
+
               <!-- 📞 A2 в работе (A2a + A2b с конверсиями) -->
-              <div class="mc-card col-3 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
+              <div class="mc-card col-2 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📞</div>
                 <div class="mc-card-label">A2 в работе</div>
@@ -6679,7 +6598,7 @@
               </div>
 
               <!-- 🤔 Думающие сделки (B) — причины + Reopen rate -->
-              <div class="mc-card col-3 accent-purple" onclick="showToast('Список B-сделок с причинами')">
+              <div class="mc-card col-2 accent-purple" onclick="showToast('Список B-сделок с причинами')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🤔</div>
                 <div class="mc-card-label">Думающие сделки <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">до 14 дней</span></div>
