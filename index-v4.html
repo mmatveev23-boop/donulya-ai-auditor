@@ -2256,10 +2256,10 @@
       body[data-role="closer-personal"]   .mc-summary[data-mc="closer-personal"] { display: block; }
       body[data-role="director"]          .mc-summary[data-mc="director"]        { display: block; }
       /* Скрываем legacy summary блоки на любой роли когда показывается Mission Control */
-      body[data-role="hunter"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
-      body[data-role="closer"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
-      body[data-role="closer-personal"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
-      body[data-role="director"]        .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary) { display: none !important; }
+      body[data-role="hunter"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
+      body[data-role="closer"]          .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
+      body[data-role="closer-personal"] .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
+      body[data-role="director"]        .page[data-page-content="summary"] > *:not(.page-header):not(.mc-summary):not(.d0-rule-banner) { display: none !important; }
 
       .mc-summary {
         margin-top: 4px;
