@@ -3184,6 +3184,10 @@
       .reopen-bar .lbl { color: rgba(255,255,255,0.7); }
 
       /* ── KPI-ячейки HERO с tooltip-подсказкой ── */
+      /* Снимаем overflow:hidden на mc-card содержащей KPI-ячейки чтобы tooltip не резался */
+      .mc-card:has(.kpi-cell) { overflow: visible; }
+      .mc-grid:has(.kpi-cell) { overflow: visible; }
+
       .kpi-cell {
         position: relative;
         cursor: help;
@@ -3195,9 +3199,9 @@
       }
       .kpi-cell .kpi-tip {
         position: absolute;
-        bottom: calc(100% + 10px);
+        top: calc(100% + 10px);
         left: -8px; right: -8px;
-        z-index: 100;
+        z-index: 9999;
         padding: 14px 16px;
         background: #0c0c0c;
         border: 1px solid rgba(255,255,255,0.18);
@@ -3205,7 +3209,7 @@
         box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.4);
         opacity: 0;
         pointer-events: none;
-        transform: translateY(4px);
+        transform: translateY(-4px);
         transition: opacity 0.18s, transform 0.18s;
         font-size: 12px;
         line-height: 1.55;
@@ -3221,9 +3225,9 @@
       }
       .kpi-tip::after {
         content: ""; position: absolute;
-        top: 100%; left: 24px;
+        bottom: 100%; left: 24px;
         border: 6px solid transparent;
-        border-top-color: #0c0c0c;
+        border-bottom-color: #0c0c0c;
       }
       .kpi-tip .tip-title {
         font-size: 13px; font-weight: 700;
