@@ -5953,47 +5953,88 @@
                 </div>
               </div>
 
-              <!-- 💰 Оплаты сегодня (A2 = сегодня) -->
-              <div class="mc-card col-3 accent-green" onclick="showToast('A2-сделки с датой оплаты = сегодня')">
+              <!-- 💰 Деньги сегодня (все денежные обязательства на день) -->
+              <div class="mc-card col-3 accent-green" onclick="showToast('Все денежные обязательства на сегодня')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">💰</div>
-                <div class="mc-card-label">Оплаты сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">A2 · дата = сегодня</span></div>
-                <div class="mc-card-value">18<small>· ждём от клиентов</small></div>
-                <div class="mc-pay-row">
+                <div class="mc-card-label">Деньги сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">все обязательства · 312к ₽</span></div>
+                <div class="mc-card-value">18<small>· обязательств · 12 / 18 = 67% оплачено</small></div>
+
+                <!-- Типы обязательств -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 12px;">
+                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7)">📄 Счёт сегодня</span>
+                    <span style="color:#fff; font-weight:600;">8</span>
+                  </div>
+                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7)">💵 Доплата (после Частички)</span>
+                    <span style="color:#fff; font-weight:600;">4</span>
+                  </div>
+                  <div style="padding: 6px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7)">🤝 Обещание сегодня</span>
+                    <span style="color:#fff; font-weight:600;">3</span>
+                  </div>
+                  <div style="padding: 6px 10px; background: rgba(255,159,10,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7)">🔁 Перенос на сегодня</span>
+                    <span style="color:#ff9f0a; font-weight:600;">3</span>
+                  </div>
+                </div>
+
+                <!-- Состояния по времени дня -->
+                <div class="mc-pay-row" style="margin-top: 8px;">
                   <div class="pay-cell ok">
-                    <div class="pn">7</div>
+                    <div class="pn">12</div>
                     <div class="pl">оплачено</div>
                   </div>
                   <div class="pay-cell wait">
-                    <div class="pn">8</div>
-                    <div class="pl">ждут до вечера</div>
+                    <div class="pn">3</div>
+                    <div class="pl">пора звонить</div>
                   </div>
                   <div class="pay-cell warn">
                     <div class="pn">3</div>
-                    <div class="pl">молчат на звонки</div>
+                    <div class="pl">молчат после касания</div>
                   </div>
                 </div>
+
                 <div class="mc-card-sub">
-                  Утром автонапоминания клиентам отправлены ✓ · вечер — контроль платежей
+                  <b style="color:#30d158">209к ₽ ✓</b> поступило · <b style="color:#ff9f0a">103к ₽</b> ждём до 18:00 · 3 переноса требуют звонка
                 </div>
               </div>
 
-              <!-- 🛑 Просрочка обещаний (DANGER · главная дыра системы) -->
-              <div class="mc-card col-2 accent-red status-danger" onclick="showToast('Очередь просрочек обещаний')">
+              <!-- 🚨 Счета без контроля (главная дыра системы) -->
+              <div class="mc-card col-2 accent-red status-danger" onclick="showToast('Список счетов без контроля')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🛑</div>
-                <div class="mc-card-label">Просрочка обещаний</div>
-                <div class="mc-card-value">7<small>· не оплатили вчера</small></div>
-                <div class="mc-card-sub">
-                  Клоузеры должны звонить · 3 не позвонили уже 2 дня
+                <div class="mc-card-icon">🚨</div>
+                <div class="mc-card-label">Счета без контроля <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">потеряли управление</span></div>
+                <div class="mc-card-value">17<small>· счетов · 285к ₽ под угрозой</small></div>
+
+                <!-- 4 типа потери контроля -->
+                <div style="display: grid; gap: 5px; margin-top: 10px;">
+                  <div style="padding: 7px 10px; background: rgba(255,69,58,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:#fff;">🔴 Без даты оплаты</span>
+                    <span style="color:#ff453a; font-weight:700;">5 · 95к ₽</span>
+                  </div>
+                  <div style="padding: 7px 10px; background: rgba(255,159,10,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.85);">🟠 Без касания 24ч+</span>
+                    <span style="color:#ff9f0a; font-weight:700;">4 · 70к ₽</span>
+                  </div>
+                  <div style="padding: 7px 10px; background: rgba(255,69,58,0.10); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:#fff;">⏳ Просрочены</span>
+                    <span style="color:#ff453a; font-weight:700;">5 · 85к ₽</span>
+                  </div>
+                  <div style="padding: 7px 10px; background: rgba(176,132,255,0.08); border-radius: 6px; display: flex; justify-content: space-between; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.85);">🟣 72ч+ без решения</span>
+                    <span style="color:#b084ff; font-weight:700;">3 · 35к ₽</span>
+                  </div>
                 </div>
-                <div class="mc-card-action">
+
+                <div class="mc-card-action" style="margin-top: 10px;">
                   <div class="ic">🚨</div>
                   <div class="text">
-                    <b>Ляшенко 3 · Яковлева 2 · Марченко 2</b>
-                    <span class="what">1 контрольный звонок: новая дата (макс 1 раз) / иначе C</span>
+                    <b>Ляшенко 7 · Яковлева 5 · Петрова 3</b>
+                    <span class="what">Счёт ≠ финал · должен жить до денег / частички / новой даты / отказа / РОПа</span>
                   </div>
-                  <button class="cta" onclick="event.stopPropagation(); showToast('Эскалация — звонок РОПа')">→ Эскалация</button>
+                  <button class="cta" onclick="event.stopPropagation(); showToast('Очередь счетов без контроля')">→ Список</button>
                 </div>
               </div>
 
@@ -6070,23 +6111,35 @@
                 </div>
               </div>
 
-              <!-- 📅 Оплаты на этой неделе (A2 ≤ 7 дней) -->
-              <div class="mc-card col-2 accent-blue" onclick="showToast('A2 ≤7 дней — даты по дням недели')">
+              <!-- 💸 Деньги в воздухе (главный денежный индикатор) -->
+              <div class="mc-card col-2 accent-orange" onclick="showToast('Все неоплаченные счета по статусам')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">📅</div>
-                <div class="mc-card-label">Оплаты на неделе</div>
-                <div class="mc-card-value">42<small>· A2 ≤ 7 дней</small></div>
-                <div class="mc-week-bars">
-                  <div class="wb-row"><span class="wd">Пн</span><span class="bar"><span class="fill" style="width:90%"></span></span><span class="cnt">9</span></div>
-                  <div class="wb-row"><span class="wd">Вт</span><span class="bar"><span class="fill" style="width:80%"></span></span><span class="cnt">8</span></div>
-                  <div class="wb-row"><span class="wd">Ср</span><span class="bar"><span class="fill" style="width:70%"></span></span><span class="cnt">7</span></div>
-                  <div class="wb-row today"><span class="wd">Чт</span><span class="bar"><span class="fill" style="width:60%"></span></span><span class="cnt">6</span></div>
-                  <div class="wb-row"><span class="wd">Пт</span><span class="bar"><span class="fill" style="width:50%"></span></span><span class="cnt">5</span></div>
-                  <div class="wb-row"><span class="wd">Сб</span><span class="bar"><span class="fill" style="width:40%"></span></span><span class="cnt">4</span></div>
-                  <div class="wb-row"><span class="wd">Вс</span><span class="bar"><span class="fill" style="width:30%"></span></span><span class="cnt">3</span></div>
+                <div class="mc-card-icon">💸</div>
+                <div class="mc-card-label">Деньги в воздухе <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">сумма неоплаченных счетов</span></div>
+                <div class="mc-card-value" style="color: #ff9f0a">783к<small> ₽ висит · из 1290к выставлено</small></div>
+
+                <!-- Воронка денег: выставлено → оплачено → в воздухе -->
+                <div style="display: grid; gap: 5px; margin-top: 12px;">
+                  <div style="padding: 7px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.55);">Выставлено счетов</span>
+                    <span><b style="color:#fff;">86</b> <small style="color:rgba(255,255,255,0.5);">· 1 290к ₽</small></span>
+                  </div>
+                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.06); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7);">✓ Оплачено полностью</span>
+                    <span><b style="color:#30d158;">31</b> <small style="color:#30d158;">· 465к ₽</small></span>
+                  </div>
+                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                    <span style="color:rgba(255,255,255,0.7);">▣ Частично оплачено</span>
+                    <span><b style="color:rgba(255,255,255,0.85);">14</b> <small style="color:rgba(255,255,255,0.5);">· 42к ₽ ✓ + 168к ₽ ждём</small></span>
+                  </div>
+                  <div style="padding: 8px 10px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.25); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
+                    <span style="color:#fff; font-weight:600;">⚠ В воздухе</span>
+                    <span><b style="color:#ff9f0a; font-size:14px;">783к ₽</b></span>
+                  </div>
                 </div>
+
                 <div class="mc-card-sub">
-                  Платежи равномерно · автонапоминания клиентам идут утром
+                  Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
                 </div>
               </div>
 
