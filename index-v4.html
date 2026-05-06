@@ -6400,6 +6400,239 @@
         margin-top: 2px;
         font-style: italic;
       }
+
+      /* ═══════════════ Дорожная карта РОПа · оформление страницы ═══════════════ */
+      .roadmap-page { max-width: 1080px; }
+      .roadmap-page .page-header h1 { font-size: 28px; }
+      .roadmap-page .page-sub { font-size: 13px; color: var(--text-2); }
+
+      .rm-section {
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-left: 3px solid rgba(255,255,255,0.20);
+        border-radius: 12px;
+        padding: 18px 20px 20px;
+        margin-bottom: 14px;
+      }
+      .rm-section.blue   { border-left-color: #52a7ff; }
+      .rm-section.purple { border-left-color: #b084ff; }
+      .rm-section.orange { border-left-color: #ff9f0a; }
+      .rm-section.cyan   { border-left-color: #4dd0e1; }
+      .rm-section.indigo { border-left-color: #7986cb; }
+      .rm-section.green  { border-left-color: #30d158; }
+      .rm-section.red    { border-left-color: #ff453a; }
+      .rm-section.yellow { border-left-color: #ffd60a; }
+      .rm-section.gold   { border-left-color: #ffb84d; background: rgba(255,184,77,0.04); }
+
+      .rm-h {
+        display: flex; align-items: baseline; gap: 12px;
+        margin-bottom: 6px;
+      }
+      .rm-h .ico { font-size: 22px; line-height: 1; }
+      .rm-h .title {
+        font-size: 17px; font-weight: 700; color: #fff;
+      }
+      .rm-h .time {
+        margin-left: auto;
+        font-size: 11px; font-weight: 700;
+        color: rgba(255,255,255,0.45);
+        text-transform: uppercase; letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .rm-section.blue   .rm-h .ico { color: #52a7ff; }
+      .rm-section.purple .rm-h .ico { color: #b084ff; }
+      .rm-section.orange .rm-h .ico { color: #ff9f0a; }
+      .rm-section.cyan   .rm-h .ico { color: #4dd0e1; }
+      .rm-section.indigo .rm-h .ico { color: #7986cb; }
+      .rm-section.green  .rm-h .ico { color: #30d158; }
+      .rm-section.red    .rm-h .ico { color: #ff453a; }
+      .rm-section.yellow .rm-h .ico { color: #ffd60a; }
+      .rm-section.gold   .rm-h .ico { color: #ffb84d; }
+
+      .rm-goal {
+        font-size: 12.5px; color: rgba(255,255,255,0.55);
+        margin-bottom: 14px;
+      }
+      .rm-goal b { color: #fff; font-weight: 600; }
+
+      /* Таблица «Что смотрит — Где — Зелёный — Красный» */
+      .rm-table {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr 1fr 1fr;
+        gap: 1px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .rm-table .cell {
+        background: #0f1014;
+        padding: 10px 12px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.85);
+      }
+      .rm-table .cell.head {
+        background: rgba(255,255,255,0.04);
+        font-size: 9.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        color: rgba(255,255,255,0.50);
+      }
+      .rm-table .cell.good   { color: #30d158; }
+      .rm-table .cell.bad    { color: #ff8478; }
+      .rm-table .cell b { color: #fff; }
+
+      /* Таблица 3 колонки (для эскалаций / сигналов) */
+      .rm-table.col3 { grid-template-columns: 1.2fr 1fr 1.4fr; }
+      /* Таблица 2 колонки */
+      .rm-table.col2 { grid-template-columns: 1fr 1.5fr; }
+
+      /* Action-list (Очередь РОПа в карте) */
+      .rm-actions { display: grid; gap: 8px; }
+      .rm-action {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 12px; align-items: start;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+      }
+      .rm-action .a-ico {
+        width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.06);
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      .rm-action .a-text {
+        font-size: 12.5px; color: rgba(255,255,255,0.85);
+      }
+      .rm-action .a-text b { color: #fff; }
+      .rm-action.danger .a-ico { background: rgba(255,69,58,0.12); color: #ff453a; }
+      .rm-action.warn   .a-ico { background: rgba(255,159,10,0.12); color: #ff9f0a; }
+      .rm-action.info   .a-ico { background: rgba(82,167,255,0.12); color: #52a7ff; }
+      .rm-action.win    .a-ico { background: rgba(48,209,88,0.12); color: #30d158; }
+
+      /* Светофор-чипы (для контроля) */
+      .rm-stoplight {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .rm-stoplight .sl {
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .rm-stoplight .sl .label {
+        font-size: 11px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.04em;
+        margin-bottom: 4px;
+      }
+      .rm-stoplight .sl .who {
+        font-size: 13px; color: rgba(255,255,255,0.85);
+        margin-bottom: 4px;
+      }
+      .rm-stoplight .sl .what {
+        font-size: 11px; color: rgba(255,255,255,0.55);
+      }
+      .rm-stoplight .sl.green  { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.20); }
+      .rm-stoplight .sl.green  .label { color: #30d158; }
+      .rm-stoplight .sl.yellow { background: rgba(255,214,10,0.06); border-color: rgba(255,214,10,0.20); }
+      .rm-stoplight .sl.yellow .label { color: #ffd60a; }
+      .rm-stoplight .sl.red    { background: rgba(255,69,58,0.06);  border-color: rgba(255,69,58,0.20); }
+      .rm-stoplight .sl.red    .label { color: #ff453a; }
+
+      /* Главные законы — нумерованные карточки */
+      .rm-laws {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 10px;
+      }
+      .rm-law {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 10px; align-items: start;
+        padding: 12px 14px;
+        background: rgba(255,184,77,0.05);
+        border: 1px solid rgba(255,184,77,0.18);
+        border-radius: 10px;
+      }
+      .rm-law .num {
+        font-size: 22px; font-weight: 800;
+        color: #ffb84d;
+        line-height: 1;
+      }
+      .rm-law .text {
+        font-size: 12.5px; color: rgba(255,255,255,0.85);
+        line-height: 1.4;
+      }
+      .rm-law .text b { color: #fff; }
+
+      /* Подпись под каждой секцией: «правило РОПа» */
+      .rm-rule {
+        margin-top: 12px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.04);
+        border-left: 2px solid rgba(255,255,255,0.20);
+        border-radius: 6px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.75);
+        font-style: italic;
+      }
+      .rm-rule b { color: #fff; font-style: normal; }
+
+      /* Хлеб-крошки внутри секции (например список дел) */
+      .rm-list {
+        margin: 6px 0 0 0;
+        padding-left: 18px;
+      }
+      .rm-list li {
+        font-size: 12.5px; color: rgba(255,255,255,0.80);
+        margin-bottom: 5px; line-height: 1.45;
+      }
+      .rm-list li b { color: #fff; }
+
+      /* Footer-блок «3 вопроса утром» */
+      .rm-questions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .rm-questions .q {
+        padding: 12px 14px;
+        background: rgba(82,167,255,0.06);
+        border: 1px solid rgba(82,167,255,0.20);
+        border-radius: 10px;
+        text-align: center;
+      }
+      .rm-questions .q .num {
+        display: inline-block;
+        background: #52a7ff; color: #0f1014;
+        font-weight: 800; font-size: 12px;
+        width: 22px; height: 22px;
+        line-height: 22px; border-radius: 50%;
+        margin-bottom: 6px;
+      }
+      .rm-questions .q .topic {
+        font-size: 11px; font-weight: 700;
+        color: #52a7ff;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        margin-bottom: 2px;
+      }
+      .rm-questions .q .ask {
+        font-size: 12.5px; color: rgba(255,255,255,0.85);
+      }
+
+      @media (max-width: 720px) {
+        .rm-table, .rm-table.col3 { grid-template-columns: 1fr; }
+        .rm-stoplight { grid-template-columns: 1fr; }
+        .rm-questions { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body data-role="hunter">
@@ -6458,6 +6691,7 @@
           <div class="tab" data-tab="prompt-hunter" data-roles="director">Промт охотников</div>
           <div class="tab" data-tab="prompt-closer" data-roles="director">Промт клоузеров</div>
           <div class="tab" data-tab="personal">Личный кабинет</div>
+          <div class="tab" data-tab="roadmap" data-roles="closer closer-personal director">📖 Карта</div>
         </div>
 
         <!-- ═══════════════ PAGE: СВОДКА ═══════════════ -->
@@ -11343,6 +11577,327 @@
             </div>
           </details>
           <!-- /конец второго details: Рейтинг + Тренд -->
+        </section>
+
+        <!-- ═══════════════ PAGE: ДОРОЖНАЯ КАРТА РОПа ═══════════════ -->
+        <section class="page roadmap-page" data-page-content="roadmap">
+          <div class="page-header">
+            <div>
+              <h1>📖 Дорожная карта РОПа клоузеров</h1>
+              <div class="page-sub">Куда смотрит, за чем следит, что решает — по слоям дня и недели</div>
+            </div>
+          </div>
+
+          <!-- ── 1. Утро ── -->
+          <div class="rm-section blue">
+            <div class="rm-h">
+              <div class="ico">🌅</div>
+              <div class="title">Утренний открыв</div>
+              <div class="time">5–10 минут · сразу после прихода</div>
+            </div>
+            <div class="rm-goal">Понять <b>контекст за вчера</b> и состояние сегодня. Не лезу в детали.</div>
+
+            <div class="rm-table">
+              <div class="cell head">Что смотрит</div>
+              <div class="cell head">Где</div>
+              <div class="cell head">Сигнал «всё хорошо»</div>
+              <div class="cell head">Сигнал «копать»</div>
+
+              <div class="cell"><b>Money-tile «Сегодня»</b><br><span style="color: rgba(255,255,255,0.50); font-size: 11px;">ждём / получили / осталось</span></div>
+              <div class="cell">Шапка плитки «Счета под контролем»</div>
+              <div class="cell good">получили ≥ 30% от ждём</div>
+              <div class="cell bad">&lt;10% от ждём в 11:00 → звоню клоузерам</div>
+
+              <div class="cell"><b>Деньги в воздухе</b></div>
+              <div class="cell">Отдельная плитка</div>
+              <div class="cell good">стабильно или ↓</div>
+              <div class="cell bad">▲+15% за неделю → собирать счета, не выставлять новые</div>
+
+              <div class="cell"><b>HERO 3 KPI команды</b><br><span style="color: rgba(255,255,255,0.50); font-size: 11px;">Конверсия / В моменте / Дожим</span></div>
+              <div class="cell">Сверху Сводки</div>
+              <div class="cell good">30% / 24% / 6% — все в норме</div>
+              <div class="cell bad">любая ↓ к плану ≥3 п.п. → разбор недели</div>
+
+              <div class="cell"><b>Сделок в работе</b><br><span style="color: rgba(255,255,255,0.50); font-size: 11px;">5 статусов Д0</span></div>
+              <div class="cell">Плитка «💼 Сделок в работе»</div>
+              <div class="cell good">Продажа+Частичка ≥ 50%, Думают ≤ 20%</div>
+              <div class="cell bad">Думают &gt;25% → клоузеры не дожимают</div>
+            </div>
+
+            <div class="rm-rule">
+              <b>3 вопроса, на которые РОП отвечает после утреннего сканирования:</b>
+            </div>
+            <div class="rm-questions">
+              <div class="q">
+                <div class="num">1</div>
+                <div class="topic">Деньги</div>
+                <div class="ask">Где мы по выручке к плану недели?</div>
+              </div>
+              <div class="q">
+                <div class="num">2</div>
+                <div class="topic">Воронка</div>
+                <div class="ask">Где течёт?</div>
+              </div>
+              <div class="q">
+                <div class="num">3</div>
+                <div class="topic">Команда</div>
+                <div class="ask">Кто слабый сегодня?</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── 2. Очередь РОПа ── -->
+          <div class="rm-section purple">
+            <div class="rm-h">
+              <div class="ico">⚡</div>
+              <div class="title">Первый час · Очередь РОПа</div>
+              <div class="time">~60 минут · 5 действий, не больше</div>
+            </div>
+            <div class="rm-goal">Сделать <b>ровно 5 действий</b>, которые система выявила за ночь по правилам watchdog.</div>
+
+            <div class="rm-actions">
+              <div class="rm-action danger">
+                <div class="a-ico">🚨</div>
+                <div class="a-text"><b>Просрочки + AI-красные встречи</b> у одного клоузера → 1:1 + AI-разбор каждого красного звонка</div>
+              </div>
+              <div class="rm-action warn">
+                <div class="a-ico">⚠</div>
+                <div class="a-text"><b>Reopen rate ниже нормы</b> + просроченные счета → 1:1 сегодня, разобрать каждый и принять решение</div>
+              </div>
+              <div class="rm-action warn">
+                <div class="a-ico">⏳</div>
+                <div class="a-text"><b>72ч+ без решения</b> → передать сильному клоузеру / закрыть в C / принять решение лично</div>
+              </div>
+              <div class="rm-action info">
+                <div class="a-ico">📞</div>
+                <div class="a-text"><b>Молчание после касания</b> в «Деньгах сегодня» → срочный звонок клоузеру: «дозвонись или эскалируй»</div>
+              </div>
+              <div class="rm-action win">
+                <div class="a-ico">🏆</div>
+                <div class="a-text"><b>Эталон топа команды</b> (Лим Елена · 5 эталонных встреч за неделю) → шаринг записей с командой</div>
+              </div>
+            </div>
+
+            <div class="rm-rule">
+              <b>Правило РОПа:</b> прошёл по 5 строкам очереди → нажал каждую кнопку («Разобрать / 1:1 / Решить / Звонок / Шарить»). После этого <b>прибил очередь к нулю</b> — операционная задача дня закрыта.
+            </div>
+          </div>
+
+          <!-- ── 3. Контроль команды ── -->
+          <div class="rm-section orange">
+            <div class="rm-h">
+              <div class="ico">🔍</div>
+              <div class="title">В течение дня · контроль команды</div>
+              <div class="time">фоном, без расписания</div>
+            </div>
+            <div class="rm-goal">Видеть <b>кто закрывает деньги</b>, а кто рассылает счета как листовки.</div>
+
+            <ul class="rm-list">
+              <li>Плитка <b>«📑 Счета под контролем»</b> · таблица 8 клоузеров, 6 колонок</li>
+              <li>Главная конверсия — <b>Счёт→оплата</b> (норма ≥60%)</li>
+              <li>Контрольные метрики: <b>Просрочено</b> (норма ≤15%), <b>72ч+</b> (норма 0)</li>
+              <li><b>Drill-down</b>: клик по строке → карточка клоузера со всеми счетами + AI-разбор всех его звонков за неделю</li>
+            </ul>
+
+            <div class="rm-stoplight">
+              <div class="sl green">
+                <div class="label">🟢 Зелёный (≥60%)</div>
+                <div class="who">Лим, Гальков, Алиев</div>
+                <div class="what">Работают системно — не трогать, изучать как эталон</div>
+              </div>
+              <div class="sl yellow">
+                <div class="label">🟡 Жёлтый (40–60%)</div>
+                <div class="who">Петрова, Марченко, Мифтахов</div>
+                <div class="what">Учить дожиму · разобрать 2-3 звонка вместе</div>
+              </div>
+              <div class="sl red">
+                <div class="label">🔴 Красный (&lt;40%)</div>
+                <div class="who">Яковлева, Ляшенко</div>
+                <div class="what">1:1 + аудит звонков · режем поток новых трипваеров пока не разберёт</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── 4. Аудит звонков ── -->
+          <div class="rm-section cyan">
+            <div class="rm-h">
+              <div class="ico">🎧</div>
+              <div class="title">Точечно · аудит звонков</div>
+              <div class="time">по флагам AI, не «всё подряд»</div>
+            </div>
+            <div class="rm-goal">Не «слушать всё подряд», а <b>проверять там, где AI поставил флаг</b>.</div>
+
+            <ul class="rm-list">
+              <li>Плитка <b>«🔴 Красные встречи Д0»</b> — список встреч AI&lt;3/5 баллов за неделю</li>
+              <li>Клик → карточка звонка <b>Gong-style</b>: аудиоплеер с маркерами проблемных моментов</li>
+              <li><b>AI-таймлайн 5 моментов</b>: цитата → AI-комментарий → кнопка перемотки на это место</li>
+              <li><b>AI-чек-лист 7 регламентных вопросов</b> с вердиктом ✓/✗ по каждому</li>
+              <li><b>Эталон топа</b> (Лим Елена) для сравнения «как должно быть»</li>
+              <li>3 кнопки: <b>Согласен с AI</b> / <b>Не согласен</b> (HITL feedback → правит промпт) / <b>На разбор</b></li>
+            </ul>
+
+            <div class="rm-rule">
+              Кнопка <b>«Не согласен с AI»</b> — когда видишь, что AI ошибся в трактовке. Это не спор — это сигнал в Конструктор для уточнения промпта.
+            </div>
+          </div>
+
+          <!-- ── 5. К концу дня ── -->
+          <div class="rm-section indigo">
+            <div class="rm-h">
+              <div class="ico">🌙</div>
+              <div class="title">К концу дня · закрытие</div>
+              <div class="time">17:00–18:30 · не оставлять зомби на завтра</div>
+            </div>
+            <div class="rm-goal">Не оставлять <b>зомби-сделки</b> на следующий день. Каждая встреча должна иметь финальный статус.</div>
+
+            <div class="rm-table">
+              <div class="cell head">Что закрыть</div>
+              <div class="cell head">Где смотреть</div>
+              <div class="cell head">Норма</div>
+              <div class="cell head">Что делать</div>
+
+              <div class="cell"><b>Не капнули деньги к 18:00</b></div>
+              <div class="cell">Money-tile · «осталось 225к»</div>
+              <div class="cell good">осталось &lt; 30%</div>
+              <div class="cell bad">Звонить клоузерам, эскалировать</div>
+
+              <div class="cell"><b>Думающие сделки</b> без решения</div>
+              <div class="cell">Плитка «🤔 Думающие сделки»</div>
+              <div class="cell good">все с назначенным контрольным звонком A2 через 3-5 дней</div>
+              <div class="cell bad">Назначить контрольный, иначе пропадёт</div>
+
+              <div class="cell"><b>72ч+ без решения</b></div>
+              <div class="cell">Колонка «72ч+» в таблице счетов</div>
+              <div class="cell good">0 у каждого клоузера</div>
+              <div class="cell bad">Принять решение лично: передать / закрыть / выдержать</div>
+
+              <div class="cell"><b>Встречи без статуса</b> (зомби)</div>
+              <div class="cell">Автоматически в «🔴 Красные встречи»</div>
+              <div class="cell good">все встречи с одним из 5 статусов Д0</div>
+              <div class="cell bad">Заставить клоузера поставить статус</div>
+            </div>
+          </div>
+
+          <!-- ── 6. Неделя ── -->
+          <div class="rm-section green">
+            <div class="rm-h">
+              <div class="ico">📅</div>
+              <div class="title">Недельный слой · понедельник утром</div>
+              <div class="time">30–45 минут · подвести итог + план</div>
+            </div>
+            <div class="rm-goal">Подвести итог недели, скорректировать план, поделиться эталонами.</div>
+
+            <ul class="rm-list">
+              <li><b>HERO 3 KPI</b> · факт vs план: где недотянули, где перевыполнили</li>
+              <li><b>Конверсия трипваеров → продажа по клоузерам</b> · рейтинг 8 человек: кто растёт, кто падает</li>
+              <li><b>Эталоны</b> · взять 2-3 лучшие встречи Лим Елены, расшарить команде</li>
+              <li><b>План на следующую неделю</b> · направить трипваеры тем, у кого чистые счета</li>
+              <li><b>Чистка нарушителей</b> · у кого 72ч+ или много просрочек → режем поток новых трипваеров пока не разберёт</li>
+            </ul>
+          </div>
+
+          <!-- ── 7. Сигналы тревоги ── -->
+          <div class="rm-section red">
+            <div class="rm-h">
+              <div class="ico">🚨</div>
+              <div class="title">Сигналы тревоги · действовать сразу</div>
+              <div class="time">в течение 30 минут</div>
+            </div>
+            <div class="rm-goal">Эти сигналы <b>отменяют все остальные задачи</b>. Реакция в течение получаса.</div>
+
+            <div class="rm-table">
+              <div class="cell head">Сигнал</div>
+              <div class="cell head">Где видно</div>
+              <div class="cell head">Норма</div>
+              <div class="cell head">Что делать</div>
+
+              <div class="cell"><b>Money-tile: получили &lt; 10% к 14:00</b></div>
+              <div class="cell">Шапка «Счета под контролем»</div>
+              <div class="cell good">≥ 30% к 14:00</div>
+              <div class="cell bad">Срочный созвон команды</div>
+
+              <div class="cell"><b>Деньги в воздухе ▲ за день</b></div>
+              <div class="cell">Плитка «💸 Деньги в воздухе»</div>
+              <div class="cell good">стабильно или ↓</div>
+              <div class="cell bad">Запретить выставление новых счетов до разбора</div>
+
+              <div class="cell"><b>72ч+ у клоузера &gt; 2</b></div>
+              <div class="cell">Колонка «72ч+» в таблице</div>
+              <div class="cell good">0</div>
+              <div class="cell bad">1:1 в этот же день</div>
+
+              <div class="cell"><b>Без касания 24ч &gt; 3</b></div>
+              <div class="cell">Колонка «Без касания»</div>
+              <div class="cell good">≤ 1</div>
+              <div class="cell bad">Сделка считается брошенной — отобрать у клоузера</div>
+
+              <div class="cell"><b>AI-красных встреч за неделю &gt; 10</b></div>
+              <div class="cell">Плитка «🔴 Красные встречи»</div>
+              <div class="cell good">≤ 5 / неделя</div>
+              <div class="cell bad">Калибровка регламента, разбор паттерна</div>
+            </div>
+          </div>
+
+          <!-- ── 8. Эскалации ── -->
+          <div class="rm-section yellow">
+            <div class="rm-h">
+              <div class="ico">🪜</div>
+              <div class="title">Эскалации · куда уходит конфликт</div>
+              <div class="time">по ситуации</div>
+            </div>
+            <div class="rm-goal">РОП — не последняя инстанция. Каждый тип проблемы имеет свой путь наверх.</div>
+
+            <div class="rm-table col3">
+              <div class="cell head">От кого → к кому</div>
+              <div class="cell head">Как</div>
+              <div class="cell head">Когда</div>
+
+              <div class="cell">Клоузер → <b>РОП</b></div>
+              <div class="cell">Автоматически в «Очередь РОПа»</div>
+              <div class="cell">Сделка &gt; 72ч без решения</div>
+
+              <div class="cell">РОП → <b>Директор продаж</b></div>
+              <div class="cell">Вручную (отчёт + контекст)</div>
+              <div class="cell">Падение Конверсии &gt; 5 п.п. за неделю</div>
+
+              <div class="cell">РОП → <b>ОКК</b> (Ермолина / Наумов)</div>
+              <div class="cell">Через «На разбор» в карточке звонка</div>
+              <div class="cell">Конфликт по AI-вердикту, нужна правка промпта</div>
+            </div>
+          </div>
+
+          <!-- ── 9. Главные законы ── -->
+          <div class="rm-section gold">
+            <div class="rm-h">
+              <div class="ico">⚖️</div>
+              <div class="title">Главные законы системы</div>
+              <div class="time">всегда в голове</div>
+            </div>
+            <div class="rm-goal">Когда сомневаешься в решении — сверься с этими 5 принципами. Они не меняются.</div>
+
+            <div class="rm-laws">
+              <div class="rm-law">
+                <div class="num">1</div>
+                <div class="text"><b>Счёт ≠ финал работы.</b> Счёт живёт до денег / частички / новой даты / отказа / решения РОПа. Никаких «отправил ссылку и ушёл».</div>
+              </div>
+              <div class="rm-law">
+                <div class="num">2</div>
+                <div class="text"><b>5 финальных статусов встречи Д0.</b> Без статуса = красная встреча. Продажа · Частичка · Обещание · Думают (с причиной) · Отказ.</div>
+              </div>
+              <div class="rm-law">
+                <div class="num">3</div>
+                <div class="text"><b>Дата оплаты ≤ 14 дней.</b> Иначе это «думают», не «согласились». Без даты счёт в АМО не выставится — это закрыто системой.</div>
+              </div>
+              <div class="rm-law">
+                <div class="num">4</div>
+                <div class="text"><b>72 часа максимум на счёт без решения.</b> После этого автоматически на разбор РОПу. Лимит переноса даты — 1 раз.</div>
+              </div>
+              <div class="rm-law">
+                <div class="num">5</div>
+                <div class="text"><b>Чистота счетов = доступ к новым трипваерам.</b> Режется поток нарушителям. «Сначала собери деньги, которые поднял в воздух».</div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- ═══════════════ PAGE: ПРОМТ КЛОУЗЕРОВ ═══════════════ -->
