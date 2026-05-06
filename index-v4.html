@@ -15332,6 +15332,36 @@
 
       // инициализация — роль по умолчанию hunter (первым в списке у пользователя в скринах)
       setRole("hunter");
+
+      // ═══════════════ Автомодалка «5 финальных исходов» — раз в день при первом заходе на роль клоузера ═══════════════
+      // Запускается каждый раз когда РОП переключается на «РОП Клоуз.» или «Я · Клоузер»
+      // Показывает модалку только если сегодня ещё не показывали (через localStorage)
+      function checkD0RulesDailyReminder() {
+        const role = document.body.getAttribute("data-role");
+        if (role !== "closer" && role !== "closer-personal") return;
+
+        const today = new Date().toISOString().slice(0, 10); // "2026-05-05"
+        const lastShown = localStorage.getItem("d0-rules-last-shown");
+        if (lastShown === today) return;
+
+        // Показываем модалку через 600мс — даём странице отрисоваться
+        setTimeout(() => {
+          openModal("d0-rules");
+          localStorage.setItem("d0-rules-last-shown", today);
+        }, 600);
+      }
+
+      // Хук на смену роли — оборачиваем существующую setRole
+      (function () {
+        const origSetRole = window.setRole;
+        window.setRole = function (role) {
+          origSetRole(role);
+          checkD0RulesDailyReminder();
+        };
+      })();
+
+      // Проверка при первой загрузке (если default-роль закроется на closer когда-нибудь)
+      checkD0RulesDailyReminder();
     </script>
 
     <!-- ═══════════════ ТЕКСТЫ ПРОМТОВ (хранятся как text/plain, JS подставляет в textarea) ═══════════════ -->
