@@ -3183,6 +3183,68 @@
       .reopen-bar .big.warn { color: #ff9f0a; }
       .reopen-bar .lbl { color: rgba(255,255,255,0.7); }
 
+      /* ── Очередь РОПа: список action-items ── */
+      .rop-queue {
+        display: grid; gap: 8px; margin-top: 12px;
+      }
+      .rop-action {
+        display: grid;
+        grid-template-columns: 36px 200px 1fr 1fr auto;
+        gap: 14px; align-items: center;
+        padding: 12px 14px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        font-size: 12.5px;
+        transition: all 0.15s;
+        cursor: pointer;
+      }
+      .rop-action:hover {
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(255,255,255,0.16);
+      }
+      .rop-action.danger { background: rgba(255,69,58,0.06); border-color: rgba(255,69,58,0.22); }
+      .rop-action.warn   { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.22); }
+      .rop-action.info   { background: rgba(82,167,255,0.06); border-color: rgba(82,167,255,0.22); }
+      .rop-action.win    { background: rgba(48,209,88,0.06); border-color: rgba(48,209,88,0.22); }
+
+      .rop-action .icon {
+        font-size: 22px; text-align: center; line-height: 1;
+      }
+      .rop-action .who {
+        color: #fff; font-weight: 700;
+      }
+      .rop-action .who small {
+        display: block; color: rgba(255,255,255,0.5);
+        font-weight: 500; font-size: 10.5px; margin-top: 2px;
+        text-transform: uppercase; letter-spacing: 0.04em;
+      }
+      .rop-action .problem {
+        color: rgba(255,255,255,0.85); line-height: 1.4;
+      }
+      .rop-action .problem b { color: #fff; }
+      .rop-action .what-to-do {
+        color: rgba(255,255,255,0.7);
+        font-size: 11.5px;
+      }
+      .rop-action .what-to-do .arrow {
+        color: rgba(255,255,255,0.4); margin-right: 4px;
+      }
+      .rop-action .cta {
+        padding: 7px 14px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.14);
+        color: #fff; border-radius: 8px;
+        font-size: 11.5px; font-weight: 600;
+        cursor: pointer; white-space: nowrap;
+        transition: all 0.12s;
+      }
+      .rop-action .cta:hover { background: rgba(255,255,255,0.16); }
+      .rop-action.danger .cta { border-color: rgba(255,69,58,0.40); background: rgba(255,69,58,0.10); }
+      .rop-action.warn .cta   { border-color: rgba(255,159,10,0.40); background: rgba(255,159,10,0.10); }
+      .rop-action.info .cta   { border-color: rgba(82,167,255,0.40); background: rgba(82,167,255,0.10); }
+      .rop-action.win .cta    { border-color: rgba(48,209,88,0.40); background: rgba(48,209,88,0.10); }
+
       /* ── KPI-ячейки HERO с tooltip-подсказкой ── */
       /* Снимаем overflow:hidden на mc-card содержащей KPI-ячейки чтобы tooltip не резался */
       .mc-card:has(.kpi-cell) { overflow: visible; }
@@ -6136,6 +6198,62 @@
 
                 <div class="mc-card-sub">
                   <b style="color:#30d158">209к ₽ ✓</b> поступило · <b style="color:#ff9f0a">103к ₽</b> ждём до 18:00 · 3 переноса требуют звонка
+                </div>
+              </div>
+
+              <!-- 📋 Очередь РОПа · конкретные действия на сегодня (col-6 — на всю ширину) -->
+              <div class="mc-card col-6 accent-purple">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📋</div>
+                <div class="mc-card-label">Очередь РОПа · действия на сегодня <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">5 элементов · РОП не ищет проблемы — система показывает</span></div>
+                <div class="mc-card-value">5<small>· действий · приоритет от 🚨 к 🏆</small></div>
+
+                <div class="rop-queue">
+
+                  <div class="rop-action danger" onclick="openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')">
+                    <div class="icon">🚨</div>
+                    <div class="who">Ляшенко А.<small>Просел Д0 + красные</small></div>
+                    <div class="problem">5 счетов <b>без даты</b> + 7 AI-красных встреч (▲+3 за неделю)</div>
+                    <div class="what-to-do"><span class="arrow">→</span>1:1 + AI-разбор · разобрать каждый счёт</div>
+                    <button class="cta">Разобрать</button>
+                  </div>
+
+                  <div class="rop-action warn" onclick="showToast('Открываем 4 просроченных счёта Яковлевой')">
+                    <div class="icon">⚠</div>
+                    <div class="who">Яковлева А.<small>Просрочки + reopen</small></div>
+                    <div class="problem">4 <b>просроченных счёта</b> на <b>120к ₽</b> · Reopen rate 22% (норма ≥30%)</div>
+                    <div class="what-to-do"><span class="arrow">→</span>1:1 сегодня · разобрать каждый и принять решение</div>
+                    <button class="cta">1:1 сегодня</button>
+                  </div>
+
+                  <div class="rop-action warn" onclick="showToast('Открываем 2 счёта Петровой 72ч+')">
+                    <div class="icon">⏳</div>
+                    <div class="who">Петрова Д.<small>72ч+ без решения</small></div>
+                    <div class="problem">2 счёта <b>72ч+ без решения</b> на 35к ₽ · цикл сделки 171ч</div>
+                    <div class="what-to-do"><span class="arrow">→</span>Передать сильному / закрыть в C / принять решение</div>
+                    <button class="cta">Решить</button>
+                  </div>
+
+                  <div class="rop-action info" onclick="showToast('Список молчащих в Деньги сегодня')">
+                    <div class="icon">📞</div>
+                    <div class="who">Гальков Н.<small>Молчат в платежи</small></div>
+                    <div class="problem">3 клиента в «Деньги сегодня» <b>молчат после касания</b> (84к ₽)</div>
+                    <div class="what-to-do"><span class="arrow">→</span>Срочный звонок клоузеру: «дозвонись или эскалируй»</div>
+                    <button class="cta">Звонок</button>
+                  </div>
+
+                  <div class="rop-action win" onclick="showToast('Эталонные записи Лим Елены за неделю')">
+                    <div class="icon">🏆</div>
+                    <div class="who">Лим Елена<small>Топ-1 команды</small></div>
+                    <div class="problem">5 эталонных встреч за неделю · конверсия 92% · цикл 21ч</div>
+                    <div class="what-to-do"><span class="arrow">→</span>Шаринг записей с командой · использовать как эталон</div>
+                    <button class="cta">Шарить</button>
+                  </div>
+
+                </div>
+
+                <div class="mc-card-sub" style="margin-top: 12px;">
+                  Список формируется автоматически по правилам watchdog (счета без даты / просрочки / 72ч+ / молчания / эталоны) · кликни на строку чтобы решить
                 </div>
               </div>
 
