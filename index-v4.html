@@ -3183,6 +3183,97 @@
       .reopen-bar .big.warn { color: #ff9f0a; }
       .reopen-bar .lbl { color: rgba(255,255,255,0.7); }
 
+      /* ── Счета под контролем: таблица по клоузерам ── */
+      .bills-stats {
+        display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px;
+      }
+      .bills-stats .stat {
+        padding: 10px 12px; border-radius: 8px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .bills-stats .stat .lbl {
+        font-size: 10px; color: rgba(255,255,255,0.55);
+        text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;
+      }
+      .bills-stats .stat .num {
+        font-size: 22px; font-weight: 700; color: #fff;
+        line-height: 1; margin-top: 4px; font-feature-settings: "tnum";
+      }
+      .bills-stats .stat.win  { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.18); }
+      .bills-stats .stat.win  .num { color: #30d158; }
+      .bills-stats .stat.warn { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.18); }
+      .bills-stats .stat.warn .num { color: #ff9f0a; }
+      .bills-stats .stat.danger { background: rgba(255,69,58,0.06); border-color: rgba(255,69,58,0.20); }
+      .bills-stats .stat.danger .num { color: #ff453a; }
+
+      .bills-table {
+        margin-top: 12px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .bills-row {
+        display: grid;
+        grid-template-columns: 1.6fr 70px 70px 90px 90px 80px 70px;
+        gap: 10px; align-items: center;
+        padding: 9px 14px;
+        font-size: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: background 0.12s;
+      }
+      .bills-row:last-child { border-bottom: 0; }
+      .bills-row.head {
+        background: rgba(255,255,255,0.04);
+        font-size: 9.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-weight: 700;
+        color: rgba(255,255,255,0.55);
+        padding: 8px 14px;
+      }
+      .bills-row.body { cursor: pointer; }
+      .bills-row.body:hover { background: rgba(255,255,255,0.04); }
+      .bills-row .name {
+        color: #fff; font-weight: 600;
+      }
+      .bills-row .name small {
+        color: rgba(255,255,255,0.5); font-weight: 400;
+        margin-left: 6px; font-size: 10.5px;
+      }
+      .bills-row .v {
+        text-align: right; font-feature-settings: "tnum";
+        color: rgba(255,255,255,0.85);
+      }
+      .bills-row .v.good { color: #30d158; font-weight: 700; }
+      .bills-row .v.mid  { color: rgba(255,255,255,0.85); }
+      .bills-row .v.bad  { color: #ff453a; font-weight: 700; }
+      .bills-row .v.warn { color: #ff9f0a; font-weight: 700; }
+      .bills-row .v.zero { color: rgba(255,255,255,0.35); }
+      .bills-row .pct-cell {
+        text-align: right;
+      }
+      .bills-row .pct-cell.good { color: #30d158; font-weight: 700; }
+      .bills-row .pct-cell.warn { color: #ff9f0a; font-weight: 700; }
+      .bills-row .pct-cell.bad  { color: #ff453a; font-weight: 700; }
+
+      .bills-flag-row {
+        margin-top: 10px;
+        padding: 12px 16px;
+        background: rgba(255,69,58,0.06);
+        border-left: 3px solid #ff453a;
+        border-radius: 0 10px 10px 0;
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.9);
+        line-height: 1.55;
+      }
+      .bills-flag-row b { color: #fff; }
+      .bills-flag-row .small {
+        font-size: 11px; color: rgba(255,255,255,0.55);
+        margin-top: 4px; display: block;
+      }
+
       /* ── Очередь РОПа: список action-items ── */
       .rop-queue {
         display: grid; gap: 8px; margin-top: 12px;
@@ -6396,6 +6487,145 @@
 
                 <div class="mc-card-sub">
                   Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
+                </div>
+              </div>
+
+              <!-- 📑 Счета под контролем (col-6 — детальная таблица по клоузерам) -->
+              <div class="mc-card col-6 accent-orange">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📑</div>
+                <div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">кто закрывает деньги, а кто рассылает счета как листовки</span></div>
+                <div class="mc-card-value">86<small>· счетов выставлено · 31 оплачено = 36% конверсия</small></div>
+
+                <!-- Сводная статистика команды -->
+                <div class="bills-stats">
+                  <div class="stat">
+                    <div class="lbl">Выставлено</div>
+                    <div class="num">86</div>
+                  </div>
+                  <div class="stat win">
+                    <div class="lbl">Оплачено</div>
+                    <div class="num">31</div>
+                  </div>
+                  <div class="stat">
+                    <div class="lbl">Ждём сегодня</div>
+                    <div class="num">18</div>
+                  </div>
+                  <div class="stat danger">
+                    <div class="lbl">Просрочено</div>
+                    <div class="num">22</div>
+                  </div>
+                  <div class="stat danger">
+                    <div class="lbl">Без даты</div>
+                    <div class="num">9</div>
+                  </div>
+                  <div class="stat warn">
+                    <div class="lbl">Без касания 24ч</div>
+                    <div class="num">14</div>
+                  </div>
+                </div>
+
+                <!-- Таблица по клоузерам -->
+                <div class="bills-table">
+                  <div class="bills-row head">
+                    <div>Клоузер</div>
+                    <div class="v">Счетов</div>
+                    <div class="v">Оплачено</div>
+                    <div class="v">Счёт→оплата<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥60%</span></div>
+                    <div class="v">Просрочено<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≤15%</span></div>
+                    <div class="v">Без даты<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
+                    <div class="v">72ч+<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
+                    <div class="name">Лим Елена <small>цикл 21ч</small></div>
+                    <div class="v mid">13</div>
+                    <div class="v good">9</div>
+                    <div class="pct-cell good">69%</div>
+                    <div class="v zero">1</div>
+                    <div class="v zero">0</div>
+                    <div class="v zero">0</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
+                    <div class="name">Гальков Н. <small>20ч</small></div>
+                    <div class="v mid">11</div>
+                    <div class="v good">7</div>
+                    <div class="pct-cell good">64%</div>
+                    <div class="v zero">2</div>
+                    <div class="v warn">1</div>
+                    <div class="v zero">0</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
+                    <div class="name">Алиев Камран <small>26ч</small></div>
+                    <div class="v mid">8</div>
+                    <div class="v mid">5</div>
+                    <div class="pct-cell good">63%</div>
+                    <div class="v zero">1</div>
+                    <div class="v zero">0</div>
+                    <div class="v zero">0</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
+                    <div class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></div>
+                    <div class="v mid">7</div>
+                    <div class="v mid">3</div>
+                    <div class="pct-cell warn">43%</div>
+                    <div class="v warn">1</div>
+                    <div class="v zero">0</div>
+                    <div class="v warn">1</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
+                    <div class="name">Марченко С. <small>72ч</small></div>
+                    <div class="v mid">7</div>
+                    <div class="v mid">3</div>
+                    <div class="pct-cell warn">43%</div>
+                    <div class="v warn">1</div>
+                    <div class="v warn">1</div>
+                    <div class="v zero">0</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
+                    <div class="name">Мифтахов Р. <small>93ч</small></div>
+                    <div class="v mid">5</div>
+                    <div class="v mid">2</div>
+                    <div class="pct-cell warn">40%</div>
+                    <div class="v warn">1</div>
+                    <div class="v warn">1</div>
+                    <div class="v zero">0</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
+                    <div class="name" style="color:#ff8478;">Яковлева А. <small style="color:#ff9f0a">94ч</small></div>
+                    <div class="v mid">13</div>
+                    <div class="v bad">3</div>
+                    <div class="pct-cell bad">23%</div>
+                    <div class="v bad">6</div>
+                    <div class="v bad">3</div>
+                    <div class="v warn">1</div>
+                  </div>
+
+                  <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
+                    <div class="name" style="color:#ff8478;">Ляшенко А. <small>49ч</small></div>
+                    <div class="v mid">22</div>
+                    <div class="v bad">5</div>
+                    <div class="pct-cell bad">23%</div>
+                    <div class="v bad">10</div>
+                    <div class="v bad">4</div>
+                    <div class="v bad">2</div>
+                  </div>
+                </div>
+
+                <!-- Главное правило управления -->
+                <div class="bills-flag-row">
+                  <b>🚨 Правило: пока у клоузера есть «Без даты» или «72ч+» — новые трипваеры режутся.</b>
+                  <span class="small">Сначала собери деньги, которые поднял в воздух · Ляшенко 4 без даты + 2 (72ч+) = поток новых лидов на стопе · Яковлева 3 без даты + 1 (72ч+) = тоже стоп</span>
+                </div>
+
+                <div class="mc-card-sub" style="margin-top: 10px;">
+                  Кликни на строку → drill-down карточка клоузера со всеми счетами и AI-разбором звонков
                 </div>
               </div>
 
