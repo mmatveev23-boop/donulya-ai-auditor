@@ -3183,6 +3183,61 @@
       .reopen-bar .big.warn { color: #ff9f0a; }
       .reopen-bar .lbl { color: rgba(255,255,255,0.7); }
 
+      /* ── AI-контроль регламента: 7 вопросов в карточке звонка ── */
+      .ai-checklist {
+        margin: 14px 22px;
+        padding: 14px 16px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+      }
+      .ai-checklist .h {
+        font-size: 11px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 10px;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .ai-checklist .h .score {
+        font-size: 13px; color: #fff; font-feature-settings: "tnum";
+      }
+      .ai-checklist .h .score b.bad { color: #ff453a; }
+      .ai-checklist .h .score b.ok  { color: #30d158; }
+      .ai-check {
+        display: grid; grid-template-columns: 28px 1fr 110px;
+        gap: 10px; padding: 8px 10px; align-items: center;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 8px;
+        margin-bottom: 4px;
+        font-size: 12.5px;
+      }
+      .ai-check.pass { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.18); }
+      .ai-check.fail { background: rgba(255,69,58,0.06);  border-color: rgba(255,69,58,0.20); }
+      .ai-check .mark {
+        font-size: 16px; text-align: center; font-weight: 700;
+      }
+      .ai-check.pass .mark { color: #30d158; }
+      .ai-check.fail .mark { color: #ff453a; }
+      .ai-check .q {
+        color: rgba(255,255,255,0.85); line-height: 1.4;
+      }
+      .ai-check .q small {
+        display: block; color: rgba(255,255,255,0.45);
+        font-size: 11px; margin-top: 2px;
+      }
+      .ai-check.fail .q small {
+        color: #ff8478;
+      }
+      .ai-check .verdict {
+        text-align: right;
+        font-size: 11px;
+        color: rgba(255,255,255,0.6);
+        font-weight: 600;
+      }
+      .ai-check.pass .verdict { color: #30d158; }
+      .ai-check.fail .verdict { color: #ff8478; }
+
       /* ── Баннер «5 финальных исходов» (правило системы) ── */
       .d0-rule-banner {
         display: none;
@@ -12670,6 +12725,77 @@
             Встреча закрылась без финального статуса (A1/A2a/A2b/B/C) — автоматически красная по правилу 5 статусов.
             <br><br>
             <b>Топ-3 пропущенных момента:</b> 02:14 не отработал «надо подумать» · 06:45 не предложил частичку · 13:30 закрыл встречу без чёткого статуса.
+          </div>
+        </div>
+
+        <!-- AI-чек-лист регламента: 7 вопросов -->
+        <div class="ai-checklist">
+          <div class="h">
+            <span>🤖 AI-контроль регламента · 7 проверок</span>
+            <span class="score">Прошёл: <b class="bad">2 / 7</b></span>
+          </div>
+
+          <div class="ai-check fail">
+            <div class="mark">✗</div>
+            <div class="q">
+              Клоузер предложил полную оплату прямо в звонке?
+              <small>Не предложил купить · скрипт «откройте, я подожду» не использован</small>
+            </div>
+            <div class="verdict">Не предложил купить</div>
+          </div>
+
+          <div class="ai-check fail">
+            <div class="mark">✗</div>
+            <div class="q">
+              Если полной оплаты нет — предложил частичку?
+              <small>Клиент сказал «денег нет», клоузер не предложил закрепить 1-2к</small>
+            </div>
+            <div class="verdict">Не закрепил деньгами</div>
+          </div>
+
+          <div class="ai-check fail">
+            <div class="mark">✗</div>
+            <div class="q">
+              Если частички нет — получил конкретную дату оплаты?
+              <small>Дата не зафиксирована · просто «созвонимся через пару дней»</small>
+            </div>
+            <div class="verdict">Нет даты</div>
+          </div>
+
+          <div class="ai-check pass">
+            <div class="mark">✓</div>
+            <div class="q">
+              Дату назвал клиент или клоузер придумал сам?
+              <small>В этой встрече дата не была получена, но это не «дата от клоузера»</small>
+            </div>
+            <div class="verdict">N/A</div>
+          </div>
+
+          <div class="ai-check fail">
+            <div class="mark">✗</div>
+            <div class="q">
+              Если клиент думает — причина выбрана из справочника?
+              <small>Клиент сказал «подумаю», клоузер не выяснил причину думания</small>
+            </div>
+            <div class="verdict">«Подумаю» без причины</div>
+          </div>
+
+          <div class="ai-check fail">
+            <div class="mark">✗</div>
+            <div class="q">
+              Клоузер закрыл отказ, если клиент не готов?
+              <small>Не закрыл отказ — встреча оставлена «зомби» без финального статуса</small>
+            </div>
+            <div class="verdict">Сделка оставлена зомби</div>
+          </div>
+
+          <div class="ai-check pass">
+            <div class="mark">✓</div>
+            <div class="q">
+              Было удержание на линии до оплаты?
+              <small>Клоузер удерживал клиента (не отпустил «оплатите потом»)</small>
+            </div>
+            <div class="verdict">Удержание было</div>
           </div>
         </div>
 
