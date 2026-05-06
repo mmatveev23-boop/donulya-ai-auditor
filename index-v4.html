@@ -3502,7 +3502,7 @@
 
       /* ── Счета под контролем: таблица по клоузерам ── */
       .bills-stats {
-        display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px;
       }
       .bills-stats .stat {
         padding: 10px 12px; border-radius: 8px;
@@ -3574,7 +3574,7 @@
       }
       .bills-row {
         display: grid;
-        grid-template-columns: 1.6fr 70px 70px 90px 90px 80px 70px;
+        grid-template-columns: 1.6fr 70px 70px 90px 90px 70px;
         gap: 10px; align-items: center;
         padding: 9px 14px;
         font-size: 12px;
@@ -6668,7 +6668,7 @@
                   <div class="rop-action danger" onclick="openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')">
                     <div class="icon">🚨</div>
                     <div class="who">Ляшенко А.<small>Просел Д0 + красные</small></div>
-                    <div class="problem">5 счетов <b>без даты</b> + 7 AI-красных встреч (▲+3 за неделю)</div>
+                    <div class="problem">10 <b>просроченных счетов</b> + 7 AI-красных встреч (▲+3 за неделю)</div>
                     <div class="what-to-do"><span class="arrow">→</span>1:1 + AI-разбор · разобрать каждый счёт</div>
                     <button class="cta">Разобрать</button>
                   </div>
@@ -6708,7 +6708,7 @@
                 </div>
 
                 <div class="mc-card-sub" style="margin-top: 12px;">
-                  Список формируется автоматически по правилам watchdog (счета без даты / просрочки / 72ч+ / молчания / эталоны) · кликни на строку чтобы решить
+                  Список формируется автоматически по правилам watchdog (просрочки / 72ч+ / молчания 24ч / эталоны) · кликни на строку чтобы решить
                 </div>
               </div>
 
@@ -6722,7 +6722,7 @@
                       <div class="title">Главное правило · счёт ≠ финал работы клоузера</div>
                       <div class="desc">Счёт должен <b>жить под контролем</b> до денег / частички / новой даты / отказа / решения РОПа. Никаких «отправил ссылку и ушёл».</div>
                       <div class="outcomes">
-                        <span class="pill danger">⏰ Без даты — красный</span>
+                        <span class="pill warn">📅 Дата ≤ 14 дней</span>
                         <span class="pill warn">📞 Без касания 24ч</span>
                         <span class="pill danger">🔥 Просрочен</span>
                         <span class="pill purple">🚨 72ч+ → к РОПу</span>
@@ -6775,10 +6775,6 @@
                     <div class="lbl">Просрочено</div>
                     <div class="num">22</div>
                   </div>
-                  <div class="stat danger">
-                    <div class="lbl">Без даты</div>
-                    <div class="num">9</div>
-                  </div>
                   <div class="stat warn">
                     <div class="lbl">Без касания 24ч</div>
                     <div class="num">14</div>
@@ -6793,7 +6789,6 @@
                     <div class="v">Оплачено</div>
                     <div class="v">Счёт→оплата<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥60%</span></div>
                     <div class="v">Просрочено<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≤15%</span></div>
-                    <div class="v">Без даты<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
                     <div class="v">72ч+<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
                   </div>
 
@@ -6804,7 +6799,6 @@
                     <div class="pct-cell good">69%</div>
                     <div class="v zero">1</div>
                     <div class="v zero">0</div>
-                    <div class="v zero">0</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
@@ -6813,7 +6807,6 @@
                     <div class="v good">7</div>
                     <div class="pct-cell good">64%</div>
                     <div class="v zero">2</div>
-                    <div class="v warn">1</div>
                     <div class="v zero">0</div>
                   </div>
 
@@ -6824,7 +6817,6 @@
                     <div class="pct-cell good">63%</div>
                     <div class="v zero">1</div>
                     <div class="v zero">0</div>
-                    <div class="v zero">0</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
@@ -6833,7 +6825,6 @@
                     <div class="v mid">3</div>
                     <div class="pct-cell warn">43%</div>
                     <div class="v warn">1</div>
-                    <div class="v zero">0</div>
                     <div class="v warn">1</div>
                   </div>
 
@@ -6842,7 +6833,6 @@
                     <div class="v mid">7</div>
                     <div class="v mid">3</div>
                     <div class="pct-cell warn">43%</div>
-                    <div class="v warn">1</div>
                     <div class="v warn">1</div>
                     <div class="v zero">0</div>
                   </div>
@@ -6853,7 +6843,6 @@
                     <div class="v mid">2</div>
                     <div class="pct-cell warn">40%</div>
                     <div class="v warn">1</div>
-                    <div class="v warn">1</div>
                     <div class="v zero">0</div>
                   </div>
 
@@ -6863,7 +6852,6 @@
                     <div class="v bad">3</div>
                     <div class="pct-cell bad">23%</div>
                     <div class="v bad">6</div>
-                    <div class="v bad">3</div>
                     <div class="v warn">1</div>
                   </div>
 
@@ -6873,7 +6861,6 @@
                     <div class="v bad">5</div>
                     <div class="pct-cell bad">23%</div>
                     <div class="v bad">10</div>
-                    <div class="v bad">4</div>
                     <div class="v bad">2</div>
                   </div>
                 </div>
@@ -12840,7 +12827,7 @@
         <div class="modal-head" style="background: rgba(255,159,10,0.06); border-bottom: 1px solid rgba(255,159,10,0.20);">
           <div>
             <div class="modal-title">🧾 Правила работы со счетами</div>
-            <div class="modal-sub">8 статусов счёта + 5 железных правил + AI-проверки в звонке</div>
+            <div class="modal-sub">7 статусов счёта + 5 железных правил + AI-проверки в звонке</div>
           </div>
           <button class="modal-close" onclick="closeModal('bills-rules')">✕</button>
         </div>
@@ -12851,7 +12838,7 @@
               <b>Счёт ≠ финал работы клоузера.</b> Клоузер не отправляет счёт «оплатите как сможете» и не уходит. Каждый счёт обязан довестись до одного из финалов: <b>деньги</b>, <b>частичка</b>, <b>новая дата оплаты</b>, <b>отказ</b> или <b>передача РОПу</b>.
             </div>
 
-            <div class="section-title">8 статусов счёта</div>
+            <div class="section-title">7 статусов счёта</div>
 
             <div class="bill-status-card warn">
               <div class="name">🔥 Ждём оплату сегодня</div>
@@ -12877,12 +12864,6 @@
               <div class="verdict">РОП в разборе</div>
             </div>
 
-            <div class="bill-status-card danger">
-              <div class="name">⏰ Без даты оплаты</div>
-              <div class="desc">Счёт выставлен, но дата не зафиксирована. «Оплатите как сможете» — нарушение клоузера.</div>
-              <div class="verdict">Нарушение клоузера</div>
-            </div>
-
             <div class="bill-status-card warn">
               <div class="name">📞 Без касания 24 часа</div>
               <div class="desc">По счёту не было звонка, сообщения или другого действия за сутки.</div>
@@ -12905,7 +12886,7 @@
 
             <div class="bills-iron-rule">
               <div class="num">1</div>
-              <div class="text"><b>Нельзя выставить счёт без даты оплаты.</b> Сценарий: «Иван, я выставляю счёт. Чтобы запустить процедуру, когда планируете оплатить — сегодня до вечера или завтра до обеда?» Клиент называет дату → счёт + задача на контроль. Если клиент не даёт дату — это не «счёт», а «думает без обязательства».</div>
+              <div class="text"><b>Дата оплаты в счёте — максимум +14 дней.</b> Без даты счёт в АМО просто не выставится — это закрыто системой. Но клоузер может поставить нереалистичную «как-нибудь через месяц». Сценарий: «Иван, я выставляю счёт. Когда планируете оплатить — сегодня до вечера или завтра до обеда?» Клиент называет дату → счёт + задача на контроль. Дата дальше +14 дней = «думает без обязательства», не счёт.</div>
             </div>
 
             <div class="bills-iron-rule">
@@ -12925,18 +12906,18 @@
 
             <div class="bills-iron-rule">
               <div class="num">5</div>
-              <div class="text"><b>Доступ к новым лидам зависит от чистоты счетов.</b> Если у клоузера есть «без даты», «72ч+» или много просрочек — поток новых трипваеров режется. «Сначала собери деньги, которые поднял в воздух». Не наказание — логика «не переваривает текущие, не получает новый поток».</div>
+              <div class="text"><b>Доступ к новым лидам зависит от чистоты счетов.</b> Если у клоузера висят «72ч+» или много просрочек — поток новых трипваеров режется. «Сначала собери деньги, которые поднял в воздух». Не наказание — логика «не переваривает текущие, не получает новый поток».</div>
             </div>
 
             <div class="section-title">AI слушает каждый звонок</div>
 
             <div class="bills-iron-rule" style="background: rgba(82,167,255,0.05); border-color: rgba(82,167,255,0.20);">
               <div class="num" style="color: #52a7ff;">🤖</div>
-              <div class="text">AI отвечает на 7 вопросов: предложил оплату в моменте? выставил счёт? удерживал клиента до оплаты? получил дату? объяснил что после оплаты? договорился о следующем шаге? клиент подтвердил намерение? <br><br>Фраза «<i>я вам сейчас скину, посмотрите, оплатите как сможете</i>» = автоматически красный звонок.</div>
+              <div class="text">AI отвечает на 7 вопросов: предложил оплату в моменте? выставил счёт? удерживал клиента до оплаты? получил дату ≤ 14 дней? объяснил что после оплаты? договорился о следующем шаге? клиент подтвердил намерение? <br><br>Фраза «<i>я вам сейчас скину, посмотрите, оплатите как сможете</i>» = автоматически красный звонок.</div>
             </div>
 
             <div class="bills-law-quote">
-              Счёт не может существовать без даты оплаты или следующего действия. Если дата не указана — счёт сразу красный. Если дата указана, но оплата не поступила — счёт уходит в просрочку. Если счёт не получил решения за 72 часа — он автоматически уходит на разбор РОПу.
+              Дата оплаты в счёте — максимум +14 дней. Если оплата не поступила в срок — счёт уходит в просрочку. Если счёт не получил решения за 72 часа — он автоматически уходит на разбор РОПу.
               <span class="src">— Главный закон системы счетов</span>
             </div>
 
@@ -13088,7 +13069,7 @@
           <div class="ai-check fail">
             <div class="mark">✗</div>
             <div class="q">
-              Если частички нет — получил конкретную дату оплаты?
+              Если частички нет — получил конкретную дату оплаты ≤ 14 дней?
               <small>Дата не зафиксирована · просто «созвонимся через пару дней»</small>
             </div>
             <div class="verdict">Нет даты</div>
