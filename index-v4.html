@@ -2749,6 +2749,44 @@
       .mc-team-row { cursor: pointer; padding: 4px 6px; border-radius: 6px; margin: 0 -6px; }
       .mc-team-row:hover { background: rgba(255,255,255,0.04); }
 
+      /* ── Модификатор with-leads: добавляет колонку «N лидов» между именем и конверсией ── */
+      .mc-team-list.with-leads .mc-team-row {
+        grid-template-columns: 18px 1fr 60px auto;
+      }
+      .mc-team-row .leads {
+        font-size: 11px;
+        color: rgba(255,255,255,0.60);
+        font-feature-settings: "tnum";
+        text-align: right;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .mc-team-row .leads small {
+        font-weight: 400;
+        font-size: 9.5px;
+        color: rgba(255,255,255,0.40);
+        margin-left: 2px;
+      }
+      /* Header-полоса с label'ами колонок */
+      .mc-team-list.with-leads .mc-team-head {
+        display: grid;
+        grid-template-columns: 18px 1fr 60px auto;
+        gap: 8px;
+        padding: 0 6px 4px;
+        margin: 0 -6px;
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        color: rgba(255,255,255,0.40);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        margin-bottom: 4px;
+      }
+      .mc-team-list.with-leads .mc-team-head .h-leads,
+      .mc-team-list.with-leads .mc-team-head .h-pct {
+        text-align: right;
+      }
+
       /* Компактный список с трендом + AI-кнопкой (8 клоузеров) */
       .mc-team-list.compact-list .mc-team-row {
         grid-template-columns: 16px 1fr 38px 38px 22px;
@@ -3616,6 +3654,68 @@
         color: rgba(255,255,255,0.40);
       }
 
+      /* ── Деньги в воздухе: подблок плитки счетов ── */
+      .bills-air {
+        margin-top: 10px;
+        padding: 12px 14px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        font-feature-settings: "tnum";
+      }
+      .bills-air .head {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 10px;
+      }
+      .bills-air .head .title {
+        font-size: 11.5px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.04em;
+        color: rgba(255,255,255,0.65);
+      }
+      .bills-air .head .big {
+        font-size: 22px; font-weight: 800;
+        color: #ff9f0a;
+        line-height: 1;
+      }
+      .bills-air .head .big small {
+        font-size: 11px; font-weight: 500;
+        color: rgba(255,255,255,0.50);
+      }
+      .bills-air .rows {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+      }
+      .bills-air .row {
+        padding: 7px 10px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 6px;
+        display: flex; justify-content: space-between; align-items: baseline;
+        font-size: 11px;
+      }
+      .bills-air .row .lbl { color: rgba(255,255,255,0.55); }
+      .bills-air .row .val { color: rgba(255,255,255,0.85); }
+      .bills-air .row .val b { color: #fff; }
+      .bills-air .row .val small { color: rgba(255,255,255,0.50); }
+      .bills-air .row.win { background: rgba(48,209,88,0.06); }
+      .bills-air .row.win .val b, .bills-air .row.win .val small { color: #30d158; }
+      .bills-air .row.mid { background: rgba(255,255,255,0.04); }
+      .bills-air .row.air {
+        grid-column: span 2;
+        background: rgba(255,159,10,0.10);
+        border: 1px solid rgba(255,159,10,0.25);
+        font-size: 12px;
+      }
+      .bills-air .row.air .lbl { color: #fff; font-weight: 600; }
+      .bills-air .row.air .val b { color: #ff9f0a; font-size: 14px; }
+      .bills-air .split {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px dashed rgba(255,255,255,0.08);
+        font-size: 11px;
+        color: rgba(255,255,255,0.55);
+      }
+
       .bills-table {
         margin-top: 12px;
         background: rgba(255,255,255,0.02);
@@ -3650,6 +3750,56 @@
       .bills-row .name small {
         color: rgba(255,255,255,0.5); font-weight: 400;
         margin-left: 6px; font-size: 10.5px;
+      }
+      .bills-row .name .lead-block-badge {
+        display: inline-flex; align-items: center; gap: 3px;
+        margin-left: 8px;
+        padding: 2px 7px;
+        background: rgba(255,69,58,0.14);
+        border: 1px solid rgba(255,69,58,0.35);
+        border-radius: 4px;
+        color: #ff453a;
+        font-size: 9.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        vertical-align: middle;
+      }
+
+      /* ── Полоса блокировки под таблицей счетов ── */
+      .bills-block-strip {
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: linear-gradient(90deg, rgba(255,69,58,0.10) 0%, rgba(255,69,58,0.04) 100%);
+        border: 1px solid rgba(255,69,58,0.28);
+        border-left: 3px solid #ff453a;
+        border-radius: 8px;
+        display: flex; align-items: center; gap: 14px;
+        flex-wrap: wrap;
+      }
+      .bills-block-strip .ico { font-size: 18px; line-height: 1; color: #ff453a; }
+      .bills-block-strip .label {
+        font-size: 11px; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        color: #ff453a;
+        white-space: nowrap;
+      }
+      .bills-block-strip .body {
+        font-size: 12px;
+        color: rgba(255,255,255,0.85);
+        flex: 1;
+        line-height: 1.5;
+      }
+      .bills-block-strip .body b { color: #fff; }
+      .bills-block-strip .body .who {
+        color: #ff8478;
+        font-weight: 600;
+      }
+      .bills-block-strip .rule {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.50);
+        font-style: italic;
+        white-space: nowrap;
       }
       .bills-row .v {
         text-align: right; font-feature-settings: "tnum";
@@ -6828,51 +6978,65 @@
                   </div>
                 </div>
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия трипваеров в продажу · по клоузерам · ▲▼</div>
-                <div class="mc-team-list">
+                <div class="mc-team-list with-leads">
+                  <div class="mc-team-head">
+                    <span></span>
+                    <span>Клоузер · цикл</span>
+                    <span class="h-leads">Лидов</span>
+                    <span class="h-pct">Конверсия</span>
+                  </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
                     <span class="rank">①</span>
                     <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">цикл 21ч</small></span>
+                    <span class="leads">25 <small>лид</small></span>
                     <span class="pct">92% <small style="color:#30d158">▲+4</small></span>
                   </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
                     <span class="rank">②</span>
                     <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
+                    <span class="leads">50 <small>лид</small></span>
                     <span class="pct">88% <small style="color:#30d158">▲+2</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
                     <span class="rank">③</span>
                     <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
+                    <span class="leads">70 <small>лид</small></span>
                     <span class="pct">85% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
                     <span class="rank">④</span>
                     <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
+                    <span class="leads">75 <small>лид</small></span>
                     <span class="pct">83% <small style="color:#ff453a">▼-2</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
                     <span class="rank">⑤</span>
                     <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">72ч</small></span>
+                    <span class="leads">80 <small>лид</small></span>
                     <span class="pct">80% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
                     <span class="rank">⑥</span>
                     <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">93ч</small></span>
+                    <span class="leads">85 <small>лид</small></span>
                     <span class="pct">77% <small style="color:#30d158">▲+1</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
                     <span class="rank">⚠</span>
                     <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">94ч</small></span>
+                    <span class="leads">95 <small>лид</small></span>
                     <span class="pct">68% <small style="color:#ff453a">▼-5</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
                     <span class="rank">⚠</span>
                     <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
+                    <span class="leads">120 <small>лид</small></span>
                     <span class="pct">53% <small style="color:#ff453a">▼-8</small></span>
                   </div>
                 </div>
 
                 <div class="mc-card-sub" style="margin-top: 12px;">
-                  План 30% ✓ · 2 клоузера &lt;75% по личной конверсии: Ляшенко 53% (▼-8пп) / Яковлева 68% (▼-5пп) — на разбор
+                  План 30% ✓ · 2 клоузера &lt;75% по личной конверсии: Ляшенко 53% (▼-8пп · 120 лидов) / Яковлева 68% (▼-5пп · 95 лидов) — на разбор · нагрузка распределена неравномерно
                 </div>
               </div>
 
@@ -6915,35 +7079,45 @@
               </div>
 
 
-              <!-- 💸 Деньги в воздухе (главный денежный индикатор) -->
-              <div class="mc-card col-3 accent-orange" onclick="showToast('Все неоплаченные счета по статусам')">
+              <!-- 🤔 Думающие сделки (B) — причины + Reopen rate (поднято в верхний ряд: деньги в работе) -->
+              <div class="mc-card col-3 accent-purple" onclick="showToast('Список B-сделок с причинами')">
                 <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">💸</div>
-                <div class="mc-card-label">Деньги в воздухе <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">сумма неоплаченных счетов</span></div>
-                <div class="mc-card-value" style="color: #ff9f0a">783к<small> ₽ висит · из 1290к выставлено</small></div>
-
-                <!-- Воронка денег: выставлено → оплачено → в воздухе -->
-                <div style="display: grid; gap: 5px; margin-top: 12px;">
-                  <div style="padding: 7px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.55);">Выставлено счетов</span>
-                    <span><b style="color:#fff;">86</b> <small style="color:rgba(255,255,255,0.5);">· 1 290к ₽</small></span>
+                <div class="mc-card-icon">🤔</div>
+                <div class="mc-card-label">Думающие сделки <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">до 14 дней</span></div>
+                <div class="mc-card-value" style="color: #b084ff">22<small>· 15% от встреч</small></div>
+                <div class="mc-card-sub">
+                  Топ-причины думания (выбраны клоузерами из справочника):
+                </div>
+                <div class="think-reasons">
+                  <div class="row">
+                    <span>Надо посоветоваться</span>
+                    <span class="bar"><span class="fill" style="width:100%"></span></span>
+                    <span class="cnt">7</span>
                   </div>
-                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.06); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7);">✓ Оплачено полностью</span>
-                    <span><b style="color:#30d158;">31</b> <small style="color:#30d158;">· 465к ₽</small></span>
+                  <div class="row">
+                    <span>Не понимает банкротство</span>
+                    <span class="bar"><span class="fill" style="width:71%"></span></span>
+                    <span class="cnt">5</span>
                   </div>
-                  <div style="padding: 7px 10px; background: rgba(48,209,88,0.04); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                    <span style="color:rgba(255,255,255,0.7);">▣ Частично оплачено</span>
-                    <span><b style="color:rgba(255,255,255,0.85);">14</b> <small style="color:rgba(255,255,255,0.5);">· 42к ₽ ✓ + 168к ₽ ждём</small></span>
+                  <div class="row">
+                    <span>Сравнивает с конкурентами</span>
+                    <span class="bar"><span class="fill" style="width:57%"></span></span>
+                    <span class="cnt">4</span>
                   </div>
-                  <div style="padding: 8px 10px; background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.25); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
-                    <span style="color:#fff; font-weight:600;">⚠ В воздухе</span>
-                    <span><b style="color:#ff9f0a; font-size:14px;">783к ₽</b></span>
+                  <div class="row">
+                    <span>Боится последствий</span>
+                    <span class="bar"><span class="fill" style="width:43%"></span></span>
+                    <span class="cnt">3</span>
+                  </div>
+                  <div class="row">
+                    <span>Сомневается в результате</span>
+                    <span class="bar"><span class="fill" style="width:43%"></span></span>
+                    <span class="cnt">3</span>
                   </div>
                 </div>
-
-                <div class="mc-card-sub">
-                  Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
+                <div class="reopen-bar">
+                  <div class="big">36%</div>
+                  <div class="lbl"><b style="color:#fff">Reopen rate</b><br><span style="font-size:10.5px">Думают → Продажа · вытаскивание · норма ≥30% ✓</span></div>
                 </div>
               </div>
 
@@ -7053,6 +7227,35 @@
                   <div class="hint">из 18 обязательств · 6 закрыто · 12 в работе</div>
                 </div>
 
+                <!-- 💸 Деньги в воздухе (раньше была отдельная плитка, теперь подблок Счетов) -->
+                <div class="bills-air">
+                  <div class="head">
+                    <span class="title">💸 Деньги в воздухе</span>
+                    <span class="big">783к<small> ₽ висит</small></span>
+                  </div>
+                  <div class="rows">
+                    <div class="row">
+                      <span class="lbl">Выставлено счетов</span>
+                      <span class="val"><b>86</b> · <small>1 290к ₽</small></span>
+                    </div>
+                    <div class="row win">
+                      <span class="lbl">✓ Оплачено полностью</span>
+                      <span class="val"><b>31</b> · <small>465к ₽</small></span>
+                    </div>
+                    <div class="row mid">
+                      <span class="lbl">▣ Частично оплачено</span>
+                      <span class="val"><b>14</b> · <small>42к ✓ + 168к ждём</small></span>
+                    </div>
+                    <div class="row air">
+                      <span class="lbl">⚠ В воздухе</span>
+                      <span class="val"><b>783к ₽</b></span>
+                    </div>
+                  </div>
+                  <div class="split">
+                    Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
+                  </div>
+                </div>
+
                 <!-- Сводная статистика команды (структура портфеля счетов) -->
                 <div class="bills-stats">
                   <div class="stat">
@@ -7112,7 +7315,7 @@
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
-                    <div class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></div>
+                    <div class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small> <span class="lead-block-badge" title="72ч+ &gt;0 → автоблок новых трипваеров">🚫 Блок</span></div>
                     <div class="v mid">7</div>
                     <div class="v mid">3</div>
                     <div class="pct-cell warn">43%</div>
@@ -7139,7 +7342,7 @@
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
-                    <div class="name" style="color:#ff8478;">Яковлева А. <small style="color:#ff9f0a">94ч</small></div>
+                    <div class="name" style="color:#ff8478;">Яковлева А. <small style="color:#ff9f0a">94ч</small> <span class="lead-block-badge" title="6 просрочек + 1 «72ч+» → автоблок">🚫 Блок</span></div>
                     <div class="v mid">13</div>
                     <div class="v bad">3</div>
                     <div class="pct-cell bad">23%</div>
@@ -7148,7 +7351,7 @@
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
-                    <div class="name" style="color:#ff8478;">Ляшенко А. <small>49ч</small></div>
+                    <div class="name" style="color:#ff8478;">Ляшенко А. <small>49ч</small> <span class="lead-block-badge" title="10 просрочек + 2 «72ч+» → жёсткий блок">🚫 Блок</span></div>
                     <div class="v mid">22</div>
                     <div class="v bad">5</div>
                     <div class="pct-cell bad">23%</div>
@@ -7157,13 +7360,74 @@
                   </div>
                 </div>
 
+                <!-- 🚫 Сводка блокировки лидов: кто сейчас не получает новые трипваеры -->
+                <div class="bills-block-strip">
+                  <div class="ico">🚫</div>
+                  <div>
+                    <div class="label">Блок новых трипваеров</div>
+                  </div>
+                  <div class="body">
+                    <b>3 клоузера</b> в блоке: <span class="who">Ляшенко</span> (10 просрочек + 2 «72ч+») · <span class="who">Яковлева</span> (6 просрочек + 1 «72ч+») · <span class="who">Петрова</span> (1 «72ч+»)
+                  </div>
+                  <div class="rule">Условия: просрочек ≥5 ИЛИ 72ч+ &gt;0</div>
+                </div>
+
                 <div class="mc-card-sub" style="margin-top: 10px;">
-                  Кликни на строку → drill-down карточка клоузера со всеми счетами и AI-разбором звонков
+                  Кликни на строку → drill-down карточка клоузера со всеми счетами и AI-разбором звонков. <b>Снять блок</b> можно в drill-down после разбора.
                 </div>
               </div>
 
-              <!-- 🔴 Красные встречи Д0 · AI-перехват -->
-              <div class="mc-card col-2 accent-red status-warn" onclick="openRedQueue()">
+              <!-- 📞 A2 в работе (A2a + A2b с конверсиями) -->
+              <div class="mc-card col-3 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">📞</div>
+                <div class="mc-card-label">A2 в работе</div>
+                <div class="mc-card-value">60<small>· ждём оплату</small></div>
+                <div class="a2-split">
+                  <div class="a2-row a2a">
+                    <div class="a2-head">
+                      <span><b>32</b> Частичка</span>
+                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">cр. 3,200₽</span>
+                    </div>
+                    <div class="a2-conv">
+                      <div class="conv-cell">
+                        <span class="lbl">→ Продажа</span>
+                        <span class="val ok">87%</span>
+                      </div>
+                      <div class="conv-cell">
+                        <span class="lbl">cр. время</span>
+                        <span class="val ok">5,2 дн</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="a2-row a2b">
+                    <div class="a2-head">
+                      <span><b>28</b> Обещание</span>
+                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">2+ переноса: 4</span>
+                    </div>
+                    <div class="a2-conv">
+                      <div class="conv-cell">
+                        <span class="lbl">→ Продажа</span>
+                        <span class="val warn">47%</span>
+                      </div>
+                      <div class="conv-cell">
+                        <span class="lbl">→ Частичка</span>
+                        <span class="val warn">32%</span>
+                      </div>
+                      <div class="conv-cell">
+                        <span class="lbl">cр. время</span>
+                        <span class="val">8,4 дн</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mc-card-sub">
+                  «Обещание → Частичка» = 32% при норме ≥40% — клоузеры слабо закрепляют частичкой
+                </div>
+              </div>
+
+              <!-- 🔴 Красные встречи Д0 · AI-перехват (col-3, перенесено из верхнего ряда — это коучинг-зона) -->
+              <div class="mc-card col-3 accent-red status-warn" onclick="openRedQueue()">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🔴</div>
                 <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов · за неделю</span></div>
@@ -7232,99 +7496,6 @@
                     <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
                   </div>
                   <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
-                </div>
-              </div>
-
-
-
-              <!-- 📞 A2 в работе (A2a + A2b с конверсиями) -->
-              <div class="mc-card col-2 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">📞</div>
-                <div class="mc-card-label">A2 в работе</div>
-                <div class="mc-card-value">60<small>· ждём оплату</small></div>
-                <div class="a2-split">
-                  <div class="a2-row a2a">
-                    <div class="a2-head">
-                      <span><b>32</b> Частичка</span>
-                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">cр. 3,200₽</span>
-                    </div>
-                    <div class="a2-conv">
-                      <div class="conv-cell">
-                        <span class="lbl">→ Продажа</span>
-                        <span class="val ok">87%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">cр. время</span>
-                        <span class="val ok">5,2 дн</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="a2-row a2b">
-                    <div class="a2-head">
-                      <span><b>28</b> Обещание</span>
-                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">2+ переноса: 4</span>
-                    </div>
-                    <div class="a2-conv">
-                      <div class="conv-cell">
-                        <span class="lbl">→ Продажа</span>
-                        <span class="val warn">47%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">→ Частичка</span>
-                        <span class="val warn">32%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">cр. время</span>
-                        <span class="val">8,4 дн</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mc-card-sub">
-                  «Обещание → Частичка» = 32% при норме ≥40% — клоузеры слабо закрепляют частичкой
-                </div>
-              </div>
-
-              <!-- 🤔 Думающие сделки (B) — причины + Reopen rate -->
-              <div class="mc-card col-2 accent-purple" onclick="showToast('Список B-сделок с причинами')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🤔</div>
-                <div class="mc-card-label">Думающие сделки <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">до 14 дней</span></div>
-                <div class="mc-card-value" style="color: #b084ff">22<small>· 15% от встреч</small></div>
-                <div class="mc-card-sub">
-                  Топ-причины думания (выбраны клоузерами из справочника):
-                </div>
-                <div class="think-reasons">
-                  <div class="row">
-                    <span>Надо посоветоваться</span>
-                    <span class="bar"><span class="fill" style="width:100%"></span></span>
-                    <span class="cnt">7</span>
-                  </div>
-                  <div class="row">
-                    <span>Не понимает банкротство</span>
-                    <span class="bar"><span class="fill" style="width:71%"></span></span>
-                    <span class="cnt">5</span>
-                  </div>
-                  <div class="row">
-                    <span>Сравнивает с конкурентами</span>
-                    <span class="bar"><span class="fill" style="width:57%"></span></span>
-                    <span class="cnt">4</span>
-                  </div>
-                  <div class="row">
-                    <span>Боится последствий</span>
-                    <span class="bar"><span class="fill" style="width:43%"></span></span>
-                    <span class="cnt">3</span>
-                  </div>
-                  <div class="row">
-                    <span>Сомневается в результате</span>
-                    <span class="bar"><span class="fill" style="width:43%"></span></span>
-                    <span class="cnt">3</span>
-                  </div>
-                </div>
-                <div class="reopen-bar">
-                  <div class="big">36%</div>
-                  <div class="lbl"><b style="color:#fff">Reopen rate</b><br><span style="font-size:10.5px">Думают → Продажа · вытаскивание · норма ≥30% ✓</span></div>
                 </div>
               </div>
 
@@ -11609,7 +11780,7 @@
               <div class="cell bad">&lt;10% от ждём в 11:00 → звоню клоузерам</div>
 
               <div class="cell"><b>Деньги в воздухе</b></div>
-              <div class="cell">Отдельная плитка</div>
+              <div class="cell">Подблок плитки «Счета под контролем»</div>
               <div class="cell good">стабильно или ↓</div>
               <div class="cell bad">▲+15% за неделю → собирать счета, не выставлять новые</div>
 
@@ -11817,7 +11988,7 @@
               <div class="cell bad">Срочный созвон команды</div>
 
               <div class="cell"><b>Деньги в воздухе ▲ за день</b></div>
-              <div class="cell">Плитка «💸 Деньги в воздухе»</div>
+              <div class="cell">Подблок «💸 В воздухе» внутри «Счета под контролем»</div>
               <div class="cell good">стабильно или ↓</div>
               <div class="cell bad">Запретить выставление новых счетов до разбора</div>
 
