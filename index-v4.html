@@ -3842,6 +3842,108 @@
       .bills-row .v.touch.good { color: #30d158; font-weight: 700; }
       .bills-row .v.touch.mid  { color: #ff9f0a; font-weight: 700; }
       .bills-row .v.touch.bad  { color: #ff453a; font-weight: 700; }
+
+      /* ── 🤖 AI · Нарушения регламента (плитка Row 6) ── */
+      .ai-violations {
+        margin-top: 12px;
+        display: grid;
+        gap: 6px;
+      }
+      .ai-violations .vio {
+        display: grid;
+        grid-template-columns: 22px 1fr 90px 70px 1.5fr;
+        gap: 10px;
+        align-items: center;
+        padding: 9px 12px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+        font-feature-settings: "tnum";
+      }
+      .ai-violations .vio.fail { border-left: 3px solid #ff453a; }
+      .ai-violations .vio.ok   { border-left: 3px solid #30d158; }
+      .ai-violations .marker {
+        font-size: 14px; font-weight: 800;
+        text-align: center;
+      }
+      .ai-violations .vio.fail .marker { color: #ff453a; }
+      .ai-violations .vio.ok   .marker { color: #30d158; }
+      .ai-violations .name {
+        font-size: 12px;
+        color: rgba(255,255,255,0.85);
+      }
+      .ai-violations .name b { color: #fff; }
+      .ai-violations .name small {
+        color: rgba(255,255,255,0.45);
+        font-size: 10px;
+        margin-left: 4px;
+      }
+      .ai-violations .bar {
+        height: 6px;
+        background: rgba(255,69,58,0.12);
+        border-radius: 3px;
+        overflow: hidden;
+        position: relative;
+      }
+      .ai-violations .bar .fill {
+        position: absolute; top: 0; left: 0; bottom: 0;
+        background: #ff453a;
+        border-radius: 3px;
+      }
+      .ai-violations .vio.ok .bar .fill { background: #30d158; }
+      .ai-violations .vio.ok .bar { background: rgba(48,209,88,0.12); }
+      .ai-violations .count {
+        font-size: 16px;
+        font-weight: 800;
+        text-align: right;
+      }
+      .ai-violations .vio.fail .count { color: #ff453a; }
+      .ai-violations .vio.ok   .count { color: #30d158; }
+      .ai-violations .count small {
+        font-size: 10px; font-weight: 500;
+        color: rgba(255,255,255,0.45);
+        margin-left: 3px;
+      }
+      .ai-violations .who {
+        font-size: 11px;
+        color: rgba(255,255,255,0.65);
+        line-height: 1.4;
+      }
+      .ai-violations .who b { color: #ff8478; font-weight: 600; }
+      .ai-violations .who .dim { color: rgba(255,255,255,0.40); }
+
+      .ai-training {
+        margin-top: 10px;
+        padding: 12px 14px;
+        background: linear-gradient(90deg, rgba(82,167,255,0.08), rgba(82,167,255,0.02));
+        border: 1px solid rgba(82,167,255,0.25);
+        border-left: 3px solid #52a7ff;
+        border-radius: 8px;
+      }
+      .ai-training .head {
+        font-size: 11px; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        color: #52a7ff;
+        margin-bottom: 8px;
+      }
+      .ai-training .topic {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        padding: 5px 0;
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.85);
+      }
+      .ai-training .topic .num {
+        font-size: 14px; font-weight: 800;
+        color: #52a7ff;
+        text-align: center;
+      }
+      .ai-training .topic b { color: #fff; }
+      .ai-training .topic .quote {
+        color: rgba(255,255,255,0.55);
+        font-style: italic;
+      }
       .bills-row .v {
         text-align: right; font-feature-settings: "tnum";
         color: rgba(255,255,255,0.85);
@@ -7710,6 +7812,100 @@
                     <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
                   </div>
                   <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
+                </div>
+              </div>
+
+              <!-- 🤖 AI · Нарушения регламента (col-6 — сводка по 7 проверкам за неделю) -->
+              <div class="mc-card col-6 accent-blue">
+                <div class="mc-card-arrow">→</div>
+                <div class="mc-card-icon">🤖</div>
+                <div class="mc-card-label">AI · Нарушения регламента <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 7 проверок · 156 встреч проверено · что чаще всего ломается</span></div>
+                <div class="mc-card-value">61<small>· нарушений · команда (▼-8 к прошлой неделе)</small></div>
+
+                <div class="ai-violations">
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Не предложил частичку</b> <small>после отказа от полной</small></span>
+                    <span class="bar"><span class="fill" style="width: 100%;"></span></span>
+                    <span class="count">18<small>раз</small></span>
+                    <span class="who"><b>Ляшенко 7</b> · <b>Яковлева 4</b> · Марченко 3 · Мифтахов 2 · Петрова 2</span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Не получил дату ≤14 дней</b> <small>или дата нереалистичная «через месяц»</small></span>
+                    <span class="bar"><span class="fill" style="width: 67%;"></span></span>
+                    <span class="count">12<small>раз</small></span>
+                    <span class="who"><b>Ляшенко 5</b> · Марченко 3 · Яковлева 2 · Мифтахов 2</span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Без удержания на линии до оплаты</b> <small>«я вам скину, оплатите как сможете»</small></span>
+                    <span class="bar"><span class="fill" style="width: 56%;"></span></span>
+                    <span class="count">10<small>раз</small></span>
+                    <span class="who"><b>Яковлева 3</b> · Мифтахов 3 · Петрова 2 · Алиев 1 · <span class="dim">Лим 1</span></span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Не предложил полную в моменте</b> <small>не использовал «откройте, я подожду»</small></span>
+                    <span class="bar"><span class="fill" style="width: 44%;"></span></span>
+                    <span class="count">8<small>раз</small></span>
+                    <span class="who"><b>Ляшенко 4</b> · Алиев 2 · Петрова 1 · Марченко 1</span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Дату придумал клоузер</b> <small>«давайте на пятницу» вместо «когда вам удобно?»</small></span>
+                    <span class="bar"><span class="fill" style="width: 33%;"></span></span>
+                    <span class="count">6<small>раз</small></span>
+                    <span class="who"><b>Петрова 3</b> · Ляшенко 2 · Яковлева 1</span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>«Подумаю» без причины из справочника</b> <small>не выяснил почему</small></span>
+                    <span class="bar"><span class="fill" style="width: 22%;"></span></span>
+                    <span class="count">4<small>раза</small></span>
+                    <span class="who">Ляшенко 2 · Яковлева 2</span>
+                  </div>
+
+                  <div class="vio fail">
+                    <span class="marker">✗</span>
+                    <span class="name"><b>Не закрыл отказ</b> <small>встреча оставлена «зомби» без финального статуса</small></span>
+                    <span class="bar"><span class="fill" style="width: 17%;"></span></span>
+                    <span class="count">3<small>раза</small></span>
+                    <span class="who">Ляшенко 1 · Яковлева 1 · Марченко 1</span>
+                  </div>
+
+                  <div class="vio ok">
+                    <span class="marker">✓</span>
+                    <span class="name"><b>Полная в моменте предложена</b> <small>в 148 из 156 встреч (95%)</small></span>
+                    <span class="bar"><span class="fill" style="width: 95%;"></span></span>
+                    <span class="count">148<small>/156</small></span>
+                    <span class="who">норма ≥90% · команда выполняет</span>
+                  </div>
+                </div>
+
+                <div class="ai-training">
+                  <div class="head">🎯 Темы для тренинга на следующую неделю · по топ-нарушениям</div>
+                  <div class="topic">
+                    <span class="num">1</span>
+                    <span><b>Скрипт удержания: «Откройте, я подожду на линии»</b> — закрывает #1 (частичка) и #4 (полная в моменте). <span class="quote">«Иван, открывайте СБП, я на связи. Какой банк удобнее?»</span></span>
+                  </div>
+                  <div class="topic">
+                    <span class="num">2</span>
+                    <span><b>Скрипт даты от клиента</b> — закрывает #2 (нет даты) и #5 (дата от клоузера). <span class="quote">«Когда планируете оплатить — сегодня до вечера или завтра до обеда?»</span></span>
+                  </div>
+                  <div class="topic">
+                    <span class="num">3</span>
+                    <span><b>1:1 с Ляшенко</b> — у него #1 в 5 из 7 нарушений. Системная проблема, не точечная. <span class="quote">→ Шарить эталоны Лим Елены</span></span>
+                  </div>
+                </div>
+
+                <div class="mc-card-sub" style="margin-top: 10px;">
+                  AI слушает каждый звонок и проверяет 7 правил регламента. Это <b>не оценка качества</b>, это <b>контроль соблюдения</b>. Кликни на строку → список встреч с этим нарушением для разбора.
                 </div>
               </div>
 
