@@ -7249,9 +7249,9 @@
                 📌 Скрытые правила <span class="cnt">0</span>
               </button>
               <div class="period-switch">
-                <div class="period">День</div>
-                <div class="period active">Неделя</div>
-                <div class="period">Месяц</div>
+                <div class="period" data-period="day" onclick="setPeriod('day')">День</div>
+                <div class="period active" data-period="week" onclick="setPeriod('week')">Неделя</div>
+                <div class="period" data-period="month" onclick="setPeriod('month')">Месяц</div>
               </div>
             </div>
           </div>
@@ -7292,49 +7292,49 @@
                 <div class="hero-main">
                   <div class="left">
                     <span class="label">🎯 Конверсия в продажу</span>
-                    <span class="num">30%</span>
+                    <span class="num js-hero-num">30%</span>
                   </div>
-                  <div class="meta">план ≥30% ✓ · <b>179</b> из 600 · <span class="trend">▲ +2пп</span> к прошлой неделе</div>
+                  <div class="meta">план ≥30% ✓ · <b class="js-hero-qty">179</b> из <b class="js-hero-total">600</b> · <span class="trend js-hero-trend">▲ +2пп</span> <span class="js-hero-trend-period">к прошлой неделе</span></div>
                 </div>
 
                 <div class="hero-decomp">
-                  <div class="title">↳ Декомпозиция · по 4 дожимным статусам</div>
+                  <div class="title js-decomp-title">↳ Декомпозиция · по 4 дожимным статусам</div>
 
                   <div class="kpi-strip full">
-                    <div class="bar-bg" style="width: 100%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="full" style="width: 100%;"></div>
                     <span class="ico">💰</span>
                     <span class="name">Полная в моменте <small>план ≥15%</small></span>
-                    <span class="pct">15.0%</span>
-                    <span class="qty"><b>90</b>/600</span>
+                    <span class="pct js-kpi-pct" data-key="full">15.0%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="full">90</b>/<span class="js-kpi-total" data-key="full">600</span></span>
                   </div>
 
                   <div class="kpi-strip part">
-                    <div class="bar-bg" style="width: 55%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="part" style="width: 55%;"></div>
                     <span class="ico">🤝</span>
                     <span class="name">Частичка → Полная <small>план ≥8%</small></span>
-                    <span class="pct">8.3%</span>
-                    <span class="qty"><b>50</b>/600</span>
+                    <span class="pct js-kpi-pct" data-key="part">8.3%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="part">50</b>/<span class="js-kpi-total" data-key="part">600</span></span>
                   </div>
 
                   <div class="kpi-strip promise">
-                    <div class="bar-bg" style="width: 33%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 33%;"></div>
                     <span class="ico">📅</span>
                     <span class="name">Обещание → Продажа <small>план ≥5%</small></span>
-                    <span class="pct">5.0%</span>
-                    <span class="qty"><b>30</b>/600</span>
+                    <span class="pct js-kpi-pct" data-key="promise">5.0%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="promise">30</b>/<span class="js-kpi-total" data-key="promise">600</span></span>
                   </div>
 
                   <div class="kpi-strip think">
-                    <div class="bar-bg" style="width: 11%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="think" style="width: 11%;"></div>
                     <span class="ico">🤔</span>
                     <span class="name">Думают → Reopen → Продажа <small>план ≥1%</small></span>
-                    <span class="pct">1.7%</span>
-                    <span class="qty"><b>10</b>/600</span>
+                    <span class="pct js-kpi-pct" data-key="think">1.7%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="think">10</b>/<span class="js-kpi-total" data-key="think">600</span></span>
                   </div>
 
                   <div class="hero-sum">
-                    <b>30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
-                    🔄 <b>Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b>1,7 дня</b>
+                    <b class="js-hero-sum-formula">30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
+                    🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
                   </div>
                 </div>
 
@@ -7352,8 +7352,8 @@
                     <span class="lbl">просели &lt;75%</span>
                   </div>
                 </div>
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия по клоузерам · с разбивкой по дожимным статусам · ▲▼</div>
-                <div class="mc-team-list with-leads with-decomp">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;"><span class="js-closers-title">Конверсия по клоузерам · за неделю · с разбивкой по дожимным статусам</span> · ▲▼</div>
+                <div class="mc-team-list with-leads with-decomp" id="js-closers-list">
                   <div class="mc-team-head">
                     <span></span>
                     <span>Клоузер · цикл</span>
@@ -7446,7 +7446,7 @@
                   </div>
                 </div>
 
-                <div class="mc-card-sub" style="margin-top: 12px;">
+                <div class="mc-card-sub js-closers-insight" style="margin-top: 12px;">
                   План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.
                 </div>
               </div>
@@ -15135,6 +15135,188 @@
         } else {
           switchTab('calls');
         }
+      }
+
+      // ═══════════════ Переключатель периода День/Неделя/Месяц ═══════════════
+      // Меняет данные HERO + список клоузеров в реальном времени.
+      // Демо-данные показывают как «вчера» (День) разные клоузеры дали разный результат —
+      // РОП видит резкие сигналы (Лим 95%, Ляшенко 30%) и может сегодня перераспределить лидов.
+
+      const heroDataByPeriod = {
+        day: {
+          num: '38%', qty: 38, total: 100,
+          trend: '▲ +8пп', trendPeriod: 'ко вчера',
+          decomp: {
+            full:    { pct: '17.0%', qty: 17, bar: 100 },
+            part:    { pct: '11.0%', qty: 11, bar: 73 },
+            promise: { pct: '8.0%',  qty: 8,  bar: 53 },
+            think:   { pct: '2.0%',  qty: 2,  bar: 13 },
+          },
+          formula: '38% = 17% + 11% + 8% + 2%',
+          reopen: 'Reopen rate 42%',
+          cycle: '0,9 дня',
+          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за вчера',
+          closersTitle: 'Конверсия по клоузерам · за вчера · с разбивкой по дожимным статусам',
+        },
+        week: {
+          num: '30%', qty: 179, total: 600,
+          trend: '▲ +2пп', trendPeriod: 'к прошлой неделе',
+          decomp: {
+            full:    { pct: '15.0%', qty: 90, bar: 100 },
+            part:    { pct: '8.3%',  qty: 50, bar: 55 },
+            promise: { pct: '5.0%',  qty: 30, bar: 33 },
+            think:   { pct: '1.7%',  qty: 10, bar: 11 },
+          },
+          formula: '30% = 15% + 8.3% + 5% + 1.7%',
+          reopen: 'Reopen rate 36%',
+          cycle: '1,7 дня',
+          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам',
+          closersTitle: 'Конверсия по клоузерам · за неделю · с разбивкой по дожимным статусам',
+        },
+        month: {
+          num: '28%', qty: 720, total: 2580,
+          trend: '▼ -1пп', trendPeriod: 'к прошлому месяцу',
+          decomp: {
+            full:    { pct: '14.0%', qty: 360, bar: 93 },
+            part:    { pct: '8.0%',  qty: 206, bar: 53 },
+            promise: { pct: '4.5%',  qty: 116, bar: 30 },
+            think:   { pct: '1.5%',  qty: 38,  bar: 10 },
+          },
+          formula: '28% = 14% + 8% + 4.5% + 1.5%',
+          reopen: 'Reopen rate 33%',
+          cycle: '1,9 дня',
+          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за месяц',
+          closersTitle: 'Конверсия по клоузерам · за месяц · с разбивкой по дожимным статусам',
+        },
+      };
+
+      // Клоузеры — массивы для разных периодов. Цикл: full+part+promise+think ≈ Σ
+      const closersByPeriod = {
+        day: [
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 18ч',   leads: 12, full: 87, part: 5,  promise: 2, think: 1, total: '95%', trend: '▲+5',  trendCol: '#30d158', cls: 'over' },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '19ч',        leads: 14, full: 75, part: 8,  promise: 5, think: 2, total: '90%', trend: '▲+2',  trendCol: '#30d158', cls: 'over' },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '24ч',        leads: 13, full: 70, part: 8,  promise: 5, think: 2, total: '85%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '120ч ⚠',     leads: 11, full: 55, part: 12, promise: 6, think: 2, total: '75%', trend: '▼-8',  trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '60ч',        leads: 13, full: 50, part: 13, promise: 5, think: 2, total: '70%', trend: '▼-10', trendCol: '#ff453a', cls: '' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '80ч',        leads: 14, full: 45, part: 13, promise: 5, think: 2, total: '65%', trend: '▼-12', trendCol: '#ff453a', cls: '' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '100ч',       leads: 11, full: 18, part: 10, promise: 5, think: 2, total: '35%', trend: '▼-33', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '40ч',        leads: 12, full: 15, part: 8,  promise: 5, think: 2, total: '30%', trend: '▼-23', trendCol: '#ff453a', cls: 'under' },
+        ],
+        week: [
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 21ч',   leads: 25,  full: 80, part: 8,  promise: 3, think: 1, total: '92%', trend: '▲+4', trendCol: '#30d158', cls: 'over', dim4: true },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '20ч',        leads: 50,  full: 70, part: 12, promise: 5, think: 1, total: '88%', trend: '▲+2', trendCol: '#30d158', cls: 'over', dim4: true },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '26ч',        leads: 70,  full: 65, part: 13, promise: 5, think: 2, total: '85%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '171ч ⚠',     leads: 75,  full: 60, part: 15, promise: 6, think: 2, total: '83%', trend: '▼-2', trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '72ч',        leads: 80,  full: 55, part: 16, promise: 7, think: 2, total: '80%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '93ч',        leads: 85,  full: 50, part: 18, promise: 7, think: 2, total: '77%', trend: '▲+1', trendCol: '#30d158', cls: '' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '94ч',        leads: 95,  full: 40, part: 18, promise: 8, think: 2, total: '68%', trend: '▼-5', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '49ч',        leads: 120, full: 30, part: 15, promise: 6, think: 2, total: '53%', trend: '▼-8', trendCol: '#ff453a', cls: 'under' },
+        ],
+        month: [
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 22ч',   leads: 105, full: 78, part: 9,  promise: 3, think: 1, total: '91%', trend: '▲+3', trendCol: '#30d158', cls: 'over', dim4: true },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '21ч',        leads: 215, full: 68, part: 13, promise: 5, think: 1, total: '87%', trend: '▲+1', trendCol: '#30d158', cls: 'over', dim4: true },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '28ч',        leads: 295, full: 64, part: 13, promise: 5, think: 2, total: '84%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '180ч ⚠',     leads: 320, full: 58, part: 15, promise: 6, think: 2, total: '81%', trend: '▼-3', trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '78ч',        leads: 340, full: 53, part: 16, promise: 7, think: 2, total: '78%', trend: '▼-1', trendCol: '#ff453a', cls: '' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '95ч',        leads: 360, full: 48, part: 18, promise: 7, think: 2, total: '75%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '99ч',        leads: 405, full: 38, part: 18, promise: 8, think: 2, total: '66%', trend: '▼-4', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '52ч',        leads: 510, full: 28, part: 15, promise: 6, think: 2, total: '51%', trend: '▼-6', trendCol: '#ff453a', cls: 'under' },
+        ],
+      };
+
+      const closersInsightByPeriod = {
+        day: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (топ дня), Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> и <b style="color:#ff8478">Ляшенко 30%</b> провалили день — режем поток + 1:1 утром. Марченко -10пп и Мифтахов -12пп — сигнал к проверке.',
+        week: 'План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.',
+        month: 'План 28% ▼ · общая просадка к прошлому месяцу −1пп. Сильные стабильны (Лим 91%, Гальков 87%), но отстающие тянут вниз (Ляшенко 51%, Яковлева 66%). Высокий объём лидов у слабых (Ляшенко 510 лидов = 18% от общего потока) — задача месяца: <b style="color:#fff">перебалансировать поток</b>.',
+      };
+
+      function renderClosersList(period) {
+        const list = document.getElementById('js-closers-list');
+        if (!list) return;
+        const closers = closersByPeriod[period] || closersByPeriod.week;
+        // Удалить все строки .body, оставить .head
+        list.querySelectorAll('.mc-team-row.body, .mc-team-row.under, .mc-team-row.over, .mc-team-row:not(.head)').forEach(r => r.remove());
+        // (на всякий случай — точный селектор: всё кроме .mc-team-head)
+        list.querySelectorAll('.mc-team-row').forEach(r => r.remove());
+        // Сохраняем head
+        const head = list.querySelector('.mc-team-head');
+        // Рендерим строки клоузеров
+        closers.forEach(c => {
+          const cycleHtml = c.cycleColor
+            ? `<small style="color:${c.cycleColor}">${c.cycle}</small>`
+            : `<small style="color:rgba(255,255,255,0.4)">${c.cycle}</small>`;
+          const trendDim = c.trendCol === 'rgba(255,255,255,0.4)';
+          const trendHtml = `<small style="color:${c.trendCol}">${c.trend}</small>`;
+          const dim4 = c.dim4 ? ' dim' : '';
+          const row = document.createElement('div');
+          row.className = `mc-team-row ${c.cls}`;
+          row.setAttribute('onclick', `event.stopPropagation(); openCloserDrilldown('${c.id}')`);
+          row.innerHTML = `
+            <span class="rank">${c.rank}</span>
+            <span class="name">${c.name} ${cycleHtml}</span>
+            <span class="leads">${c.leads} <small>лид</small></span>
+            <span class="micro full">${c.full}</span>
+            <span class="micro part">${c.part}</span>
+            <span class="micro promise">${c.promise}</span>
+            <span class="micro think${dim4}">${c.think}</span>
+            <span class="pct">${c.total} ${trendHtml}</span>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      function setPeriod(period) {
+        // Активная кнопка
+        document.querySelectorAll('.period-switch .period').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.period-switch .period[data-period="${period}"]`)?.classList.add('active');
+
+        const data = heroDataByPeriod[period];
+        if (!data) return;
+
+        // HERO главная
+        const setText = (sel, txt) => { const el = document.querySelector(sel); if (el) el.textContent = txt; };
+        setText('.js-hero-num', data.num);
+        setText('.js-hero-qty', data.qty);
+        setText('.js-hero-total', data.total);
+        setText('.js-hero-trend', data.trend);
+        setText('.js-hero-trend-period', data.trendPeriod);
+        setText('.js-hero-sum-formula', data.formula + ' · математически точная сумма по 4 финальным статусам');
+        // переписать sum-formula только саму формулу — текст после остаётся
+        const sumEl = document.querySelector('.js-hero-sum-formula');
+        if (sumEl) sumEl.textContent = data.formula;
+        setText('.js-hero-reopen', data.reopen);
+        setText('.js-hero-cycle', data.cycle);
+        setText('.js-decomp-title', data.decompTitle);
+        setText('.js-closers-title', data.closersTitle);
+
+        // Тренд цвет (▲ зелёный, ▼ красный, → серый)
+        const trendEl = document.querySelector('.js-hero-trend');
+        if (trendEl) {
+          if (data.trend.startsWith('▲')) trendEl.style.color = '#30d158';
+          else if (data.trend.startsWith('▼')) trendEl.style.color = '#ff453a';
+          else trendEl.style.color = 'rgba(255,255,255,0.55)';
+        }
+
+        // 4 декомпозиции
+        ['full', 'part', 'promise', 'think'].forEach(key => {
+          const d = data.decomp[key];
+          if (!d) return;
+          const pctEl = document.querySelector(`.js-kpi-pct[data-key="${key}"]`);
+          const qtyEl = document.querySelector(`.js-kpi-qty[data-key="${key}"]`);
+          const totalEl = document.querySelector(`.js-kpi-total[data-key="${key}"]`);
+          const barEl = document.querySelector(`.js-kpi-bar[data-key="${key}"]`);
+          if (pctEl) pctEl.textContent = d.pct;
+          if (qtyEl) qtyEl.textContent = d.qty;
+          if (totalEl) totalEl.textContent = data.total;
+          if (barEl) barEl.style.width = d.bar + '%';
+        });
+
+        // Список клоузеров
+        renderClosersList(period);
+
+        // Footer-инсайт
+        const insightEl = document.querySelector('.js-closers-insight');
+        if (insightEl) insightEl.innerHTML = closersInsightByPeriod[period] || '';
       }
 
       // ═══════════════ Drill-down: нарушение → список встреч → AI-разбор ═══════════════
