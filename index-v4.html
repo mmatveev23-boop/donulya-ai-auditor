@@ -3900,6 +3900,138 @@
       .mc-card:has(.kpi-cell) { overflow: visible; }
       .mc-grid:has(.kpi-cell) { overflow: visible; }
 
+      /* ── HERO: главная конверсия + декомпозиция по 4 финальным статусам ── */
+      .hero-main {
+        margin-top: 10px;
+        padding: 14px 16px;
+        background: linear-gradient(135deg, rgba(48,209,88,0.10) 0%, rgba(48,209,88,0.04) 100%);
+        border: 1px solid rgba(48,209,88,0.30);
+        border-radius: 10px;
+        display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+        flex-wrap: wrap;
+      }
+      .hero-main .left { display: flex; align-items: baseline; gap: 12px; }
+      .hero-main .label {
+        font-size: 10.5px; color: rgba(255,255,255,0.55);
+        text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+      }
+      .hero-main .num {
+        font-size: 38px; font-weight: 200; color: #30d158;
+        line-height: 1; letter-spacing: -0.02em;
+        font-feature-settings: "tnum";
+      }
+      .hero-main .meta {
+        font-size: 11px; color: rgba(255,255,255,0.60);
+      }
+      .hero-main .meta b { color: #fff; }
+      .hero-main .trend { color: #30d158; font-weight: 700; }
+
+      .hero-decomp {
+        margin-top: 10px;
+      }
+      .hero-decomp .title {
+        font-size: 9.5px; color: rgba(255,255,255,0.45);
+        text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .kpi-strip {
+        display: grid;
+        grid-template-columns: 24px 1fr 50px 70px;
+        gap: 8px; align-items: center;
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+        margin-bottom: 5px;
+        position: relative;
+        overflow: hidden;
+        font-feature-settings: "tnum";
+      }
+      .kpi-strip:last-child { margin-bottom: 0; }
+      .kpi-strip .bar-bg {
+        position: absolute; top: 0; left: 0; bottom: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+        z-index: 0;
+        border-radius: 8px;
+      }
+      .kpi-strip > * { position: relative; z-index: 1; }
+      .kpi-strip .ico {
+        font-size: 14px;
+        text-align: center;
+      }
+      .kpi-strip .name {
+        font-size: 11.5px;
+        color: rgba(255,255,255,0.85);
+      }
+      .kpi-strip .name small {
+        color: rgba(255,255,255,0.45);
+        font-size: 10px;
+        margin-left: 4px;
+      }
+      .kpi-strip .pct {
+        font-size: 14px;
+        font-weight: 700;
+        text-align: right;
+      }
+      .kpi-strip .qty {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.50);
+        text-align: right;
+      }
+      .kpi-strip .qty b { color: rgba(255,255,255,0.75); }
+
+      .kpi-strip.full    { border-left: 3px solid #30d158; }
+      .kpi-strip.full    .pct { color: #30d158; }
+      .kpi-strip.full    .bar-bg { background: linear-gradient(90deg, rgba(48,209,88,0.10), rgba(48,209,88,0)); }
+
+      .kpi-strip.part    { border-left: 3px solid #4dd0a8; }
+      .kpi-strip.part    .pct { color: #4dd0a8; }
+      .kpi-strip.part    .bar-bg { background: linear-gradient(90deg, rgba(77,208,168,0.10), rgba(77,208,168,0)); }
+
+      .kpi-strip.promise { border-left: 3px solid #ff9f0a; }
+      .kpi-strip.promise .pct { color: #ff9f0a; }
+      .kpi-strip.promise .bar-bg { background: linear-gradient(90deg, rgba(255,159,10,0.10), rgba(255,159,10,0)); }
+
+      .kpi-strip.think   { border-left: 3px solid #b084ff; }
+      .kpi-strip.think   .pct { color: #b084ff; }
+      .kpi-strip.think   .bar-bg { background: linear-gradient(90deg, rgba(176,132,255,0.10), rgba(176,132,255,0)); }
+
+      .hero-sum {
+        margin-top: 8px;
+        padding: 7px 10px;
+        background: rgba(82,167,255,0.06);
+        border-left: 2px solid #52a7ff;
+        border-radius: 0 6px 6px 0;
+        font-size: 10.5px; color: rgba(255,255,255,0.70);
+        line-height: 1.5;
+      }
+      .hero-sum b { color: #fff; }
+
+      /* ── Микро-конверсии в строках клоузеров (4 источника + Σ) ── */
+      .mc-team-list.with-decomp .mc-team-row {
+        grid-template-columns: 18px 1fr 40px 26px 26px 26px 26px 50px;
+      }
+      .mc-team-list.with-decomp .mc-team-head {
+        grid-template-columns: 18px 1fr 40px 26px 26px 26px 26px 50px;
+      }
+      .mc-team-row .micro {
+        font-size: 10.5px;
+        font-weight: 600;
+        text-align: right;
+        font-feature-settings: "tnum";
+        color: rgba(255,255,255,0.65);
+        white-space: nowrap;
+      }
+      .mc-team-row .micro.full    { color: #30d158; }
+      .mc-team-row .micro.part    { color: #4dd0a8; }
+      .mc-team-row .micro.promise { color: #ff9f0a; }
+      .mc-team-row .micro.think   { color: #b084ff; }
+      .mc-team-row .micro.dim     { color: rgba(255,255,255,0.30); }
+      .mc-team-list.with-decomp .mc-team-head .h-mic {
+        font-size: 10px;
+        text-align: center;
+      }
+
       .kpi-cell {
         position: relative;
         cursor: help;
@@ -6895,72 +7027,54 @@
                 <div class="mc-card-icon">🎯</div>
                 <div class="mc-card-label">Главные KPI команды <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 600 трипваеров → 179 продаж</span></div>
 
-                <!-- 3 главных метрики · общий знаменатель (600 трипваеров) -->
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 6px; margin-top: 10px;">
-
-                  <div class="kpi-cell" style="padding: 12px 12px; border-radius: 10px; background: rgba(48,209,88,0.10); border: 1px solid rgba(48,209,88,0.30);">
-                    <div style="font-size: 9.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">🎯 Конверсия в продажу</div>
-                    <div style="font-size: 32px; font-weight: 200; color: #30d158; line-height: 1; margin: 6px 0; letter-spacing: -0.02em;">30%</div>
-                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.6);">план ≥30% ✓ · 179/600</div>
-
-                    <div class="kpi-tip">
-                      <div class="tip-title">🎯 Конверсия в продажу</div>
-                      <div class="tip-desc">% трипваеров, которые в итоге стали продажей (любым способом — на встрече или через дожим)</div>
-                      <div class="tip-row"><span class="lbl">План</span><span class="val">≥ 30%</span></div>
-                      <div class="tip-row"><span class="lbl">Сейчас</span><span class="val" style="color:#30d158">30% ✓</span></div>
-                      <div class="tip-row"><span class="lbl">Тренд к прошлой неделе</span><span class="val" style="color:#30d158">▲ +2пп</span></div>
-                      <div class="tip-formula">
-                        <b>Формула:</b><br>
-                        <span class="green">продажи</span> / <span class="yellow">переданные трипваеры</span><br>
-                        = 179 / 600 = <b>30%</b>
-                      </div>
-                    </div>
+                <!-- Главная метрика: общая конверсия + декомпозиция по 4 финальным статусам -->
+                <div class="hero-main">
+                  <div class="left">
+                    <span class="label">🎯 Конверсия в продажу</span>
+                    <span class="num">30%</span>
                   </div>
-
-                  <div class="kpi-cell" style="padding: 12px 12px; border-radius: 10px; background: rgba(82,167,255,0.08); border: 1px solid rgba(82,167,255,0.25);">
-                    <div style="font-size: 9.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">📈 Деньги в моменте</div>
-                    <div style="font-size: 28px; font-weight: 200; color: #52a7ff; line-height: 1; margin: 6px 0; letter-spacing: -0.02em;">24%</div>
-                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.6);">план ≥20% ✓ · 143/600</div>
-
-                    <div class="kpi-tip">
-                      <div class="tip-title">📈 Деньги в моменте</div>
-                      <div class="tip-desc">% трипваеров, где клиент заплатил <b>прямо на встрече</b> — полную сумму (Продажа в звонке) или частичку</div>
-                      <div class="tip-row"><span class="lbl">План</span><span class="val">≥ 20%</span></div>
-                      <div class="tip-row"><span class="lbl">Сейчас</span><span class="val" style="color:#52a7ff">24% ✓</span></div>
-                      <div class="tip-row"><span class="lbl">Тренд к прошлой неделе</span><span class="val" style="color:#30d158">▲ +1пп</span></div>
-                      <div class="tip-formula">
-                        <b>Формула:</b><br>
-                        (<span class="green">продажа в звонке</span> + <span class="green">частичка</span>) / <span class="yellow">трипваеры</span><br>
-                        = (95 + 48) / 600 = <b>24%</b>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="kpi-cell" style="padding: 12px 12px; border-radius: 10px; background: rgba(176,132,255,0.08); border: 1px solid rgba(176,132,255,0.25);">
-                    <div style="font-size: 9.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">🔄 Дожим A2/B</div>
-                    <div style="font-size: 28px; font-weight: 200; color: #b084ff; line-height: 1; margin: 6px 0; letter-spacing: -0.02em;">6%</div>
-                    <div style="font-size: 10.5px; color: rgba(255,255,255,0.6);">план ≥5% ✓ · 36/600</div>
-
-                    <div class="kpi-tip">
-                      <div class="tip-title">🔄 Дожим A2/B</div>
-                      <div class="tip-desc">% трипваеров, где деньги пришли <b>потом</b> — клиент сначала дал обещание (A2b) или задумался (B), но клоузер дожал</div>
-                      <div class="tip-row"><span class="lbl">План</span><span class="val">≥ 5%</span></div>
-                      <div class="tip-row"><span class="lbl">Сейчас</span><span class="val" style="color:#b084ff">6% ✓</span></div>
-                      <div class="tip-row"><span class="lbl">Тренд к прошлой неделе</span><span class="val" style="color:#30d158">▲ +1пп</span></div>
-                      <div class="tip-formula">
-                        <b>Формула:</b><br>
-                        (продажи из <span class="yellow">обещаний A2b</span> + продажи из <span class="yellow">думающих B</span>) / трипваеры<br>
-                        = (24 + 12) / 600 = <b>6%</b>
-                      </div>
-                    </div>
-                  </div>
-
+                  <div class="meta">план ≥30% ✓ · <b>179</b> из 600 · <span class="trend">▲ +2пп</span> к прошлой неделе</div>
                 </div>
 
-                <!-- Декомпозиция конверсии · математически точная -->
-                <div style="margin-top: 10px; padding: 8px 12px; background: rgba(255,255,255,0.04); border-left: 3px solid #52a7ff; border-radius: 0 6px 6px 0; font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.5;">
-                  <b style="color:#fff">30% = 24% + 6%</b> · Конверсия = «Деньги в моменте» (заплатили на встрече) + «Дожим» (вытащили потом из думающих)<br>
-                  <span style="color:rgba(255,255,255,0.55);">⏱ Цикл сделки: <b style="color:rgba(255,255,255,0.85)">1,7 дня</b> (норма ≤24ч) · ▲ +2пп к прошлой неделе</span>
+                <div class="hero-decomp">
+                  <div class="title">↳ Декомпозиция · по 4 дожимным статусам</div>
+
+                  <div class="kpi-strip full">
+                    <div class="bar-bg" style="width: 100%;"></div>
+                    <span class="ico">💰</span>
+                    <span class="name">Полная в моменте <small>план ≥15%</small></span>
+                    <span class="pct">15.0%</span>
+                    <span class="qty"><b>90</b>/600</span>
+                  </div>
+
+                  <div class="kpi-strip part">
+                    <div class="bar-bg" style="width: 55%;"></div>
+                    <span class="ico">🤝</span>
+                    <span class="name">Частичка → Полная <small>план ≥8%</small></span>
+                    <span class="pct">8.3%</span>
+                    <span class="qty"><b>50</b>/600</span>
+                  </div>
+
+                  <div class="kpi-strip promise">
+                    <div class="bar-bg" style="width: 33%;"></div>
+                    <span class="ico">📅</span>
+                    <span class="name">Обещание → Продажа <small>план ≥5%</small></span>
+                    <span class="pct">5.0%</span>
+                    <span class="qty"><b>30</b>/600</span>
+                  </div>
+
+                  <div class="kpi-strip think">
+                    <div class="bar-bg" style="width: 11%;"></div>
+                    <span class="ico">🤔</span>
+                    <span class="name">Думают → Reopen → Продажа <small>план ≥1%</small></span>
+                    <span class="pct">1.7%</span>
+                    <span class="qty"><b>10</b>/600</span>
+                  </div>
+
+                  <div class="hero-sum">
+                    <b>30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
+                    🔄 <b>Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b>1,7 дня</b>
+                  </div>
                 </div>
 
                 <div class="mc-team-summary" style="margin-top: 12px;">
@@ -6977,66 +7091,102 @@
                     <span class="lbl">просели &lt;75%</span>
                   </div>
                 </div>
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия трипваеров в продажу · по клоузерам · ▲▼</div>
-                <div class="mc-team-list with-leads">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Конверсия по клоузерам · с разбивкой по дожимным статусам · ▲▼</div>
+                <div class="mc-team-list with-leads with-decomp">
                   <div class="mc-team-head">
                     <span></span>
                     <span>Клоузер · цикл</span>
                     <span class="h-leads">Лидов</span>
-                    <span class="h-pct">Конверсия</span>
+                    <span class="h-mic" title="Полная в моменте">💰</span>
+                    <span class="h-mic" title="Частичка → Полная">🤝</span>
+                    <span class="h-mic" title="Обещание → Продажа">📅</span>
+                    <span class="h-mic" title="Думают → Продажа">🤔</span>
+                    <span class="h-pct">Σ</span>
                   </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
                     <span class="rank">①</span>
                     <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">цикл 21ч</small></span>
                     <span class="leads">25 <small>лид</small></span>
+                    <span class="micro full">80</span>
+                    <span class="micro part">8</span>
+                    <span class="micro promise">3</span>
+                    <span class="micro think dim">1</span>
                     <span class="pct">92% <small style="color:#30d158">▲+4</small></span>
                   </div>
                   <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
                     <span class="rank">②</span>
                     <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
                     <span class="leads">50 <small>лид</small></span>
+                    <span class="micro full">70</span>
+                    <span class="micro part">12</span>
+                    <span class="micro promise">5</span>
+                    <span class="micro think dim">1</span>
                     <span class="pct">88% <small style="color:#30d158">▲+2</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
                     <span class="rank">③</span>
                     <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
                     <span class="leads">70 <small>лид</small></span>
+                    <span class="micro full">65</span>
+                    <span class="micro part">13</span>
+                    <span class="micro promise">5</span>
+                    <span class="micro think">2</span>
                     <span class="pct">85% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
                     <span class="rank">④</span>
                     <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
                     <span class="leads">75 <small>лид</small></span>
+                    <span class="micro full">60</span>
+                    <span class="micro part">15</span>
+                    <span class="micro promise">6</span>
+                    <span class="micro think">2</span>
                     <span class="pct">83% <small style="color:#ff453a">▼-2</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
                     <span class="rank">⑤</span>
                     <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">72ч</small></span>
                     <span class="leads">80 <small>лид</small></span>
+                    <span class="micro full">55</span>
+                    <span class="micro part">16</span>
+                    <span class="micro promise">7</span>
+                    <span class="micro think">2</span>
                     <span class="pct">80% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
                   </div>
                   <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
                     <span class="rank">⑥</span>
                     <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">93ч</small></span>
                     <span class="leads">85 <small>лид</small></span>
+                    <span class="micro full">50</span>
+                    <span class="micro part">18</span>
+                    <span class="micro promise">7</span>
+                    <span class="micro think">2</span>
                     <span class="pct">77% <small style="color:#30d158">▲+1</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
                     <span class="rank">⚠</span>
                     <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">94ч</small></span>
                     <span class="leads">95 <small>лид</small></span>
+                    <span class="micro full">40</span>
+                    <span class="micro part">18</span>
+                    <span class="micro promise">8</span>
+                    <span class="micro think">2</span>
                     <span class="pct">68% <small style="color:#ff453a">▼-5</small></span>
                   </div>
                   <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
                     <span class="rank">⚠</span>
                     <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
                     <span class="leads">120 <small>лид</small></span>
+                    <span class="micro full">30</span>
+                    <span class="micro part">15</span>
+                    <span class="micro promise">6</span>
+                    <span class="micro think">2</span>
                     <span class="pct">53% <small style="color:#ff453a">▼-8</small></span>
                   </div>
                 </div>
 
                 <div class="mc-card-sub" style="margin-top: 12px;">
-                  План 30% ✓ · 2 клоузера &lt;75% по личной конверсии: Ляшенко 53% (▼-8пп · 120 лидов) / Яковлева 68% (▼-5пп · 95 лидов) — на разбор · нагрузка распределена неравномерно
+                  План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.
                 </div>
               </div>
 
