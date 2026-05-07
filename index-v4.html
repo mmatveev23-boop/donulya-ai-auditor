@@ -4227,6 +4227,86 @@
       }
       .hero-sum b { color: #fff; }
 
+      /* ── Выполнение плана 2×2 grid (4 метрики: КП, Встречи, Продаж, Выручка) ── */
+      .hero-plan {
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        font-feature-settings: "tnum";
+      }
+      .hero-plan .head {
+        font-size: 9.5px;
+        color: rgba(255,255,255,0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .hero-plan .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .hero-plan .item {
+        padding: 9px 11px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+        border-left: 3px solid rgba(255,255,255,0.20);
+      }
+      .hero-plan .item.good { border-left-color: #30d158; }
+      .hero-plan .item.warn { border-left-color: #ff9f0a; }
+      .hero-plan .item.bad  { border-left-color: #ff453a; }
+
+      .hero-plan .top {
+        display: flex; align-items: baseline; justify-content: space-between;
+        margin-bottom: 5px; gap: 8px;
+      }
+      .hero-plan .name {
+        font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.85);
+        white-space: nowrap;
+      }
+      .hero-plan .name .ico { margin-right: 4px; }
+      .hero-plan .vals {
+        font-size: 12px; font-weight: 700; color: #fff;
+        white-space: nowrap;
+      }
+      .hero-plan .vals small {
+        font-weight: 500; color: rgba(255,255,255,0.50);
+        margin-left: 3px;
+        font-size: 11px;
+      }
+      .hero-plan .vals .pct { font-weight: 800; margin-left: 4px; }
+      .hero-plan .item.good .vals .pct { color: #30d158; }
+      .hero-plan .item.warn .vals .pct { color: #ff9f0a; }
+      .hero-plan .item.bad  .vals .pct { color: #ff453a; }
+
+      .hero-plan .bar {
+        height: 5px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+      .hero-plan .bar .fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.3s;
+      }
+      .hero-plan .item.good .bar .fill { background: #30d158; }
+      .hero-plan .item.warn .bar .fill { background: #ff9f0a; }
+      .hero-plan .item.bad  .bar .fill { background: #ff453a; }
+
+      .hero-plan .meta {
+        font-size: 10px;
+        color: rgba(255,255,255,0.55);
+        line-height: 1.4;
+      }
+      .hero-plan .meta b { color: rgba(255,255,255,0.85); font-weight: 600; }
+      .hero-plan .item.good .meta { color: rgba(48,209,88,0.85); }
+
       /* ── Микро-конверсии в строках клоузеров (4 источника + Σ) ── */
       .mc-team-list.with-decomp .mc-team-row {
         grid-template-columns: 18px 1fr 40px 26px 26px 26px 26px 50px;
@@ -7335,6 +7415,14 @@
                   <div class="hero-sum">
                     <b class="js-hero-sum-formula">30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
                     🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
+                  </div>
+
+                  <!-- 📊 Выполнение плана за период · 2×2 grid (4 метрики) -->
+                  <div class="hero-plan">
+                    <div class="head">📊 <span class="js-plan-title">Выполнение плана · за неделю</span></div>
+                    <div class="grid" id="js-plan-grid">
+                      <!-- рендерится через renderPlanGrid() -->
+                    </div>
                   </div>
                 </div>
 
@@ -15224,6 +15312,70 @@
         ],
       };
 
+      // План по 4 метрикам (КП поступило, Встречи, Продаж, Выручка) для 3 периодов.
+      // Сегодня — 25 апреля (среда), день 3 из 5 в неделе, день 13 из 22 в месяце.
+      // Цвета: ≥95% good, 80-95% warn, <80% bad. Темп догона = (план - факт) / оставшиеся дни.
+      const planByPeriod = {
+        day: {
+          title: 'Выполнение плана · за вчера',
+          items: [
+            { key: 'received', icon: '📥', name: 'КП поступило', fact: 15, plan: 15, unit: '',     pctOverride: 100, status: 'good', meta: 'выполнено · вчера +1 к плану' },
+            { key: 'meetings', icon: '🤝', name: 'Встречи',      fact: 9,  plan: 8,  unit: '',     pctOverride: 113, status: 'good', meta: 'перевыполнено · 113%' },
+            { key: 'sales',    icon: '💰', name: 'Продаж',       fact: 4,  plan: 2,  unit: '',     pctOverride: 200, status: 'good', meta: 'перевыполнено · 200%' },
+            { key: 'revenue',  icon: '💸', name: 'Выручка',      fact: 0.62, plan: 0.37, unit: 'млн', pctOverride: 167, status: 'good', meta: 'перевыполнено · 167%' },
+          ],
+        },
+        week: {
+          title: 'Выполнение плана · за неделю · день 3 из 5',
+          items: [
+            { key: 'received', icon: '📥', name: 'КП поступило', fact: 47, plan: 75, unit: '',     status: 'bad',  meta: 'осталось <b>28</b> за <b>2 дня</b> · нужен темп <b>14/день</b>' },
+            { key: 'meetings', icon: '🤝', name: 'Встречи',      fact: 38, plan: 40, unit: '',     status: 'warn', meta: 'осталось <b>2</b> за <b>2 дня</b> · темп <b>1/день</b>' },
+            { key: 'sales',    icon: '💰', name: 'Продаж',       fact: 12, plan: 12, unit: '',     pctOverride: 100, status: 'good', meta: 'план выполнен · опережаем темп' },
+            { key: 'revenue',  icon: '💸', name: 'Выручка',      fact: 1.86, plan: 1.86, unit: 'млн', pctOverride: 100, status: 'good', meta: 'план выполнен · опережаем темп' },
+          ],
+        },
+        month: {
+          title: 'Выполнение плана · за месяц · день 13 из 22',
+          items: [
+            { key: 'received', icon: '📥', name: 'КП поступило', fact: 199, plan: 330, unit: '',     status: 'warn', meta: 'осталось <b>131</b> за <b>9 дней</b> · нужен темп <b>15/день</b>' },
+            { key: 'meetings', icon: '🤝', name: 'Встречи',      fact: 110, plan: 178, unit: '',     status: 'warn', meta: 'осталось <b>68</b> за <b>9 дней</b> · темп <b>8/день</b>' },
+            { key: 'sales',    icon: '💰', name: 'Продаж',       fact: 35,  plan: 53,  unit: '',     status: 'warn', meta: 'осталось <b>18</b> за <b>9 дней</b> · темп <b>2/день</b>' },
+            { key: 'revenue',  icon: '💸', name: 'Выручка',      fact: 5.4, plan: 8.2, unit: 'млн',  status: 'warn', meta: 'осталось <b>2.8м</b> за <b>9 дней</b> · темп <b>311к/день</b>' },
+          ],
+        },
+      };
+
+      function renderPlanGrid(period) {
+        const grid = document.getElementById('js-plan-grid');
+        if (!grid) return;
+        const data = planByPeriod[period] || planByPeriod.week;
+
+        // Update title
+        const titleEl = document.querySelector('.js-plan-title');
+        if (titleEl) titleEl.textContent = data.title;
+
+        grid.innerHTML = data.items.map(item => {
+          const pct = item.pctOverride !== undefined
+            ? item.pctOverride
+            : Math.round((item.fact / item.plan) * 100);
+          const barWidth = Math.min(pct, 100);
+          const status = item.status || (pct >= 95 ? 'good' : pct >= 80 ? 'warn' : 'bad');
+          const factText = item.unit === 'млн' ? `${item.fact}м` : `${item.fact}`;
+          const planText = item.unit === 'млн' ? `${item.plan}м` : `${item.plan}`;
+          const statusIcon = status === 'good' ? '✓' : (status === 'warn' ? '⚠' : '⚠');
+          return `
+            <div class="item ${status}">
+              <div class="top">
+                <span class="name"><span class="ico">${item.icon}</span>${item.name}</span>
+                <span class="vals">${factText} <small>/ ${planText}</small> <span class="pct">${pct}% ${statusIcon}</span></span>
+              </div>
+              <div class="bar"><div class="fill" style="width: ${barWidth}%;"></div></div>
+              <div class="meta">${item.meta}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
       const closersInsightByPeriod = {
         day: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (топ дня), Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> и <b style="color:#ff8478">Ляшенко 30%</b> провалили день — режем поток + 1:1 утром. Марченко -10пп и Мифтахов -12пп — сигнал к проверке.',
         week: 'План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.',
@@ -15313,6 +15465,9 @@
 
         // Список клоузеров
         renderClosersList(period);
+
+        // План 2×2 grid (4 метрики: КП / Встречи / Продаж / Выручка)
+        renderPlanGrid(period);
 
         // Footer-инсайт
         const insightEl = document.querySelector('.js-closers-insight');
@@ -17555,6 +17710,11 @@
       // Проверка при первой загрузке (если default-роль закроется на closer когда-нибудь)
       checkD0RulesDailyReminder();
       applyRuleBannerState();
+
+      // Первичный рендер списка клоузеров + плана через JS (с дефолтным периодом «Неделя»)
+      if (typeof setPeriod === 'function') {
+        setPeriod('week');
+      }
     </script>
 
     <!-- ═══════════════ ТЕКСТЫ ПРОМТОВ (хранятся как text/plain, JS подставляет в textarea) ═══════════════ -->
