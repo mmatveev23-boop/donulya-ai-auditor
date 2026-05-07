@@ -4350,6 +4350,24 @@
       /* ── Модалка карточки звонка (AI-разбор Gong-style) ── */
       #modal-call-card .modal { width: 1100px; max-width: 92vw; max-height: 92vh; display: flex; flex-direction: column; }
 
+      /* Баннер контекста нарушения на странице call-detail (показывается когда пришли из drill-down) */
+      .violation-context {
+        display: flex; align-items: center; gap: 12px;
+        margin: 14px 0;
+        padding: 12px 16px;
+        background: linear-gradient(90deg, rgba(255,69,58,0.10), rgba(255,69,58,0.04));
+        border: 1px solid rgba(255,69,58,0.30);
+        border-left: 3px solid #ff453a;
+        border-radius: 8px;
+        font-size: 13px;
+        color: rgba(255,255,255,0.85);
+        line-height: 1.5;
+      }
+      .violation-context .ico { font-size: 20px; line-height: 1; }
+      .violation-context b { color: #fff; font-weight: 700; }
+      .violation-context .v-name { color: #ff8478; }
+      .violation-context .v-skill { color: #ffd60a; }
+
       /* Кнопка «Назад» в шапке карточки звонка (drill-down navigation) */
       .cc-back-btn {
         display: none;
@@ -13014,10 +13032,16 @@
 
         <!-- ═══════════════ PAGE: КАРТОЧКА ЗВОНКА (drill-down) ═══════════════ -->
         <section class="page" data-page-content="call-detail">
-          <div class="back-link" onclick="switchTab('calls')">← к списку звонков</div>
+          <div class="back-link js-cc-detail-back" onclick="switchTab('calls')">← к списку звонков</div>
+
+          <!-- Баннер контекста нарушения (показывается когда пришли из drill-down плитки AI-нарушений) -->
+          <div id="violation-context-banner" class="violation-context" style="display: none;">
+            <span class="ico">🎯</span>
+            <span>Пришли из нарушения <b class="v-name">«Не предложил частичку»</b> — особое внимание критерию <b class="v-skill">«Дожим / Закрытие»</b> в AI-скоркарде ниже</span>
+          </div>
 
           <div class="call-title-row">
-            <h1>Встреча #2730608</h1>
+            <h1 id="cc-detail-title">Встреча #2730608</h1>
             <span class="call-title-meta">· Марченко Светлана → Сергей Петров · 5:42 · 24.04.2026</span>
           </div>
 
@@ -15041,6 +15065,78 @@
         }
       }
 
+      // ═══════════════ Полный разбор звонка на странице call-detail (вместо упрощённой модалки) ═══════════════
+      // Из drill-down плитки AI-нарушений → переключаемся на страницу call-detail с полным разбором:
+      // транскрипт, плеер, AI-скоркард по 7 навыкам, ключевые моменты, эталоны.
+      // На странице показывается баннер «Пришли из нарушения X» с привязкой к критерию.
+
+      let _callDetailReturn = null;
+
+      // Маппинг ключа нарушения → название критерия в AI-скоркарде (для подсветки)
+      const violationToSkill = {
+        'no-partial':  'Дожим / Закрытие',
+        'no-date':     'Дожим / Закрытие',
+        'no-hold':     'Дожим / Закрытие',
+        'no-full':     'Дожим / Закрытие',
+        'fake-date':   'Дожим / Закрытие',
+        'no-reason':   'Возражения',
+        'no-refusal':  'Структура скрипта',
+      };
+
+      function openCallDetail(dealName, returnTo) {
+        // Обновить заголовок встречи
+        const titleEl = document.querySelector('#cc-detail-title');
+        if (titleEl && dealName) {
+          titleEl.textContent = `Встреча · ${dealName}`;
+        }
+
+        // Запомнить контекст возврата
+        _callDetailReturn = returnTo || null;
+
+        // Настроить кнопку «Назад» под контекст
+        const backLink = document.querySelector('.js-cc-detail-back');
+        if (backLink) {
+          if (_callDetailReturn && _callDetailReturn.type === 'violation') {
+            const data = (typeof violationsData !== 'undefined') ? violationsData[_callDetailReturn.key] : null;
+            const label = data ? `← К списку: ${data.title.replace('✗ ', '')}` : '← К списку нарушений';
+            backLink.textContent = label;
+            backLink.onclick = goBackFromCallDetail;
+          } else {
+            backLink.textContent = '← к списку звонков';
+            backLink.onclick = () => switchTab('calls');
+          }
+        }
+
+        // Показать/скрыть баннер контекста нарушения
+        const banner = document.querySelector('#violation-context-banner');
+        if (banner) {
+          if (_callDetailReturn && _callDetailReturn.type === 'violation') {
+            const data = (typeof violationsData !== 'undefined') ? violationsData[_callDetailReturn.key] : null;
+            const vName = banner.querySelector('.v-name');
+            const vSkill = banner.querySelector('.v-skill');
+            if (vName && data) vName.textContent = `«${data.title.replace('✗ ', '')}»`;
+            if (vSkill) vSkill.textContent = `«${violationToSkill[_callDetailReturn.key] || 'Дожим / Закрытие'}»`;
+            banner.style.display = 'flex';
+          } else {
+            banner.style.display = 'none';
+          }
+        }
+
+        // Переключиться на страницу
+        switchTab('call-detail');
+      }
+
+      function goBackFromCallDetail() {
+        const returnTo = _callDetailReturn;
+        _callDetailReturn = null;
+        if (returnTo && returnTo.type === 'violation') {
+          switchTab('summary');
+          setTimeout(() => openViolationList(returnTo.key), 150);
+        } else {
+          switchTab('calls');
+        }
+      }
+
       // ═══════════════ Drill-down: нарушение → список встреч → AI-разбор ═══════════════
       const violationsData = {
         'no-partial': {
@@ -15220,7 +15316,7 @@
               <span class="count">${closer.count} ${declension(closer.count)}</span>
             </div>
             ${closer.meetings.map(m => `
-              <div class="meeting" onclick="closeModal('violation-list'); setTimeout(() => openCallCard('${m.client} · ${m.amount} (${closer.name})', {type:'violation', key:'${key}'}), 200);">
+              <div class="meeting" onclick="closeModal('violation-list'); setTimeout(() => openCallDetail('${m.client} · ${m.amount} · ${closer.name}', {type:'violation', key:'${key}'}), 200);">
                 <span class="client">${m.client}<small>встреча · клоузер ${closer.name}</small></span>
                 <span class="amount">${m.amount}</span>
                 <span class="date">${m.date}</span>
