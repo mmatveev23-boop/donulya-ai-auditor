@@ -3944,6 +3944,83 @@
         color: rgba(255,255,255,0.55);
         font-style: italic;
       }
+
+      /* ── Модалка drill-down списка встреч с нарушением ── */
+      .v-list { padding: 14px 18px; }
+      .v-list .closer-block {
+        margin-bottom: 14px;
+      }
+      .v-list .closer-block:last-child { margin-bottom: 0; }
+      .v-list .closer-head {
+        display: flex; align-items: baseline; gap: 8px;
+        padding: 8px 12px;
+        background: rgba(255,69,58,0.08);
+        border-left: 3px solid #ff453a;
+        border-radius: 4px;
+        margin-bottom: 6px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .v-list .closer-head .count {
+        margin-left: auto;
+        color: #ff8478;
+        font-size: 11px;
+      }
+      .v-list .meeting {
+        display: grid;
+        grid-template-columns: 1fr 80px 56px auto;
+        gap: 10px;
+        align-items: center;
+        padding: 9px 12px;
+        margin-left: 12px;
+        margin-bottom: 4px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 11.5px;
+        transition: background 0.12s, border-color 0.12s;
+      }
+      .v-list .meeting:hover {
+        background: rgba(82,167,255,0.08);
+        border-color: rgba(82,167,255,0.30);
+      }
+      .v-list .meeting .client {
+        color: rgba(255,255,255,0.90);
+        font-weight: 600;
+      }
+      .v-list .meeting .client small {
+        color: rgba(255,255,255,0.45);
+        font-weight: 400;
+        margin-left: 6px;
+        font-size: 10.5px;
+      }
+      .v-list .meeting .amount {
+        color: #ff9f0a;
+        font-weight: 700;
+        font-feature-settings: "tnum";
+        text-align: right;
+      }
+      .v-list .meeting .date {
+        color: rgba(255,255,255,0.45);
+        font-size: 11px;
+        font-feature-settings: "tnum";
+      }
+      .v-list .meeting .arrow {
+        color: #52a7ff;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .v-list .meeting:hover .arrow { color: #fff; }
+
+      /* Кликабельность строк нарушений в плитке AI */
+      .ai-violations .vio.fail { cursor: pointer; }
+      .ai-violations .vio.fail:hover {
+        background: rgba(255,69,58,0.08);
+        border-color: rgba(255,69,58,0.25);
+      }
       .bills-row .v {
         text-align: right; font-feature-settings: "tnum";
         color: rgba(255,255,255,0.85);
@@ -7823,7 +7900,7 @@
                 <div class="mc-card-value">61<small>· нарушений · команда (▼-8 к прошлой неделе)</small></div>
 
                 <div class="ai-violations">
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-partial')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Не предложил частичку</b> <small>после отказа от полной</small></span>
                     <span class="bar"><span class="fill" style="width: 100%;"></span></span>
@@ -7831,7 +7908,7 @@
                     <span class="who"><b>Ляшенко 7</b> · <b>Яковлева 4</b> · Марченко 3 · Мифтахов 2 · Петрова 2</span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-date')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Не получил дату ≤14 дней</b> <small>или дата нереалистичная «через месяц»</small></span>
                     <span class="bar"><span class="fill" style="width: 67%;"></span></span>
@@ -7839,7 +7916,7 @@
                     <span class="who"><b>Ляшенко 5</b> · Марченко 3 · Яковлева 2 · Мифтахов 2</span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-hold')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Без удержания на линии до оплаты</b> <small>«я вам скину, оплатите как сможете»</small></span>
                     <span class="bar"><span class="fill" style="width: 56%;"></span></span>
@@ -7847,7 +7924,7 @@
                     <span class="who"><b>Яковлева 3</b> · Мифтахов 3 · Петрова 2 · Алиев 1 · <span class="dim">Лим 1</span></span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-full')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Не предложил полную в моменте</b> <small>не использовал «откройте, я подожду»</small></span>
                     <span class="bar"><span class="fill" style="width: 44%;"></span></span>
@@ -7855,7 +7932,7 @@
                     <span class="who"><b>Ляшенко 4</b> · Алиев 2 · Петрова 1 · Марченко 1</span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('fake-date')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Дату придумал клоузер</b> <small>«давайте на пятницу» вместо «когда вам удобно?»</small></span>
                     <span class="bar"><span class="fill" style="width: 33%;"></span></span>
@@ -7863,7 +7940,7 @@
                     <span class="who"><b>Петрова 3</b> · Ляшенко 2 · Яковлева 1</span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-reason')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>«Подумаю» без причины из справочника</b> <small>не выяснил почему</small></span>
                     <span class="bar"><span class="fill" style="width: 22%;"></span></span>
@@ -7871,7 +7948,7 @@
                     <span class="who">Ляшенко 2 · Яковлева 2</span>
                   </div>
 
-                  <div class="vio fail">
+                  <div class="vio fail" onclick="openViolationList('no-refusal')" title="Кликни → список встреч с этим нарушением">
                     <span class="marker">✗</span>
                     <span class="name"><b>Не закрыл отказ</b> <small>встреча оставлена «зомби» без финального статуса</small></span>
                     <span class="bar"><span class="fill" style="width: 17%;"></span></span>
@@ -14207,6 +14284,30 @@
       </div>
     </div>
 
+    <!-- ═══════════════ МОДАЛКА · DRILL-DOWN: список встреч с нарушением → клик → карточка звонка ═══════════════ -->
+    <div class="modal-overlay" id="modal-violation-list">
+      <div class="modal" style="max-width: 760px;">
+        <div class="modal-head" style="background: rgba(255,69,58,0.06); border-bottom: 1px solid rgba(255,69,58,0.20);">
+          <div>
+            <div class="modal-title v-title">✗ Нарушение</div>
+            <div class="modal-sub v-sub">N встреч · M клоузеров</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('violation-list')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto;">
+          <div class="v-list">
+            <!-- динамически рендерится через openViolationList() -->
+          </div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            🎯 Кликни на встречу → AI-разбор с конкретным моментом нарушения. Используй для 1:1 с клоузером.
+          </div>
+          <button class="btn" onclick="closeModal('violation-list')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-overlay" id="modal-call-card">
       <div class="modal">
         <div class="call-card-head">
@@ -14885,6 +14986,198 @@
           nameEl.textContent = dealName;
         }
         openModal("call-card");
+      }
+
+      // ═══════════════ Drill-down: нарушение → список встреч → AI-разбор ═══════════════
+      const violationsData = {
+        'no-partial': {
+          title: '✗ Не предложил частичку',
+          sub: '18 встреч за неделю · 5 клоузеров · после отказа от полной',
+          closers: [
+            { name: 'Ляшенко А.', count: 7, meetings: [
+              { client: 'Куделькин С.', amount: '110к ₽', date: '24.04' },
+              { client: 'Морозов А.', amount: '85к ₽', date: '24.04' },
+              { client: 'Иванова Е.', amount: '120к ₽', date: '23.04' },
+              { client: 'Сидоров П.', amount: '95к ₽', date: '23.04' },
+              { client: 'Петров Н.', amount: '180к ₽', date: '22.04' },
+              { client: 'Захаров Б.', amount: '65к ₽', date: '22.04' },
+              { client: 'Лебедев Г.', amount: '210к ₽', date: '21.04' },
+            ]},
+            { name: 'Яковлева А.', count: 4, meetings: [
+              { client: 'Иванчук М.', amount: '320к ₽', date: '24.04' },
+              { client: 'Громов К.', amount: '150к ₽', date: '23.04' },
+              { client: 'Соколова И.', amount: '90к ₽', date: '22.04' },
+              { client: 'Дроздов Ф.', amount: '180к ₽', date: '21.04' },
+            ]},
+            { name: 'Марченко С.', count: 3, meetings: [
+              { client: 'Корчик А.', amount: '180к ₽', date: '24.04' },
+              { client: 'Андреев К.', amount: '110к ₽', date: '23.04' },
+              { client: 'Орлов М.', amount: '75к ₽', date: '22.04' },
+            ]},
+            { name: 'Мифтахов Р.', count: 2, meetings: [
+              { client: 'Прохоров В.', amount: '220к ₽', date: '23.04' },
+              { client: 'Власов Д.', amount: '95к ₽', date: '22.04' },
+            ]},
+            { name: 'Петрова Д.', count: 2, meetings: [
+              { client: 'Соколов Р.', amount: '150к ₽', date: '24.04' },
+              { client: 'Тарасов И.', amount: '85к ₽', date: '21.04' },
+            ]},
+          ]
+        },
+        'no-date': {
+          title: '✗ Не получил дату ≤14 дней',
+          sub: '12 встреч за неделю · 4 клоузера · или дата нереалистичная «через месяц»',
+          closers: [
+            { name: 'Ляшенко А.', count: 5, meetings: [
+              { client: 'Куделькин С.', amount: '110к ₽', date: '24.04' },
+              { client: 'Иванова Е.', amount: '120к ₽', date: '23.04' },
+              { client: 'Петров Н.', amount: '180к ₽', date: '22.04' },
+              { client: 'Захаров Б.', amount: '65к ₽', date: '22.04' },
+              { client: 'Лебедев Г.', amount: '210к ₽', date: '21.04' },
+            ]},
+            { name: 'Марченко С.', count: 3, meetings: [
+              { client: 'Корчик А.', amount: '180к ₽', date: '24.04' },
+              { client: 'Андреев К.', amount: '110к ₽', date: '23.04' },
+              { client: 'Орлов М.', amount: '75к ₽', date: '22.04' },
+            ]},
+            { name: 'Яковлева А.', count: 2, meetings: [
+              { client: 'Иванчук М.', amount: '320к ₽', date: '24.04' },
+              { client: 'Громов К.', amount: '150к ₽', date: '23.04' },
+            ]},
+            { name: 'Мифтахов Р.', count: 2, meetings: [
+              { client: 'Прохоров В.', amount: '220к ₽', date: '23.04' },
+              { client: 'Власов Д.', amount: '95к ₽', date: '22.04' },
+            ]},
+          ]
+        },
+        'no-hold': {
+          title: '✗ Без удержания на линии до оплаты',
+          sub: '10 встреч за неделю · 5 клоузеров · «я вам скину, оплатите как сможете»',
+          closers: [
+            { name: 'Яковлева А.', count: 3, meetings: [
+              { client: 'Иванчук М.', amount: '320к ₽', date: '24.04' },
+              { client: 'Громов К.', amount: '150к ₽', date: '23.04' },
+              { client: 'Соколова И.', amount: '90к ₽', date: '22.04' },
+            ]},
+            { name: 'Мифтахов Р.', count: 3, meetings: [
+              { client: 'Прохоров В.', amount: '220к ₽', date: '23.04' },
+              { client: 'Власов Д.', amount: '95к ₽', date: '22.04' },
+              { client: 'Карпов Е.', amount: '130к ₽', date: '21.04' },
+            ]},
+            { name: 'Петрова Д.', count: 2, meetings: [
+              { client: 'Соколов Р.', amount: '150к ₽', date: '24.04' },
+              { client: 'Тарасов И.', amount: '85к ₽', date: '21.04' },
+            ]},
+            { name: 'Алиев К.', count: 1, meetings: [
+              { client: 'Беляев Я.', amount: '170к ₽', date: '22.04' },
+            ]},
+            { name: 'Лим Е.', count: 1, meetings: [
+              { client: 'Юдин С.', amount: '95к ₽', date: '24.04' },
+            ]},
+          ]
+        },
+        'no-full': {
+          title: '✗ Не предложил полную в моменте',
+          sub: '8 встреч за неделю · 4 клоузера · не использовал «откройте, я подожду»',
+          closers: [
+            { name: 'Ляшенко А.', count: 4, meetings: [
+              { client: 'Иванова Е.', amount: '120к ₽', date: '23.04' },
+              { client: 'Петров Н.', amount: '180к ₽', date: '22.04' },
+              { client: 'Захаров Б.', amount: '65к ₽', date: '22.04' },
+              { client: 'Лебедев Г.', amount: '210к ₽', date: '21.04' },
+            ]},
+            { name: 'Алиев К.', count: 2, meetings: [
+              { client: 'Беляев Я.', amount: '170к ₽', date: '22.04' },
+              { client: 'Михайлов А.', amount: '95к ₽', date: '21.04' },
+            ]},
+            { name: 'Петрова Д.', count: 1, meetings: [
+              { client: 'Соколов Р.', amount: '150к ₽', date: '24.04' },
+            ]},
+            { name: 'Марченко С.', count: 1, meetings: [
+              { client: 'Корчик А.', amount: '180к ₽', date: '24.04' },
+            ]},
+          ]
+        },
+        'fake-date': {
+          title: '✗ Дату придумал клоузер',
+          sub: '6 встреч за неделю · 3 клоузера · «давайте на пятницу» вместо «когда вам удобно?»',
+          closers: [
+            { name: 'Петрова Д.', count: 3, meetings: [
+              { client: 'Соколов Р.', amount: '150к ₽', date: '24.04' },
+              { client: 'Тарасов И.', amount: '85к ₽', date: '21.04' },
+              { client: 'Богданов А.', amount: '110к ₽', date: '22.04' },
+            ]},
+            { name: 'Ляшенко А.', count: 2, meetings: [
+              { client: 'Куделькин С.', amount: '110к ₽', date: '24.04' },
+              { client: 'Сидоров П.', amount: '95к ₽', date: '23.04' },
+            ]},
+            { name: 'Яковлева А.', count: 1, meetings: [
+              { client: 'Дроздов Ф.', amount: '180к ₽', date: '21.04' },
+            ]},
+          ]
+        },
+        'no-reason': {
+          title: '✗ «Подумаю» без причины из справочника',
+          sub: '4 встречи за неделю · 2 клоузера · не выяснил почему',
+          closers: [
+            { name: 'Ляшенко А.', count: 2, meetings: [
+              { client: 'Морозов А.', amount: '85к ₽', date: '24.04' },
+              { client: 'Захаров Б.', amount: '65к ₽', date: '22.04' },
+            ]},
+            { name: 'Яковлева А.', count: 2, meetings: [
+              { client: 'Соколова И.', amount: '90к ₽', date: '22.04' },
+              { client: 'Дроздов Ф.', amount: '180к ₽', date: '21.04' },
+            ]},
+          ]
+        },
+        'no-refusal': {
+          title: '✗ Не закрыл отказ — встреча оставлена «зомби»',
+          sub: '3 встречи за неделю · 3 клоузера · без финального статуса',
+          closers: [
+            { name: 'Ляшенко А.', count: 1, meetings: [
+              { client: 'Лебедев Г.', amount: '210к ₽', date: '21.04' },
+            ]},
+            { name: 'Яковлева А.', count: 1, meetings: [
+              { client: 'Дроздов Ф.', amount: '180к ₽', date: '21.04' },
+            ]},
+            { name: 'Марченко С.', count: 1, meetings: [
+              { client: 'Орлов М.', amount: '75к ₽', date: '22.04' },
+            ]},
+          ]
+        },
+      };
+
+      function openViolationList(key) {
+        const data = violationsData[key];
+        if (!data) return;
+
+        const titleEl = document.querySelector('#modal-violation-list .v-title');
+        const subEl = document.querySelector('#modal-violation-list .v-sub');
+        const listEl = document.querySelector('#modal-violation-list .v-list');
+
+        if (titleEl) titleEl.textContent = data.title;
+        if (subEl) subEl.textContent = data.sub;
+
+        const declension = (n) => n === 1 ? 'встреча' : (n >= 2 && n <= 4) ? 'встречи' : 'встреч';
+
+        listEl.innerHTML = data.closers.map(closer => `
+          <div class="closer-block">
+            <div class="closer-head">
+              <span>👤 ${closer.name}</span>
+              <span class="count">${closer.count} ${declension(closer.count)}</span>
+            </div>
+            ${closer.meetings.map(m => `
+              <div class="meeting" onclick="closeModal('violation-list'); setTimeout(() => openCallCard('${m.client} · ${m.amount} (${closer.name})'), 200);">
+                <span class="client">${m.client}<small>встреча · клоузер ${closer.name}</small></span>
+                <span class="amount">${m.amount}</span>
+                <span class="date">${m.date}</span>
+                <span class="arrow">→ AI-разбор</span>
+              </div>
+            `).join('')}
+          </div>
+        `).join('');
+
+        openModal('violation-list');
       }
 
       // Чекбоксы задач "До 18:00"
