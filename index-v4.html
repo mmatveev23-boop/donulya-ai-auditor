@@ -4227,12 +4227,47 @@
       }
       .hero-sum b { color: #fff; }
 
-      /* ── Микро-конверсии в строках клоузеров (4 источника + Σ) ── */
+      /* Дисциплина скрипта — отдельная плашка под декомпозицией */
+      .hero-discipline {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: linear-gradient(90deg, rgba(255,159,10,0.10), rgba(255,159,10,0.03));
+        border: 1px solid rgba(255,159,10,0.25);
+        border-left: 3px solid #ff9f0a;
+        border-radius: 8px;
+        display: flex; gap: 10px; align-items: flex-start;
+        font-feature-settings: "tnum";
+      }
+      .hero-discipline .ico { font-size: 16px; line-height: 1.3; }
+      .hero-discipline .body { flex: 1; }
+      .hero-discipline .head {
+        font-size: 12px; font-weight: 700; color: #fff;
+        margin-bottom: 4px;
+        display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+      }
+      .hero-discipline .head .js-disc-pct {
+        font-size: 16px; font-weight: 800; color: #ff9f0a;
+      }
+      .hero-discipline .head .norm {
+        font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,0.50);
+        text-transform: none;
+      }
+      .hero-discipline .head .js-disc-status.warn { color: #ff8478; font-size: 11px; font-weight: 600; }
+      .hero-discipline .head .js-disc-status.ok   { color: #30d158; font-size: 11px; font-weight: 600; }
+      .hero-discipline .meta {
+        font-size: 10.5px; color: rgba(255,255,255,0.65); line-height: 1.5;
+      }
+      .hero-discipline .meta b { color: #fff; }
+
+      /* Подбивка под полосой «Закрыл в звонке» — полная vs частичка */
+      .kpi-substrip { font-feature-settings: "tnum"; }
+
+      /* ── Микро-конверсии в строках клоузеров (3 источника + Σ + дисциплина) ── */
       .mc-team-list.with-decomp .mc-team-row {
-        grid-template-columns: 18px 1fr 40px 26px 26px 26px 26px 50px;
+        grid-template-columns: 18px 1fr 40px 32px 28px 28px 50px 44px;
       }
       .mc-team-list.with-decomp .mc-team-head {
-        grid-template-columns: 18px 1fr 40px 26px 26px 26px 26px 50px;
+        grid-template-columns: 18px 1fr 40px 32px 28px 28px 50px 44px;
       }
       .mc-team-row .micro {
         font-size: 10.5px;
@@ -4243,13 +4278,30 @@
         white-space: nowrap;
       }
       .mc-team-row .micro.full    { color: #30d158; }
-      .mc-team-row .micro.part    { color: #4dd0a8; }
       .mc-team-row .micro.promise { color: #ff9f0a; }
       .mc-team-row .micro.think   { color: #b084ff; }
       .mc-team-row .micro.dim     { color: rgba(255,255,255,0.30); }
+      .mc-team-row .disc          {
+        font-size: 10.5px;
+        font-weight: 700;
+        text-align: right;
+        font-feature-settings: "tnum";
+        white-space: nowrap;
+        padding-left: 6px;
+        border-left: 1px dashed rgba(255,255,255,0.10);
+      }
+      .mc-team-row .disc.good { color: #30d158; }
+      .mc-team-row .disc.mid  { color: #ff9f0a; }
+      .mc-team-row .disc.bad  { color: #ff453a; }
       .mc-team-list.with-decomp .mc-team-head .h-mic {
         font-size: 10px;
         text-align: center;
+      }
+      .mc-team-list.with-decomp .mc-team-head .h-disc {
+        font-size: 10px;
+        text-align: center;
+        padding-left: 6px;
+        border-left: 1px dashed rgba(255,255,255,0.10);
       }
 
       .kpi-cell {
@@ -7302,39 +7354,44 @@
 
                   <div class="kpi-strip full">
                     <div class="bar-bg js-kpi-bar" data-key="full" style="width: 100%;"></div>
-                    <span class="ico">💰</span>
-                    <span class="name">Полная в моменте <small>план ≥15%</small></span>
-                    <span class="pct js-kpi-pct" data-key="full">15.0%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="full">90</b>/<span class="js-kpi-total" data-key="full">600</span></span>
+                    <span class="ico">💸</span>
+                    <span class="name">Закрыл в звонке <small>полная или частичка в моменте · +10 мин · план ≥20%</small></span>
+                    <span class="pct js-kpi-pct" data-key="full">23.3%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="full">140</b>/<span class="js-kpi-total" data-key="full">600</span></span>
                   </div>
 
-                  <div class="kpi-strip part">
-                    <div class="bar-bg js-kpi-bar" data-key="part" style="width: 55%;"></div>
-                    <span class="ico">🤝</span>
-                    <span class="name">Частичка → Полная <small>план ≥8%</small></span>
-                    <span class="pct js-kpi-pct" data-key="part">8.3%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="part">50</b>/<span class="js-kpi-total" data-key="part">600</span></span>
+                  <div class="kpi-substrip" style="margin: -3px 0 5px 26px; padding: 6px 10px; font-size: 10.5px; color: rgba(255,255,255,0.55); border-left: 1px dashed rgba(48,209,88,0.30); display: flex; gap: 14px; flex-wrap: wrap;">
+                    <span>↳ <b class="js-deal-full" style="color: #30d158;">90</b> полных сразу <span style="color: rgba(255,255,255,0.35)">(64%)</span></span>
+                    <span>↳ <b class="js-deal-part" style="color: #4dd0a8;">50</b> частичка → доплата вечером/завтра <span style="color: rgba(255,255,255,0.35)">(36%)</span></span>
                   </div>
 
                   <div class="kpi-strip promise">
-                    <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 33%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 100%;"></div>
                     <span class="ico">📅</span>
-                    <span class="name">Обещание → Продажа <small>план ≥5%</small></span>
+                    <span class="name">Обещание → Продажа <small>обещал дату · в итоге ПОЛНАЯ оплата · план ≥5%</small></span>
                     <span class="pct js-kpi-pct" data-key="promise">5.0%</span>
                     <span class="qty"><b class="js-kpi-qty" data-key="promise">30</b>/<span class="js-kpi-total" data-key="promise">600</span></span>
                   </div>
 
                   <div class="kpi-strip think">
-                    <div class="bar-bg js-kpi-bar" data-key="think" style="width: 11%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="think" style="width: 100%;"></div>
                     <span class="ico">🤔</span>
-                    <span class="name">Думают → Reopen → Продажа <small>план ≥1%</small></span>
+                    <span class="name">Думают → Reopen → Продажа <small>вытащили из «думают» в активный статус → продажа · план ≥1%</small></span>
                     <span class="pct js-kpi-pct" data-key="think">1.7%</span>
                     <span class="qty"><b class="js-kpi-qty" data-key="think">10</b>/<span class="js-kpi-total" data-key="think">600</span></span>
                   </div>
 
+                  <div class="hero-discipline">
+                    <span class="ico">📊</span>
+                    <div class="body">
+                      <div class="head">Дисциплина «нет денег → частичка» <span class="js-disc-pct">75%</span> <span class="norm">норма ≥85%</span> <span class="js-disc-status warn">⚠ ниже нормы</span></div>
+                      <div class="meta">Из <b class="js-disc-base">70</b> встреч где не взяли полную — частичку взяли в <b class="js-disc-taken">53</b> → <b class="js-disc-lost" style="color:#ff8478;">17 встреч</b> клоузер отпустил без денег (нарушение скрипта)</div>
+                    </div>
+                  </div>
+
                   <div class="hero-sum">
-                    <b class="js-hero-sum-formula">30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
-                    🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
+                    <b class="js-hero-sum-formula">30% = 23.3% + 5% + 1.7%</b> · 3 источника продажи (полная и частичка в моменте = один стандарт скрипта)<br>
+                    🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
                   </div>
                 </div>
 
@@ -7358,96 +7415,17 @@
                     <span></span>
                     <span>Клоузер · цикл</span>
                     <span class="h-leads">Лидов</span>
-                    <span class="h-mic" title="Полная в моменте">💰</span>
-                    <span class="h-mic" title="Частичка → Полная">🤝</span>
+                    <span class="h-mic" title="Закрыл в звонке (полная или частичка в моменте)">💸</span>
                     <span class="h-mic" title="Обещание → Продажа">📅</span>
-                    <span class="h-mic" title="Думают → Продажа">🤔</span>
+                    <span class="h-mic" title="Думают → Reopen → Продажа">🤔</span>
                     <span class="h-pct">Σ</span>
+                    <span class="h-disc" title="Дисциплина «нет денег → частичка», норма ≥85%">📊</span>
                   </div>
-                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
-                    <span class="rank">①</span>
-                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">цикл 21ч</small></span>
-                    <span class="leads">25 <small>лид</small></span>
-                    <span class="micro full">80</span>
-                    <span class="micro part">8</span>
-                    <span class="micro promise">3</span>
-                    <span class="micro think dim">1</span>
-                    <span class="pct">92% <small style="color:#30d158">▲+4</small></span>
-                  </div>
-                  <div class="mc-team-row over" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
-                    <span class="rank">②</span>
-                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">20ч</small></span>
-                    <span class="leads">50 <small>лид</small></span>
-                    <span class="micro full">70</span>
-                    <span class="micro part">12</span>
-                    <span class="micro promise">5</span>
-                    <span class="micro think dim">1</span>
-                    <span class="pct">88% <small style="color:#30d158">▲+2</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
-                    <span class="rank">③</span>
-                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">26ч</small></span>
-                    <span class="leads">70 <small>лид</small></span>
-                    <span class="micro full">65</span>
-                    <span class="micro part">13</span>
-                    <span class="micro promise">5</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">85% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
-                    <span class="rank">④</span>
-                    <span class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small></span>
-                    <span class="leads">75 <small>лид</small></span>
-                    <span class="micro full">60</span>
-                    <span class="micro part">15</span>
-                    <span class="micro promise">6</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">83% <small style="color:#ff453a">▼-2</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
-                    <span class="rank">⑤</span>
-                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">72ч</small></span>
-                    <span class="leads">80 <small>лид</small></span>
-                    <span class="micro full">55</span>
-                    <span class="micro part">16</span>
-                    <span class="micro promise">7</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">80% <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
-                    <span class="rank">⑥</span>
-                    <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">93ч</small></span>
-                    <span class="leads">85 <small>лид</small></span>
-                    <span class="micro full">50</span>
-                    <span class="micro part">18</span>
-                    <span class="micro promise">7</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">77% <small style="color:#30d158">▲+1</small></span>
-                  </div>
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
-                    <span class="rank">⚠</span>
-                    <span class="name">Яковлева А. <small style="color:rgba(255,255,255,0.4)">94ч</small></span>
-                    <span class="leads">95 <small>лид</small></span>
-                    <span class="micro full">40</span>
-                    <span class="micro part">18</span>
-                    <span class="micro promise">8</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">68% <small style="color:#ff453a">▼-5</small></span>
-                  </div>
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
-                    <span class="rank">⚠</span>
-                    <span class="name">Ляшенко А. <small style="color:rgba(255,255,255,0.4)">49ч</small></span>
-                    <span class="leads">120 <small>лид</small></span>
-                    <span class="micro full">30</span>
-                    <span class="micro part">15</span>
-                    <span class="micro promise">6</span>
-                    <span class="micro think">2</span>
-                    <span class="pct">53% <small style="color:#ff453a">▼-8</small></span>
-                  </div>
+                  <!-- Строки клоузеров рендерятся через JS (renderClosersList) при инициализации + смене периода -->
                 </div>
 
                 <div class="mc-card-sub js-closers-insight" style="margin-top: 12px;">
-                  План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.
+                  План 30% ✓ · Σ = 💸 + 📅 + 🤔. У топов работает 💸 «закрыл в звонке» (Лим 88%, дисциплина 95%), у отстающих проседает всё (Ляшенко 45%, дисциплина 40%). Дисциплина «нет денег → частичка» по команде <b>75%</b> — ниже нормы ≥85%, главная зона роста.
                 </div>
               </div>
 
@@ -15147,87 +15125,92 @@
           num: '38%', qty: 38, total: 100,
           trend: '▲ +8пп', trendPeriod: 'ко вчера',
           decomp: {
-            full:    { pct: '17.0%', qty: 17, bar: 100 },
-            part:    { pct: '11.0%', qty: 11, bar: 73 },
-            promise: { pct: '8.0%',  qty: 8,  bar: 53 },
-            think:   { pct: '2.0%',  qty: 2,  bar: 13 },
+            full:    { pct: '28.0%', qty: 28, bar: 100 },
+            promise: { pct: '8.0%',  qty: 8,  bar: 100 },
+            think:   { pct: '2.0%',  qty: 2,  bar: 100 },
           },
-          formula: '38% = 17% + 11% + 8% + 2%',
+          dealFull: 17, dealPart: 11,
+          discipline: { pct: '92%', base: 22, taken: 20, lost: 2, status: 'ok',   statusText: '✓ норма' },
+          formula: '38% = 28% + 8% + 2%',
           reopen: 'Reopen rate 42%',
           cycle: '0,9 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за вчера',
-          closersTitle: 'Конверсия по клоузерам · за вчера · с разбивкой по дожимным статусам',
+          decompTitle: '↳ Декомпозиция · 3 источника продажи · за вчера',
+          closersTitle: 'Конверсия по клоузерам · за вчера · с разбивкой по источникам',
         },
         week: {
           num: '30%', qty: 179, total: 600,
           trend: '▲ +2пп', trendPeriod: 'к прошлой неделе',
           decomp: {
-            full:    { pct: '15.0%', qty: 90, bar: 100 },
-            part:    { pct: '8.3%',  qty: 50, bar: 55 },
-            promise: { pct: '5.0%',  qty: 30, bar: 33 },
-            think:   { pct: '1.7%',  qty: 10, bar: 11 },
+            full:    { pct: '23.3%', qty: 140, bar: 100 },
+            promise: { pct: '5.0%',  qty: 30,  bar: 100 },
+            think:   { pct: '1.7%',  qty: 10,  bar: 100 },
           },
-          formula: '30% = 15% + 8.3% + 5% + 1.7%',
+          dealFull: 90, dealPart: 50,
+          discipline: { pct: '75%', base: 70, taken: 53, lost: 17, status: 'warn', statusText: '⚠ ниже нормы' },
+          formula: '30% = 23.3% + 5% + 1.7%',
           reopen: 'Reopen rate 36%',
           cycle: '1,7 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам',
-          closersTitle: 'Конверсия по клоузерам · за неделю · с разбивкой по дожимным статусам',
+          decompTitle: '↳ Декомпозиция · 3 источника продажи',
+          closersTitle: 'Конверсия по клоузерам · за неделю · с разбивкой по источникам',
         },
         month: {
           num: '28%', qty: 720, total: 2580,
           trend: '▼ -1пп', trendPeriod: 'к прошлому месяцу',
           decomp: {
-            full:    { pct: '14.0%', qty: 360, bar: 93 },
-            part:    { pct: '8.0%',  qty: 206, bar: 53 },
-            promise: { pct: '4.5%',  qty: 116, bar: 30 },
-            think:   { pct: '1.5%',  qty: 38,  bar: 10 },
+            full:    { pct: '22.0%', qty: 566, bar: 100 },
+            promise: { pct: '4.5%',  qty: 116, bar: 90 },
+            think:   { pct: '1.5%',  qty: 38,  bar: 100 },
           },
-          formula: '28% = 14% + 8% + 4.5% + 1.5%',
+          dealFull: 360, dealPart: 206,
+          discipline: { pct: '68%', base: 320, taken: 218, lost: 102, status: 'warn', statusText: '⚠ системная просадка' },
+          formula: '28% = 22% + 4.5% + 1.5%',
           reopen: 'Reopen rate 33%',
           cycle: '1,9 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за месяц',
-          closersTitle: 'Конверсия по клоузерам · за месяц · с разбивкой по дожимным статусам',
+          decompTitle: '↳ Декомпозиция · 3 источника продажи · за месяц',
+          closersTitle: 'Конверсия по клоузерам · за месяц · с разбивкой по источникам',
         },
       };
 
-      // Клоузеры — массивы для разных периодов. Цикл: full+part+promise+think ≈ Σ
+      // Клоузеры — массивы для разных периодов.
+      // deal = «Закрыл в звонке» (полная + частичка, единый стандарт скрипта по фидбеку Роба)
+      // disc = дисциплина «нет денег → частичка»: % взятых частичек из встреч где не получилась полная
       const closersByPeriod = {
         day: [
-          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 18ч',   leads: 12, full: 87, part: 5,  promise: 2, think: 1, total: '95%', trend: '▲+5',  trendCol: '#30d158', cls: 'over' },
-          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '19ч',        leads: 14, full: 75, part: 8,  promise: 5, think: 2, total: '90%', trend: '▲+2',  trendCol: '#30d158', cls: 'over' },
-          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '24ч',        leads: 13, full: 70, part: 8,  promise: 5, think: 2, total: '85%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '' },
-          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '120ч ⚠',     leads: 11, full: 55, part: 12, promise: 6, think: 2, total: '75%', trend: '▼-8',  trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
-          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '60ч',        leads: 13, full: 50, part: 13, promise: 5, think: 2, total: '70%', trend: '▼-10', trendCol: '#ff453a', cls: '' },
-          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '80ч',        leads: 14, full: 45, part: 13, promise: 5, think: 2, total: '65%', trend: '▼-12', trendCol: '#ff453a', cls: '' },
-          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '100ч',       leads: 11, full: 18, part: 10, promise: 5, think: 2, total: '35%', trend: '▼-33', trendCol: '#ff453a', cls: 'under' },
-          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '40ч',        leads: 12, full: 15, part: 8,  promise: 5, think: 2, total: '30%', trend: '▼-23', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 18ч',   leads: 12,  deal: 92, promise: 2, think: 1, total: '95%', trend: '▲+5',  trendCol: '#30d158', cls: 'over',  disc: '95', discCls: 'good' },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '19ч',        leads: 14,  deal: 83, promise: 5, think: 2, total: '90%', trend: '▲+2',  trendCol: '#30d158', cls: 'over',  disc: '90', discCls: 'good' },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '24ч',        leads: 13,  deal: 78, promise: 5, think: 2, total: '85%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '', disc: '85', discCls: 'good' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '120ч ⚠',     leads: 11,  deal: 67, promise: 6, think: 2, total: '75%', trend: '▼-8',  trendCol: '#ff453a', cls: '',     disc: '70', discCls: 'mid', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '60ч',        leads: 13,  deal: 63, promise: 5, think: 2, total: '70%', trend: '▼-10', trendCol: '#ff453a', cls: '',     disc: '60', discCls: 'mid' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '80ч',        leads: 14,  deal: 58, promise: 5, think: 2, total: '65%', trend: '▼-12', trendCol: '#ff453a', cls: '',     disc: '55', discCls: 'bad' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '100ч',       leads: 11,  deal: 28, promise: 5, think: 2, total: '35%', trend: '▼-33', trendCol: '#ff453a', cls: 'under', disc: '50', discCls: 'bad' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '40ч',        leads: 12,  deal: 23, promise: 5, think: 2, total: '30%', trend: '▼-23', trendCol: '#ff453a', cls: 'under', disc: '40', discCls: 'bad' },
         ],
         week: [
-          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 21ч',   leads: 25,  full: 80, part: 8,  promise: 3, think: 1, total: '92%', trend: '▲+4', trendCol: '#30d158', cls: 'over', dim4: true },
-          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '20ч',        leads: 50,  full: 70, part: 12, promise: 5, think: 1, total: '88%', trend: '▲+2', trendCol: '#30d158', cls: 'over', dim4: true },
-          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '26ч',        leads: 70,  full: 65, part: 13, promise: 5, think: 2, total: '85%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
-          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '171ч ⚠',     leads: 75,  full: 60, part: 15, promise: 6, think: 2, total: '83%', trend: '▼-2', trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
-          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '72ч',        leads: 80,  full: 55, part: 16, promise: 7, think: 2, total: '80%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
-          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '93ч',        leads: 85,  full: 50, part: 18, promise: 7, think: 2, total: '77%', trend: '▲+1', trendCol: '#30d158', cls: '' },
-          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '94ч',        leads: 95,  full: 40, part: 18, promise: 8, think: 2, total: '68%', trend: '▼-5', trendCol: '#ff453a', cls: 'under' },
-          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '49ч',        leads: 120, full: 30, part: 15, promise: 6, think: 2, total: '53%', trend: '▼-8', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 21ч',   leads: 25,  deal: 88, promise: 3, think: 1, total: '92%', trend: '▲+4',  trendCol: '#30d158', cls: 'over',  disc: '95', discCls: 'good', dim4: true },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '20ч',        leads: 50,  deal: 82, promise: 5, think: 1, total: '88%', trend: '▲+2',  trendCol: '#30d158', cls: 'over',  disc: '85', discCls: 'good', dim4: true },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '26ч',        leads: 70,  deal: 78, promise: 5, think: 2, total: '85%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '', disc: '80', discCls: 'mid' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '171ч ⚠',     leads: 75,  deal: 75, promise: 6, think: 2, total: '83%', trend: '▼-2',  trendCol: '#ff453a', cls: '',     disc: '70', discCls: 'mid', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '72ч',        leads: 80,  deal: 71, promise: 7, think: 2, total: '80%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '', disc: '60', discCls: 'mid' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '93ч',        leads: 85,  deal: 68, promise: 7, think: 2, total: '77%', trend: '▲+1',  trendCol: '#30d158', cls: '',     disc: '55', discCls: 'bad' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '94ч',        leads: 95,  deal: 58, promise: 8, think: 2, total: '68%', trend: '▼-5',  trendCol: '#ff453a', cls: 'under', disc: '50', discCls: 'bad' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '49ч',        leads: 120, deal: 45, promise: 6, think: 2, total: '53%', trend: '▼-8',  trendCol: '#ff453a', cls: 'under', disc: '40', discCls: 'bad' },
         ],
         month: [
-          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 22ч',   leads: 105, full: 78, part: 9,  promise: 3, think: 1, total: '91%', trend: '▲+3', trendCol: '#30d158', cls: 'over', dim4: true },
-          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '21ч',        leads: 215, full: 68, part: 13, promise: 5, think: 1, total: '87%', trend: '▲+1', trendCol: '#30d158', cls: 'over', dim4: true },
-          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '28ч',        leads: 295, full: 64, part: 13, promise: 5, think: 2, total: '84%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
-          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '180ч ⚠',     leads: 320, full: 58, part: 15, promise: 6, think: 2, total: '81%', trend: '▼-3', trendCol: '#ff453a', cls: '', cycleColor: '#ff9f0a' },
-          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '78ч',        leads: 340, full: 53, part: 16, promise: 7, think: 2, total: '78%', trend: '▼-1', trendCol: '#ff453a', cls: '' },
-          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '95ч',        leads: 360, full: 48, part: 18, promise: 7, think: 2, total: '75%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '' },
-          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '99ч',        leads: 405, full: 38, part: 18, promise: 8, think: 2, total: '66%', trend: '▼-4', trendCol: '#ff453a', cls: 'under' },
-          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '52ч',        leads: 510, full: 28, part: 15, promise: 6, think: 2, total: '51%', trend: '▼-6', trendCol: '#ff453a', cls: 'under' },
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 22ч',   leads: 105, deal: 87, promise: 3, think: 1, total: '91%', trend: '▲+3', trendCol: '#30d158', cls: 'over',  disc: '93', discCls: 'good', dim4: true },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '21ч',        leads: 215, deal: 81, promise: 5, think: 1, total: '87%', trend: '▲+1', trendCol: '#30d158', cls: 'over',  disc: '83', discCls: 'mid', dim4: true },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '28ч',        leads: 295, deal: 77, promise: 5, think: 2, total: '84%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '', disc: '78', discCls: 'mid' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '180ч ⚠',     leads: 320, deal: 73, promise: 6, think: 2, total: '81%', trend: '▼-3', trendCol: '#ff453a', cls: '',     disc: '68', discCls: 'mid', cycleColor: '#ff9f0a' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '78ч',        leads: 340, deal: 69, promise: 7, think: 2, total: '78%', trend: '▼-1', trendCol: '#ff453a', cls: '',     disc: '58', discCls: 'bad' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '95ч',        leads: 360, deal: 66, promise: 7, think: 2, total: '75%', trend: '→0',  trendCol: 'rgba(255,255,255,0.4)', cls: '', disc: '52', discCls: 'bad' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '99ч',        leads: 405, deal: 56, promise: 8, think: 2, total: '66%', trend: '▼-4', trendCol: '#ff453a', cls: 'under', disc: '48', discCls: 'bad' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '52ч',        leads: 510, deal: 43, promise: 6, think: 2, total: '51%', trend: '▼-6', trendCol: '#ff453a', cls: 'under', disc: '38', discCls: 'bad' },
         ],
       };
 
       const closersInsightByPeriod = {
-        day: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (топ дня), Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> и <b style="color:#ff8478">Ляшенко 30%</b> провалили день — режем поток + 1:1 утром. Марченко -10пп и Мифтахов -12пп — сигнал к проверке.',
-        week: 'План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.',
-        month: 'План 28% ▼ · общая просадка к прошлому месяцу −1пп. Сильные стабильны (Лим 91%, Гальков 87%), но отстающие тянут вниз (Ляшенко 51%, Яковлева 66%). Высокий объём лидов у слабых (Ляшенко 510 лидов = 18% от общего потока) — задача месяца: <b style="color:#fff">перебалансировать поток</b>.',
+        day: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (закрытий в звонке 92%, дисциплина 95% ✓). Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> (дисциплина 50%) и <b style="color:#ff8478">Ляшенко 30%</b> (дисциплина 40%) провалили день — режем поток + 1:1 утром. <b>Дисциплина команды за вчера 92% ✓</b> — лучше чем за неделю.',
+        week: 'План 30% ✓ · Σ = 💸 + 📅 + 🤔. У топов работает 💸 «закрыл в звонке» (Лим 88%, дисциплина 95%), у отстающих проседает всё (Ляшенко 45%, дисциплина 40%). <b style="color:#ff8478">Дисциплина команды 75%</b> — ниже нормы ≥85%, главная зона роста через тренинг скрипта «нет денег → частичка».',
+        month: 'План 28% ▼ · общая просадка к прошлому месяцу −1пп. Сильные стабильны (Лим 91%, Гальков 87%), но отстающие тянут вниз (Ляшенко 51%, Яковлева 66%). <b style="color:#ff8478">Дисциплина команды 68%</b> — системная проблема, теряем ~102 встречи в месяц где клиента «отпустили без денег». Задача месяца: <b style="color:#fff">тренинг скрипта частички + перебалансировать поток</b> (Ляшенко 510 лидов = 18% потока).',
       };
 
       function renderClosersList(period) {
@@ -15240,12 +15223,11 @@
         list.querySelectorAll('.mc-team-row').forEach(r => r.remove());
         // Сохраняем head
         const head = list.querySelector('.mc-team-head');
-        // Рендерим строки клоузеров
+        // Рендерим строки клоузеров (3 микро-колонки + Σ + дисциплина скрипта)
         closers.forEach(c => {
           const cycleHtml = c.cycleColor
             ? `<small style="color:${c.cycleColor}">${c.cycle}</small>`
             : `<small style="color:rgba(255,255,255,0.4)">${c.cycle}</small>`;
-          const trendDim = c.trendCol === 'rgba(255,255,255,0.4)';
           const trendHtml = `<small style="color:${c.trendCol}">${c.trend}</small>`;
           const dim4 = c.dim4 ? ' dim' : '';
           const row = document.createElement('div');
@@ -15255,11 +15237,11 @@
             <span class="rank">${c.rank}</span>
             <span class="name">${c.name} ${cycleHtml}</span>
             <span class="leads">${c.leads} <small>лид</small></span>
-            <span class="micro full">${c.full}</span>
-            <span class="micro part">${c.part}</span>
+            <span class="micro full">${c.deal}</span>
             <span class="micro promise">${c.promise}</span>
             <span class="micro think${dim4}">${c.think}</span>
             <span class="pct">${c.total} ${trendHtml}</span>
+            <span class="disc ${c.discCls}">${c.disc}</span>
           `;
           list.appendChild(row);
         });
@@ -15297,8 +15279,8 @@
           else trendEl.style.color = 'rgba(255,255,255,0.55)';
         }
 
-        // 4 декомпозиции
-        ['full', 'part', 'promise', 'think'].forEach(key => {
+        // 3 декомпозиции (после изменения по фидбеку Роба)
+        ['full', 'promise', 'think'].forEach(key => {
           const d = data.decomp[key];
           if (!d) return;
           const pctEl = document.querySelector(`.js-kpi-pct[data-key="${key}"]`);
@@ -15310,6 +15292,43 @@
           if (totalEl) totalEl.textContent = data.total;
           if (barEl) barEl.style.width = d.bar + '%';
         });
+
+        // Подбивка под «Закрыл в звонке»: полная vs частичка
+        const dealFullEl = document.querySelector('.js-deal-full');
+        const dealPartEl = document.querySelector('.js-deal-part');
+        if (dealFullEl) dealFullEl.textContent = data.dealFull;
+        if (dealPartEl) dealPartEl.textContent = data.dealPart;
+        // Обновим проценты внутри подбивки (sibling spans)
+        const dealTotal = data.dealFull + data.dealPart;
+        if (dealTotal > 0) {
+          const fullPct = Math.round((data.dealFull / dealTotal) * 100);
+          const partPct = 100 - fullPct;
+          const fullPctEl = dealFullEl?.parentElement?.querySelector('span[style*="rgba(255,255,255,0.35)"]');
+          const partPctEl = dealPartEl?.parentElement?.querySelector('span[style*="rgba(255,255,255,0.35)"]');
+          if (fullPctEl) fullPctEl.textContent = `(${fullPct}%)`;
+          if (partPctEl) partPctEl.textContent = `(${partPct}%)`;
+        }
+
+        // Дисциплина скрипта
+        if (data.discipline) {
+          const d = data.discipline;
+          const pctEl = document.querySelector('.js-disc-pct');
+          const baseEl = document.querySelector('.js-disc-base');
+          const takenEl = document.querySelector('.js-disc-taken');
+          const lostEl = document.querySelector('.js-disc-lost');
+          const statusEl = document.querySelector('.js-disc-status');
+          if (pctEl) {
+            pctEl.textContent = d.pct;
+            pctEl.style.color = d.status === 'ok' ? '#30d158' : '#ff9f0a';
+          }
+          if (baseEl) baseEl.textContent = d.base;
+          if (takenEl) takenEl.textContent = d.taken;
+          if (lostEl) lostEl.textContent = d.lost;
+          if (statusEl) {
+            statusEl.textContent = d.statusText;
+            statusEl.className = 'js-disc-status ' + d.status;
+          }
+        }
 
         // Список клоузеров
         renderClosersList(period);
@@ -17555,6 +17574,11 @@
       // Проверка при первой загрузке (если default-роль закроется на closer когда-нибудь)
       checkD0RulesDailyReminder();
       applyRuleBannerState();
+
+      // Первичный рендер списка клоузеров через JS (с дефолтным периодом «Неделя»)
+      if (typeof setPeriod === 'function') {
+        setPeriod('week');
+      }
     </script>
 
     <!-- ═══════════════ ТЕКСТЫ ПРОМТОВ (хранятся как text/plain, JS подставляет в textarea) ═══════════════ -->
