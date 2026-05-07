@@ -3725,7 +3725,7 @@
       }
       .bills-row {
         display: grid;
-        grid-template-columns: 1.6fr 70px 70px 90px 90px 70px;
+        grid-template-columns: 1.6fr 60px 60px 80px 80px 60px 80px;
         gap: 10px; align-items: center;
         padding: 9px 14px;
         font-size: 12px;
@@ -3801,6 +3801,47 @@
         font-style: italic;
         white-space: nowrap;
       }
+
+      /* ── Полоса активности по счетам (Касаний/счёт) ── */
+      .bills-touch-strip {
+        margin-top: 8px;
+        padding: 12px 14px;
+        background: linear-gradient(90deg, rgba(82,167,255,0.06) 0%, rgba(82,167,255,0.02) 100%);
+        border: 1px solid rgba(82,167,255,0.20);
+        border-left: 3px solid #52a7ff;
+        border-radius: 8px;
+        display: flex; align-items: center; gap: 14px;
+        flex-wrap: wrap;
+      }
+      .bills-touch-strip .ico { font-size: 18px; line-height: 1; color: #52a7ff; }
+      .bills-touch-strip .label {
+        font-size: 11px; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        color: #52a7ff;
+        white-space: nowrap;
+      }
+      .bills-touch-strip .body {
+        font-size: 12px;
+        color: rgba(255,255,255,0.85);
+        flex: 1;
+        line-height: 1.6;
+      }
+      .bills-touch-strip .body .group { display: block; margin: 1px 0; }
+      .bills-touch-strip .body .group b { color: #fff; font-weight: 600; }
+      .bills-touch-strip .body .who-good { color: #30d158; font-weight: 600; }
+      .bills-touch-strip .body .who-mid  { color: #ff9f0a; font-weight: 600; }
+      .bills-touch-strip .body .who-bad  { color: #ff8478; font-weight: 600; }
+      .bills-touch-strip .rule {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.50);
+        font-style: italic;
+        white-space: nowrap;
+      }
+
+      /* Цвета для колонки «Касаний» в таблице */
+      .bills-row .v.touch.good { color: #30d158; font-weight: 700; }
+      .bills-row .v.touch.mid  { color: #ff9f0a; font-weight: 700; }
+      .bills-row .v.touch.bad  { color: #ff453a; font-weight: 700; }
       .bills-row .v {
         text-align: right; font-feature-settings: "tnum";
         color: rgba(255,255,255,0.85);
@@ -7435,6 +7476,7 @@
                     <div class="v">Счёт→оплата<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥60%</span></div>
                     <div class="v">Просрочено<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≤15%</span></div>
                     <div class="v">72ч+<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
+                    <div class="v">Касаний/счёт<br><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥3</span></div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
@@ -7444,6 +7486,7 @@
                     <div class="pct-cell good">69%</div>
                     <div class="v zero">1</div>
                     <div class="v zero">0</div>
+                    <div class="v touch good">5.2</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
@@ -7453,6 +7496,7 @@
                     <div class="pct-cell good">64%</div>
                     <div class="v zero">2</div>
                     <div class="v zero">0</div>
+                    <div class="v touch good">4.8</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
@@ -7462,6 +7506,7 @@
                     <div class="pct-cell good">63%</div>
                     <div class="v zero">1</div>
                     <div class="v zero">0</div>
+                    <div class="v touch good">3.5</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
@@ -7471,6 +7516,7 @@
                     <div class="pct-cell warn">43%</div>
                     <div class="v warn">1</div>
                     <div class="v warn">1</div>
+                    <div class="v touch mid">2.8</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
@@ -7480,6 +7526,7 @@
                     <div class="pct-cell warn">43%</div>
                     <div class="v warn">1</div>
                     <div class="v zero">0</div>
+                    <div class="v touch mid">2.5</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
@@ -7489,6 +7536,7 @@
                     <div class="pct-cell warn">40%</div>
                     <div class="v warn">1</div>
                     <div class="v zero">0</div>
+                    <div class="v touch mid">2.3</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
@@ -7498,6 +7546,7 @@
                     <div class="pct-cell bad">23%</div>
                     <div class="v bad">6</div>
                     <div class="v warn">1</div>
+                    <div class="v touch bad">1.2</div>
                   </div>
 
                   <div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
@@ -7507,6 +7556,7 @@
                     <div class="pct-cell bad">23%</div>
                     <div class="v bad">10</div>
                     <div class="v bad">2</div>
+                    <div class="v touch bad">0.5</div>
                   </div>
                 </div>
 
@@ -7520,6 +7570,20 @@
                     <b>3 клоузера</b> в блоке: <span class="who">Ляшенко</span> (10 просрочек + 2 «72ч+») · <span class="who">Яковлева</span> (6 просрочек + 1 «72ч+») · <span class="who">Петрова</span> (1 «72ч+»)
                   </div>
                   <div class="rule">Условия: просрочек ≥5 ИЛИ 72ч+ &gt;0</div>
+                </div>
+
+                <!-- 🚥 Активность по счетам: кто дожимает, кто бросает -->
+                <div class="bills-touch-strip">
+                  <div class="ico">🚥</div>
+                  <div>
+                    <div class="label">Активность по счетам</div>
+                  </div>
+                  <div class="body">
+                    <span class="group"><b>🟢 Активные дожимщики</b> (≥3.5 касаний/счёт): <span class="who-good">Лим 5.2</span> · <span class="who-good">Гальков 4.8</span> · <span class="who-good">Алиев 3.5</span></span>
+                    <span class="group"><b>🟡 Средние</b> (2.0–3.5): <span class="who-mid">Петрова 2.8</span> · <span class="who-mid">Марченко 2.5</span> · <span class="who-mid">Мифтахов 2.3</span></span>
+                    <span class="group"><b>🔴 Бросают счета</b> (&lt;2): <span class="who-bad">Яковлева 1.2</span> · <span class="who-bad">Ляшенко 0.5</span> — отправляют счёт и не возвращаются</span>
+                  </div>
+                  <div class="rule">Норма: ≥3 касаний/счёт</div>
                 </div>
 
                 <div class="mc-card-sub" style="margin-top: 10px;">
