@@ -3945,6 +3945,55 @@
         font-style: italic;
       }
 
+      /* ── Воронка прихода + финальные статусы в плитке Сделок в работе (2x2 + 5 финалов) ── */
+      .mc-funnel-section {
+        margin-top: 12px;
+      }
+      .mc-funnel-title {
+        font-size: 9.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        color: rgba(255,255,255,0.45);
+        margin-bottom: 6px;
+      }
+      .mc-funnel-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        font-feature-settings: "tnum";
+      }
+      .mc-funnel-cell {
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 6px;
+        border-left: 3px solid rgba(255,255,255,0.15);
+      }
+      .mc-funnel-cell.good { border-left-color: #30d158; }
+      .mc-funnel-cell.warn { border-left-color: #ff9f0a; }
+      .mc-funnel-cell.bad  { border-left-color: #ff453a; }
+      .mc-funnel-cell .num {
+        font-size: 18px; font-weight: 800;
+        color: #fff;
+        line-height: 1;
+      }
+      .mc-funnel-cell.bad  .num { color: #ff8478; }
+      .mc-funnel-cell.good .num { color: #30d158; }
+      .mc-funnel-cell .lbl {
+        font-size: 10px;
+        color: rgba(255,255,255,0.65);
+        margin-top: 3px;
+      }
+      .mc-funnel-cell .pct {
+        font-size: 9.5px;
+        font-weight: 600;
+        margin-top: 2px;
+        color: rgba(255,255,255,0.55);
+      }
+      .mc-funnel-cell.good .pct { color: #ff9f0a; }
+      .mc-funnel-cell.bad  .pct { color: #ff453a; }
+
       /* ── 📋 Расхождения · Расторги · Сливы — финансовый контур (плитка Row 7) ── */
       .fin-violations {
         margin-top: 12px;
@@ -7647,41 +7696,72 @@
                 </div>
               </div>
 
-              <!-- 💼 Сделок в работе (по 5 статусам A1/A2a/A2b/B/C) -->
+              <!-- 💼 Сделок в работе (воронка прихода + 5 финальных статусов состоявшихся + Недозвон) -->
               <div class="mc-card col-3 accent-purple" onclick="switchTab('calls')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">💼</div>
-                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 5 статусов</span></div>
-                <div class="mc-card-value">142<small>· команда</small></div>
-                <div class="mc-status-grid cells-5">
-                  <div class="ms-cell ok">
-                    <div class="ms-num">48</div>
-                    <div class="ms-lbl">Продажа в звонке</div>
-                    <div class="ms-pct">34%</div>
-                  </div>
-                  <div class="ms-cell ok">
-                    <div class="ms-num">32</div>
-                    <div class="ms-lbl">Частичка</div>
-                    <div class="ms-pct">23%</div>
-                  </div>
-                  <div class="ms-cell warn">
-                    <div class="ms-num">28</div>
-                    <div class="ms-lbl">Обещание</div>
-                    <div class="ms-pct">20%</div>
-                  </div>
-                  <div class="ms-cell info-soft">
-                    <div class="ms-num">22</div>
-                    <div class="ms-lbl">Думают</div>
-                    <div class="ms-pct">15%</div>
-                  </div>
-                  <div class="ms-cell muted">
-                    <div class="ms-num">12</div>
-                    <div class="ms-lbl">Отказ</div>
-                    <div class="ms-pct">8%</div>
+                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · воронка прихода + 5 финалов + Недозвон</span></div>
+                <div class="mc-card-value">142<small>· состоялось · из 160 назначенных</small></div>
+
+                <!-- 🚪 Верхняя воронка: трипваеры → встречи → состоялось/недозвон -->
+                <div class="mc-funnel-section">
+                  <div class="mc-funnel-title">🚪 Воронка прихода</div>
+                  <div class="mc-funnel-grid">
+                    <div class="mc-funnel-cell">
+                      <div class="num">600</div>
+                      <div class="lbl">🎯 Трипваеры</div>
+                    </div>
+                    <div class="mc-funnel-cell">
+                      <div class="num">160</div>
+                      <div class="lbl">📅 Назначено встреч</div>
+                    </div>
+                    <div class="mc-funnel-cell bad">
+                      <div class="num">18</div>
+                      <div class="lbl">📵 Недозвон</div>
+                      <div class="pct">11% ⚠ норма ≤10%</div>
+                    </div>
+                    <div class="mc-funnel-cell good">
+                      <div class="num">142</div>
+                      <div class="lbl">✅ Состоялось</div>
+                      <div class="pct">89% ⚠ норма ≥90%</div>
+                    </div>
                   </div>
                 </div>
+
+                <!-- ✅ Финальные статусы состоявшихся встреч (5 ячеек, сумма = 100%) -->
+                <div class="mc-funnel-section">
+                  <div class="mc-funnel-title">✅ Финал · 5 статусов из 142 состоявшихся</div>
+                  <div class="mc-status-grid cells-5">
+                    <div class="ms-cell ok">
+                      <div class="ms-num">48</div>
+                      <div class="ms-lbl">Продажа в звонке</div>
+                      <div class="ms-pct">34%</div>
+                    </div>
+                    <div class="ms-cell ok">
+                      <div class="ms-num">32</div>
+                      <div class="ms-lbl">Частичка</div>
+                      <div class="ms-pct">23%</div>
+                    </div>
+                    <div class="ms-cell warn">
+                      <div class="ms-num">28</div>
+                      <div class="ms-lbl">Обещание</div>
+                      <div class="ms-pct">20%</div>
+                    </div>
+                    <div class="ms-cell info-soft">
+                      <div class="ms-num">22</div>
+                      <div class="ms-lbl">Думают</div>
+                      <div class="ms-pct">15%</div>
+                    </div>
+                    <div class="ms-cell muted">
+                      <div class="ms-num">12</div>
+                      <div class="ms-lbl">Отказ</div>
+                      <div class="ms-pct">8%</div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="mc-card-sub">
-                  Продажа+Частичка+Обещание = <b>77%</b> работают · цель «Продажа в звонке» ≥25% (сейчас 34% ✓) · «Обещание» 20% — учим закреплять частичкой
+                  Продажа+Частичка+Обещание = <b>77%</b> состоявшихся работают · цель «Продажа в звонке» ≥25% (34% ✓) · «Обещание» 20% — учим закреплять частичкой. Недозвон 11% — выше нормы, разобрать с РОПом охотников.
                 </div>
               </div>
 
