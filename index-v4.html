@@ -3843,6 +3843,52 @@
       .bills-row .v.touch.mid  { color: #ff9f0a; font-weight: 700; }
       .bills-row .v.touch.bad  { color: #ff453a; font-weight: 700; }
 
+      /* ── 🔴🤖 AI-перехват качества встреч · объединённый блок (Виктория v5): Красные + Нарушения в 2 колонки ── */
+      .ai-quality-grid {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 16px;
+      }
+      .ai-quality-left, .ai-quality-right {
+        display: flex; flex-direction: column;
+      }
+      .ai-col-head {
+        margin-bottom: 8px;
+      }
+      .ai-col-title {
+        font-size: 11.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.85);
+      }
+      .ai-col-title small {
+        font-weight: 500;
+        font-size: 10px;
+        color: rgba(255,255,255,0.45);
+        text-transform: none;
+        letter-spacing: 0;
+        margin-left: 6px;
+      }
+      .ai-col-big {
+        display: flex; align-items: baseline; gap: 10px;
+        margin-bottom: 10px;
+        font-feature-settings: "tnum";
+      }
+      .ai-col-big .big-num {
+        font-size: 38px; font-weight: 200;
+        line-height: 1; letter-spacing: -0.02em;
+      }
+      .ai-col-big .big-num.red { color: #ff453a; }
+      .ai-col-big .sub {
+        font-size: 11px; color: rgba(255,255,255,0.60);
+      }
+
+      @media (max-width: 1100px) {
+        .ai-quality-grid { grid-template-columns: 1fr; }
+      }
+
       /* ── 🤖 AI · Нарушения регламента (плитка Row 6) ── */
       .ai-violations {
         margin-top: 12px;
@@ -3943,6 +3989,119 @@
       .ai-training .topic .quote {
         color: rgba(255,255,255,0.55);
         font-style: italic;
+      }
+
+      /* ── Сделок в работе (col-3 row-2 в стиле Виктории v5): шапка 600→179 + 3×3 grid + Думающие подблоком ── */
+      .deals-hero {
+        margin-top: 10px;
+        padding: 14px 16px;
+        background: linear-gradient(135deg, rgba(176,132,255,0.10) 0%, rgba(48,209,88,0.06) 100%);
+        border: 1px solid rgba(176,132,255,0.25);
+        border-radius: 10px;
+        display: flex; align-items: baseline; gap: 10px;
+        flex-wrap: wrap;
+        font-feature-settings: "tnum";
+      }
+      .deals-hero .big-num {
+        font-size: 42px; font-weight: 200;
+        line-height: 1; letter-spacing: -0.02em;
+      }
+      .deals-hero .big-num.blue { color: #b084ff; }
+      .deals-hero .big-num.green { color: #30d158; }
+      .deals-hero .arrow {
+        font-size: 22px; color: rgba(255,255,255,0.45);
+        font-weight: 300;
+      }
+      .deals-hero .suffix {
+        font-size: 12px; color: rgba(255,255,255,0.55);
+        margin-left: auto;
+      }
+
+      .deals-funnel-grid {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        font-feature-settings: "tnum";
+      }
+      .deals-cell {
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+      }
+      .deals-cell .num {
+        font-size: 22px; font-weight: 700;
+        line-height: 1;
+        color: #fff;
+      }
+      .deals-cell .lbl {
+        font-size: 11px; font-weight: 600;
+        color: rgba(255,255,255,0.85);
+        margin-top: 5px;
+      }
+      .deals-cell .sub {
+        font-size: 10px; font-weight: 500;
+        color: rgba(255,255,255,0.45);
+        margin-top: 2px;
+      }
+      .deals-cell.blue   { background: rgba(82,167,255,0.06);  border-color: rgba(82,167,255,0.20); }
+      .deals-cell.blue   .num { color: #52a7ff; }
+      .deals-cell.green  { background: rgba(48,209,88,0.06);  border-color: rgba(48,209,88,0.20); }
+      .deals-cell.green  .num { color: #30d158; }
+      .deals-cell.orange { background: rgba(255,159,10,0.06); border-color: rgba(255,159,10,0.20); }
+      .deals-cell.orange .num { color: #ff9f0a; }
+      .deals-cell.purple { background: rgba(176,132,255,0.06); border-color: rgba(176,132,255,0.20); }
+      .deals-cell.purple .num { color: #b084ff; }
+      .deals-cell.red    { background: rgba(255,69,58,0.06);  border-color: rgba(255,69,58,0.20); }
+      .deals-cell.red    .num { color: #ff453a; }
+      .deals-cell.muted  { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); }
+      .deals-cell.muted  .num { color: rgba(255,255,255,0.65); }
+
+      /* Думающие сделки как подблок внутри Сделок в работе */
+      .deals-think {
+        margin-top: 14px;
+        padding: 12px 14px;
+        background: rgba(176,132,255,0.05);
+        border: 1px solid rgba(176,132,255,0.18);
+        border-radius: 10px;
+      }
+      .deals-think .head {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 8px;
+      }
+      .deals-think .head .title {
+        font-size: 10.5px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.75);
+      }
+      .deals-think .head .title small {
+        font-weight: 500;
+        text-transform: none;
+        letter-spacing: 0;
+        color: rgba(255,255,255,0.45);
+        margin-left: 6px;
+      }
+      .deals-think .head .big-pct {
+        font-size: 22px; font-weight: 700;
+        color: #b084ff;
+        font-feature-settings: "tnum";
+      }
+      .deals-think .head .big-pct small {
+        font-size: 10.5px; font-weight: 500;
+        color: rgba(255,255,255,0.45);
+        margin-left: 4px;
+      }
+      .deals-think .reasons-head {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 6px;
+      }
+      .deals-think .think-reasons {
+        margin-bottom: 10px;
+      }
+      .deals-think .reopen-bar {
+        margin-top: 10px;
       }
 
       /* ── Воронка прихода + финальные статусы в плитке Сделок в работе (2x2 + 5 финалов) ── */
@@ -7696,115 +7855,114 @@
                 </div>
               </div>
 
-              <!-- 💼 Сделок в работе (воронка прихода + 5 финальных статусов состоявшихся + Недозвон) -->
-              <div class="mc-card col-3 accent-purple" onclick="switchTab('calls')">
+              <!-- 💼 Сделок в работе (col-3 row-2 — полная воронка 9 статусов + Думающие подблоком, в стиле Виктории v5) -->
+              <div class="mc-card col-3 row-2 accent-purple" onclick="switchTab('calls')">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">💼</div>
-                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · воронка прихода + 5 финалов + Недозвон</span></div>
-                <div class="mc-card-value">142<small>· состоялось · из 160 назначенных</small></div>
+                <div class="mc-card-label">Сделок в работе <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">команда · 9 статусов · полная воронка</span></div>
 
-                <!-- 🚪 Верхняя воронка: трипваеры → встречи → состоялось/недозвон -->
-                <div class="mc-funnel-section">
-                  <div class="mc-funnel-title">🚪 Воронка прихода</div>
-                  <div class="mc-funnel-grid">
-                    <div class="mc-funnel-cell">
-                      <div class="num">600</div>
-                      <div class="lbl">🎯 Трипваеры</div>
-                    </div>
-                    <div class="mc-funnel-cell">
-                      <div class="num">160</div>
-                      <div class="lbl">📅 Назначено встреч</div>
-                    </div>
-                    <div class="mc-funnel-cell bad">
-                      <div class="num">18</div>
-                      <div class="lbl">📵 Недозвон</div>
-                      <div class="pct">11% ⚠ норма ≤10%</div>
-                    </div>
-                    <div class="mc-funnel-cell good">
-                      <div class="num">142</div>
-                      <div class="lbl">✅ Состоялось</div>
-                      <div class="pct">89% ⚠ норма ≥90%</div>
-                    </div>
+                <!-- Шапка: 600 → 179 (Трипваеры → Продажи) — крупно, со стрелкой -->
+                <div class="deals-hero">
+                  <span class="big-num blue">600</span>
+                  <span class="arrow">→</span>
+                  <span class="big-num green">179</span>
+                  <span class="suffix">· трипваеры → продажи</span>
+                </div>
+
+                <!-- 9 статусов воронки в 3×3 grid -->
+                <div class="deals-funnel-grid">
+                  <!-- Ряд 1: вход воронки -->
+                  <div class="deals-cell blue">
+                    <div class="num">600</div>
+                    <div class="lbl">🎯 Трипваеры</div>
+                    <div class="sub">за неделю</div>
+                  </div>
+                  <div class="deals-cell blue">
+                    <div class="num">42</div>
+                    <div class="lbl">📅 Встреч сегодня</div>
+                    <div class="sub">по календарю</div>
+                  </div>
+                  <div class="deals-cell red">
+                    <div class="num">4</div>
+                    <div class="lbl">🚪 Не дошли</div>
+                    <div class="sub">10%</div>
+                  </div>
+                  <!-- Ряд 2: состоявшаяся встреча + переход в работу -->
+                  <div class="deals-cell green">
+                    <div class="num">38</div>
+                    <div class="lbl">✅ Состоялась</div>
+                    <div class="sub">90% дошло</div>
+                  </div>
+                  <div class="deals-cell purple">
+                    <div class="num">22</div>
+                    <div class="lbl">🤔 Думает</div>
+                    <div class="sub">15%</div>
+                  </div>
+                  <div class="deals-cell orange">
+                    <div class="num">28</div>
+                    <div class="lbl">📅 Обещание</div>
+                    <div class="sub">20%</div>
+                  </div>
+                  <!-- Ряд 3: финалы с деньгами + отказ -->
+                  <div class="deals-cell green">
+                    <div class="num">32</div>
+                    <div class="lbl">🤝 Частичка</div>
+                    <div class="sub">23%</div>
+                  </div>
+                  <div class="deals-cell green">
+                    <div class="num">48</div>
+                    <div class="lbl">💰 Продажа</div>
+                    <div class="sub">34%</div>
+                  </div>
+                  <div class="deals-cell muted">
+                    <div class="num">12</div>
+                    <div class="lbl">❌ Отказ</div>
+                    <div class="sub">8%</div>
                   </div>
                 </div>
 
-                <!-- ✅ Финальные статусы состоявшихся встреч (5 ячеек, сумма = 100%) -->
-                <div class="mc-funnel-section">
-                  <div class="mc-funnel-title">✅ Финал · 5 статусов из 142 состоявшихся</div>
-                  <div class="mc-status-grid cells-5">
-                    <div class="ms-cell ok">
-                      <div class="ms-num">48</div>
-                      <div class="ms-lbl">Продажа в звонке</div>
-                      <div class="ms-pct">34%</div>
+                <!-- Думающие сделки как подблок (Виктория v5) -->
+                <div class="deals-think">
+                  <div class="head">
+                    <span class="title">🤔 ДУМАЮЩИЕ СДЕЛКИ <small>до 14 дней</small></span>
+                    <span class="big-pct">22 <small>15% от встреч</small></span>
+                  </div>
+                  <div class="reasons-head">Топ-причины (выбраны клоузерами из справочника):</div>
+                  <div class="think-reasons">
+                    <div class="row">
+                      <span>Надо посоветоваться</span>
+                      <span class="bar"><span class="fill" style="width:100%"></span></span>
+                      <span class="cnt">7</span>
                     </div>
-                    <div class="ms-cell ok">
-                      <div class="ms-num">32</div>
-                      <div class="ms-lbl">Частичка</div>
-                      <div class="ms-pct">23%</div>
+                    <div class="row">
+                      <span>Не понимает банкротство</span>
+                      <span class="bar"><span class="fill" style="width:71%"></span></span>
+                      <span class="cnt">5</span>
                     </div>
-                    <div class="ms-cell warn">
-                      <div class="ms-num">28</div>
-                      <div class="ms-lbl">Обещание</div>
-                      <div class="ms-pct">20%</div>
+                    <div class="row">
+                      <span>Сравнивает с конкурентами</span>
+                      <span class="bar"><span class="fill" style="width:57%"></span></span>
+                      <span class="cnt">4</span>
                     </div>
-                    <div class="ms-cell info-soft">
-                      <div class="ms-num">22</div>
-                      <div class="ms-lbl">Думают</div>
-                      <div class="ms-pct">15%</div>
+                    <div class="row">
+                      <span>Боится последствий</span>
+                      <span class="bar"><span class="fill" style="width:43%"></span></span>
+                      <span class="cnt">3</span>
                     </div>
-                    <div class="ms-cell muted">
-                      <div class="ms-num">12</div>
-                      <div class="ms-lbl">Отказ</div>
-                      <div class="ms-pct">8%</div>
+                    <div class="row">
+                      <span>Сомневается в результате</span>
+                      <span class="bar"><span class="fill" style="width:43%"></span></span>
+                      <span class="cnt">3</span>
                     </div>
+                  </div>
+                  <div class="reopen-bar">
+                    <div class="big">36%</div>
+                    <div class="lbl"><b style="color:#fff">Reopen rate</b><br><span style="font-size:10.5px">Думают → Продажа · вытаскивание · норма ≥30% ✓</span></div>
                   </div>
                 </div>
 
-                <div class="mc-card-sub">
-                  Продажа+Частичка+Обещание = <b>77%</b> состоявшихся работают · цель «Продажа в звонке» ≥25% (34% ✓) · «Обещание» 20% — учим закреплять частичкой. Недозвон 11% — выше нормы, разобрать с РОПом охотников.
-                </div>
-              </div>
-
-
-              <!-- 🤔 Думающие сделки (B) — причины + Reopen rate (поднято в верхний ряд: деньги в работе) -->
-              <div class="mc-card col-3 accent-purple" onclick="showToast('Список B-сделок с причинами')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🤔</div>
-                <div class="mc-card-label">Думающие сделки <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">до 14 дней</span></div>
-                <div class="mc-card-value" style="color: #b084ff">22<small>· 15% от встреч</small></div>
-                <div class="mc-card-sub">
-                  Топ-причины думания (выбраны клоузерами из справочника):
-                </div>
-                <div class="think-reasons">
-                  <div class="row">
-                    <span>Надо посоветоваться</span>
-                    <span class="bar"><span class="fill" style="width:100%"></span></span>
-                    <span class="cnt">7</span>
-                  </div>
-                  <div class="row">
-                    <span>Не понимает банкротство</span>
-                    <span class="bar"><span class="fill" style="width:71%"></span></span>
-                    <span class="cnt">5</span>
-                  </div>
-                  <div class="row">
-                    <span>Сравнивает с конкурентами</span>
-                    <span class="bar"><span class="fill" style="width:57%"></span></span>
-                    <span class="cnt">4</span>
-                  </div>
-                  <div class="row">
-                    <span>Боится последствий</span>
-                    <span class="bar"><span class="fill" style="width:43%"></span></span>
-                    <span class="cnt">3</span>
-                  </div>
-                  <div class="row">
-                    <span>Сомневается в результате</span>
-                    <span class="bar"><span class="fill" style="width:43%"></span></span>
-                    <span class="cnt">3</span>
-                  </div>
-                </div>
-                <div class="reopen-bar">
-                  <div class="big">36%</div>
-                  <div class="lbl"><b style="color:#fff">Reopen rate</b><br><span style="font-size:10.5px">Думают → Продажа · вытаскивание · норма ≥30% ✓</span></div>
+                <div class="mc-card-sub" style="margin-top: 12px;">
+                  Продажа+Частичка+Обещание = <b>77%</b> состоявшихся работают · «Продажа в звонке» 34% ≥25% ✓ · «Обещание» 20% — учим закреплять частичкой
                 </div>
               </div>
 
@@ -8087,134 +8245,100 @@
                 </div>
               </div>
 
-              <!-- 📞 A2 в работе (A2a + A2b с конверсиями) -->
-              <div class="mc-card col-3 accent-blue" onclick="showToast('Подкатегории A2 с конверсиями')">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">📞</div>
-                <div class="mc-card-label">A2 в работе</div>
-                <div class="mc-card-value">60<small>· ждём оплату</small></div>
-                <div class="a2-split">
-                  <div class="a2-row a2a">
-                    <div class="a2-head">
-                      <span><b>32</b> Частичка</span>
-                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">cр. 3,200₽</span>
-                    </div>
-                    <div class="a2-conv">
-                      <div class="conv-cell">
-                        <span class="lbl">→ Продажа</span>
-                        <span class="val ok">87%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">cр. время</span>
-                        <span class="val ok">5,2 дн</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="a2-row a2b">
-                    <div class="a2-head">
-                      <span><b>28</b> Обещание</span>
-                      <span style="font-size:10.5px; color:rgba(255,255,255,0.5)">2+ переноса: 4</span>
-                    </div>
-                    <div class="a2-conv">
-                      <div class="conv-cell">
-                        <span class="lbl">→ Продажа</span>
-                        <span class="val warn">47%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">→ Частичка</span>
-                        <span class="val warn">32%</span>
-                      </div>
-                      <div class="conv-cell">
-                        <span class="lbl">cр. время</span>
-                        <span class="val">8,4 дн</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mc-card-sub">
-                  «Обещание → Частичка» = 32% при норме ≥40% — клоузеры слабо закрепляют частичкой
-                </div>
-              </div>
+              <!-- (📞 A2 в работе — удалена. Метрики A2a/A2b живут в подблоке «Думающие сделки» и в финалах «Сделок в работе») -->
 
-              <!-- 🔴 Красные встречи Д0 · AI-перехват (col-3, перенесено из верхнего ряда — это коучинг-зона) -->
-              <div class="mc-card col-3 accent-red status-warn" onclick="openRedQueue()">
+              <!-- 🔴🤖 AI-перехват качества встреч (col-6 объединённый блок: Красные встречи + Нарушения регламента) -->
+              <div class="mc-card col-6 accent-red">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">🔴</div>
-                <div class="mc-card-label">Красные встречи Д0 <span style="color: rgba(255,255,255,0.4); font-size:10px; margin-left: 6px;">AI &lt;3/5 баллов · за неделю</span></div>
-                <div class="mc-card-value">18<small>за неделю · сегодня 7 · ▼ снижается</small></div>
+                <div class="mc-card-label">AI-перехват качества встреч <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">красные встречи Д0 + нарушения регламента · 156 встреч за неделю</span></div>
 
-                <!-- Sparkline тренд за 7 дней (компактный) -->
-                <div style="margin-top: 8px; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
-                  <svg viewBox="0 0 100 18" preserveAspectRatio="none" style="width: 100%; height: 18px;">
-                    <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,16" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
-                    <circle cx="100" cy="16" r="2" fill="#ff453a" />
-                  </svg>
-                  <div style="display: flex; justify-content: space-between; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: -2px;">
-                    <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span style="color:rgba(255,255,255,0.7)"><b>сегодня 7</b></span>
-                  </div>
-                </div>
+                <div class="ai-quality-grid">
 
-                <!-- РЕЙТИНГ КЛОУЗЕРОВ ПО КРАСНЫМ -->
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-top: 12px; margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
-                <div class="mc-team-list">
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
-                    <span class="rank">⚠</span>
-                    <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
-                    <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
-                  </div>
-                  <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
-                    <span class="rank">⚠</span>
-                    <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
-                    <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
-                  </div>
-                  <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
-                    <span class="rank">·</span>
-                    <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
-                    <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">1 <small style="color:#30d158">▼-2</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                  <div class="mc-team-row over">
-                    <span class="rank">✓</span>
-                    <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
-                    <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
-                  </div>
-                </div>
+                  <!-- ───────────── ЛЕВАЯ КОЛОНКА · Красные встречи Д0 ───────────── -->
+                  <div class="ai-quality-left">
+                    <div class="ai-col-head">
+                      <span class="ai-col-title">🔴 КРАСНЫЕ ВСТРЕЧИ Д0 <small>AI &lt;3/5</small></span>
+                    </div>
+                    <div class="ai-col-big">
+                      <span class="big-num red">18</span>
+                      <span class="sub">сегодня 7 · ▼ снижается</span>
+                    </div>
 
-                <div class="mc-card-action" style="margin-top: 12px;">
-                  <div class="ic">🚨</div>
-                  <div class="text">
-                    <b>Ляшенко А. растёт · ▲+3 за неделю</b>
-                    <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
-                  </div>
-                  <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
-                </div>
-              </div>
+                    <!-- Sparkline тренд за 7 дней -->
+                    <div style="padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-bottom: 10px;">
+                      <svg viewBox="0 0 100 18" preserveAspectRatio="none" style="width: 100%; height: 18px;">
+                        <polyline points="0,4 14,8 28,2 42,10 56,6 70,12 84,16 100,16" fill="none" stroke="#ff453a" stroke-width="1.5" opacity="0.85" />
+                        <circle cx="100" cy="16" r="2" fill="#ff453a" />
+                      </svg>
+                      <div style="display: flex; justify-content: space-between; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: -2px;">
+                        <span>пн 14</span><span>вт 12</span><span>ср 13</span><span>чт 10</span><span>пт 11</span><span>сб 8</span><span style="color:rgba(255,255,255,0.7)"><b>сегодня 7</b></span>
+                      </div>
+                    </div>
 
-              <!-- 🤖 AI · Нарушения регламента (col-6 — сводка по 7 проверкам за неделю) -->
-              <div class="mc-card col-6 accent-blue">
-                <div class="mc-card-arrow">→</div>
-                <div class="mc-card-icon">🤖</div>
-                <div class="mc-card-label">AI · Нарушения регламента <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · 7 проверок · 156 встреч проверено · что чаще всего ломается</span></div>
-                <div class="mc-card-value">61<small>· нарушений · команда (▼-8 к прошлой неделе)</small></div>
+                    <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
+                    <div class="mc-team-list">
+                      <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
+                        <span class="rank">⚠</span>
+                        <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
+                        <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
+                      </div>
+                      <div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
+                        <span class="rank">⚠</span>
+                        <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
+                        <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
+                      </div>
+                      <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
+                        <span class="rank">·</span>
+                        <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                        <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                      </div>
+                      <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
+                        <span class="rank">·</span>
+                        <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                        <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
+                      </div>
+                      <div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
+                        <span class="rank">·</span>
+                        <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
+                        <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                      </div>
+                      <div class="mc-team-row over">
+                        <span class="rank">✓</span>
+                        <span class="name">Алиев Камран <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                        <span class="pct" style="color:#30d158;">1 <small style="color:#30d158">▼-2</small></span>
+                      </div>
+                      <div class="mc-team-row over">
+                        <span class="rank">✓</span>
+                        <span class="name">Гальков Н. <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                        <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                      </div>
+                      <div class="mc-team-row over">
+                        <span class="rank">✓</span>
+                        <span class="name">Лим Елена <small style="color:rgba(255,255,255,0.4)">чисто</small></span>
+                        <span class="pct" style="color:#30d158;">0 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
+                      </div>
+                    </div>
+
+                    <div class="mc-card-action" style="margin-top: 12px;">
+                      <div class="ic">🚨</div>
+                      <div class="text">
+                        <b>Ляшенко А. растёт · ▲+3 за неделю</b>
+                        <span class="what">Кликни на строку → AI-разбор его встреч с моментами</span>
+                      </div>
+                      <button class="cta" onclick="event.stopPropagation(); openRedQueue()">→ Все 7</button>
+                    </div>
+                  </div>
+
+                  <!-- ───────────── ПРАВАЯ КОЛОНКА · Нарушения регламента ───────────── -->
+                  <div class="ai-quality-right">
+                    <div class="ai-col-head">
+                      <span class="ai-col-title">🤖 НАРУШЕНИЯ РЕГЛАМЕНТА <small>7 AI-проверок</small></span>
+                    </div>
+                    <div class="ai-col-big">
+                      <span class="big-num red">61</span>
+                      <span class="sub">▼-8 к прошлой неделе · что ломается</span>
+                    </div>
 
                 <div class="ai-violations">
                   <div class="vio fail" onclick="openViolationList('no-partial')" title="Кликни → список встреч с этим нарушением">
@@ -8298,8 +8422,12 @@
                   </div>
                 </div>
 
+                  </div> <!-- /ai-quality-right -->
+
+                </div> <!-- /ai-quality-grid -->
+
                 <div class="mc-card-sub" style="margin-top: 10px;">
-                  AI слушает каждый звонок и проверяет 7 правил регламента. Это <b>не оценка качества</b>, это <b>контроль соблюдения</b>. Кликни на строку → список встреч с этим нарушением для разбора.
+                  AI слушает каждый звонок и проверяет 7 правил регламента. Это <b>не оценка качества</b>, это <b>контроль соблюдения</b>. Кликни на строку → список встреч с этим нарушением для разбора. Слева видно <b>чей</b> звонок попал в красные · справа видно <b>что</b> ломается в скрипте.
                 </div>
               </div>
 
