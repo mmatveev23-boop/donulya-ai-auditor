@@ -8480,27 +8480,27 @@
 </div>
 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-bottom: 6px;">Красные за неделю · ▲▼ к прошлой</div>
 <div class="mc-team-list">
-<div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Куделькин · 110к ₽ · этап 05 (Ляшенко А.)')" style="cursor:pointer;">
+<div class="mc-team-row under clickable-num" onclick="event.stopPropagation(); openDrillDown('red-Ляшенко')" style="cursor:pointer;" title="Кликни → 7 встреч с AI-разбором">
 <span class="rank">⚠</span>
 <span class="name">Ляшенко А. <small style="color:#ff8478">7 встреч</small></span>
 <span class="pct" style="color:#ff453a;">7 <small style="color:#ff453a">▲+3</small></span>
 </div>
-<div class="mc-team-row under" onclick="event.stopPropagation(); openCallCard('Иванчук М. · 320к ₽ (Яковлева А.)')" style="cursor:pointer;">
+<div class="mc-team-row under clickable-num" onclick="event.stopPropagation(); openDrillDown('red-Яковлева')" style="cursor:pointer;" title="Кликни → 4 встречи с AI-разбором">
 <span class="rank">⚠</span>
 <span class="name">Яковлева А. <small style="color:#ffb84a">4 встречи</small></span>
 <span class="pct" style="color:#ff9f0a;">4 <small style="color:#ff9f0a">▲+2</small></span>
 </div>
-<div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Корчик · 180к ₽ (Марченко С.)')" style="cursor:pointer;">
+<div class="mc-team-row clickable-num" onclick="event.stopPropagation(); openDrillDown('red-Марченко')" style="cursor:pointer;" title="Кликни → 2 встречи с AI-разбором">
 <span class="rank">·</span>
 <span class="name">Марченко С. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
 <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
 </div>
-<div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Прохоров · 220к ₽ (Мифтахов Р.)')" style="cursor:pointer;">
+<div class="mc-team-row clickable-num" onclick="event.stopPropagation(); openDrillDown('red-Мифтахов')" style="cursor:pointer;" title="Кликни → 2 встречи с AI-разбором">
 <span class="rank">·</span>
 <span class="name">Мифтахов Р. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
 <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:#30d158">▼-1</small></span>
 </div>
-<div class="mc-team-row" onclick="event.stopPropagation(); openCallCard('Соколов · 150к ₽ (Петрова Д.)')" style="cursor:pointer;">
+<div class="mc-team-row clickable-num" onclick="event.stopPropagation(); openDrillDown('red-Петрова')" style="cursor:pointer;" title="Кликни → 2 встречи с AI-разбором">
 <span class="rank">·</span>
 <span class="name">Петрова Д. <small style="color:rgba(255,255,255,0.4)">2 встречи</small></span>
 <span class="pct" style="color:rgba(255,255,255,0.85);">2 <small style="color:rgba(255,255,255,0.4)">→0</small></span>
@@ -14088,6 +14088,86 @@
             ['Зайцева М.', '120к ₽', 'Яковлева А.', 'Закрыл подумаю без даты','−2 000 ₽'],
             ['Никитин В.', '180к ₽', 'Ляшенко А.',  'Долгий цикл >72ч',       '−2 000 ₽'],
             ['(ещё 20)', '', '', '', ''],
+          ],
+        },
+
+        // ═══ Drill-down по клоузерам в плитке «AI-перехват качества встреч» ═══
+        // Клик на строку клоузера → список его встреч с AI-нарушениями
+        'red-Ляшенко': {
+          title: '⚠ Ляшенко А. · 7 красных встреч за неделю',
+          sub: '▲+3 к прошлой · растёт · клик на встречу → AI-разбор',
+          stats: [
+            { num: '7', lbl: 'встреч с ошибками' },
+            { num: '▲+3', lbl: 'к прошлой неделе' },
+            { num: '5/7', lbl: 'критичных нарушений' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Дата', 'Главное нарушение', 'AI'],
+          rows: [
+            ['Куделькин С.',  '110к ₽', '25.04', 'Не предложил частичку', '2/5'],
+            ['Морозов А.',    '85к ₽',  '24.04', 'Дата оплаты «через месяц»', '2/5'],
+            ['Орлов А.',      '180к ₽', '24.04', 'Нет холда возражения',  '3/5'],
+            ['Беляев М.',     '120к ₽', '23.04', 'Закрыл без причины отказа', '2/5'],
+            ['Григорьев С.',  '95к ₽',  '23.04', 'Не предложил полную',   '3/5'],
+            ['Соколов Р.',    '150к ₽', '22.04', 'Закрыл подумаю без даты', '2/5'],
+            ['Никитин В.',    '180к ₽', '22.04', 'Дезинформация по срокам', '1/5'],
+          ],
+        },
+        'red-Яковлева': {
+          title: '⚠ Яковлева А. · 4 красные встречи за неделю',
+          sub: '▲+2 к прошлой · клик на встречу → AI-разбор',
+          stats: [
+            { num: '4', lbl: 'встреч с ошибками' },
+            { num: '▲+2', lbl: 'к прошлой неделе' },
+            { num: '3/7', lbl: 'критичных нарушений' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Дата', 'Главное нарушение', 'AI'],
+          rows: [
+            ['Иванчук М.',    '320к ₽', '25.04', 'Не отработал возражение', '2/5'],
+            ['Зайцева М.',    '120к ₽', '24.04', 'Закрыл подумаю без даты', '2/5'],
+            ['Орлова К.',     '120к ₽', '23.04', 'Дезинформация «спишут всё»', '1/5'],
+            ['Соколова Н.',   '95к ₽',  '22.04', 'Не предложил частичку', '2/5'],
+          ],
+        },
+        'red-Марченко': {
+          title: '· Марченко С. · 2 встречи с замечаниями',
+          sub: '→0 к прошлой · стабильно · клик на встречу → AI-разбор',
+          stats: [
+            { num: '2', lbl: 'встреч с замечаниями' },
+            { num: '→0', lbl: 'к прошлой неделе' },
+            { num: '1/7', lbl: 'критичных нарушений' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Дата', 'Замечание', 'AI'],
+          rows: [
+            ['Корчик П.',     '180к ₽', '25.04', 'Слабая квалификация',  '3/5'],
+            ['Семёнов К.',    '120к ₽', '23.04', 'Нет фиксации даты',    '3/5'],
+          ],
+        },
+        'red-Мифтахов': {
+          title: '· Мифтахов Р. · 2 встречи с замечаниями',
+          sub: '▼-1 к прошлой · улучшается · клик на встречу → AI-разбор',
+          stats: [
+            { num: '2', lbl: 'встреч с замечаниями' },
+            { num: '▼-1', lbl: 'к прошлой неделе' },
+            { num: '1/7', lbl: 'критичных нарушений' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Дата', 'Замечание', 'AI'],
+          rows: [
+            ['Прохоров А.',   '220к ₽', '24.04', 'Скрытые доходы — не уточнил', '3/5'],
+            ['Дроздов Ф.',    '95к ₽',  '22.04', 'Затянул вступление',  '4/5'],
+          ],
+        },
+        'red-Петрова': {
+          title: '· Петрова Д. · 2 встречи с замечаниями',
+          sub: '→0 к прошлой · стабильно · клик на встречу → AI-разбор',
+          stats: [
+            { num: '2', lbl: 'встреч с замечаниями' },
+            { num: '→0', lbl: 'к прошлой неделе' },
+            { num: '0/7', lbl: 'критичных нарушений' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Дата', 'Замечание', 'AI'],
+          rows: [
+            ['Соколов И.',    '150к ₽', '24.04', 'Слабый дожим возражения «дорого»', '3/5'],
+            ['Гаврилов Н.',   '180к ₽', '23.04', 'Не зафиксировал следующий шаг', '4/5'],
           ],
         },
       };
