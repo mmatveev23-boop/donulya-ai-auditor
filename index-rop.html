@@ -4643,7 +4643,7 @@
       }
       .traffic-row {
         display: grid;
-        grid-template-columns: 28px 1.3fr 0.85fr 0.85fr 0.7fr 1.2fr;
+        grid-template-columns: 28px 1.25fr 1.4fr 0.75fr 0.75fr 0.85fr 1.1fr;
         gap: 12px;
         align-items: center;
         padding: 10px 12px;
@@ -4655,6 +4655,34 @@
         cursor: pointer;
         transition: all 0.15s;
       }
+      .traffic-row .progress {
+        position: relative;
+        height: 8px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .traffic-row .progress .fill {
+        position: absolute; top: 0; left: 0; bottom: 0;
+        border-radius: 4px;
+        transition: width 0.3s;
+      }
+      .traffic-row.green  .progress .fill { background: #30d158; }
+      .traffic-row.yellow .progress .fill { background: #ffd60a; }
+      .traffic-row.orange .progress .fill { background: #ff9f0a; }
+      .traffic-row.red    .progress .fill { background: #ff453a; }
+      .traffic-row .sales {
+        font-weight: 800;
+        font-feature-settings: "tnum";
+        font-size: 14px;
+        color: #fff;
+      }
+      .traffic-row .sales small {
+        color: rgba(255,255,255,0.4);
+        font-weight: 400; font-size: 10.5px; margin-left: 4px;
+      }
+      .traffic-row.green .sales { color: #30d158; }
+      .traffic-row.red   .sales { color: rgba(255,255,255,0.55); }
       .traffic-row:hover {
         background: rgba(255,255,255,0.05);
         transform: translateX(2px);
@@ -8296,81 +8324,135 @@
 <div class="mc-card-label">Светофор команды · дисциплина дожима <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">% красных сделок (без касания &gt;48 раб.ч) · публично для всех · кликни клоузера → его 🔴 сделки</span></div>
 
 <div class="traffic-grid">
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-lim')" title="Лим — 1 красная, 2 молчат">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-lim')" title="Лим — топ дисциплины, 23 продажи">
     <span class="dot">🟢</span>
-    <span class="name">Лим Елена <small>топ-1 дисциплина</small></span>
-    <span class="pct">2% <small>(1 🔴)</small></span>
-    <span class="silent">5% <small>(2 🔇)</small></span>
-    <span class="deals">36 сделок</span>
+    <span class="name">Лим Елена <small>топ-1</small></span>
+    <span class="progress"><span class="fill" style="width:5%;"></span></span>
+    <span class="pct">2% <small>🔴</small></span>
+    <span class="silent">5% <small>🔇</small></span>
+    <span class="sales">23 <small>продаж</small></span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 1 красная, 3 молчат">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 19 продаж">
     <span class="dot">🟢</span>
     <span class="name">Гальков Н.</span>
-    <span class="pct">3% <small>(1 🔴)</small></span>
-    <span class="silent">8% <small>(3 🔇)</small></span>
-    <span class="deals">38 сделок</span>
+    <span class="progress"><span class="fill" style="width:8%;"></span></span>
+    <span class="pct">3% <small>🔴</small></span>
+    <span class="silent">8% <small>🔇</small></span>
+    <span class="sales">19 <small>продаж</small></span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 3 красных, 4 молчат">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 21 продажа">
     <span class="dot">🟢</span>
     <span class="name">Алиев Камран</span>
-    <span class="pct">7% <small>(3 🔴)</small></span>
-    <span class="silent">10% <small>(4 🔇)</small></span>
-    <span class="deals">41 сделка</span>
+    <span class="progress"><span class="fill" style="width:18%;"></span></span>
+    <span class="pct">7% <small>🔴</small></span>
+    <span class="silent">10% <small>🔇</small></span>
+    <span class="sales">21 <small>продажа</small></span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 4 красных, 4 молчат, близко к оранжевой">
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 17, близко к оранжевой">
     <span class="dot">🟡</span>
     <span class="name">Петрова Д. <small>близко к оранжевой</small></span>
-    <span class="pct">12% <small>(4 🔴)</small></span>
-    <span class="silent">12% <small>(4 🔇)</small></span>
-    <span class="deals">33 сделки</span>
+    <span class="progress"><span class="fill" style="width:35%;"></span></span>
+    <span class="pct">12% <small>🔴</small></span>
+    <span class="silent">12% <small>🔇</small></span>
+    <span class="sales">17 <small>продаж</small></span>
     <span class="effect">поток норма · предупреждение</span>
   </div>
-  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 5 красных, 5 молчат">
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 15">
     <span class="dot">🟡</span>
     <span class="name">Марченко С.</span>
-    <span class="pct">14% <small>(5 🔴)</small></span>
-    <span class="silent">15% <small>(5 🔇)</small></span>
-    <span class="deals">35 сделок</span>
+    <span class="progress"><span class="fill" style="width:45%;"></span></span>
+    <span class="pct">14% <small>🔴</small></span>
+    <span class="silent">15% <small>🔇</small></span>
+    <span class="sales">15 <small>продаж</small></span>
     <span class="effect">поток норма · предупреждение</span>
   </div>
-  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 8 красных, 7 молчат, поток −50%">
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 12, оранжевая">
     <span class="dot">🟠</span>
-    <span class="name">Мифтахов Р. <small>оранжевая зона</small></span>
-    <span class="pct">22% <small>(8 🔴)</small></span>
-    <span class="silent high">19% <small>(7 🔇)</small></span>
-    <span class="deals">37 сделок</span>
+    <span class="name">Мифтахов Р. <small>оранжевая</small></span>
+    <span class="progress"><span class="fill" style="width:70%;"></span></span>
+    <span class="pct">22% <small>🔴</small></span>
+    <span class="silent high">19% <small>🔇</small></span>
+    <span class="sales">12 <small>продаж</small></span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
   </div>
-  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 11 красных, 8 молчат, шаблонные сообщения">
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 10, шаблоны">
     <span class="dot">🟠</span>
-    <span class="name">Яковлева А. <small>шаблонные сообщения</small></span>
-    <span class="pct">28% <small>(11 🔴)</small></span>
-    <span class="silent high">21% <small>(8 🔇)</small></span>
-    <span class="deals">39 сделок</span>
+    <span class="name">Яковлева А. <small>шаблоны</small></span>
+    <span class="progress"><span class="fill" style="width:90%;"></span></span>
+    <span class="pct">28% <small>🔴</small></span>
+    <span class="silent high">21% <small>🔇</small></span>
+    <span class="sales">10 <small>продаж</small></span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
   </div>
-  <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 12 красных, 8 молчат, грубый на первом звонке">
+  <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 7, заблокирован">
     <span class="dot">🔴</span>
-    <span class="name">Ляшенко А. <small>заблокирован · грубый тон</small></span>
-    <span class="pct">34% <small>(12 🔴)</small></span>
-    <span class="silent high">23% <small>(8 🔇)</small></span>
-    <span class="deals">35 сделок</span>
+    <span class="name">Ляшенко А. <small>заблокирован</small></span>
+    <span class="progress"><span class="fill" style="width:100%;"></span></span>
+    <span class="pct">34% <small>🔴</small></span>
+    <span class="silent high">23% <small>🔇</small></span>
+    <span class="sales">7 <small>продаж</small></span>
     <span class="effect">🚫 0 новых лидов · премия 0</span>
   </div>
 </div>
 
-<div class="traffic-legend">
-  <div class="leg-item"><span>🟢</span> <b>≤10% 🔴</b> · +30% лидов</div>
-  <div class="leg-item"><span>🟡</span> <b>10–20% 🔴</b> · норма + предупреждение</div>
-  <div class="leg-item"><span>🟠</span> <b>20–30% 🔴</b> · поток −50% · премия −20%</div>
-  <div class="leg-item"><span>🔴</span> <b>&gt;30% 🔴</b> · 0 лидов · премия 0</div>
-</div>
+<!-- 📖 ПРАВИЛА СВЕТОФОРА — постоянно видны команде -->
+<div style="margin-top: 18px; padding: 14px 16px; background: rgba(82,167,255,0.03); border: 1px solid rgba(82,167,255,0.15); border-radius: 10px;">
+  <div style="font-size: 11px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#52a7ff; margin-bottom: 10px;">📖 Как работает светофор · правила для всех</div>
 
-<div class="mc-card-sub" style="margin-top: 12px;">
-  <b>🔴 Красные</b> = клоузер бросил (касание &gt;48ч), наказывается. <b>🔇 Молчания</b> = клиент не отвечает после 6+ попыток клоузера (не наказывается, отдельный регламент). Норма 🔇 по команде ≤15%; сейчас среднее 14% — пограничная. У Яковлевой 21% / Ляшенко 23% (высокое 🔇 = шаблонные сообщения или грубый тон → AI проверка). Клик на клоузера → разбор его 🔴 + 🔇.
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+    <div>
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin-bottom: 6px;">🔴 Что такое «красная сделка»</div>
+      <div style="font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+        Сделка без касания клиента <b style="color:#ff453a;">&gt; 48 рабочих часов</b>.<br/>
+        Выходные/праздники не считаются.
+      </div>
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin: 12px 0 6px;">✅ Что засчитывается как касание</div>
+      <div style="font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+        • Звонок <b>&gt; 60 сек</b> + продвижение в карточке<br/>
+        • Сообщение <b>с ответом клиента</b> (одностороннее не считается)<br/>
+        • Назначенная встреча с подтверждением
+      </div>
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin: 12px 0 6px;">❌ Фейк-касания (AI отфильтрует)</div>
+      <div style="font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+        • Звонок &lt; 10 сек / сразу сброс<br/>
+        • Сообщение «привет» / стикер / эмодзи<br/>
+        • Шаблонная фраза (3+ копий разным клиентам)
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin-bottom: 6px;">🚦 4 зоны · что получает клоузер</div>
+      <div style="display: grid; gap: 4px; font-size: 11.5px;">
+        <div style="display: grid; grid-template-columns: 24px 70px 1fr; gap: 8px; align-items: center;">
+          <span>🟢</span><b style="color:#30d158;">≤ 10%</b><span style="color:rgba(255,255,255,0.7);"><b>+30%</b> к потоку лидов</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 24px 70px 1fr; gap: 8px; align-items: center;">
+          <span>🟡</span><b style="color:#ffd60a;">10–20%</b><span style="color:rgba(255,255,255,0.7);">норма + предупреждение</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 24px 70px 1fr; gap: 8px; align-items: center;">
+          <span>🟠</span><b style="color:#ff9f0a;">20–30%</b><span style="color:rgba(255,255,255,0.7);"><b>−50%</b> лидов · премия <b>−20%</b></span>
+        </div>
+        <div style="display: grid; grid-template-columns: 24px 70px 1fr; gap: 8px; align-items: center;">
+          <span>🔴</span><b style="color:#ff453a;">&gt; 30%</b><span style="color:rgba(255,255,255,0.7);"><b>0 лидов</b> + премия <b>0</b></span>
+        </div>
+      </div>
+
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin: 12px 0 6px;">🔇 Статус «Молчит» (защита)</div>
+      <div style="font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+        Если клиент <b>не ответил</b> после <b>6 твоих попыток за 48 ч</b> (3 звонка + 3 сообщения) — сделка переходит в 🔇 и <b>не считается в твой % красных</b>.<br/>
+        День 7 — бот пишет реанимацию. День 14 — авто-закрытие «Без контакта».
+      </div>
+
+      <div style="font-size: 11.5px; font-weight: 700; color: #fff; margin: 12px 0 6px;">⚠️ Как разблокироваться</div>
+      <div style="font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+        В 🔴 → разгреби красные до <b>≤30%</b> (любым касанием по правилам выше) → автоматически 🟠.<br/>
+        В 🟠 → разгреби до ≤20% → 🟡. И так далее. <b>Никакого согласия РОПа не нужно.</b>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -8632,151 +8714,6 @@
 <div class="more">Подробнее →</div>
 </div>
 </div>
-<!-- 📑 Счета под контролем (col-6 — таблица по клоузерам в стиле Виктории v5) -->
-<div class="mc-card col-6 accent-orange">
-<div class="mc-card-arrow">→</div>
-<div class="mc-card-icon">📑</div>
-<div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">таблица по клоузерам · кто закрывает, кто бросает</span></div>
-<!-- 3 акцентные плитки сверху (стиль Виктории v5) -->
-<div class="bills-top3">
-<div class="bills-top warn clickable-num" onclick="openDrillDown('bills-today')" title="Кликни — список счетов на сегодня">
-<div class="head">
-<span class="ico">📅</span>
-<span class="lbl">Должны оплатить сегодня</span>
-</div>
-<div class="big"><span class="num">18</span> <small>счетов</small> · <span class="num">312к ₽</span></div>
-<div class="sub">из них уже получили: <b>87к ₽</b> (6 шт)</div>
-</div>
-<div class="bills-top danger clickable-num" onclick="openDrillDown('bills-overdue')" title="Кликни — просроченные счета">
-<div class="head">
-<span class="ico">🔥</span>
-<span class="lbl">Не оплатили</span>
-</div>
-<div class="big"><span class="num">22</span> просрочено · <span class="num">170к ₽</span></div>
-<div class="sub">норма ≤15% · <b style="color:#ff453a;">сейчас 26%</b> ⚠</div>
-</div>
-<div class="bills-top danger clickable-num" onclick="openDrillDown('bills-silent')" title="Кликни — сделки без касания">
-<div class="head">
-<span class="ico">📞</span>
-<span class="lbl">Без касания 24 часа</span>
-</div>
-<div class="big"><span class="num">14</span> <small>сделок молчат</small></div>
-<div class="sub">→ авто-эскалация в Очередь РОПа</div>
-</div>
-</div>
-<!-- Таблица по клоузерам -->
-<div class="bills-table">
-<div class="bills-row head">
-<div>Клоузер</div>
-<div class="v">Счетов</div>
-<div class="v">Оплачено</div>
-<div class="v">Счёт→оплата<br/><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥60%</span></div>
-<div class="v">Просрочено<br/><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≤15%</span></div>
-<div class="v">72ч+<br/><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма 0</span></div>
-<div class="v">Касаний/счёт<br/><span style="color: rgba(255,255,255,0.35); font-size:9px;">норма ≥3</span></div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lim')">
-<div class="name">Лим Елена <small>цикл 21ч</small></div>
-<div class="v mid">13</div>
-<div class="v good">9</div>
-<div class="pct-cell good">69%</div>
-<div class="v zero">1</div>
-<div class="v zero">0</div>
-<div class="v touch good">5.2</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('galkov')">
-<div class="name">Гальков Н. <small>20ч</small></div>
-<div class="v mid">11</div>
-<div class="v good">7</div>
-<div class="pct-cell good">64%</div>
-<div class="v zero">2</div>
-<div class="v zero">0</div>
-<div class="v touch good">4.8</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('aliev')">
-<div class="name">Алиев Камран <small>26ч</small></div>
-<div class="v mid">8</div>
-<div class="v mid">5</div>
-<div class="pct-cell good">63%</div>
-<div class="v zero">1</div>
-<div class="v zero">0</div>
-<div class="v touch good">3.5</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('petrova')">
-<div class="name">Петрова Д. <small style="color:#ff9f0a">171ч ⚠</small> <span class="lead-block-badge" title="72ч+ &gt;0 → автоблок новых трипваеров">🚫 Блок</span></div>
-<div class="v mid">7</div>
-<div class="v mid">3</div>
-<div class="pct-cell warn">43%</div>
-<div class="v warn">1</div>
-<div class="v warn">1</div>
-<div class="v touch mid">2.8</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('marchenko')">
-<div class="name">Марченко С. <small>72ч</small></div>
-<div class="v mid">7</div>
-<div class="v mid">3</div>
-<div class="pct-cell warn">43%</div>
-<div class="v warn">1</div>
-<div class="v zero">0</div>
-<div class="v touch mid">2.5</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('miftakhov')">
-<div class="name">Мифтахов Р. <small>93ч</small></div>
-<div class="v mid">5</div>
-<div class="v mid">2</div>
-<div class="pct-cell warn">40%</div>
-<div class="v warn">1</div>
-<div class="v zero">0</div>
-<div class="v touch mid">2.3</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('yakovleva')">
-<div class="name" style="color:#ff8478;">Яковлева А. <small style="color:#ff9f0a">94ч</small> <span class="lead-block-badge" title="6 просрочек + 1 «72ч+» → автоблок">🚫 Блок</span></div>
-<div class="v mid">13</div>
-<div class="v bad">3</div>
-<div class="pct-cell bad">23%</div>
-<div class="v bad">6</div>
-<div class="v warn">1</div>
-<div class="v touch bad">1.2</div>
-</div>
-<div class="bills-row body" onclick="event.stopPropagation(); openCloserDrilldown('lyashenko')">
-<div class="name" style="color:#ff8478;">Ляшенко А. <small>49ч</small> <span class="lead-block-badge" title="10 просрочек + 2 «72ч+» → жёсткий блок">🚫 Блок</span></div>
-<div class="v mid">22</div>
-<div class="v bad">5</div>
-<div class="pct-cell bad">23%</div>
-<div class="v bad">10</div>
-<div class="v bad">2</div>
-<div class="v touch bad">0.5</div>
-</div>
-</div>
-<!-- 🚫 Сводка блокировки лидов: кто сейчас не получает новые трипваеры -->
-<div class="bills-block-strip">
-<div class="ico">🚫</div>
-<div>
-<div class="label">Блок новых трипваеров</div>
-</div>
-<div class="body">
-<b>3 клоузера</b> в блоке: <span class="who">Ляшенко</span> (10 просрочек + 2 «72ч+») · <span class="who">Яковлева</span> (6 просрочек + 1 «72ч+») · <span class="who">Петрова</span> (1 «72ч+»)
-                  </div>
-<div class="rule">Условия: просрочек ≥5 ИЛИ 72ч+ &gt;0</div>
-</div>
-<!-- 🚥 Активность по счетам: кто дожимает, кто бросает -->
-<div class="bills-touch-strip">
-<div class="ico">🚥</div>
-<div>
-<div class="label">Активность по счетам</div>
-</div>
-<div class="body">
-<span class="group"><b>🟢 Активные дожимщики</b> (≥3.5 касаний/счёт): <span class="who-good">Лим 5.2</span> · <span class="who-good">Гальков 4.8</span> · <span class="who-good">Алиев 3.5</span></span>
-<span class="group"><b>🟡 Средние</b> (2.0–3.5): <span class="who-mid">Петрова 2.8</span> · <span class="who-mid">Марченко 2.5</span> · <span class="who-mid">Мифтахов 2.3</span></span>
-<span class="group"><b>🔴 Бросают счета</b> (&lt;2): <span class="who-bad">Яковлева 1.2</span> · <span class="who-bad">Ляшенко 0.5</span> — отправляют счёт и не возвращаются</span>
-</div>
-<div class="rule">Норма: ≥3 касаний/счёт</div>
-</div>
-<div class="mc-card-sub" style="margin-top: 10px;">
-                  Кликни на строку → drill-down карточка клоузера со всеми счетами и AI-разбором звонков. <b>Снять блок</b> можно в drill-down после разбора.
-                </div>
-</div>
-<!-- (📞 A2 в работе — удалена. Метрики A2a/A2b живут в подблоке «Думающие сделки» и в финалах «Сделок в работе») -->
 <!-- 🔴🤖 AI-перехват качества встреч (col-6 объединённый блок: Красные встречи + Нарушения регламента) -->
 <div class="mc-card col-6 accent-red">
 <div class="mc-card-arrow">→</div>
