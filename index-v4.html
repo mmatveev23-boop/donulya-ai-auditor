@@ -7378,43 +7378,43 @@
                 </div>
 
                 <div class="hero-decomp">
-                  <div class="title js-decomp-title">↳ Декомпозиция · по 4 дожимным статусам</div>
+                  <div class="title js-decomp-title">↳ Диагностические метрики · 4 разные конверсии · влияют на 30% (не суммируются)</div>
 
                   <div class="kpi-strip full">
                     <div class="bar-bg js-kpi-bar" data-key="full" style="width: 100%;"></div>
                     <span class="ico">💰</span>
-                    <span class="name">Полная в моменте <small>план ≥15%</small></span>
-                    <span class="pct js-kpi-pct" data-key="full">15.0%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="full">90</b>/<span class="js-kpi-total" data-key="full">600</span></span>
+                    <span class="name">Полная в моменте <small>полные на встрече / состоявшиеся встречи · план ≥15%</small></span>
+                    <span class="pct js-kpi-pct" data-key="full">16.7%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="full">90</b>/<span class="js-kpi-total" data-key="full">540</span></span>
                   </div>
 
                   <div class="kpi-strip part">
-                    <div class="bar-bg js-kpi-bar" data-key="part" style="width: 55%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="part" style="width: 70%;"></div>
                     <span class="ico">🤝</span>
-                    <span class="name">Частичка → Полная <small>план ≥8%</small></span>
-                    <span class="pct js-kpi-pct" data-key="part">8.3%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="part">50</b>/<span class="js-kpi-total" data-key="part">600</span></span>
+                    <span class="name">Частичка → Полная <small>частички, дожатые до полной / все полные · план ≥40%</small></span>
+                    <span class="pct js-kpi-pct" data-key="part">55.6%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="part">50</b>/<span class="js-kpi-total" data-key="part">90</span></span>
                   </div>
 
                   <div class="kpi-strip promise">
-                    <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 33%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 66%;"></div>
                     <span class="ico">📅</span>
-                    <span class="name">Обещание → Продажа <small>план ≥5%</small></span>
-                    <span class="pct js-kpi-pct" data-key="promise">5.0%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="promise">30</b>/<span class="js-kpi-total" data-key="promise">600</span></span>
+                    <span class="name">Обещание → Продажа <small>продажи / обещания · план ≥40%</small></span>
+                    <span class="pct js-kpi-pct" data-key="promise">33.3%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="promise">30</b>/<span class="js-kpi-total" data-key="promise">90</span></span>
                   </div>
 
                   <div class="kpi-strip think">
-                    <div class="bar-bg js-kpi-bar" data-key="think" style="width: 11%;"></div>
+                    <div class="bar-bg js-kpi-bar" data-key="think" style="width: 73%;"></div>
                     <span class="ico">🤔</span>
-                    <span class="name">Думают → Reopen → Продажа <small>план ≥1%</small></span>
-                    <span class="pct js-kpi-pct" data-key="think">1.7%</span>
-                    <span class="qty"><b class="js-kpi-qty" data-key="think">10</b>/<span class="js-kpi-total" data-key="think">600</span></span>
+                    <span class="name">Думают → Reopen → Продажа <small>продажи / обещания из Reopen · план ≥30%</small></span>
+                    <span class="pct js-kpi-pct" data-key="think">36.4%</span>
+                    <span class="qty"><b class="js-kpi-qty" data-key="think">8</b>/<span class="js-kpi-total" data-key="think">22</span></span>
                   </div>
 
                   <div class="hero-sum">
-                    <b class="js-hero-sum-formula">30% = 15% + 8.3% + 5% + 1.7%</b> · математически точная сумма по 4 финальным статусам<br>
-                    🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус (Обещание/Частичка). Продажа из Думают идёт <b>через Reopen</b>, не напрямую. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
+                    <b class="js-hero-sum-formula">⚠ Эти 4 метрики НЕ суммируются в общую 30%</b> — у каждой свой знаменатель (см. подписи). Они <b>диагностируют</b> где в воронке клоузер силён/слаб: чем выше каждая, тем выше итоговая 30%.<br>
+                    🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
                   </div>
 
                   <!-- 📊 Выполнение плана за период · 2×2 grid (4 метрики) -->
@@ -15230,50 +15230,52 @@
       // Демо-данные показывают как «вчера» (День) разные клоузеры дали разный результат —
       // РОП видит резкие сигналы (Лим 95%, Ляшенко 30%) и может сегодня перераспределить лидов.
 
+      // Декомпозиция: 4 разные конверсии с разными знаменателями (по методологии Виктории).
+      // НЕ суммируются в общую 30%. Каждая = диагностика конкретного этапа воронки.
       const heroDataByPeriod = {
         day: {
           num: '38%', qty: 38, total: 100,
           trend: '▲ +8пп', trendPeriod: 'ко вчера',
           decomp: {
-            full:    { pct: '17.0%', qty: 17, bar: 100 },
-            part:    { pct: '11.0%', qty: 11, bar: 73 },
-            promise: { pct: '8.0%',  qty: 8,  bar: 53 },
-            think:   { pct: '2.0%',  qty: 2,  bar: 13 },
+            full:    { pct: '18.9%', qty: 17, total: 90, bar: 100 },   // 17/90 встреч
+            part:    { pct: '64.7%', qty: 11, total: 17, bar: 100 },   // 11/17 полных через частичку
+            promise: { pct: '33.3%', qty: 8,  total: 24, bar: 83 },    // 8/24 обещаний
+            think:   { pct: '40.0%', qty: 2,  total: 5,  bar: 100 },   // 2/5 reopen
           },
-          formula: '38% = 17% + 11% + 8% + 2%',
+          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 30%',
           reopen: 'Reopen rate 42%',
           cycle: '0,9 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за вчера',
+          decompTitle: '↳ Диагностические метрики · за вчера · 4 разные конверсии (не суммируются)',
           closersTitle: 'Конверсия по клоузерам · за вчера · с разбивкой по дожимным статусам',
         },
         week: {
           num: '30%', qty: 179, total: 600,
           trend: '▲ +2пп', trendPeriod: 'к прошлой неделе',
           decomp: {
-            full:    { pct: '15.0%', qty: 90, bar: 100 },
-            part:    { pct: '8.3%',  qty: 50, bar: 55 },
-            promise: { pct: '5.0%',  qty: 30, bar: 33 },
-            think:   { pct: '1.7%',  qty: 10, bar: 11 },
+            full:    { pct: '16.7%', qty: 90, total: 540, bar: 100 },  // 90/540 встреч
+            part:    { pct: '55.6%', qty: 50, total: 90,  bar: 100 },  // 50/90 полных
+            promise: { pct: '33.3%', qty: 30, total: 90,  bar: 83 },   // 30/90 обещаний
+            think:   { pct: '36.4%', qty: 8,  total: 22,  bar: 100 },  // 8/22 думающих
           },
-          formula: '30% = 15% + 8.3% + 5% + 1.7%',
+          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 30%',
           reopen: 'Reopen rate 36%',
           cycle: '1,7 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам',
+          decompTitle: '↳ Диагностические метрики · 4 разные конверсии · влияют на 30% (не суммируются)',
           closersTitle: 'Конверсия по клоузерам · за неделю · с разбивкой по дожимным статусам',
         },
         month: {
           num: '28%', qty: 720, total: 2580,
           trend: '▼ -1пп', trendPeriod: 'к прошлому месяцу',
           decomp: {
-            full:    { pct: '14.0%', qty: 360, bar: 93 },
-            part:    { pct: '8.0%',  qty: 206, bar: 53 },
-            promise: { pct: '4.5%',  qty: 116, bar: 30 },
-            think:   { pct: '1.5%',  qty: 38,  bar: 10 },
+            full:    { pct: '15.5%', qty: 360, total: 2322, bar: 100 },
+            part:    { pct: '57.2%', qty: 206, total: 360,  bar: 100 },
+            promise: { pct: '33.3%', qty: 116, total: 348,  bar: 83 },
+            think:   { pct: '38.0%', qty: 38,  total: 100,  bar: 100 },
           },
-          formula: '28% = 14% + 8% + 4.5% + 1.5%',
+          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 30%',
           reopen: 'Reopen rate 33%',
           cycle: '1,9 дня',
-          decompTitle: '↳ Декомпозиция · по 4 дожимным статусам · за месяц',
+          decompTitle: '↳ Диагностические метрики · за месяц · 4 разные конверсии (не суммируются)',
           closersTitle: 'Конверсия по клоузерам · за месяц · с разбивкой по дожимным статусам',
         },
       };
@@ -15432,10 +15434,7 @@
         setText('.js-hero-total', data.total);
         setText('.js-hero-trend', data.trend);
         setText('.js-hero-trend-period', data.trendPeriod);
-        setText('.js-hero-sum-formula', data.formula + ' · математически точная сумма по 4 финальным статусам');
-        // переписать sum-formula только саму формулу — текст после остаётся
-        const sumEl = document.querySelector('.js-hero-sum-formula');
-        if (sumEl) sumEl.textContent = data.formula;
+        setText('.js-hero-sum-formula', data.formula);
         setText('.js-hero-reopen', data.reopen);
         setText('.js-hero-cycle', data.cycle);
         setText('.js-decomp-title', data.decompTitle);
@@ -15449,7 +15448,7 @@
           else trendEl.style.color = 'rgba(255,255,255,0.55)';
         }
 
-        // 4 декомпозиции
+        // 4 декомпозиции: у каждой СВОЙ знаменатель (методология Виктории)
         ['full', 'part', 'promise', 'think'].forEach(key => {
           const d = data.decomp[key];
           if (!d) return;
@@ -15459,7 +15458,7 @@
           const barEl = document.querySelector(`.js-kpi-bar[data-key="${key}"]`);
           if (pctEl) pctEl.textContent = d.pct;
           if (qtyEl) qtyEl.textContent = d.qty;
-          if (totalEl) totalEl.textContent = data.total;
+          if (totalEl) totalEl.textContent = (d.total !== undefined ? d.total : data.total);
           if (barEl) barEl.style.width = d.bar + '%';
         });
 
