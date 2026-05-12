@@ -7841,13 +7841,6 @@
                     🔄 <b class="js-hero-reopen">Reopen rate 36%</b> (норма ≥30% ✓) — % думающих переведено в активный статус. ⏱ Цикл сделки: <b class="js-hero-cycle">1,7 дня</b>
                   </div>
 
-                  <!-- 📊 Выполнение плана за период · 2×2 grid (4 метрики) -->
-                  <div class="hero-plan">
-                    <div class="head">📊 <span class="js-plan-title">Выполнение плана · за неделю</span></div>
-                    <div class="grid" id="js-plan-grid">
-                      <!-- рендерится через renderPlanGrid() -->
-                    </div>
-                  </div>
                 </div>
 
                 <div class="mc-team-summary" style="margin-top: 12px;">
@@ -15892,9 +15885,6 @@
 
         // Список клоузеров
         renderClosersList(period);
-
-        // План 2×2 grid (4 метрики: КП / Встречи / Продаж / Выручка)
-        renderPlanGrid(period);
 
         // Footer-инсайт
         const insightEl = document.querySelector('.js-closers-insight');
