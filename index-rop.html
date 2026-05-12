@@ -4643,7 +4643,7 @@
       }
       .traffic-row {
         display: grid;
-        grid-template-columns: 28px 1.4fr 1fr 0.8fr 1.3fr;
+        grid-template-columns: 28px 1.3fr 0.85fr 0.85fr 0.7fr 1.2fr;
         gap: 12px;
         align-items: center;
         padding: 10px 12px;
@@ -4684,6 +4684,17 @@
       .traffic-row.yellow .pct { color: #ffd60a; }
       .traffic-row.orange .pct { color: #ff9f0a; }
       .traffic-row.red    .pct { color: #ff453a; }
+      .traffic-row .silent {
+        font-weight: 700;
+        font-feature-settings: "tnum";
+        font-size: 13px;
+        color: rgba(255,255,255,0.55);
+      }
+      .traffic-row .silent small {
+        color: rgba(255,255,255,0.35);
+        font-weight: 400; font-size: 10.5px; margin-left: 4px;
+      }
+      .traffic-row .silent.high { color: #b084ff; }
       .traffic-row .deals {
         color: rgba(255,255,255,0.65);
         font-feature-settings: "tnum";
@@ -8285,73 +8296,132 @@
 <div class="mc-card-label">Светофор команды · дисциплина дожима <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">% красных сделок (без касания &gt;48 раб.ч) · публично для всех · кликни клоузера → его 🔴 сделки</span></div>
 
 <div class="traffic-grid">
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-lim')" title="Лим — все 36 сделок зелёные">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-lim')" title="Лим — 1 красная, 2 молчат">
     <span class="dot">🟢</span>
     <span class="name">Лим Елена <small>топ-1 дисциплина</small></span>
     <span class="pct">2% <small>(1 🔴)</small></span>
+    <span class="silent">5% <small>(2 🔇)</small></span>
     <span class="deals">36 сделок</span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 1 красная">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 1 красная, 3 молчат">
     <span class="dot">🟢</span>
     <span class="name">Гальков Н.</span>
     <span class="pct">3% <small>(1 🔴)</small></span>
+    <span class="silent">8% <small>(3 🔇)</small></span>
     <span class="deals">38 сделок</span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 3 красных">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 3 красных, 4 молчат">
     <span class="dot">🟢</span>
     <span class="name">Алиев Камран</span>
     <span class="pct">7% <small>(3 🔴)</small></span>
+    <span class="silent">10% <small>(4 🔇)</small></span>
     <span class="deals">41 сделка</span>
     <span class="effect">+30% к потоку лидов</span>
   </div>
-  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 4 красных, на грани оранжевой">
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 4 красных, 4 молчат, близко к оранжевой">
     <span class="dot">🟡</span>
     <span class="name">Петрова Д. <small>близко к оранжевой</small></span>
     <span class="pct">12% <small>(4 🔴)</small></span>
+    <span class="silent">12% <small>(4 🔇)</small></span>
     <span class="deals">33 сделки</span>
     <span class="effect">поток норма · предупреждение</span>
   </div>
-  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 5 красных">
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 5 красных, 5 молчат">
     <span class="dot">🟡</span>
     <span class="name">Марченко С.</span>
     <span class="pct">14% <small>(5 🔴)</small></span>
+    <span class="silent">15% <small>(5 🔇)</small></span>
     <span class="deals">35 сделок</span>
     <span class="effect">поток норма · предупреждение</span>
   </div>
-  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 8 красных, поток −50%">
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 8 красных, 7 молчат, поток −50%">
     <span class="dot">🟠</span>
     <span class="name">Мифтахов Р. <small>оранжевая зона</small></span>
     <span class="pct">22% <small>(8 🔴)</small></span>
+    <span class="silent high">19% <small>(7 🔇)</small></span>
     <span class="deals">37 сделок</span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
   </div>
-  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 11 красных, поток −50%">
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 11 красных, 8 молчат, шаблонные сообщения">
     <span class="dot">🟠</span>
-    <span class="name">Яковлева А.</span>
+    <span class="name">Яковлева А. <small>шаблонные сообщения</small></span>
     <span class="pct">28% <small>(11 🔴)</small></span>
+    <span class="silent high">21% <small>(8 🔇)</small></span>
     <span class="deals">39 сделок</span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
   </div>
-  <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 12 красных, ЗАБЛОКИРОВАН">
+  <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 12 красных, 8 молчат, грубый на первом звонке">
     <span class="dot">🔴</span>
-    <span class="name">Ляшенко А. <small>заблокирован на новые лиды</small></span>
+    <span class="name">Ляшенко А. <small>заблокирован · грубый тон</small></span>
     <span class="pct">34% <small>(12 🔴)</small></span>
+    <span class="silent high">23% <small>(8 🔇)</small></span>
     <span class="deals">35 сделок</span>
     <span class="effect">🚫 0 новых лидов · премия 0</span>
   </div>
 </div>
 
 <div class="traffic-legend">
-  <div class="leg-item"><span>🟢</span> <b>≤10%</b> · +30% лидов</div>
-  <div class="leg-item"><span>🟡</span> <b>10–20%</b> · норма + предупреждение</div>
-  <div class="leg-item"><span>🟠</span> <b>20–30%</b> · поток −50% · премия −20%</div>
-  <div class="leg-item"><span>🔴</span> <b>&gt;30%</b> · 0 лидов · премия 0</div>
+  <div class="leg-item"><span>🟢</span> <b>≤10% 🔴</b> · +30% лидов</div>
+  <div class="leg-item"><span>🟡</span> <b>10–20% 🔴</b> · норма + предупреждение</div>
+  <div class="leg-item"><span>🟠</span> <b>20–30% 🔴</b> · поток −50% · премия −20%</div>
+  <div class="leg-item"><span>🔴</span> <b>&gt;30% 🔴</b> · 0 лидов · премия 0</div>
 </div>
 
 <div class="mc-card-sub" style="margin-top: 12px;">
-  Лиды Ляшенко (≈75/нед) автоматически уходят 🟢-клоузерам · Лим/Гальков/Алиев получают +30% к норме. Естественный отбор без увольнений: разгрёб до 30% — разблокирован. Клик на клоузера → его красные сделки для 1:1.
+  <b>🔴 Красные</b> = клоузер бросил (касание &gt;48ч), наказывается. <b>🔇 Молчания</b> = клиент не отвечает после 6+ попыток клоузера (не наказывается, отдельный регламент). Норма 🔇 по команде ≤15%; сейчас среднее 14% — пограничная. У Яковлевой 21% / Ляшенко 23% (высокое 🔇 = шаблонные сообщения или грубый тон → AI проверка). Клик на клоузера → разбор его 🔴 + 🔇.
+</div>
+</div>
+
+<!-- 🔇 Молчания команды — отдельный контур качества лидов / скриптов (col-6) -->
+<div class="mc-card col-6 accent-purple">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">🔇</div>
+<div class="mc-card-label">Молчания клиентов · контур качества лидов <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">когда клоузер делает попытки, а клиент не отвечает · сигнал о качестве трафика или скриптов</span></div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
+  <div style="padding: 12px; background: rgba(176,132,255,0.06); border: 1px solid rgba(176,132,255,0.20); border-radius: 8px; text-align: center;">
+    <div style="font-size: 28px; font-weight: 800; color: #b084ff; font-feature-settings: 'tnum';">42</div>
+    <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px;">сделок в 🔇 молчании</div>
+    <div style="font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px;">из 294 активных · <b style="color:#ffd60a">14% (норма ≤15%)</b></div>
+  </div>
+  <div style="padding: 12px; background: rgba(255,159,10,0.06); border: 1px solid rgba(255,159,10,0.20); border-radius: 8px; text-align: center;">
+    <div style="font-size: 28px; font-weight: 800; color: #ff9f0a; font-feature-settings: 'tnum';">18</div>
+    <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px;">ждут реанимации</div>
+    <div style="font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px;">7+ дней молчат · <b style="color:#ff9f0a">бот пишет сегодня</b></div>
+  </div>
+  <div style="padding: 12px; background: rgba(255,69,58,0.06); border: 1px solid rgba(255,69,58,0.20); border-radius: 8px; text-align: center;">
+    <div style="font-size: 28px; font-weight: 800; color: #ff453a; font-feature-settings: 'tnum';">7</div>
+    <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px;">авто-закрытие завтра</div>
+    <div style="font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px;">14 дней без ответа → <b style="color:#ff453a">архив «Без контакта»</b></div>
+  </div>
+</div>
+
+<div style="margin-top: 14px;">
+  <div style="font-size: 10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.45); margin-bottom: 6px;">Источники молчаний · что говорит AI</div>
+  <div style="display: grid; gap: 6px;">
+    <div class="clickable-num" onclick="openDrillDown('silence-templates')" style="display:grid; grid-template-columns: 1fr auto; gap:10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-left: 3px solid #ff9f0a; border-radius: 6px; cursor:pointer; font-size: 12px;">
+      <span><b>Шаблонные сообщения</b> · одинаковые фразы 5+ раз клиентам · <span style="color:rgba(255,255,255,0.55)">Яковлева, Мифтахов</span></span>
+      <span style="color:#ff9f0a; font-weight:700;">12 сделок</span>
+    </div>
+    <div class="clickable-num" onclick="openDrillDown('silence-rude')" style="display:grid; grid-template-columns: 1fr auto; gap:10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-left: 3px solid #ff453a; border-radius: 6px; cursor:pointer; font-size: 12px;">
+      <span><b>Грубый тон на первом звонке</b> · 4 жалобы клиентов · <span style="color:rgba(255,255,255,0.55)">Ляшенко</span></span>
+      <span style="color:#ff453a; font-weight:700;">8 сделок</span>
+    </div>
+    <div class="clickable-num" onclick="openDrillDown('silence-unsubscribe')" style="display:grid; grid-template-columns: 1fr auto; gap:10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-left: 3px solid #b084ff; border-radius: 6px; cursor:pointer; font-size: 12px;">
+      <span><b>Отписались от бота</b> · мгновенный 🔇 · <span style="color:rgba(255,255,255,0.55)">все клоузеры</span></span>
+      <span style="color:#b084ff; font-weight:700;">11 сделок</span>
+    </div>
+    <div class="clickable-num" onclick="openDrillDown('silence-quality')" style="display:grid; grid-template-columns: 1fr auto; gap:10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-left: 3px solid #52a7ff; border-radius: 6px; cursor:pointer; font-size: 12px;">
+      <span><b>Низкая квалификация лида</b> · трипваер купил, но реально не банкротится · <span style="color:rgba(255,255,255,0.55)">распределено</span></span>
+      <span style="color:#52a7ff; font-weight:700;">11 сделок</span>
+    </div>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  Если &gt;15% молчаний по команде — проблема не у клоузера, а в маркетинге (плохой трафик) или в скриптах. Сейчас 14% — на грани. Топ-3 причин выше → разбор на 1:1 с конкретными клоузерами + проверка скриптов сообщений + ревью кампаний трипваера.
 </div>
 </div>
 
@@ -14393,16 +14463,18 @@
         // ═══ Drill-down светофора: клик на клоузера → его 🔴 сделки (без касания >48ч) ═══
         // Основа для 1:1 РОПа с конкретным клоузером
         'traffic-lim': {
-          title: '🟢 Лим Елена · 2% красных (1 из 36)',
-          sub: 'Топ-1 дисциплина · +30% к потоку лидов · единственная просрочка — Соколов',
+          title: '🟢 Лим Елена · 2% 🔴 + 5% 🔇 (36 сделок)',
+          sub: 'Топ-1 дисциплина · +30% к потоку лидов · персональные сообщения работают (минимум молчаний)',
           stats: [
-            { num: '1', lbl: 'красная сделка' },
-            { num: '35', lbl: 'зелёных' },
+            { num: '1', lbl: '🔴 просрочена' },
+            { num: '2', lbl: '🔇 молчат (норма)' },
             { num: '+30%', lbl: 'к потоку лидов' },
           ],
           headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
           rows: [
-            ['Соколов И.',  '150к ₽', '52ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Соколов И.',   '150к ₽', '52ч назад',  '🔴 Просрочена',         '→ карточка'],
+            ['Лебедев С.',   '120к ₽', '5 дней молчит', '🔇 Молчит (3 поп.)',  '→ карточка'],
+            ['Морозова А.',  '85к ₽',  '8 дней молчит', '🔇 Молчит · реан. сегодня', '→ карточка'],
           ],
         },
         'traffic-galkov': {
@@ -14487,11 +14559,11 @@
           ],
         },
         'traffic-yakovleva': {
-          title: '🟠 Яковлева А. · 28% красных (11 из 39) · поток −50%',
-          sub: 'Оранжевая зона · −50% новых лидов + −20% премии · ещё 2 просрочки → 🔴 БЛОК',
+          title: '🟠 Яковлева А. · 28% 🔴 + 21% 🔇 (39 сделок) · поток −50%',
+          sub: 'Оранжевая зона · 11 бросила + 8 клиентов молчит. AI: шаблонные сообщения (одинаковые фразы 5+ раз) → клиенты игнорируют. Нужен 1:1 + переписать скрипт.',
           stats: [
-            { num: '11', lbl: 'красных' },
-            { num: '28', lbl: 'зелёных' },
+            { num: '11', lbl: '🔴 бросила' },
+            { num: '8', lbl: '🔇 молчат (выше нормы)' },
             { num: '2', lbl: 'до 🔴 БЛОКА' },
           ],
           headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
@@ -14510,12 +14582,12 @@
           ],
         },
         'traffic-lyashenko': {
-          title: '🔴 Ляшенко А. · 34% красных (12 из 35) · ЗАБЛОКИРОВАН',
-          sub: '0 новых лидов · премия за дисциплину 0 · разгреби до 30% — снимется блок · 5 худших ниже',
+          title: '🔴 Ляшенко А. · 34% 🔴 + 23% 🔇 (35 сделок) · ЗАБЛОКИРОВАН',
+          sub: '0 новых лидов · премия 0 · 12 бросил + 8 клиентов молчит. AI: грубый тон на первом звонке (4 жалобы клиентов) → клиенты не возвращаются. Срочно 1:1 + слушать звонки на интонацию.',
           stats: [
-            { num: '12', lbl: 'красных 🔴' },
-            { num: '23', lbl: 'зелёных' },
-            { num: '2', lbl: 'разгрести до 🟠' },
+            { num: '12', lbl: '🔴 бросил' },
+            { num: '8', lbl: '🔇 молчат (выше нормы)' },
+            { num: '2', lbl: 'до 🟠' },
           ],
           headers: ['Клиент', 'Сумма', 'Касание', 'Главное нарушение', '→'],
           rows: [
@@ -14533,6 +14605,79 @@
             ['Орлова К.',     '120к ₽', '180ч назад', '🚫 Глубокая просрочка',         '→ карточка'],
           ],
         },
+        // ═══ Drill-down контура молчаний — категории по AI ═══
+        'silence-templates': {
+          title: '🟠 Шаблонные сообщения · 12 сделок молчат',
+          sub: 'AI поймал одинаковые фразы 5+ раз разным клиентам. Клиенты не отвечают потому что чувствуют «бот, не человек». Лечится переписыванием скрипта + 1:1.',
+          stats: [
+            { num: '12', lbl: 'сделок в 🔇' },
+            { num: '2', lbl: 'клоузера-источника' },
+            { num: '0', lbl: 'персонализации' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Молчит', 'Шаблонная фраза AI'],
+          rows: [
+            ['Михайлова Г.', '120к ₽', 'Яковлева А.', '8 дней',  'Здравствуйте, как ваше решение?'],
+            ['Кузин Р.',     '180к ₽', 'Яковлева А.', '6 дней',  'Здравствуйте, как ваше решение?'],
+            ['Семёнова К.',  '150к ₽', 'Яковлева А.', '5 дней',  'Здравствуйте, как ваше решение?'],
+            ['Андреев С.',   '95к ₽',  'Яковлева А.', '4 дня',   'Здравствуйте, как ваше решение?'],
+            ['Морозов И.',   '180к ₽', 'Мифтахов Р.', '7 дней',  'Иван, как договорились?'],
+            ['Кузьмин Р.',   '120к ₽', 'Мифтахов Р.', '5 дней',  'Иван, как договорились?'],
+            ['Власов А.',    '85к ₽',  'Мифтахов Р.', '4 дня',   'Иван, как договорились?'],
+            ['(ещё 5)', '', '', '', ''],
+          ],
+        },
+        'silence-rude': {
+          title: '🔴 Грубый тон на первом звонке · 8 сделок молчат',
+          sub: 'AI услышал агрессивный/нетерпеливый тон в первых 30 секундах звонка. 4 клиента написали жалобу в WhatsApp. Срочно слушать звонки + 1:1 + работа с интонацией.',
+          stats: [
+            { num: '8', lbl: 'сделок в 🔇' },
+            { num: '1', lbl: 'клоузер (Ляшенко)' },
+            { num: '4', lbl: 'жалобы клиентов' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Молчит', 'Что услышал AI', '→'],
+          rows: [
+            ['Куделькин С.', '110к ₽', '6 дней',  'Перебивал клиента 4 раза',           '→ запись'],
+            ['Морозов А.',   '85к ₽',  '5 дней',  'Тон давления, нет эмпатии',           '→ запись'],
+            ['Орлов А.',     '180к ₽', '4 дня',   '«Вы не понимаете, давайте быстрее»',  '→ запись'],
+            ['Беляев М.',    '120к ₽', '7 дней',  'Жалоба в WhatsApp «грубый сотрудник»', '→ запись'],
+            ['(ещё 4)', '', '', '', ''],
+          ],
+        },
+        'silence-unsubscribe': {
+          title: '⚪ Отписались от бота · 11 сделок мгновенный 🔇',
+          sub: 'Клиенты вышли из чата с ботом или заблокировали номер. Распределено по всем клоузерам — это не их вина, обычно usability бота.',
+          stats: [
+            { num: '11', lbl: 'отписались' },
+            { num: '4', lbl: 'из них в WhatsApp' },
+            { num: '7', lbl: 'из них в TG-боте' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Канал', 'Когда отписался'],
+          rows: [
+            ['Иванчук М.',   '320к ₽', 'Яковлева А.',  'TG-бот',    '3 дня назад'],
+            ['Зайцева М.',   '120к ₽', 'Яковлева А.',  'WhatsApp',  '4 дня назад'],
+            ['Соколов И.',   '150к ₽', 'Петрова Д.',   'TG-бот',    '5 дней назад'],
+            ['Корчик П.',    '180к ₽', 'Марченко С.',  'TG-бот',    '6 дней назад'],
+            ['(ещё 7)', '', '', '', ''],
+          ],
+        },
+        'silence-quality': {
+          title: '🔵 Низкая квалификация лида · 11 сделок молчат',
+          sub: 'Купил трипваер 99₽ но реально не банкротится — посмотреть, любопытствует, ждёт чужого ответа. Не вина клоузера. Сигнал для маркетинга: проверить таргетинги трипваера.',
+          stats: [
+            { num: '11', lbl: 'не квалифицированы' },
+            { num: '4%', lbl: 'от всех трипваеров' },
+            { num: '≤3%', lbl: 'норма' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Молчит', 'Что не так'],
+          rows: [
+            ['Тимошенко П.', '120к ₽', 'Марченко С.',  '8 дней',  'Долги меньше 250к (не нужен 127-ФЗ)'],
+            ['Захарова Б.',  '85к ₽',  'Алиев К.',     '6 дней',  'Уже подал сам через МФЦ'],
+            ['Лебедев Г.',   '210к ₽', 'Гальков Н.',   '5 дней',  'Купил для друга, сам не банкротится'],
+            ['Михайлов Р.',  '180к ₽', 'Алиев К.',     '4 дня',   'Доход выше прожиточного × 5 → не подходит'],
+            ['(ещё 7)', '', '', '', ''],
+          ],
+        },
+
         'conv-think': {
           title: '🤔 Думают → Reopen → Продажа · 36.4% (8 из 22 думающих)',
           sub: 'План ≥30% ✓ · переоткрытие думающих в активный статус · топ 3 не работают с думающими',
