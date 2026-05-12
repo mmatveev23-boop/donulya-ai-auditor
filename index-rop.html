@@ -7949,28 +7949,28 @@
 </div>
 <div class="hero-decomp">
 <div class="title js-decomp-title">↳ Диагностические метрики · 4 разные конверсии · влияют на 30% (не суммируются)</div>
-<div class="kpi-strip full">
+<div class="kpi-strip full clickable-num" onclick="openDrillDown('conv-full')" style="cursor:pointer;" title="Кликни → раскладка по 8 клоузерам, 3 худших красным">
 <div class="bar-bg js-kpi-bar" data-key="full" style="width: 100%;"></div>
 <span class="ico">💰</span>
 <span class="name">Полная в моменте <small>полные на встрече / состоявшиеся встречи · план ≥15%</small></span>
 <span class="pct js-kpi-pct" data-key="full">16.7%</span>
 <span class="qty"><b class="js-kpi-qty" data-key="full">90</b>/<span class="js-kpi-total" data-key="full">540</span></span>
 </div>
-<div class="kpi-strip part">
+<div class="kpi-strip part clickable-num" onclick="openDrillDown('conv-part')" style="cursor:pointer;" title="Кликни → раскладка по 8 клоузерам, 3 худших красным">
 <div class="bar-bg js-kpi-bar" data-key="part" style="width: 70%;"></div>
 <span class="ico">🤝</span>
 <span class="name">Частичка → Полная <small>частички, дожатые до полной / все полные · план ≥40%</small></span>
 <span class="pct js-kpi-pct" data-key="part">55.6%</span>
 <span class="qty"><b class="js-kpi-qty" data-key="part">50</b>/<span class="js-kpi-total" data-key="part">90</span></span>
 </div>
-<div class="kpi-strip promise">
+<div class="kpi-strip promise clickable-num" onclick="openDrillDown('conv-promise')" style="cursor:pointer;" title="Кликни → раскладка по 8 клоузерам, 3 худших красным">
 <div class="bar-bg js-kpi-bar" data-key="promise" style="width: 66%;"></div>
 <span class="ico">📅</span>
 <span class="name">Обещание → Продажа <small>продажи / обещания · план ≥40%</small></span>
 <span class="pct js-kpi-pct" data-key="promise">33.3%</span>
 <span class="qty"><b class="js-kpi-qty" data-key="promise">30</b>/<span class="js-kpi-total" data-key="promise">90</span></span>
 </div>
-<div class="kpi-strip think">
+<div class="kpi-strip think clickable-num" onclick="openDrillDown('conv-think')" style="cursor:pointer;" title="Кликни → раскладка по 8 клоузерам, 3 худших красным">
 <div class="bar-bg js-kpi-bar" data-key="think" style="width: 73%;"></div>
 <span class="ico">🤔</span>
 <span class="name">Думают → Reopen → Продажа <small>продажи / обещания из Reopen · план ≥30%</small></span>
@@ -14168,6 +14168,90 @@
           rows: [
             ['Соколов И.',    '150к ₽', '24.04', 'Слабый дожим возражения «дорого»', '3/5'],
             ['Гаврилов Н.',   '180к ₽', '23.04', 'Не зафиксировал следующий шаг', '4/5'],
+          ],
+        },
+
+        // ═══ Drill-down по 4 декомпозиционным метрикам HERO ═══
+        // Клик на цифру конверсии → раскладка по 8 клоузерам
+        // 3 худших по этой метрике выделены красным (color:#ff453a)
+        'conv-full': {
+          title: '💰 Полная в моменте · 16.7% (90 из 540 встреч)',
+          sub: 'План ≥15% ✓ · клиент платит полную сумму прямо на Д0 · топ 3 хуже всего справляются',
+          stats: [
+            { num: '90/540', lbl: '16.7%' },
+            { num: '≥15%', lbl: 'норма ✓' },
+            { num: '3', lbl: 'ниже плана' },
+          ],
+          headers: ['Клоузер', 'Полная', 'Встреч', 'Конверсия', 'vs план'],
+          rows: [
+            ['Лим Елена',    '4',  '14', '28%',                                                       '▲ +13пп'],
+            ['Гальков Н.',   '8',  '36', '22%',                                                       '▲ +7пп'],
+            ['Алиев Камран', '10', '53', '19%',                                                       '▲ +4пп'],
+            ['Петрова Д.',   '12', '67', '18%',                                                       '▲ +3пп'],
+            ['Марченко С.',  '11', '69', '16%',                                                       '▲ +1пп'],
+            ['Мифтахов Р.',  '10', '71', '<span style="color:#ff453a; font-weight:700;">14%</span>',  '<span style="color:#ff453a;">▼ -1пп ⚠</span>'],
+            ['Яковлева А.',  '8',  '73', '<span style="color:#ff453a; font-weight:700;">11%</span>',  '<span style="color:#ff453a;">▼ -4пп ⚠</span>'],
+            ['Ляшенко А.',   '5',  '57', '<span style="color:#ff453a; font-weight:700;">9%</span>',   '<span style="color:#ff453a;">▼ -6пп ⚠</span>'],
+          ],
+        },
+        'conv-part': {
+          title: '🤝 Частичка → Полная · 55.6% (50 из 90 полных)',
+          sub: 'План ≥40% ✓ · дожим частички до полной оплаты · топ 3 хуже всего дожимают',
+          stats: [
+            { num: '50/90', lbl: '55.6%' },
+            { num: '≥40%', lbl: 'норма ✓' },
+            { num: '2', lbl: 'ниже плана' },
+          ],
+          headers: ['Клоузер', 'Дожали', 'Частичек', 'Конверсия', 'vs план'],
+          rows: [
+            ['Лим Елена',    '8', '10', '80%',                                                       '▲ +40пп'],
+            ['Гальков Н.',   '7', '10', '70%',                                                       '▲ +30пп'],
+            ['Алиев Камран', '9', '14', '64%',                                                       '▲ +24пп'],
+            ['Петрова Д.',   '9', '15', '60%',                                                       '▲ +20пп'],
+            ['Марченко С.',  '5', '9',  '56%',                                                       '▲ +16пп'],
+            ['Мифтахов Р.',  '5', '11', '45%',                                                       '▲ +5пп'],
+            ['Яковлева А.',  '4', '11', '<span style="color:#ff453a; font-weight:700;">36%</span>',  '<span style="color:#ff453a;">▼ -4пп ⚠</span>'],
+            ['Ляшенко А.',   '3', '10', '<span style="color:#ff453a; font-weight:700;">30%</span>',  '<span style="color:#ff453a;">▼ -10пп ⚠</span>'],
+          ],
+        },
+        'conv-promise': {
+          title: '📅 Обещание → Продажа · 33.3% (30 из 90 обещаний)',
+          sub: 'План ≥40% ⚠ ниже нормы · дожим обещаний до оплаты · топ 3 хуже всех дожимают',
+          stats: [
+            { num: '30/90', lbl: '33.3%' },
+            { num: '≥40%', lbl: 'норма ⚠' },
+            { num: '4', lbl: 'ниже плана' },
+          ],
+          headers: ['Клоузер', 'Продали', 'Обещаний', 'Конверсия', 'vs план'],
+          rows: [
+            ['Лим Елена',    '6', '10', '60%',                                                       '▲ +20пп'],
+            ['Гальков Н.',   '5', '10', '50%',                                                       '▲ +10пп'],
+            ['Алиев Камран', '5', '11', '45%',                                                       '▲ +5пп'],
+            ['Петрова Д.',   '4', '10', '40%',                                                       '→ 0пп ✓'],
+            ['Марченко С.',  '3', '9',  '33%',                                                       '▼ -7пп'],
+            ['Мифтахов Р.',  '3', '10', '<span style="color:#ff453a; font-weight:700;">30%</span>',  '<span style="color:#ff453a;">▼ -10пп ⚠</span>'],
+            ['Яковлева А.',  '2', '8',  '<span style="color:#ff453a; font-weight:700;">25%</span>',  '<span style="color:#ff453a;">▼ -15пп ⚠</span>'],
+            ['Ляшенко А.',   '2', '11', '<span style="color:#ff453a; font-weight:700;">18%</span>',  '<span style="color:#ff453a;">▼ -22пп ⚠</span>'],
+          ],
+        },
+        'conv-think': {
+          title: '🤔 Думают → Reopen → Продажа · 36.4% (8 из 22 думающих)',
+          sub: 'План ≥30% ✓ · переоткрытие думающих в активный статус · топ 3 не работают с думающими',
+          stats: [
+            { num: '8/22', lbl: '36.4%' },
+            { num: '≥30%', lbl: 'норма ✓' },
+            { num: '3', lbl: 'ниже плана' },
+          ],
+          headers: ['Клоузер', 'Продали', 'Думающих', 'Конверсия', 'vs план'],
+          rows: [
+            ['Лим Елена',    '2', '3', '67%',                                                       '▲ +37пп'],
+            ['Гальков Н.',   '2', '4', '50%',                                                       '▲ +20пп'],
+            ['Алиев Камран', '1', '2', '50%',                                                       '▲ +20пп'],
+            ['Петрова Д.',   '1', '3', '33%',                                                       '▲ +3пп'],
+            ['Марченко С.',  '1', '3', '33%',                                                       '▲ +3пп'],
+            ['Мифтахов Р.',  '1', '4', '<span style="color:#ff453a; font-weight:700;">25%</span>',  '<span style="color:#ff453a;">▼ -5пп ⚠</span>'],
+            ['Яковлева А.',  '0', '2', '<span style="color:#ff453a; font-weight:700;">0%</span>',   '<span style="color:#ff453a;">▼ -30пп ⚠</span>'],
+            ['Ляшенко А.',   '0', '1', '<span style="color:#ff453a; font-weight:700;">0%</span>',   '<span style="color:#ff453a;">▼ -30пп ⚠</span>'],
           ],
         },
       };
