@@ -3589,6 +3589,58 @@
       }
       .d0-rules-body .footer-rule b { color: #fff; font-style: normal; }
 
+      /* ── 3 акцентные плитки сверху Счетов под контролем (стиль Виктории v5) ── */
+      .bills-top3 {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        font-feature-settings: "tnum";
+      }
+      .bills-top {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.06);
+        border-left: 3px solid rgba(255,255,255,0.20);
+      }
+      .bills-top.warn   { background: rgba(255,159,10,0.05); border-color: rgba(255,159,10,0.20); border-left-color: #ff9f0a; }
+      .bills-top.danger { background: rgba(255,69,58,0.05);  border-color: rgba(255,69,58,0.20);  border-left-color: #ff453a; }
+
+      .bills-top .head {
+        display: flex; align-items: baseline; gap: 6px;
+        margin-bottom: 6px;
+      }
+      .bills-top .head .ico { font-size: 14px; line-height: 1; }
+      .bills-top .head .lbl {
+        font-size: 10px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.65);
+      }
+
+      .bills-top .big {
+        font-size: 12.5px; color: rgba(255,255,255,0.75);
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+      .bills-top .big .num {
+        font-size: 26px; font-weight: 700;
+        line-height: 1;
+        vertical-align: -3px;
+      }
+      .bills-top.warn   .big .num { color: #ff9f0a; }
+      .bills-top.danger .big .num { color: #ff453a; }
+      .bills-top .big small {
+        font-size: 11px; font-weight: 500;
+        color: rgba(255,255,255,0.55);
+      }
+
+      .bills-top .sub {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.55);
+        line-height: 1.4;
+      }
+      .bills-top .sub b { color: #fff; }
+
       /* ── Счета под контролем: таблица по клоузерам ── */
       .bills-stats {
         display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px;
@@ -4153,7 +4205,63 @@
       .mc-funnel-cell.good .pct { color: #ff9f0a; }
       .mc-funnel-cell.bad  .pct { color: #ff453a; }
 
-      /* ── 📋 Расхождения · Расторги · Сливы — финансовый контур (плитка Row 7) ── */
+      /* ── 📋 Расхождения · Расторги · Сливы — 5 плиток-индикаторов в ряд (стиль Виктории v5) ── */
+      .fin-grid {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        font-feature-settings: "tnum";
+      }
+      .fin-tile {
+        padding: 14px 14px 12px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.12s, transform 0.12s;
+        position: relative;
+      }
+      .fin-tile:hover {
+        background: rgba(255,255,255,0.05);
+        transform: translateY(-2px);
+      }
+      .fin-tile.yellow  { background: rgba(255,214,10,0.04);  border-color: rgba(255,214,10,0.20); }
+      .fin-tile.orange  { background: rgba(255,159,10,0.04);  border-color: rgba(255,159,10,0.20); }
+      .fin-tile.blue    { background: rgba(82,167,255,0.04);  border-color: rgba(82,167,255,0.20); }
+      .fin-tile.red     { background: rgba(255,69,58,0.04);   border-color: rgba(255,69,58,0.25); }
+      .fin-tile.purple  { background: rgba(176,132,255,0.04); border-color: rgba(176,132,255,0.20); }
+
+      .fin-tile .ico {
+        font-size: 22px; line-height: 1;
+        margin-bottom: 10px;
+      }
+      .fin-tile .num {
+        font-size: 36px; font-weight: 800;
+        line-height: 1;
+        margin-bottom: 6px;
+        letter-spacing: -0.02em;
+      }
+      .fin-tile.yellow .num { color: #ffd60a; }
+      .fin-tile.orange .num { color: #ff9f0a; }
+      .fin-tile.blue   .num { color: #52a7ff; }
+      .fin-tile.red    .num { color: #ff453a; }
+      .fin-tile.purple .num { color: #b084ff; }
+
+      .fin-tile .lbl {
+        font-size: 12.5px; font-weight: 600;
+        color: rgba(255,255,255,0.85);
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+      .fin-tile .sub {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.50);
+      }
+      .fin-tile .sub .up   { color: #ff8478; font-weight: 700; }
+      .fin-tile .sub .down { color: #30d158; font-weight: 700; }
+
+      /* ── 📋 Расхождения · Расторги · Сливы — старые стили fin-violations (оставлены неиспользуемыми) ── */
       .fin-violations {
         margin-top: 12px;
         display: grid;
@@ -8045,79 +8153,39 @@
                 </div>
               </div>
 
-              <!-- 📑 Счета под контролем (col-6 — детальная таблица по клоузерам) -->
+              <!-- 📑 Счета под контролем (col-6 — таблица по клоузерам в стиле Виктории v5) -->
               <div class="mc-card col-6 accent-orange">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📑</div>
-                <div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">кто закрывает деньги, а кто рассылает счета как листовки</span></div>
-                <div class="mc-card-value">86<small>· счетов · 31 оплачено = 36%</small></div>
+                <div class="mc-card-label">Счета под контролем <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">таблица по клоузерам · кто закрывает, кто бросает</span></div>
 
-                <!-- Сегодня: связка ждём → получили → осталось (то что РОП хочет видеть утром) -->
-                <div class="bills-today">
-                  <div class="head">📅 Сегодня</div>
-                  <div class="seg">
-                    <span class="lbl">ждём</span>
-                    <span class="num">312к ₽</span>
+                <!-- 3 акцентные плитки сверху (стиль Виктории v5) -->
+                <div class="bills-top3">
+                  <div class="bills-top warn">
+                    <div class="head">
+                      <span class="ico">📅</span>
+                      <span class="lbl">Должны оплатить сегодня</span>
+                    </div>
+                    <div class="big"><span class="num">18</span> <small>счетов</small> · <span class="num">312к ₽</span></div>
+                    <div class="sub">из них уже получили: <b>87к ₽</b> (6 шт)</div>
                   </div>
-                  <span class="sep">·</span>
-                  <div class="seg win">
-                    <span class="lbl">получили</span>
-                    <span class="num">87к</span>
-                  </div>
-                  <span class="sep">·</span>
-                  <div class="seg left">
-                    <span class="lbl">осталось</span>
-                    <span class="num">225к</span>
-                  </div>
-                  <div class="hint">из 18 обязательств · 6 закрыто · 12 в работе</div>
-                </div>
 
-                <!-- 💸 Деньги в воздухе (раньше была отдельная плитка, теперь подблок Счетов) -->
-                <div class="bills-air">
-                  <div class="head">
-                    <span class="title">💸 Деньги в воздухе</span>
-                    <span class="big">783к<small> ₽ висит</small></span>
+                  <div class="bills-top danger">
+                    <div class="head">
+                      <span class="ico">🔥</span>
+                      <span class="lbl">Не оплатили</span>
+                    </div>
+                    <div class="big"><span class="num">22</span> просрочено · <span class="num">170к ₽</span></div>
+                    <div class="sub">норма ≤15% · <b style="color:#ff453a;">сейчас 26%</b> ⚠</div>
                   </div>
-                  <div class="rows">
-                    <div class="row">
-                      <span class="lbl">Выставлено счетов</span>
-                      <span class="val"><b>86</b> · <small>1 290к ₽</small></span>
-                    </div>
-                    <div class="row win">
-                      <span class="lbl">✓ Оплачено полностью</span>
-                      <span class="val"><b>31</b> · <small>465к ₽</small></span>
-                    </div>
-                    <div class="row mid">
-                      <span class="lbl">▣ Частично оплачено</span>
-                      <span class="val"><b>14</b> · <small>42к ✓ + 168к ждём</small></span>
-                    </div>
-                    <div class="row air">
-                      <span class="lbl">⚠ В воздухе</span>
-                      <span class="val"><b>783к ₽</b></span>
-                    </div>
-                  </div>
-                  <div class="split">
-                    Из них: <b style="color:#fff">498к под контролем</b> · <b style="color:#ff453a;">285к без контроля</b> · <b style="color:#ff453a;">170к просрочено</b>
-                  </div>
-                </div>
 
-                <!-- Сводная статистика команды (структура портфеля счетов) -->
-                <div class="bills-stats">
-                  <div class="stat">
-                    <div class="lbl">Выставлено</div>
-                    <div class="num">86</div>
-                  </div>
-                  <div class="stat win">
-                    <div class="lbl">Оплачено</div>
-                    <div class="num">31</div>
-                  </div>
-                  <div class="stat danger">
-                    <div class="lbl">Просрочено</div>
-                    <div class="num">22</div>
-                  </div>
-                  <div class="stat warn">
-                    <div class="lbl">Без касания 24ч</div>
-                    <div class="num">14</div>
+                  <div class="bills-top danger">
+                    <div class="head">
+                      <span class="ico">📞</span>
+                      <span class="lbl">Без касания 24 часа</span>
+                    </div>
+                    <div class="big"><span class="num">14</span> <small>сделок молчат</small></div>
+                    <div class="sub">→ авто-эскалация в Очередь РОПа</div>
                   </div>
                 </div>
 
@@ -8431,70 +8499,47 @@
                 </div>
               </div>
 
-              <!-- 📋 Расхождения · Расторги · Сливы (col-6 — финансовый контур из методологии v5) -->
+              <!-- 📋 Расхождения · Расторги · Сливы (col-6 — 5 компактных плиток-индикаторов в стиле Виктории v5) -->
               <div class="mc-card col-6 accent-red">
                 <div class="mc-card-arrow">→</div>
                 <div class="mc-card-icon">📋</div>
-                <div class="mc-card-label">Расхождения · Расторги · Сливы <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · прямые потери в бонусе клоузеров · регламент МПП2→ОС</span></div>
-                <div class="mc-card-value">28 000<small> ₽ штрафов · команда (▼-12к к прошлой неделе) · + 3 продажи не зачтены</small></div>
+                <div class="mc-card-label">Расхождения · Расторги · Сливы <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · кликни → стата по МПП и причины</span></div>
 
-                <div class="fin-violations">
-                  <div class="fin-row no-bonus">
-                    <span class="marker">📝</span>
-                    <span class="name"><b>Не подписал согласие</b> <small>продажа НЕ ЗАЧТЕНА · клоузер не получает бонус</small></span>
-                    <span class="count">3<small>продажи</small></span>
-                    <span class="penalty no-bonus">бонус 0 ₽</span>
-                    <span class="who"><b>Ляшенко 2</b> · Яковлева 1</span>
+                <div class="fin-grid">
+                  <div class="fin-tile yellow">
+                    <div class="ico">📝</div>
+                    <div class="num">14</div>
+                    <div class="lbl">Не подписал согласие</div>
+                    <div class="sub">за неделю · <span class="up">▲+3</span></div>
                   </div>
-
-                  <div class="fin-row warn">
-                    <span class="marker">📤</span>
-                    <span class="name"><b>Не передан в ОС</b> <small>SLA 3 ч · нет договора в Я.Диске / не сменил статус</small></span>
-                    <span class="count">2<small>случая</small></span>
-                    <span class="penalty warn">риск штрафа</span>
-                    <span class="who">Петрова 1 · Марченко 1</span>
+                  <div class="fin-tile orange">
+                    <div class="ico">📤</div>
+                    <div class="num">7</div>
+                    <div class="lbl">Не передан в ОС</div>
+                    <div class="sub">после оплаты · <span class="up">▲+2</span></div>
                   </div>
-
-                  <div class="fin-row yellow">
-                    <span class="marker">📑</span>
-                    <span class="name"><b>Принято с расхождениями</b> 🟡 <small>менеджер ОС нашёл несовпадения по факту · штраф 1 000 ₽ за сделку</small></span>
-                    <span class="count">4<small>сделки</small></span>
-                    <span class="penalty yellow">−4 000 ₽</span>
-                    <span class="who"><b>Ляшенко 2</b> · Мифтахов 1 · Алиев 1</span>
+                  <div class="fin-tile blue">
+                    <div class="ico">📑</div>
+                    <div class="num">9</div>
+                    <div class="lbl">Принято с расхождениями</div>
+                    <div class="sub">сопровождение · <span class="down">▼-1</span></div>
                   </div>
-
-                  <div class="fin-row danger">
-                    <span class="marker">🚫</span>
-                    <span class="name"><b>Расторг по вине МПП</b> 🔴 <small>клиент разорвал договор · вина клоузера · штраф 5 000 ₽ + 0% бонуса</small></span>
-                    <span class="count">2<small>расторга</small></span>
-                    <span class="penalty danger">−10 000 ₽</span>
-                    <span class="who"><b>Ляшенко 1</b> · Яковлева 1</span>
+                  <div class="fin-tile red">
+                    <div class="ico">🚫</div>
+                    <div class="num">6</div>
+                    <div class="lbl">Расторг по вине МПП</div>
+                    <div class="sub">за неделю · <span class="up">▲+2</span></div>
                   </div>
-
-                  <div class="fin-row danger">
-                    <span class="marker">💧</span>
-                    <span class="name"><b>Слитые лиды</b> <small>закрыл «не реализовано» без 2-х отработок возражений · штраф 2 000 ₽ за лид</small></span>
-                    <span class="count">7<small>лидов</small></span>
-                    <span class="penalty danger">−14 000 ₽</span>
-                    <span class="who"><b>Ляшенко 3</b> · Яковлева 2 · Марченко 1 · Петрова 1</span>
+                  <div class="fin-tile purple">
+                    <div class="ico">💧</div>
+                    <div class="num">23</div>
+                    <div class="lbl">Слитые лиды</div>
+                    <div class="sub">за неделю · <span class="down">▼-4</span></div>
                   </div>
                 </div>
 
-                <div class="fin-summary">
-                  <div class="left">
-                    <span class="lbl">📊 Сводка по нарушителям</span>
-                    <span class="who-bad"><b>Ляшенко</b> · 8 косяков · <b>−24 000 ₽</b> + 2 продажи не зачтены</span>
-                    <span class="who-bad"><b>Яковлева</b> · 4 косяка · <b>−9 000 ₽</b> + 1 продажа не зачтена</span>
-                  </div>
-                  <div class="right">
-                    <span class="lbl">Итого штрафов команды</span>
-                    <span class="total">28 000 ₽</span>
-                    <span class="note">+ 3 продажи без бонуса</span>
-                  </div>
-                </div>
-
-                <div class="mc-card-sub" style="margin-top: 10px;">
-                  Все нарушения фиксируются автоматически: ОС жмёт кнопку «принято с расхождениями», АМО ловит «не передан», тимлид проверяет «не реализовано». Регламент МПП2→ОС · матрица штрафов раздел 8. Кликни на строку → список конкретных сделок с разбором.
+                <div class="mc-card-sub" style="margin-top: 14px;">
+                  Жмёшь на любую плитку → раскрывается стата по каждому МПП и топ-причины. Источник: AmoCRM (статусы расторжения / слива / передачи) + сопровождение (расхождения после передачи).
                 </div>
               </div>
 
