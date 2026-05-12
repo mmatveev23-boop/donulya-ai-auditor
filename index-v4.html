@@ -400,19 +400,39 @@
         gap: 4px;
       }
       .period {
-        padding: 6px 12px;
+        padding: 6px 11px;
         border-radius: 6px;
         background: var(--bg-2);
         border: 1px solid var(--border);
         color: var(--text-2);
-        font-size: 12px;
+        font-size: 11.5px;
         cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.12s, border-color 0.12s, color 0.12s;
+      }
+      .period:hover {
+        background: rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.85);
       }
       .period.active {
         background: var(--green);
         color: #0a120c;
         border-color: var(--green);
         font-weight: 600;
+      }
+      .period.active:hover {
+        background: var(--green);
+        color: #0a120c;
+      }
+      .period.period-custom {
+        background: rgba(82,167,255,0.06);
+        border: 1px dashed rgba(82,167,255,0.30);
+        color: #52a7ff;
+        font-weight: 500;
+      }
+      .period.period-custom:hover {
+        background: rgba(82,167,255,0.12);
+        color: #fff;
       }
 
       /* ═════ FUNNEL-АНКОР (ГЛАВНЫЙ ЭЛЕМЕНТ) ═════ */
@@ -7753,9 +7773,11 @@
                 📌 Скрытые правила <span class="cnt">0</span>
               </button>
               <div class="period-switch">
-                <div class="period" data-period="day" onclick="setPeriod('day')">День</div>
+                <div class="period" data-period="yesterday" onclick="setPeriod('yesterday')">Вчера</div>
+                <div class="period" data-period="today" onclick="setPeriod('today')">Сегодня</div>
                 <div class="period active" data-period="week" onclick="setPeriod('week')">Неделя</div>
                 <div class="period" data-period="month" onclick="setPeriod('month')">Месяц</div>
+                <div class="period period-custom" onclick="showToast('Выбор кастомного периода доступен в продакшене (Date Range Picker)')">Период ▾</div>
               </div>
             </div>
           </div>
@@ -15654,20 +15676,35 @@
       // Декомпозиция: 4 разные конверсии с разными знаменателями (по методологии Виктории).
       // НЕ суммируются в общую 30%. Каждая = диагностика конкретного этапа воронки.
       const heroDataByPeriod = {
-        day: {
+        yesterday: {
           num: '38%', qty: 38, total: 100,
-          trend: '▲ +8пп', trendPeriod: 'ко вчера',
+          trend: '▲ +8пп', trendPeriod: 'к позавчера',
           decomp: {
             full:    { pct: '18.9%', qty: 17, total: 90, bar: 100 },   // 17/90 встреч
             part:    { pct: '64.7%', qty: 11, total: 17, bar: 100 },   // 11/17 полных через частичку
             promise: { pct: '33.3%', qty: 8,  total: 24, bar: 83 },    // 8/24 обещаний
             think:   { pct: '40.0%', qty: 2,  total: 5,  bar: 100 },   // 2/5 reopen
           },
-          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 30%',
+          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 38%',
           reopen: 'Reopen rate 42%',
           cycle: '0,9 дня',
           decompTitle: '↳ Диагностические метрики · за вчера · 4 разные конверсии (не суммируются)',
           closersTitle: 'Конверсия по клоузерам · за вчера · с разбивкой по дожимным статусам',
+        },
+        today: {
+          num: '22%', qty: 9, total: 40,
+          trend: '⏱ день в процессе', trendPeriod: 'до конца дня ~5 ч',
+          decomp: {
+            full:    { pct: '50.0%', qty: 5, total: 10, bar: 100 },   // 5/10 встреч
+            part:    { pct: '40.0%', qty: 2, total: 5,  bar: 100 },   // 2/5 полных через частичку
+            promise: { pct: '67.0%', qty: 2, total: 3,  bar: 100 },   // 2/3 обещаний
+            think:   { pct: '0%',    qty: 0, total: 1,  bar: 0 },     // 0/1 reopen
+          },
+          formula: '⚠ Эти 4 метрики НЕ суммируются в общую 22% · день идёт',
+          reopen: 'Reopen rate 25%',
+          cycle: 'идёт счёт по закрытым',
+          decompTitle: '↳ Диагностические метрики · за сегодня · день в процессе',
+          closersTitle: 'Конверсия по клоузерам · за сегодня · день идёт · кто уже закрыл',
         },
         week: {
           num: '30%', qty: 179, total: 600,
@@ -15703,7 +15740,7 @@
 
       // Клоузеры — массивы для разных периодов. Цикл: full+part+promise+think ≈ Σ
       const closersByPeriod = {
-        day: [
+        yesterday: [
           { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 18ч',   leads: 12, full: 87, part: 5,  promise: 2, think: 1, total: '95%', trend: '▲+5',  trendCol: '#30d158', cls: 'over' },
           { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '19ч',        leads: 14, full: 75, part: 8,  promise: 5, think: 2, total: '90%', trend: '▲+2',  trendCol: '#30d158', cls: 'over' },
           { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '24ч',        leads: 13, full: 70, part: 8,  promise: 5, think: 2, total: '85%', trend: '→0',   trendCol: 'rgba(255,255,255,0.4)', cls: '' },
@@ -15712,6 +15749,16 @@
           { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '80ч',        leads: 14, full: 45, part: 13, promise: 5, think: 2, total: '65%', trend: '▼-12', trendCol: '#ff453a', cls: '' },
           { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '100ч',       leads: 11, full: 18, part: 10, promise: 5, think: 2, total: '35%', trend: '▼-33', trendCol: '#ff453a', cls: 'under' },
           { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '40ч',        leads: 12, full: 15, part: 8,  promise: 5, think: 2, total: '30%', trend: '▼-23', trendCol: '#ff453a', cls: 'under' },
+        ],
+        today: [
+          { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'сегодня · 4ч встреч', leads: 3, full: 85, part: 10, promise: 5, think: 0, total: '100%', trend: 'идёт', trendCol: '#30d158', cls: 'over' },
+          { id: 'galkov',   rank: '②', name: 'Гальков Н.',    cycle: '3ч',                  leads: 3, full: 50, part: 12, promise: 5, think: 0, total: '67%',  trend: 'идёт', trendCol: '#30d158', cls: 'over' },
+          { id: 'aliev',    rank: '③', name: 'Алиев Камран',  cycle: '5ч',                  leads: 4, full: 40, part: 8,  promise: 2, think: 0, total: '50%',  trend: 'идёт', trendCol: 'rgba(255,255,255,0.4)', cls: '' },
+          { id: 'petrova',  rank: '④', name: 'Петрова Д.',    cycle: '6ч',                  leads: 5, full: 15, part: 5,  promise: 0, think: 0, total: '20%',  trend: 'идёт', trendCol: '#ff453a', cls: '' },
+          { id: 'marchenko',rank: '⑤', name: 'Марченко С.',   cycle: '4ч',                  leads: 5, full: 18, part: 2,  promise: 0, think: 0, total: '20%',  trend: 'идёт', trendCol: '#ff453a', cls: '' },
+          { id: 'miftakhov',rank: '⑥', name: 'Мифтахов Р.',   cycle: '— нет встреч',        leads: 4, full: 0,  part: 0,  promise: 0, think: 0, total: '0%',   trend: '⚠',    trendCol: '#ff9f0a', cls: '' },
+          { id: 'yakovleva',rank: '⚠', name: 'Яковлева А.',   cycle: '— нет встреч',        leads: 8, full: 0,  part: 0,  promise: 0, think: 0, total: '0%',   trend: '⚠',    trendCol: '#ff453a', cls: 'under' },
+          { id: 'lyashenko',rank: '⚠', name: 'Ляшенко А.',    cycle: '— нет встреч ⚠',      leads: 8, full: 0,  part: 0,  promise: 0, think: 0, total: '0%',   trend: '⚠',    trendCol: '#ff453a', cls: 'under', cycleColor: '#ff453a' },
         ],
         week: [
           { id: 'lim',      rank: '①', name: 'Лим Елена',     cycle: 'цикл 21ч',   leads: 25,  full: 80, part: 8,  promise: 3, think: 1, total: '92%', trend: '▲+4', trendCol: '#30d158', cls: 'over', dim4: true },
@@ -15800,7 +15847,8 @@
       }
 
       const closersInsightByPeriod = {
-        day: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (топ дня), Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> и <b style="color:#ff8478">Ляшенко 30%</b> провалили день — режем поток + 1:1 утром. Марченко -10пп и Мифтахов -12пп — сигнал к проверке.',
+        yesterday: '<b style="color:#fff">Вчера: резкие сигналы.</b> Лим взяла 95% (топ дня), Гальков 90% — дайте им больше лидов сегодня. <b style="color:#ff8478">Яковлева 35%</b> и <b style="color:#ff8478">Ляшенко 30%</b> провалили день — режем поток + 1:1 утром. Марченко -10пп и Мифтахов -12пп — сигнал к проверке.',
+        today: '<b style="color:#fff">⏱ Сегодня · день в процессе.</b> 9 продаж из 40 трипваеров (22%) · до конца дня ещё ~5 ч, цель ≥30% = нужно минимум +4 продажи. <b style="color:#30d158">Лим уже закрыла 3/3 ✓</b> — топ. <b style="color:#ff8478">Ляшенко 0/8, Яковлева 0/8</b> — экстренный 1:1 сейчас, иначе день провалят. <b style="color:#ff9f0a">Мифтахов 0/4</b> — нет встреч проведено вообще, разобраться с расписанием.',
         week: 'План 30% ✓ · Σ = 💰 + 🤝 + 📅 + 🤔. У топов работает 💰 «полная в моменте» (Лим 80%), у отстающих проседает всё (Ляшенко 30%). Дожим думающих 🤔 ≤2% у всех — слабое место команды.',
         month: 'План 28% ▼ · общая просадка к прошлому месяцу −1пп. Сильные стабильны (Лим 91%, Гальков 87%), но отстающие тянут вниз (Ляшенко 51%, Яковлева 66%). Высокий объём лидов у слабых (Ляшенко 510 лидов = 18% от общего потока) — задача месяца: <b style="color:#fff">перебалансировать поток</b>.',
       };
