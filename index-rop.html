@@ -4635,6 +4635,85 @@
         margin-top: 4px; display: block;
       }
 
+      /* ── 🚦 Светофор команды (дисциплина клоузеров по % красных сделок) ── */
+      .traffic-grid {
+        display: grid;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .traffic-row {
+        display: grid;
+        grid-template-columns: 28px 1.4fr 1fr 0.8fr 1.3fr;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-left-width: 3px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .traffic-row:hover {
+        background: rgba(255,255,255,0.05);
+        transform: translateX(2px);
+      }
+      .traffic-row.green  { border-left-color: #30d158; }
+      .traffic-row.yellow { border-left-color: #ffd60a; }
+      .traffic-row.orange { border-left-color: #ff9f0a; background: rgba(255,159,10,0.04); }
+      .traffic-row.red    { border-left-color: #ff453a; background: rgba(255,69,58,0.06); }
+      .traffic-row .dot { font-size: 16px; line-height: 1; }
+      .traffic-row .name {
+        color: #fff; font-weight: 600;
+      }
+      .traffic-row .name small {
+        color: rgba(255,255,255,0.4);
+        font-weight: 400; font-size: 10.5px; margin-left: 4px;
+      }
+      .traffic-row .pct {
+        font-weight: 800;
+        font-feature-settings: "tnum";
+        font-size: 14px;
+      }
+      .traffic-row .pct small {
+        color: rgba(255,255,255,0.4);
+        font-weight: 400; font-size: 10.5px; margin-left: 4px;
+      }
+      .traffic-row.green  .pct { color: #30d158; }
+      .traffic-row.yellow .pct { color: #ffd60a; }
+      .traffic-row.orange .pct { color: #ff9f0a; }
+      .traffic-row.red    .pct { color: #ff453a; }
+      .traffic-row .deals {
+        color: rgba(255,255,255,0.65);
+        font-feature-settings: "tnum";
+      }
+      .traffic-row .effect {
+        color: rgba(255,255,255,0.55);
+        font-size: 11px;
+      }
+      .traffic-row.orange .effect { color: #ff9f0a; }
+      .traffic-row.red    .effect { color: #ff453a; font-weight: 700; }
+      .traffic-legend {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 10.5px;
+      }
+      .traffic-legend .leg-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(255,255,255,0.65);
+      }
+      .traffic-legend .leg-item b {
+        color: #fff;
+      }
+
       /* ── Очередь РОПа: список action-items ── */
       .rop-queue {
         display: grid; gap: 8px; margin-top: 12px;
@@ -8199,6 +8278,83 @@
                   Продажа+Частичка+Обещание = <b>77%</b> состоявшихся работают · «Продажа в звонке» 34% ≥25% ✓ · «Обещание» 20% — учим закреплять частичкой
                 </div>
 </div>
+<!-- 🚦 Светофор команды · дисциплина по % красных сделок (col-6, дашборд клоузеров публичный) -->
+<div class="mc-card col-6 accent-blue">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">🚦</div>
+<div class="mc-card-label">Светофор команды · дисциплина дожима <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">% красных сделок (без касания &gt;48 раб.ч) · публично для всех · кликни клоузера → его 🔴 сделки</span></div>
+
+<div class="traffic-grid">
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-lim')" title="Лим — все 36 сделок зелёные">
+    <span class="dot">🟢</span>
+    <span class="name">Лим Елена <small>топ-1 дисциплина</small></span>
+    <span class="pct">2% <small>(1 🔴)</small></span>
+    <span class="deals">36 сделок</span>
+    <span class="effect">+30% к потоку лидов</span>
+  </div>
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 1 красная">
+    <span class="dot">🟢</span>
+    <span class="name">Гальков Н.</span>
+    <span class="pct">3% <small>(1 🔴)</small></span>
+    <span class="deals">38 сделок</span>
+    <span class="effect">+30% к потоку лидов</span>
+  </div>
+  <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 3 красных">
+    <span class="dot">🟢</span>
+    <span class="name">Алиев Камран</span>
+    <span class="pct">7% <small>(3 🔴)</small></span>
+    <span class="deals">41 сделка</span>
+    <span class="effect">+30% к потоку лидов</span>
+  </div>
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 4 красных, на грани оранжевой">
+    <span class="dot">🟡</span>
+    <span class="name">Петрова Д. <small>близко к оранжевой</small></span>
+    <span class="pct">12% <small>(4 🔴)</small></span>
+    <span class="deals">33 сделки</span>
+    <span class="effect">поток норма · предупреждение</span>
+  </div>
+  <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 5 красных">
+    <span class="dot">🟡</span>
+    <span class="name">Марченко С.</span>
+    <span class="pct">14% <small>(5 🔴)</small></span>
+    <span class="deals">35 сделок</span>
+    <span class="effect">поток норма · предупреждение</span>
+  </div>
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 8 красных, поток −50%">
+    <span class="dot">🟠</span>
+    <span class="name">Мифтахов Р. <small>оранжевая зона</small></span>
+    <span class="pct">22% <small>(8 🔴)</small></span>
+    <span class="deals">37 сделок</span>
+    <span class="effect">⚠ поток −50% · премия −20%</span>
+  </div>
+  <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 11 красных, поток −50%">
+    <span class="dot">🟠</span>
+    <span class="name">Яковлева А.</span>
+    <span class="pct">28% <small>(11 🔴)</small></span>
+    <span class="deals">39 сделок</span>
+    <span class="effect">⚠ поток −50% · премия −20%</span>
+  </div>
+  <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 12 красных, ЗАБЛОКИРОВАН">
+    <span class="dot">🔴</span>
+    <span class="name">Ляшенко А. <small>заблокирован на новые лиды</small></span>
+    <span class="pct">34% <small>(12 🔴)</small></span>
+    <span class="deals">35 сделок</span>
+    <span class="effect">🚫 0 новых лидов · премия 0</span>
+  </div>
+</div>
+
+<div class="traffic-legend">
+  <div class="leg-item"><span>🟢</span> <b>≤10%</b> · +30% лидов</div>
+  <div class="leg-item"><span>🟡</span> <b>10–20%</b> · норма + предупреждение</div>
+  <div class="leg-item"><span>🟠</span> <b>20–30%</b> · поток −50% · премия −20%</div>
+  <div class="leg-item"><span>🔴</span> <b>&gt;30%</b> · 0 лидов · премия 0</div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  Лиды Ляшенко (≈75/нед) автоматически уходят 🟢-клоузерам · Лим/Гальков/Алиев получают +30% к норме. Естественный отбор без увольнений: разгрёб до 30% — разблокирован. Клик на клоузера → его красные сделки для 1:1.
+</div>
+</div>
+
 <!-- 📋 Расхождения · Расторги · Сливы (col-6 — 5 компактных плиток-индикаторов в стиле Виктории v5) -->
 <div class="mc-card col-6 accent-red">
 <div class="mc-card-arrow">→</div>
@@ -14232,6 +14388,149 @@
             ['Мифтахов Р.',  '3', '10', '<span style="color:#ff453a; font-weight:700;">30%</span>',  '<span style="color:#ff453a;">▼ -10пп ⚠</span>'],
             ['Яковлева А.',  '2', '8',  '<span style="color:#ff453a; font-weight:700;">25%</span>',  '<span style="color:#ff453a;">▼ -15пп ⚠</span>'],
             ['Ляшенко А.',   '2', '11', '<span style="color:#ff453a; font-weight:700;">18%</span>',  '<span style="color:#ff453a;">▼ -22пп ⚠</span>'],
+          ],
+        },
+        // ═══ Drill-down светофора: клик на клоузера → его 🔴 сделки (без касания >48ч) ═══
+        // Основа для 1:1 РОПа с конкретным клоузером
+        'traffic-lim': {
+          title: '🟢 Лим Елена · 2% красных (1 из 36)',
+          sub: 'Топ-1 дисциплина · +30% к потоку лидов · единственная просрочка — Соколов',
+          stats: [
+            { num: '1', lbl: 'красная сделка' },
+            { num: '35', lbl: 'зелёных' },
+            { num: '+30%', lbl: 'к потоку лидов' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Соколов И.',  '150к ₽', '52ч назад',  '🔴 Просрочена', '→ карточка'],
+          ],
+        },
+        'traffic-galkov': {
+          title: '🟢 Гальков Н. · 3% красных (1 из 38)',
+          sub: 'Стабильный топ · +30% к потоку лидов',
+          stats: [
+            { num: '1', lbl: 'красная сделка' },
+            { num: '37', lbl: 'зелёных' },
+            { num: '+30%', lbl: 'к потоку лидов' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Лебедев Г.',  '210к ₽', '50ч назад',  '🔴 Просрочена', '→ карточка'],
+          ],
+        },
+        'traffic-aliev': {
+          title: '🟢 Алиев Камран · 7% красных (3 из 41)',
+          sub: 'На грани жёлтой · 41 сделка в работе · +30% к потоку лидов',
+          stats: [
+            { num: '3', lbl: 'красных' },
+            { num: '38', lbl: 'зелёных' },
+            { num: '+30%', lbl: 'к потоку лидов' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Иванова Е.',  '120к ₽', '49ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Захарова Б.', '85к ₽',  '54ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Михайлов Р.', '180к ₽', '60ч назад',  '🔴 Просрочена', '→ карточка'],
+          ],
+        },
+        'traffic-petrova': {
+          title: '🟡 Петрова Д. · 12% красных (4 из 33) · близко к оранжевой',
+          sub: 'Жёлтая зона · ещё 3 просрочки → оранжевая (поток −50%) · разгребай сегодня',
+          stats: [
+            { num: '4', lbl: 'красных' },
+            { num: '29', lbl: 'зелёных' },
+            { num: '6', lbl: 'разгрести до 🟠' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Гаврилов Н.', '180к ₽', '50ч назад',  '🔴 Просрочена',     '→ карточка'],
+            ['Никитин В.',  '180к ₽', '55ч назад',  '🔴 Просрочена',     '→ карточка'],
+            ['Орлова К.',   '120к ₽', '64ч назад',  '🔴 Просрочена',     '→ карточка'],
+            ['Сергеев П.',  '95к ₽',  '70ч назад',  '🔴 Просрочена',     '→ карточка'],
+          ],
+        },
+        'traffic-marchenko': {
+          title: '🟡 Марченко С. · 14% красных (5 из 35)',
+          sub: 'Жёлтая зона · ещё 2 просрочки → оранжевая · 5 сделок ждут касания',
+          stats: [
+            { num: '5', lbl: 'красных' },
+            { num: '30', lbl: 'зелёных' },
+            { num: '2', lbl: 'до оранжевой' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Семёнов К.',   '120к ₽', '49ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Корчик П.',    '180к ₽', '53ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Тимошенко П.', '95к ₽',  '58ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Васильев Н.',  '180к ₽', '62ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Кузнецова Л.', '120к ₽', '71ч назад',  '🔴 Просрочена', '→ карточка'],
+          ],
+        },
+        'traffic-miftakhov': {
+          title: '🟠 Мифтахов Р. · 22% красных (8 из 37) · поток −50%',
+          sub: 'Оранжевая зона · −50% новых лидов + −20% премии · разгреби до 20% — вернёшься в жёлтую',
+          stats: [
+            { num: '8', lbl: 'красных' },
+            { num: '29', lbl: 'зелёных' },
+            { num: '1', lbl: 'разгрести до 🟡' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Прохоров А.', '220к ₽', '50ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Дроздов Ф.',  '95к ₽',  '55ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Морозов И.',  '180к ₽', '60ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Кузьмин Р.',  '120к ₽', '64ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Власов А.',   '85к ₽',  '70ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Зайцев К.',   '150к ₽', '76ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Орлов М.',    '180к ₽', '84ч назад',  '🔴 Просрочена', '→ карточка'],
+            ['Лебедева А.', '120к ₽', '96ч назад',  '🔴 Просрочена', '→ карточка'],
+          ],
+        },
+        'traffic-yakovleva': {
+          title: '🟠 Яковлева А. · 28% красных (11 из 39) · поток −50%',
+          sub: 'Оранжевая зона · −50% новых лидов + −20% премии · ещё 2 просрочки → 🔴 БЛОК',
+          stats: [
+            { num: '11', lbl: 'красных' },
+            { num: '28', lbl: 'зелёных' },
+            { num: '2', lbl: 'до 🔴 БЛОКА' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Статус', '→'],
+          rows: [
+            ['Иванчук М.',   '320к ₽', '50ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Зайцева М.',   '120к ₽', '55ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Орлов А.',     '180к ₽', '60ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Соколова Н.',  '95к ₽',  '64ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Михайлова Г.', '120к ₽', '70ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Кузин Р.',     '180к ₽', '76ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Семёнова К.',  '150к ₽', '84ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Андреев С.',   '95к ₽',  '92ч назад',  '🔴 Просрочена',  '→ карточка'],
+            ['Гаврилов Е.',  '180к ₽', '105ч назад', '🔴 Просрочена',  '→ карточка'],
+            ['Никитин В.',   '120к ₽', '120ч назад', '🔴 Просрочена',  '→ карточка'],
+            ['Лебедева Т.',  '85к ₽',  '140ч назад', '🔴 Глубокая просрочка', '→ карточка'],
+          ],
+        },
+        'traffic-lyashenko': {
+          title: '🔴 Ляшенко А. · 34% красных (12 из 35) · ЗАБЛОКИРОВАН',
+          sub: '0 новых лидов · премия за дисциплину 0 · разгреби до 30% — снимется блок · 5 худших ниже',
+          stats: [
+            { num: '12', lbl: 'красных 🔴' },
+            { num: '23', lbl: 'зелёных' },
+            { num: '2', lbl: 'разгрести до 🟠' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Касание', 'Главное нарушение', '→'],
+          rows: [
+            ['Куделькин С.',  '110к ₽', '49ч назад',  'Не предложил частичку',         '→ карточка'],
+            ['Морозов А.',    '85к ₽',  '55ч назад',  'Дата оплаты «через месяц»',     '→ карточка'],
+            ['Орлов А.',      '180к ₽', '60ч назад',  'Нет холда возражения',          '→ карточка'],
+            ['Беляев М.',     '120к ₽', '65ч назад',  'Закрыл без причины отказа',     '→ карточка'],
+            ['Григорьев С.',  '95к ₽',  '72ч назад',  'Не предложил полную',           '→ карточка'],
+            ['Соколов Р.',    '150к ₽', '80ч назад',  'Закрыл подумаю без даты',       '→ карточка'],
+            ['Никитин В.',    '180к ₽', '92ч назад',  'Дезинформация по срокам',       '→ карточка'],
+            ['Кузнецова Л.',  '95к ₽',  '110ч назад', 'Бросил после возражения',       '→ карточка'],
+            ['Тимошенко П.',  '120к ₽', '125ч назад', 'Нет фиксации даты',             '→ карточка'],
+            ['Захарова Б.',   '85к ₽',  '140ч назад', 'Слабая квалификация',           '→ карточка'],
+            ['Михайлов Р.',   '180к ₽', '160ч назад', '🚫 Глубокая просрочка',         '→ карточка'],
+            ['Орлова К.',     '120к ₽', '180ч назад', '🚫 Глубокая просрочка',         '→ карточка'],
           ],
         },
         'conv-think': {
