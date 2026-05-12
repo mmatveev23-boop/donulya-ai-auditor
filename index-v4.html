@@ -435,6 +435,143 @@
         color: #fff;
       }
 
+      /* ── Модалка Date Range Picker ── */
+      .period-presets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin-bottom: 16px;
+      }
+      .period-presets button {
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 7px;
+        color: rgba(255,255,255,0.85);
+        font-size: 12.5px;
+        font-family: inherit;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.12s, border-color 0.12s, color 0.12s;
+      }
+      .period-presets button:hover {
+        background: rgba(82,167,255,0.10);
+        border-color: rgba(82,167,255,0.30);
+        color: #fff;
+      }
+      .period-custom-block {
+        padding: 14px;
+        background: rgba(82,167,255,0.04);
+        border: 1px solid rgba(82,167,255,0.20);
+        border-radius: 8px;
+      }
+      .period-custom-block .head {
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 10px;
+      }
+      .period-custom-block .inputs {
+        display: flex; align-items: center; gap: 10px;
+        margin-bottom: 10px;
+      }
+      .period-custom-block input[type="date"] {
+        flex: 1;
+        padding: 8px 10px;
+        background: rgba(0,0,0,0.25);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 6px;
+        color: #fff;
+        font-size: 13px;
+        font-family: inherit;
+      }
+      .period-custom-block input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0.7);
+        cursor: pointer;
+      }
+      .period-apply-btn {
+        width: 100%;
+        padding: 10px;
+        background: #30d158;
+        border: none;
+        border-radius: 6px;
+        color: #0a120c;
+        font-weight: 700;
+        font-size: 13px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+      .period-apply-btn:hover { background: #2bba4a; }
+      .period-hint {
+        margin-top: 8px;
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.45);
+        font-style: italic;
+        text-align: center;
+      }
+
+      /* ── Модалка Drill-down (универсальная) ── */
+      .dd-content { padding: 18px; }
+      .dd-content .dd-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .dd-content .dd-stat {
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 7px;
+      }
+      .dd-content .dd-stat .num {
+        font-size: 20px; font-weight: 700; color: #fff;
+        font-feature-settings: "tnum";
+      }
+      .dd-content .dd-stat .lbl {
+        font-size: 10.5px; color: rgba(255,255,255,0.55);
+        margin-top: 3px;
+      }
+      .dd-content .dd-list { display: grid; gap: 5px; }
+      .dd-content .dd-row {
+        display: grid;
+        grid-template-columns: 1fr 90px 80px 70px 90px;
+        gap: 10px;
+        align-items: center;
+        padding: 9px 12px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 7px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+      .dd-content .dd-row:hover { background: rgba(82,167,255,0.08); }
+      .dd-content .dd-row .client { color: #fff; font-weight: 600; }
+      .dd-content .dd-row .client small {
+        color: rgba(255,255,255,0.50); font-weight: 400;
+        font-size: 10.5px; margin-left: 6px;
+      }
+      .dd-content .dd-row .amount { color: #30d158; font-weight: 700; font-feature-settings: "tnum"; }
+      .dd-content .dd-row .closer { color: rgba(255,255,255,0.70); }
+      .dd-content .dd-row .date { color: rgba(255,255,255,0.50); font-size: 11px; }
+      .dd-content .dd-row .arrow { color: #52a7ff; font-size: 11px; text-align: right; }
+
+      /* Кликабельные цифры в дашборде — подсветка при hover */
+      .clickable-num {
+        cursor: pointer;
+        transition: filter 0.12s;
+      }
+      .clickable-num:hover {
+        filter: brightness(1.25);
+        text-decoration: underline;
+        text-decoration-color: rgba(255,255,255,0.30);
+        text-underline-offset: 3px;
+      }
+
       /* ═════ FUNNEL-АНКОР (ГЛАВНЫЙ ЭЛЕМЕНТ) ═════ */
       .funnel-anchor {
         background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
@@ -7777,7 +7914,7 @@
                 <div class="period" data-period="today" onclick="setPeriod('today')">Сегодня</div>
                 <div class="period active" data-period="week" onclick="setPeriod('week')">Неделя</div>
                 <div class="period" data-period="month" onclick="setPeriod('month')">Месяц</div>
-                <div class="period period-custom" onclick="showToast('Выбор кастомного периода доступен в продакшене (Date Range Picker)')">Период ▾</div>
+                <div class="period period-custom" onclick="showPeriodPicker()">Период ▾</div>
               </div>
             </div>
           </div>
@@ -7818,9 +7955,9 @@
                 <div class="hero-main">
                   <div class="left">
                     <span class="label">🎯 Конверсия в продажу</span>
-                    <span class="num js-hero-num">30%</span>
+                    <span class="num js-hero-num clickable-num" onclick="event.stopPropagation(); openDrillDown('conversion-total')" title="Кликни — раскрытие по клоузерам">30%</span>
                   </div>
-                  <div class="meta">план ≥30% ✓ · <b class="js-hero-qty">179</b> из <b class="js-hero-total">600</b> · <span class="trend js-hero-trend">▲ +2пп</span> <span class="js-hero-trend-period">к прошлой неделе</span></div>
+                  <div class="meta">план ≥30% ✓ · <b class="js-hero-qty clickable-num" onclick="event.stopPropagation(); openDrillDown('conversion-total')" title="Кликни — список продаж">179</b> из <b class="js-hero-total">600</b> · <span class="trend js-hero-trend">▲ +2пп</span> <span class="js-hero-trend-period">к прошлой неделе</span></div>
                 </div>
 
                 <div class="hero-decomp">
@@ -7995,49 +8132,49 @@
                 <!-- 9 статусов воронки в 3×3 grid -->
                 <div class="deals-funnel-grid">
                   <!-- Ряд 1: вход воронки -->
-                  <div class="deals-cell blue">
+                  <div class="deals-cell blue clickable-num" onclick="openDrillDown('conversion-total')" title="Кликни — детализация">
                     <div class="num">600</div>
                     <div class="lbl">🎯 Трипваеры</div>
                     <div class="sub">за неделю</div>
                   </div>
-                  <div class="deals-cell blue">
+                  <div class="deals-cell blue clickable-num" onclick="openDrillDown('deals-promise')" title="Кликни — детализация">
                     <div class="num">42</div>
                     <div class="lbl">📅 Встреч сегодня</div>
                     <div class="sub">по календарю</div>
                   </div>
-                  <div class="deals-cell red">
+                  <div class="deals-cell red clickable-num" onclick="openDrillDown('deals-noshow')" title="Кликни — список недозвонов">
                     <div class="num">4</div>
                     <div class="lbl">🚪 Не дошли</div>
                     <div class="sub">10%</div>
                   </div>
                   <!-- Ряд 2: состоявшаяся встреча + переход в работу -->
-                  <div class="deals-cell green">
+                  <div class="deals-cell green clickable-num" onclick="openDrillDown('conversion-total')" title="Кликни — состоявшиеся встречи">
                     <div class="num">38</div>
                     <div class="lbl">✅ Состоялась</div>
                     <div class="sub">90% дошло</div>
                   </div>
-                  <div class="deals-cell purple">
+                  <div class="deals-cell purple clickable-num" onclick="openDrillDown('deals-think')" title="Кликни — думающие сделки">
                     <div class="num">22</div>
                     <div class="lbl">🤔 Думает</div>
                     <div class="sub">15%</div>
                   </div>
-                  <div class="deals-cell orange">
+                  <div class="deals-cell orange clickable-num" onclick="openDrillDown('deals-promise')" title="Кликни — обещания оплаты">
                     <div class="num">28</div>
                     <div class="lbl">📅 Обещание</div>
                     <div class="sub">20%</div>
                   </div>
                   <!-- Ряд 3: финалы с деньгами + отказ -->
-                  <div class="deals-cell green">
+                  <div class="deals-cell green clickable-num" onclick="openDrillDown('deals-part')" title="Кликни — частичные оплаты">
                     <div class="num">32</div>
                     <div class="lbl">🤝 Частичка</div>
                     <div class="sub">23%</div>
                   </div>
-                  <div class="deals-cell green">
+                  <div class="deals-cell green clickable-num" onclick="openDrillDown('deals-sale')" title="Кликни — полные продажи">
                     <div class="num">48</div>
                     <div class="lbl">💰 Продажа</div>
                     <div class="sub">34%</div>
                   </div>
-                  <div class="deals-cell muted">
+                  <div class="deals-cell muted clickable-num" onclick="openDrillDown('deals-refusal')" title="Кликни — отказы">
                     <div class="num">12</div>
                     <div class="lbl">❌ Отказ</div>
                     <div class="sub">8%</div>
@@ -8096,31 +8233,31 @@
                 <div class="mc-card-label">Расхождения · Расторги · Сливы <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">за неделю · кликни → стата по МПП и причины</span></div>
 
                 <div class="fin-grid">
-                  <div class="fin-tile yellow">
+                  <div class="fin-tile yellow clickable-num" onclick="openDrillDown('fin-no-consent')" title="Кликни — список без согласия">
                     <div class="ico">📝</div>
                     <div class="num">14</div>
                     <div class="lbl">Не подписал согласие</div>
                     <div class="sub">за неделю · <span class="up">▲+3</span></div>
                   </div>
-                  <div class="fin-tile orange">
+                  <div class="fin-tile orange clickable-num" onclick="openDrillDown('fin-not-passed')" title="Кликни — не переданные в ОС">
                     <div class="ico">📤</div>
                     <div class="num">7</div>
                     <div class="lbl">Не передан в ОС</div>
                     <div class="sub">после оплаты · <span class="up">▲+2</span></div>
                   </div>
-                  <div class="fin-tile blue">
+                  <div class="fin-tile blue clickable-num" onclick="openDrillDown('fin-mismatch')" title="Кликни — расхождения по сделкам">
                     <div class="ico">📑</div>
                     <div class="num">9</div>
                     <div class="lbl">Принято с расхождениями</div>
                     <div class="sub">сопровождение · <span class="down">▼-1</span></div>
                   </div>
-                  <div class="fin-tile red">
+                  <div class="fin-tile red clickable-num" onclick="openDrillDown('fin-cancel')" title="Кликни — расторги по вине МПП">
                     <div class="ico">🚫</div>
                     <div class="num">6</div>
                     <div class="lbl">Расторг по вине МПП</div>
                     <div class="sub">за неделю · <span class="up">▲+2</span></div>
                   </div>
-                  <div class="fin-tile purple">
+                  <div class="fin-tile purple clickable-num" onclick="openDrillDown('fin-slip')" title="Кликни — слитые лиды">
                     <div class="ico">💧</div>
                     <div class="num">23</div>
                     <div class="lbl">Слитые лиды</div>
@@ -8220,7 +8357,7 @@
 
                 <!-- 3 акцентные плитки сверху (стиль Виктории v5) -->
                 <div class="bills-top3">
-                  <div class="bills-top warn">
+                  <div class="bills-top warn clickable-num" onclick="openDrillDown('bills-today')" title="Кликни — список счетов на сегодня">
                     <div class="head">
                       <span class="ico">📅</span>
                       <span class="lbl">Должны оплатить сегодня</span>
@@ -8229,7 +8366,7 @@
                     <div class="sub">из них уже получили: <b>87к ₽</b> (6 шт)</div>
                   </div>
 
-                  <div class="bills-top danger">
+                  <div class="bills-top danger clickable-num" onclick="openDrillDown('bills-overdue')" title="Кликни — просроченные счета">
                     <div class="head">
                       <span class="ico">🔥</span>
                       <span class="lbl">Не оплатили</span>
@@ -8238,7 +8375,7 @@
                     <div class="sub">норма ≤15% · <b style="color:#ff453a;">сейчас 26%</b> ⚠</div>
                   </div>
 
-                  <div class="bills-top danger">
+                  <div class="bills-top danger clickable-num" onclick="openDrillDown('bills-silent')" title="Кликни — сделки без касания">
                     <div class="head">
                       <span class="ico">📞</span>
                       <span class="lbl">Без касания 24 часа</span>
@@ -14669,6 +14806,64 @@
       </div>
     </div>
 
+    <!-- ═══ МОДАЛКА · ВЫБОР ПЕРИОДА (пресеты + custom range) ═══ -->
+    <div class="modal-overlay" id="modal-period-picker">
+      <div class="modal" style="max-width: 460px;">
+        <div class="modal-head">
+          <div>
+            <div class="modal-title">📅 Выбор периода</div>
+            <div class="modal-sub">Пресет или произвольный диапазон дат</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('period-picker')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 18px;">
+          <div class="period-presets">
+            <button onclick="applyPreset('today', 'Сегодня')">Сегодня</button>
+            <button onclick="applyPreset('yesterday', 'Вчера')">Вчера</button>
+            <button onclick="applyPreset('week', 'Последние 7 дней')">Последние 7 дней</button>
+            <button onclick="applyPreset('week', 'Последние 14 дней')">Последние 14 дней</button>
+            <button onclick="applyPreset('month', 'Последние 30 дней')">Последние 30 дней</button>
+            <button onclick="applyPreset('month', 'Последние 90 дней')">Последние 90 дней</button>
+            <button onclick="applyPreset('month', 'Этот месяц')">Этот месяц</button>
+            <button onclick="applyPreset('month', 'Прошлый месяц')">Прошлый месяц</button>
+          </div>
+
+          <div class="period-custom-block">
+            <div class="head">Произвольный период</div>
+            <div class="inputs">
+              <input type="date" id="period-from" />
+              <span style="color: rgba(255,255,255,0.40);">—</span>
+              <input type="date" id="period-to" />
+            </div>
+            <button class="period-apply-btn" onclick="applyCustomRange()">Применить</button>
+            <div class="period-hint">Данные подтянутся из AmoCRM за выбранные даты (демо: применяется toast)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ МОДАЛКА · УНИВЕРСАЛЬНЫЙ DRILL-DOWN (клик на цифры в дашборде) ═══ -->
+    <div class="modal-overlay" id="modal-drilldown">
+      <div class="modal" style="max-width: 820px; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-head">
+          <div>
+            <div class="modal-title js-dd-title">Детализация</div>
+            <div class="modal-sub js-dd-sub">Описание</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('drilldown')">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 0; overflow-y: auto; flex: 1;">
+          <div class="dd-content js-dd-content"></div>
+        </div>
+        <div class="modal-foot" style="border-top: 1px solid var(--border); padding: 12px 18px;">
+          <div style="font-size: 11px; color: var(--text-3); flex: 1;">
+            🔎 Drill-down · в продакшене данные подтягиваются из AmoCRM в реальном времени
+          </div>
+          <button class="btn" onclick="closeModal('drilldown')">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ МОДАЛКА · КАРТОЧКА ЗВОНКА (AI-разбор Gong-style) ═══ -->
     <!-- ═══ МОДАЛКА · ПРАВИЛА РАБОТЫ СО СЧЕТАМИ (8 статусов + 5 железных правил) ═══ -->
     <div class="modal-overlay" id="modal-bills-rules">
@@ -15937,6 +16132,330 @@
         // Footer-инсайт
         const insightEl = document.querySelector('.js-closers-insight');
         if (insightEl) insightEl.innerHTML = closersInsightByPeriod[period] || '';
+      }
+
+      // ═══════════════ Date Range Picker (модалка выбора периода) ═══════════════
+      function showPeriodPicker() {
+        const today = new Date();
+        const weekAgo = new Date();
+        weekAgo.setDate(today.getDate() - 7);
+        const fmt = d => d.toISOString().slice(0, 10);
+        const fromEl = document.querySelector('#period-from');
+        const toEl = document.querySelector('#period-to');
+        if (fromEl && !fromEl.value) fromEl.value = fmt(weekAgo);
+        if (toEl && !toEl.value) toEl.value = fmt(today);
+        openModal('period-picker');
+      }
+
+      function applyPreset(period, label) {
+        closeModal('period-picker');
+        setPeriod(period);
+        showToast(`Период применён: ${label}`);
+      }
+
+      function applyCustomRange() {
+        const from = document.querySelector('#period-from')?.value;
+        const to = document.querySelector('#period-to')?.value;
+        if (!from || !to) { showToast('Укажите обе даты'); return; }
+        if (from > to) { showToast('Дата начала позже даты окончания'); return; }
+        closeModal('period-picker');
+        // В продакшене здесь подгрузка данных из AmoCRM за выбранный диапазон.
+        // Для прототипа определяем разумный пресет по длине диапазона.
+        const d1 = new Date(from), d2 = new Date(to);
+        const days = Math.round((d2 - d1) / 86400000) + 1;
+        const period = days <= 1 ? 'today' : (days <= 10 ? 'week' : 'month');
+        setPeriod(period);
+        showToast(`Период: ${from} → ${to} (${days} дн.) — применён демо-набор «${period === 'today' ? 'сегодня' : period === 'week' ? 'неделя' : 'месяц'}»`);
+      }
+
+      // ═══════════════ Универсальный Drill-down при клике на цифры ═══════════════
+      // При клике на цифру в дашборде открывается список (сделки / встречи / клоузеры)
+      // соответствующий контексту. В продакшене — запрос в AmoCRM по period + filter.
+
+      const drillDownData = {
+        'conversion-total': {
+          title: '🎯 179 полных продаж за неделю',
+          sub: 'Конверсия 30% от 600 трипваеров · клик на строку → карточка клоузера',
+          stats: [
+            { num: '179', lbl: 'продаж' },
+            { num: '26.8 млн ₽', lbl: 'выручка' },
+            { num: '150к ₽', lbl: 'средний чек' },
+          ],
+          headers: ['Клоузер', 'Продаж', 'Выручка', 'Цикл', '%'],
+          rows: [
+            ['Лим Елена',     '23', '3.5 млн', '21ч',  '92%'],
+            ['Гальков Н.',    '44', '6.6 млн', '20ч',  '88%'],
+            ['Алиев Камран',  '59', '8.8 млн', '26ч',  '85%'],
+            ['Петрова Д.',    '62', '9.3 млн', '171ч', '83%'],
+            ['Марченко С.',   '64', '9.6 млн', '72ч',  '80%'],
+            ['Мифтахов Р.',   '65', '9.7 млн', '93ч',  '77%'],
+            ['Яковлева А.',   '65', '9.7 млн', '94ч',  '68%'],
+            ['Ляшенко А.',    '64', '9.6 млн', '49ч',  '53%'],
+          ],
+        },
+        'deals-sale': {
+          title: '💰 48 Продаж в звонке за неделю',
+          sub: 'Клиент оплатил полную сумму прямо на встрече Д0',
+          stats: [
+            { num: '48', lbl: 'встреч' },
+            { num: '7.2 млн ₽', lbl: 'выручка' },
+            { num: '34%', lbl: 'от состоявшихся' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Дата', '→'],
+          rows: [
+            ['Куделькин С.',  '150к ₽', 'Лим Е.',     '25.04', '→ карточка'],
+            ['Морозов А.',    '180к ₽', 'Гальков Н.', '25.04', '→ карточка'],
+            ['Иванова Е.',    '120к ₽', 'Алиев К.',   '24.04', '→ карточка'],
+            ['Сидоров П.',    '95к ₽',  'Лим Е.',     '24.04', '→ карточка'],
+            ['Петров Н.',     '180к ₽', 'Гальков Н.', '23.04', '→ карточка'],
+            ['Захаров Б.',    '65к ₽',  'Петрова Д.', '23.04', '→ карточка'],
+            ['Лебедев Г.',    '210к ₽', 'Алиев К.',   '22.04', '→ карточка'],
+            ['(ещё 41 встреча — кликни «Показать все»)', '', '', '', ''],
+          ],
+        },
+        'deals-part': {
+          title: '🤝 32 Частичка за неделю',
+          sub: 'Клиент внёс часть денег в звонке · далее дожим до полной',
+          stats: [
+            { num: '32', lbl: 'частички' },
+            { num: '2.1 млн ₽', lbl: 'получено' },
+            { num: '23%', lbl: 'от состоявшихся' },
+          ],
+          headers: ['Клиент', 'Частичка', 'Клоузер', 'Дата', '→'],
+          rows: [
+            ['Соколов А.',   '15к ₽', 'Лим Е.',     '25.04', '→ ждёт доплату 135к'],
+            ['Зайцев К.',    '20к ₽', 'Гальков Н.', '25.04', '→ ждёт доплату 130к'],
+            ['Орлов М.',     '10к ₽', 'Петрова Д.', '24.04', '→ просрочка ⚠'],
+            ['(ещё 29)', '', '', '', ''],
+          ],
+        },
+        'deals-promise': {
+          title: '📅 28 Обещаний за неделю',
+          sub: 'Клиент назвал дату оплаты ≤ 14 дней',
+          stats: [
+            { num: '28', lbl: 'обещаний' },
+            { num: '47%', lbl: '→ Продажа (дожали)' },
+            { num: '32%', lbl: '→ Частичка' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Дата оплаты', 'Статус'],
+          rows: [
+            ['Васильев Н.',  '180к ₽', 'Лим Е.',     '28.04', '✓ оплачено'],
+            ['Кузнецова Л.', '120к ₽', 'Гальков Н.', '29.04', '⏱ ждём'],
+            ['Тимошенко П.', '95к ₽',  'Марченко С.', '30.04', '⚠ просрочка 1 день'],
+            ['(ещё 25)', '', '', '', ''],
+          ],
+        },
+        'deals-think': {
+          title: '🤔 22 Думающих сделки',
+          sub: 'Клиент не дал решение на Д0 · до 14 дней',
+          stats: [
+            { num: '22', lbl: 'думающих' },
+            { num: '36%', lbl: 'Reopen rate ✓' },
+            { num: '8', lbl: 'переведено в актив' },
+          ],
+          headers: ['Клиент', 'Причина', 'Клоузер', 'Когда', 'Reopen'],
+          rows: [
+            ['Орлова К.',    'Надо посоветоваться', 'Лим Е.',     '23.04', '→ Обещание'],
+            ['Сергеев П.',   'Не понимает банкр-во','Петрова Д.', '22.04', 'думает'],
+            ['Лебедева А.',  'Сравнивает',           'Алиев К.',  '22.04', '→ Частичка'],
+            ['(ещё 19)', '', '', '', ''],
+          ],
+        },
+        'deals-refusal': {
+          title: '❌ 12 Отказов за неделю',
+          sub: 'Клиент сказал «нет» с фиксированной причиной',
+          stats: [
+            { num: '12', lbl: 'отказов' },
+            { num: '8%', lbl: 'от состоявшихся' },
+            { num: '≤10%', lbl: 'норма ✓' },
+          ],
+          headers: ['Клиент', 'Причина отказа', 'Клоузер', 'Дата', '→'],
+          rows: [
+            ['Андреев С.',  'Сменил мнение',         'Ляшенко А.', '24.04', '→ AI-разбор'],
+            ['Никитин В.',  'Дорого',                'Яковлева А.', '23.04', '→ AI-разбор'],
+            ['Гаврилов Е.', 'Решил сам подавать',    'Марченко С.', '23.04', '→ AI-разбор'],
+            ['(ещё 9)', '', '', '', ''],
+          ],
+        },
+        'deals-noshow': {
+          title: '📵 4 Недозвона за неделю',
+          sub: 'Клиент не подключился на встречу Д0 · норма ≤10%',
+          stats: [
+            { num: '4', lbl: 'недозвона' },
+            { num: '10%', lbl: 'от назначенных' },
+            { num: '≤10%', lbl: 'норма ✓' },
+          ],
+          headers: ['Клиент', 'Время', 'Клоузер', 'Перенос', '→'],
+          rows: [
+            ['Морозов И.',  '12:00, 24.04', 'Ляшенко А.', '→ 27.04', '→ переназначен'],
+            ['Соколова Н.', '15:30, 24.04', 'Яковлева А.', 'нет',    '→ архив'],
+            ['Кузьмин Р.',  '10:00, 25.04', 'Петрова Д.', '→ 28.04', '→ переназначен'],
+            ['Власов А.',   '14:00, 25.04', 'Марченко С.', 'нет',    '→ архив'],
+          ],
+        },
+        'bills-today': {
+          title: '📅 18 счетов на оплату сегодня',
+          sub: 'На сумму 312к ₽ · получили уже 87к ₽ (6 счетов) · осталось 12 (225к ₽)',
+          stats: [
+            { num: '6', lbl: 'оплачено (87к ₽)' },
+            { num: '12', lbl: 'ждём (225к ₽)' },
+            { num: '~14:00', lbl: 'дедлайн' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Срок', 'Статус'],
+          rows: [
+            ['Куделькин С.', '110к ₽', 'Ляшенко А.', '17:00', '⚠ молчит 84 мин'],
+            ['Иванчук М.',   '320к ₽', 'Яковлева А.','15:00', '⚠ молчит 120 мин'],
+            ['Морозов А.',   '180к ₽', 'Гальков Н.', '12:00', '✓ оплачен'],
+            ['(ещё 15)', '', '', '', ''],
+          ],
+        },
+        'bills-overdue': {
+          title: '🔥 22 просроченных счёта',
+          sub: 'Дата оплаты прошла, денег нет · на сумму 170к ₽ · норма ≤15%, сейчас 26% ⚠',
+          stats: [
+            { num: '22', lbl: 'просрочено' },
+            { num: '170к ₽', lbl: 'в воздухе' },
+            { num: '26%', lbl: '⚠ выше нормы' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Просрочка', 'Действие'],
+          rows: [
+            ['Морозов А.',   '85к ₽',  'Ляшенко А.', '3 дня',  '→ к РОПу'],
+            ['Иванова Е.',   '120к ₽', 'Ляшенко А.', '2 дня',  '→ к РОПу'],
+            ['Соколов М.',   '65к ₽',  'Яковлева А.','5 дней', '→ закрыть в C'],
+            ['(ещё 19)', '', '', '', ''],
+          ],
+        },
+        'bills-silent': {
+          title: '📞 14 сделок без касания 24+ часа',
+          sub: 'Счёт выставлен, но клоузер не звонил/не писал клиенту · авто-эскалация в Очередь РОПа',
+          stats: [
+            { num: '14', lbl: 'молчат' },
+            { num: '3', lbl: 'клоузера' },
+            { num: '~48ч', lbl: 'средне' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Молчит', 'Действие'],
+          rows: [
+            ['Корчик П.',   '180к ₽', 'Ляшенко А.', '36 ч', '→ срочный звонок'],
+            ['Прохоров А.', '220к ₽', 'Мифтахов Р.','48 ч', '→ к РОПу'],
+            ['Соколов И.',  '95к ₽',  'Яковлева А.','52 ч', '→ передать'],
+            ['(ещё 11)', '', '', '', ''],
+          ],
+        },
+        'fin-no-consent': {
+          title: '📝 14 продаж без подписи согласия',
+          sub: 'Не зачётные продажи · клоузер бонус не получает · регламент МПП2→ОС',
+          stats: [
+            { num: '14', lbl: 'без согласия' },
+            { num: '0 ₽', lbl: 'бонус 0' },
+            { num: '~5 дней', lbl: 'просрочка' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Дата оплаты', 'Причина'],
+          rows: [
+            ['Лебедев С.',   '150к ₽', 'Ляшенко А.', '20.04', 'Передумал после'],
+            ['Орлов А.',     '180к ₽', 'Яковлева А.','21.04', 'Не дозвон ОС'],
+            ['Петрова К.',   '120к ₽', 'Ляшенко А.', '22.04', 'Запросил время'],
+            ['(ещё 11)', '', '', '', ''],
+          ],
+        },
+        'fin-not-passed': {
+          title: '📤 7 сделок не переданы в ОС',
+          sub: 'SLA 3 ч после оплаты · нет договора в Я.Диске / не сменил статус',
+          stats: [
+            { num: '7', lbl: 'не передано' },
+            { num: '~6 ч', lbl: 'просрочка SLA' },
+            { num: 'риск', lbl: 'штрафа' },
+          ],
+          headers: ['Клиент', 'Сумма', 'Клоузер', 'Оплата', 'Действие'],
+          rows: [
+            ['Гаврилов Н.', '180к ₽', 'Петрова Д.', '8 ч назад', '→ передать'],
+            ['Семёнов К.',  '120к ₽', 'Марченко С.','5 ч назад', '→ загрузить договор'],
+            ['(ещё 5)', '', '', '', ''],
+          ],
+        },
+        'fin-mismatch': {
+          title: '📑 9 сделок принято с расхождениями',
+          sub: '🟡 ОС нашёл несовпадения · штраф 1 000 ₽ за сделку · итого −9 000 ₽',
+          stats: [
+            { num: '9', lbl: 'расхождений' },
+            { num: '−9 000 ₽', lbl: 'штраф' },
+            { num: 'долг', lbl: 'топ-причина' },
+          ],
+          headers: ['Клиент', 'Несовпадение', 'Клоузер', 'Дата', 'Штраф'],
+          rows: [
+            ['Беляев М.',    'Сумма долга не та',     'Ляшенко А.', '24.04', '−1 000 ₽'],
+            ['Григорьев С.', 'Состав кредиторов',     'Ляшенко А.', '23.04', '−1 000 ₽'],
+            ['Дроздов Ф.',   'Скрытые доходы',        'Мифтахов Р.','22.04', '−1 000 ₽'],
+            ['(ещё 6)', '', '', '', ''],
+          ],
+        },
+        'fin-cancel': {
+          title: '🚫 6 расторгов по вине МПП',
+          sub: '🔴 клиент разорвал договор · вина клоузера · штраф 5 000 ₽ + 0% бонуса',
+          stats: [
+            { num: '6', lbl: 'расторгов' },
+            { num: '−30 000 ₽', lbl: 'штрафы' },
+            { num: '−540к ₽', lbl: 'возвраты' },
+          ],
+          headers: ['Клиент', 'Сумма возврата', 'Клоузер', 'Причина', 'Штраф'],
+          rows: [
+            ['Морозов В.', '180к ₽', 'Ляшенко А.',  'Дезинформация по срокам',   '−5 000 ₽'],
+            ['Орлова К.',  '120к ₽', 'Яковлева А.', '«Спишут всё» без оговорок', '−5 000 ₽'],
+            ['(ещё 4)', '', '', '', ''],
+          ],
+        },
+        'fin-slip': {
+          title: '💧 23 слитых лида',
+          sub: 'Закрыл «не реализовано» без 2-х отработок возражений · штраф 2 000 ₽ за лид',
+          stats: [
+            { num: '23', lbl: 'слива' },
+            { num: '−46 000 ₽', lbl: 'штраф' },
+            { num: '0', lbl: 'отработок' },
+          ],
+          headers: ['Клиент', 'Сумма потенц.', 'Клоузер', 'Причина закрытия', 'Штраф'],
+          rows: [
+            ['Соколов Р.', '150к ₽', 'Ляшенко А.',  'Не дозвонился (1 раз)',  '−2 000 ₽'],
+            ['Зайцева М.', '120к ₽', 'Яковлева А.', 'Закрыл подумаю без даты','−2 000 ₽'],
+            ['Никитин В.', '180к ₽', 'Ляшенко А.',  'Долгий цикл >72ч',       '−2 000 ₽'],
+            ['(ещё 20)', '', '', '', ''],
+          ],
+        },
+      };
+
+      function openDrillDown(key) {
+        const data = drillDownData[key];
+        if (!data) {
+          showToast('🔎 Drill-down: детализация в продакшене (требует AMO-запрос)');
+          return;
+        }
+        document.querySelector('.js-dd-title').textContent = data.title;
+        document.querySelector('.js-dd-sub').textContent = data.sub;
+
+        const statsHtml = (data.stats || []).map(s => `
+          <div class="dd-stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>
+        `).join('');
+
+        const headerHtml = `<div class="dd-row" style="background:rgba(255,255,255,0.04); cursor: default; font-size:9.5px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; color:rgba(255,255,255,0.55);">
+          ${(data.headers || []).map(h => `<div>${h}</div>`).join('')}
+        </div>`;
+
+        const rowsHtml = (data.rows || []).map(r => {
+          if (!r[1]) {
+            return `<div class="dd-row" style="cursor:default; background:rgba(255,255,255,0.015); justify-content:center; color:rgba(255,255,255,0.40); font-style:italic; grid-template-columns:1fr;"><div>${r[0]}</div></div>`;
+          }
+          return `<div class="dd-row" onclick="closeModal('drilldown'); setTimeout(() => openCallDetail('${r[0]} · ${r[1]}', null), 200);">
+            <span class="client">${r[0]}</span>
+            <span class="amount">${r[1]}</span>
+            <span class="closer">${r[2]}</span>
+            <span class="date">${r[3]}</span>
+            <span class="arrow">${r[4]}</span>
+          </div>`;
+        }).join('');
+
+        document.querySelector('.js-dd-content').innerHTML = `
+          ${statsHtml ? `<div class="dd-stats">${statsHtml}</div>` : ''}
+          <div class="dd-list">${headerHtml}${rowsHtml}</div>
+        `;
+        openModal('drilldown');
       }
 
       // ═══════════════ Drill-down: нарушение → список встреч → AI-разбор ═══════════════
