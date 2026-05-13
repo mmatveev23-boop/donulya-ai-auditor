@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ДоНуля · Рабочее место РОПа · день из жизни</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+    background: #0a0c10;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ════════ Layout ════════ */
+  .app {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    min-height: 100vh;
+  }
+
+  .main {
+    padding: 24px 32px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .sidebar {
+    padding: 24px 20px;
+    background: rgba(255,255,255,0.015);
+  }
+
+  /* ════════ Header ════════ */
+  .page-header {
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .page-header .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.50);
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .back-btn {
+    background: rgba(82,167,255,0.10);
+    color: #52a7ff;
+    border: 1px solid rgba(82,167,255,0.25);
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .back-btn:hover {
+    background: rgba(82,167,255,0.18);
+    border-color: rgba(82,167,255,0.40);
+  }
+
+  /* ════════ Breadcrumb ════════ */
+  .breadcrumb {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .breadcrumb .crumb {
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .breadcrumb .crumb:hover { color: #fff; }
+  .breadcrumb .crumb.active { color: #fff; font-weight: 600; cursor: default; }
+  .breadcrumb .sep { color: rgba(255,255,255,0.25); }
+
+  /* ════════ Cards ════════ */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .card.green { background: rgba(48,209,88,0.04); border-color: rgba(48,209,88,0.20); }
+  .card.blue { background: rgba(82,167,255,0.04); border-color: rgba(82,167,255,0.20); }
+  .card.red { background: rgba(255,69,58,0.04); border-color: rgba(255,69,58,0.20); }
+  .card.purple { background: rgba(176,132,255,0.04); border-color: rgba(176,132,255,0.20); }
+
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+  }
+
+  /* ════════ HERO ════════ */
+  .hero-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: #30d158;
+    line-height: 1;
+  }
+
+  .hero-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+  }
+
+  .hero-note {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ════════ Светофор ════════ */
+  .closer-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 60px 70px;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 12.5px;
+  }
+
+  .closer-row:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(2px);
+  }
+
+  .closer-row .name { color: #fff; font-weight: 500; }
+  .closer-row .pct { font-feature-settings: "tnum"; font-weight: 700; text-align: right; }
+  .closer-row .sales { color: rgba(255,255,255,0.55); font-size: 11px; text-align: right; }
+
+  .closer-row.green .pct { color: #30d158; }
+  .closer-row.yellow .pct { color: #ffd60a; }
+  .closer-row.orange .pct { color: #ff9f0a; }
+  .closer-row.red {
+    background: rgba(255,69,58,0.06);
+    border: 1px solid rgba(255,69,58,0.20);
+  }
+  .closer-row.red .pct { color: #ff453a; font-weight: 800; }
+  .closer-row.red .name { color: #fff; font-weight: 700; }
+
+  .alert-note {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 11.5px;
+    color: #ff8478;
+    font-weight: 700;
+  }
+
+  /* ════════ Drill-down клоузера ════════ */
+  .closer-detail {
+    background: rgba(255,69,58,0.03);
+    border: 1px solid rgba(255,69,58,0.18);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .closer-detail h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .closer-detail .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 16px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .stat-box {
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .stat-box.red { background: rgba(255,69,58,0.10); border: 1px solid rgba(255,69,58,0.25); }
+  .stat-box.purple { background: rgba(176,132,255,0.10); border: 1px solid rgba(176,132,255,0.25); }
+  .stat-box.orange { background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.25); }
+
+  .stat-box .num {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-box .lbl {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 5px;
+  }
+
+  .stat-box.red .num { color: #ff453a; }
+  .stat-box.purple .num { color: #b084ff; }
+  .stat-box.orange .num { color: #ff9f0a; }
+
+  /* ════════ Список сделок ════════ */
+  .deal-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 80px 100px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 7px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    transition: all 0.15s;
+  }
+
+  .deal-row.red {
+    background: rgba(255,69,58,0.05);
+    border-color: rgba(255,69,58,0.18);
+  }
+
+  .deal-row.yellow {
+    background: rgba(255,214,10,0.04);
+    border-color: rgba(255,214,10,0.18);
+  }
+
+  .deal-row.green {
+    background: rgba(48,209,88,0.04);
+    border-color: rgba(48,209,88,0.15);
+  }
+
+  .deal-row.silent {
+    background: rgba(176,132,255,0.04);
+    border-color: rgba(176,132,255,0.18);
+  }
+
+  .deal-row .client { color: #fff; font-weight: 600; }
+  .deal-row .amount { color: #30d158; font-weight: 700; }
+  .deal-row .touch { color: rgba(255,255,255,0.55); font-size: 11px; }
+  .deal-row .ai-note { color: rgba(255,255,255,0.65); font-size: 11.5px; }
+
+  .play-btn {
+    background: rgba(82,167,255,0.15);
+    color: #52a7ff;
+    border: 1px solid rgba(82,167,255,0.30);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .play-btn:hover {
+    background: rgba(82,167,255,0.25);
+  }
+
+  /* ════════ Recording / Player ════════ */
+  .recording-detail {
+    background: rgba(176,132,255,0.04);
+    border: 1px solid rgba(176,132,255,0.18);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .recording-detail h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .recording-detail .meta {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 14px;
+  }
+
+  .player {
+    background: rgba(176,132,255,0.08);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .play-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #b084ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25%;
+    background: #b084ff;
+    border-radius: 4px;
+  }
+
+  .progress-marker {
+    position: absolute;
+    top: -3px;
+    width: 5px;
+    height: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .marker-red { background: #ff453a; }
+  .marker-orange { background: #ff9f0a; }
+
+  .timecode {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    font-feature-settings: "tnum";
+    white-space: nowrap;
+  }
+
+  .markers-legend {
+    display: flex;
+    gap: 12px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .marker-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .marker-dot .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  /* ════════ AI Скоркард ════════ */
+  .scorecard {
+    background: rgba(255,255,255,0.025);
+    border-radius: 8px;
+    padding: 14px;
+  }
+
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 18px 1fr 20px;
+    gap: 8px;
+    font-size: 11.5px;
+    padding: 4px 0;
+  }
+
+  .skill-row .num { color: rgba(255,255,255,0.40); }
+  .skill-row .name { color: rgba(255,255,255,0.85); }
+  .skill-row .mark { font-weight: 700; text-align: center; }
+
+  .skill-row.bad .name { color: #ff453a; }
+  .skill-row.bad .mark { color: #ff453a; }
+  .skill-row.good .mark { color: #30d158; }
+  .skill-row.medium .mark { color: #ffd60a; }
+
+  .scorecard-total {
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+  }
+
+  .scorecard-total .score {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ff453a;
+  }
+
+  .transcript-highlight {
+    background: rgba(255,69,58,0.06);
+    border-left: 3px solid #ff453a;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.75);
+    font-style: italic;
+  }
+
+  /* ════════ Email Sidebar ════════ */
+  .sidebar h3 {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+  }
+
+  .email-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 11px 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left-width: 3px;
+  }
+
+  .email-item:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .email-item.critical { border-left-color: #ff453a; background: rgba(255,69,58,0.05); }
+  .email-item.important { border-left-color: #ff9f0a; background: rgba(255,159,10,0.04); }
+  .email-item.normal { border-left-color: #30d158; }
+
+  .email-tag {
+    display: inline-block;
+    font-size: 8.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .email-tag.critical { background: #ff453a; }
+  .email-tag.important { background: #ff9f0a; }
+  .email-tag.normal { background: #30d158; }
+
+  .email-subject {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .email-preview {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.45;
+  }
+
+  .email-time {
+    font-size: 10px;
+    color: rgba(255,255,255,0.40);
+    margin-top: 6px;
+  }
+
+  /* ════════ View states ════════ */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Tooltips */
+  [title] { cursor: help; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══════════════════════════════════════════ MAIN ═══════════════════════════════════════════ -->
+  <div class="main">
+
+    <div class="page-header">
+      <div>
+        <h1>🎯 Рабочее место РОПа · день из жизни</h1>
+        <div class="sub">Виктория · РОП Клоуз. · 8 клоузеров под управлением</div>
+      </div>
+      <div class="header-meta">
+        <a href="index-rop.html" class="back-btn">← К дашборду</a>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <span class="crumb active" id="crumb-overview" onclick="showOverview()">📊 Сводка команды</span>
+      <span class="sep" id="sep-1" style="display:none;">→</span>
+      <span class="crumb" id="crumb-closer" style="display:none;" onclick="showCloserDetail(window.currentCloser)"></span>
+      <span class="sep" id="sep-2" style="display:none;">→</span>
+      <span class="crumb" id="crumb-recording" style="display:none;"></span>
+    </div>
+
+    <!-- ═══ VIEW 1: OVERVIEW (Сводка) ═══ -->
+    <div class="view active" id="view-overview">
+      <div class="grid-2">
+        <!-- HERO mini -->
+        <div class="card green">
+          <div class="card-label">🎯 Главные KPI команды</div>
+          <div style="display: flex; align-items: baseline; gap: 10px;">
+            <span class="hero-num">30%</span>
+            <span style="font-size: 12px; color: rgba(255,255,255,0.55);">Конверсия в продажу</span>
+          </div>
+          <div class="hero-meta">план ≥30% ✓ · <b style="color:#fff">179</b> из <b style="color:#fff">600</b> · <span style="color:#30d158; font-weight:700">▲ +2пп к прошлой неделе</span></div>
+          <div class="hero-note">
+            ✓ <b style="color:#fff">План выполняется.</b> Но падает дисциплина: средний % красных по команде <b style="color:#ff9f0a">14%</b> (норма ≤10%). 3 клоузера в проблемных зонах.
+          </div>
+        </div>
+
+        <!-- Светофор команды (кликабельный) -->
+        <div class="card blue">
+          <div class="card-label">🚦 Светофор команды</div>
+          <div id="closers-list">
+            <!-- генерируется JS -->
+          </div>
+          <div class="alert-note">⚠ Ляшенко в 🔴 уже 3-й день — пора 1:1</div>
+        </div>
+      </div>
+
+      <!-- Hint -->
+      <div class="card" style="margin-top: 20px; background: rgba(82,167,255,0.04); border-color: rgba(82,167,255,0.18);">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #52a7ff; margin-bottom: 8px;">💡 Что РОП решает за 30 секунд</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55;">
+          «Команда в норме (30% конверсия), но <b style="color:#ff8478;">Ляшенко 3-й день в 🔴</b> → надо к нему на 1:1 сегодня». <b>Кликни на «Ляшенко А.»</b> справа → раскрытие его пайплайна.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VIEW 2: CLOSER DETAIL (Drill-down) ═══ -->
+    <div class="view" id="view-closer">
+      <!-- генерируется JS -->
+    </div>
+
+    <!-- ═══ VIEW 3: RECORDING (Прослушка) ═══ -->
+    <div class="view" id="view-recording">
+      <!-- генерируется JS -->
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════ SIDEBAR EMAIL ═══════════════════════════════════════════ -->
+  <div class="sidebar">
+    <h3>📧 Входящие алерты</h3>
+
+    <div class="email-item critical" onclick="openEmailRecording()">
+      <span class="email-tag critical">КРИТИЧНО</span>
+      <div class="email-subject">🚨 Жалоба клиента в WhatsApp</div>
+      <div class="email-preview"><b>Беляев М.</b> (120к, Ляшенко) написал: «Перестаньте мне звонить, ваш сотрудник был очень груб». AI-sentiment: <b>2/10</b>.</div>
+      <div class="email-time">сейчас · только что</div>
+    </div>
+
+    <div class="email-item important" onclick="showCloserDetail('lyashenko')">
+      <span class="email-tag important">ВАЖНО</span>
+      <div class="email-subject">⚠ Ляшенко 3-й день в красной</div>
+      <div class="email-preview">Ляшенко А. в 🔴 (<b>34%</b>) уже 3 рабочих дня. Не разгребает сам. Готов материал для 1:1: 12 красных, 4 жалобы клиентов.</div>
+      <div class="email-time">сегодня · 09:15</div>
+    </div>
+
+    <div class="email-item normal">
+      <span class="email-tag normal">УТРО</span>
+      <div class="email-subject">📊 Утренний дайджест команды</div>
+      <div class="email-preview">Конверсия 30% ✓, но дисциплина падает (14% средних красных, было 11%). За вчера 5 продаж: Лим 2, Гальков 2, Алиев 1.</div>
+      <div class="email-time">сегодня · 09:00</div>
+    </div>
+
+    <div class="email-item important" style="opacity: 0.7;">
+      <span class="email-tag important">ВАЖНО</span>
+      <div class="email-subject">⚠ Мифтахов: 7 шаблонных сообщений</div>
+      <div class="email-preview">AI обнаружил повторы фразы «Иван, как договорились?» у 7 разных клиентов Мифтахова. Не засчитываются как касания.</div>
+      <div class="email-time">вчера · 16:42</div>
+    </div>
+
+    <div class="email-item normal" style="opacity: 0.6;">
+      <span class="email-tag normal">УТРО</span>
+      <div class="email-subject">📊 Утренний дайджест · вчера</div>
+      <div class="email-preview">Команда 28% конверсия (ниже плана). 2 в 🔴, 3 в 🟠. Нужно вмешательство.</div>
+      <div class="email-time">вчера · 09:00</div>
+    </div>
+
+    <div style="margin-top: 24px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px; font-size: 10.5px; color: rgba(255,255,255,0.55); line-height: 1.5;">
+      <b style="color:#fff;">Лимит:</b> ≤5 писем/день. Остальное в утреннем дайджесте.<br/>
+      <b style="color:#fff;">Канал:</b> email Виктории + Telegram-канал «РОП ДоНуля» для срочных.<br/><br/>
+      <b style="color:#fff;">⏰ Режим дня:</b><br/>
+      • 9:00 — email-дайджест (5 мин)<br/>
+      • 9:15 — daily huddle (15 мин)<br/>
+      • 11:00-12:00 — 1:1 с проблемным клоузером<br/>
+      • 17:00 — финальная проверка зон
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ════════ Data ════════
+  const closersData = [
+    { id: 'lim',       name: 'Лим Елена',     zone: 'green',  red: 2,  sales: 23 },
+    { id: 'galkov',    name: 'Гальков Н.',    zone: 'green',  red: 3,  sales: 19 },
+    { id: 'aliev',     name: 'Алиев Камран',  zone: 'green',  red: 7,  sales: 21 },
+    { id: 'petrova',   name: 'Петрова Д.',    zone: 'yellow', red: 12, sales: 17 },
+    { id: 'marchenko', name: 'Марченко С.',   zone: 'yellow', red: 14, sales: 15 },
+    { id: 'miftakhov', name: 'Мифтахов Р.',   zone: 'orange', red: 22, sales: 12 },
+    { id: 'yakovleva', name: 'Яковлева А.',   zone: 'orange', red: 28, sales: 10 },
+    { id: 'lyashenko', name: 'Ляшенко А.',    zone: 'red',    red: 34, sales: 7  },
+  ];
+
+  const closerDetails = {
+    lyashenko: {
+      title: '🔴 Ляшенко А. · 7 продаж · ЗАБЛОКИРОВАН · ГРУБЫЙ ТОН',
+      sub: '12 🔴 / 5 🟡 / 18 🟢 / 8 🔇 · 43 активных · 0 новых лидов · 4 жалобы клиентов в WhatsApp',
+      stats: [
+        { num: '12', lbl: '🔴 бросил', type: 'red' },
+        { num: '8',  lbl: '🔇 молчат · выше нормы', type: 'purple' },
+        { num: '2',  lbl: '🔴 до 🟠', type: 'orange' },
+      ],
+      deals: [
+        { client: 'Куделькин С.', amount: '110к', hours: 49, status: 'red', note: 'AI: перебивал клиента 4 раза', callId: 'kudelkin' },
+        { client: 'Беляев М.',    amount: '120к', hours: 65, status: 'red', note: '🚨 Жалоба клиента в WhatsApp', callId: 'belyaev' },
+        { client: 'Орлов А.',     amount: '180к', hours: 60, status: 'red', note: 'AI: «вы не понимаете»', callId: 'orlov' },
+        { client: 'Морозов А.',   amount: '85к',  hours: 55, status: 'red', note: 'Звонок 35 сек — фейк', callId: 'morozov' },
+        { client: 'Григорьев С.', amount: '95к',  hours: 72, status: 'red', note: 'Не предложил полную', callId: 'grigoriev' },
+        { client: 'Соколов Р.',   amount: '150к', hours: 80, status: 'red', note: 'Закрыл «подумаю» без даты', callId: 'sokolov' },
+        { client: 'Васильев А.',  amount: '95к',  hours: 36, status: 'yellow', note: 'Скоро 🔴 — последний шанс', callId: 'vasiliev' },
+        { client: 'Лебедев Г.',   amount: '180к', hours: 6,  status: 'green', note: '✓ Тут работает нормально', callId: 'lebedev' },
+        { client: 'Семёнов Р.',   amount: '150к', hours: 216, status: 'silent', note: '🔇 9 дней молчит · на реанимацию', callId: 'semenov' },
+      ],
+      summary: 'Видно паттерн — <b>грубый тон + не предлагает частичку</b>. Готов материал для 1:1 (3 записи). Клик на <b>▶️ Запись</b> → плеер с маркерами + AI-скоркард.',
+    },
+    miftakhov: {
+      title: '🟠 Мифтахов Р. · 12 продаж · оранжевая зона',
+      sub: '8 🔴 / 5 🟡 / 24 🟢 / 7 🔇 · 44 активных · поток лидов −50% · разгреби до 20%',
+      stats: [
+        { num: '8',  lbl: '🔴 бросил', type: 'red' },
+        { num: '7',  lbl: '🔇 шаблонные сообщения', type: 'purple' },
+        { num: '1',  lbl: '🔴 до 🟡', type: 'orange' },
+      ],
+      deals: [
+        { client: 'Прохоров А.', amount: '220к', hours: 50, status: 'red', note: 'AI: шаблон «Иван, как договорились?» 5 раз', callId: 'prohorov' },
+        { client: 'Дроздов Ф.',  amount: '95к',  hours: 55, status: 'red', note: 'Звонок 8 сек — фейк', callId: 'drozdov' },
+        { client: 'Морозов И.',  amount: '180к', hours: 60, status: 'red', note: 'Затянул вступление', callId: 'morozov-i' },
+        { client: 'Назаров П.',  amount: '95к',  hours: 32, status: 'yellow', note: 'Срочно звонить сегодня', callId: 'nazarov' },
+        { client: 'Капитанов И.',amount: '180к', hours: 5,  status: 'green', note: '✓ Дожимает', callId: 'kapitanov' },
+        { client: 'Сергеев А.',  amount: '120к', hours: 168, status: 'silent', note: '🔇 7 дней · на реанимацию завтра', callId: 'sergeev' },
+      ],
+      summary: 'Главная проблема — <b>шаблонные сообщения</b>. AI помечает повторы. Нужно научить персонализации.',
+    },
+    yakovleva: {
+      title: '🟠 Яковлева А. · 10 продаж · оранжевая · ШАБЛОНЫ',
+      sub: '11 🔴 / 6 🟡 / 22 🟢 / 8 🔇 · 47 активных · AI: одна фраза 5+ раз → клиенты молчат',
+      stats: [
+        { num: '11', lbl: '🔴 бросила', type: 'red' },
+        { num: '8',  lbl: '🔇 молчат', type: 'purple' },
+        { num: '2',  lbl: '🔴 до 🔴 БЛОКА', type: 'orange' },
+      ],
+      deals: [
+        { client: 'Иванчук М.',  amount: '320к', hours: 50, status: 'red', note: 'AI: «Здравствуйте, как ваше решение?» 5 раз', callId: 'ivanchuk' },
+        { client: 'Зайцева М.',  amount: '120к', hours: 55, status: 'red', note: 'Закрыла «подумаю» без даты', callId: 'zaiceva' },
+        { client: 'Орлова К.',   amount: '120к', hours: 60, status: 'red', note: 'Дезинформация «спишут всё»', callId: 'orlova' },
+        { client: 'Капитанова Е.',amount:'180к', hours: 4,  status: 'green', note: '✓ Здесь дожимает нормально', callId: 'kapitanova' },
+        { client: 'Иванчук А.',  amount: '320к', hours: 192, status: 'silent', note: '🔇 На реанимацию', callId: 'ivanchuk-a' },
+      ],
+      summary: 'Шаблонные фразы в WhatsApp + закрытия без даты. Серьёзный риск — ещё 2 🔴 = перейдёт в красную зону.',
+    },
+  };
+
+  const callDetails = {
+    kudelkin: {
+      title: '📞 Куделькин С. · 110к ₽ · Ляшенко А.',
+      meta: 'Длительность: 4:32 · AI-скоркард: 2/5 · Дата: 25.04.2026',
+      markers: [
+        { time: '00:48', type: 'red', label: 'Грубый тон', position: 18 },
+        { time: '01:25', type: 'orange', label: 'Не предложил частичку', position: 32 },
+        { time: '03:05', type: 'red', label: 'Клиент: «положу трубку»', position: 68 },
+      ],
+      skills: [
+        { name: 'Приветствие',         mark: '✓', level: 'good' },
+        { name: 'Квалификация',        mark: '✓', level: 'good' },
+        { name: 'SPIN',                mark: '~', level: 'medium' },
+        { name: 'Холд возражений',     mark: '✗', level: 'bad' },
+        { name: 'Предложил частичку',  mark: '✗', level: 'bad' },
+        { name: 'Тон / эмпатия',       mark: '✗', level: 'bad' },
+        { name: 'Закрытие / next step', mark: '✗', level: 'bad' },
+      ],
+      score: '2/5',
+      problem: 'давление + нет дожима',
+      transcript: '"Вы не понимаете, давайте быстрее" (00:48) → Клиент через 8 сек: "Я положу трубку"',
+    },
+    belyaev: {
+      title: '📞 Беляев М. · 120к ₽ · Ляшенко А.',
+      meta: 'Длительность: 3:18 · AI-скоркард: 1/5 · 🚨 Жалоба в WhatsApp',
+      markers: [
+        { time: '00:32', type: 'red', label: 'Перебил клиента', position: 16 },
+        { time: '01:12', type: 'red', label: 'Резкий тон', position: 38 },
+        { time: '02:45', type: 'red', label: 'Угроза подачи в суд', position: 85 },
+      ],
+      skills: [
+        { name: 'Приветствие',         mark: '✓', level: 'good' },
+        { name: 'Квалификация',        mark: '✗', level: 'bad' },
+        { name: 'SPIN',                mark: '✗', level: 'bad' },
+        { name: 'Холд возражений',     mark: '✗', level: 'bad' },
+        { name: 'Предложил частичку',  mark: '✗', level: 'bad' },
+        { name: 'Тон / эмпатия',       mark: '✗', level: 'bad' },
+        { name: 'Закрытие / next step', mark: '✗', level: 'bad' },
+      ],
+      score: '1/5',
+      problem: 'агрессия + угрозы клиенту',
+      transcript: '"Перестаньте мне звонить, ваш сотрудник был очень груб" — жалоба клиента в WhatsApp через 15 минут после звонка',
+    },
+    orlov: {
+      title: '📞 Орлов А. · 180к ₽ · Ляшенко А.',
+      meta: 'Длительность: 5:10 · AI-скоркард: 2/5',
+      markers: [
+        { time: '01:15', type: 'orange', label: 'Не выслушал возражение', position: 22 },
+        { time: '02:48', type: 'red', label: '«Вы не понимаете»', position: 54 },
+        { time: '04:20', type: 'orange', label: 'Не предложил частичку', position: 82 },
+      ],
+      skills: [
+        { name: 'Приветствие',         mark: '✓', level: 'good' },
+        { name: 'Квалификация',        mark: '✓', level: 'good' },
+        { name: 'SPIN',                mark: '~', level: 'medium' },
+        { name: 'Холд возражений',     mark: '✗', level: 'bad' },
+        { name: 'Предложил частичку',  mark: '✗', level: 'bad' },
+        { name: 'Тон / эмпатия',       mark: '✗', level: 'bad' },
+        { name: 'Закрытие / next step', mark: '~', level: 'medium' },
+      ],
+      score: '2/5',
+      problem: 'давление + игнорирует возражения',
+      transcript: '"Вы не понимаете, банкротство — это для вас единственный выход". Клиент закрылся, перестал отвечать.',
+    },
+  };
+
+  // ════════ Navigation ════════
+  window.currentCloser = null;
+  window.currentCall = null;
+
+  function showOverview() {
+    showView('overview');
+    document.getElementById('crumb-overview').classList.add('active');
+    document.getElementById('sep-1').style.display = 'none';
+    document.getElementById('crumb-closer').style.display = 'none';
+    document.getElementById('sep-2').style.display = 'none';
+    document.getElementById('crumb-recording').style.display = 'none';
+    renderClosersList();
+  }
+
+  function showCloserDetail(closerId) {
+    const data = closerDetails[closerId];
+    if (!data) {
+      alert('Drill-down этого клоузера в продакшене (требует AMO-запрос)');
+      return;
+    }
+    window.currentCloser = closerId;
+    showView('closer');
+    renderCloserDetail(closerId, data);
+
+    // Breadcrumb
+    document.getElementById('crumb-overview').classList.remove('active');
+    document.getElementById('sep-1').style.display = 'inline';
+    const crumb = document.getElementById('crumb-closer');
+    crumb.style.display = 'inline';
+    crumb.classList.add('active');
+    crumb.textContent = data.title.replace(/^[^A-Za-zА-Яа-я]+/, '').split('·')[0].trim();
+    document.getElementById('sep-2').style.display = 'none';
+    document.getElementById('crumb-recording').style.display = 'none';
+  }
+
+  function showRecording(callId) {
+    const data = callDetails[callId];
+    if (!data) {
+      alert('Запись звонка в продакшене (загружается из Манго)');
+      return;
+    }
+    window.currentCall = callId;
+    showView('recording');
+    renderRecording(callId, data);
+
+    // Breadcrumb
+    const crumb = document.getElementById('crumb-closer');
+    crumb.classList.remove('active');
+    document.getElementById('sep-2').style.display = 'inline';
+    const crumb2 = document.getElementById('crumb-recording');
+    crumb2.style.display = 'inline';
+    crumb2.classList.add('active');
+    crumb2.textContent = data.title.split('·')[0].replace('📞', '').trim();
+  }
+
+  function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function openEmailRecording() {
+    showCloserDetail('lyashenko');
+    setTimeout(() => showRecording('belyaev'), 200);
+  }
+
+  // ════════ Renderers ════════
+  function renderClosersList() {
+    const html = closersData.map(c => `
+      <div class="closer-row ${c.zone}" onclick="showCloserDetail('${c.id}')">
+        <span>${zoneEmoji(c.zone)}</span>
+        <span class="name">${c.name}</span>
+        <span class="pct">${c.red}%</span>
+        <span class="sales">${c.sales} прод.</span>
+      </div>
+    `).join('');
+    document.getElementById('closers-list').innerHTML = html;
+  }
+
+  function zoneEmoji(zone) {
+    return { green: '🟢', yellow: '🟡', orange: '🟠', red: '🔴' }[zone] || '⚪';
+  }
+
+  function statusEmoji(status) {
+    return { red: '🔴', yellow: '🟡', orange: '🟠', green: '🟢', silent: '🔇' }[status] || '⚪';
+  }
+
+  function renderCloserDetail(closerId, data) {
+    const statsHtml = data.stats.map(s => `
+      <div class="stat-box ${s.type}">
+        <div class="num">${s.num}</div>
+        <div class="lbl">${s.lbl}</div>
+      </div>
+    `).join('');
+
+    const dealsHtml = data.deals.map(d => `
+      <div class="deal-row ${d.status}">
+        <span>${statusEmoji(d.status)}</span>
+        <span class="client">${d.client}</span>
+        <span class="amount">${d.amount}</span>
+        <span class="touch">${d.hours}ч назад</span>
+        <span class="ai-note">${d.note}</span>
+        <button class="play-btn" onclick="showRecording('${d.callId}')">▶️ Запись</button>
+      </div>
+    `).join('');
+
+    const html = `
+      <div class="closer-detail">
+        <h2>${data.title}</h2>
+        <div class="sub">${data.sub}</div>
+        <div class="stats-row">${statsHtml}</div>
+      </div>
+
+      <div style="margin-bottom: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.55);">
+        Все сделки клоузера · клик ▶️ → запись с AI-разбором
+      </div>
+      <div>${dealsHtml}</div>
+
+      <div class="card" style="margin-top: 16px; background: rgba(82,167,255,0.04); border-color: rgba(82,167,255,0.18);">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #52a7ff; margin-bottom: 8px;">💡 Что РОП решает</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55;">${data.summary}</div>
+      </div>
+    `;
+
+    document.getElementById('view-closer').innerHTML = html;
+  }
+
+  function renderRecording(callId, data) {
+    const markersHtml = data.markers.map(m => `
+      <div class="progress-marker marker-${m.type === 'red' ? 'red' : 'orange'}"
+           style="left: ${m.position}%;"
+           title="${m.time} — ${m.label}"
+           onclick="jumpToMarker('${m.time}')"></div>
+    `).join('');
+
+    const legendHtml = data.markers.map(m => `
+      <span class="marker-dot" onclick="jumpToMarker('${m.time}')">
+        <span class="dot" style="background: ${m.type === 'red' ? '#ff453a' : '#ff9f0a'};"></span>
+        ${m.time} ${m.label}
+      </span>
+    `).join('');
+
+    const skillsHtml = data.skills.map((s, i) => `
+      <div class="skill-row ${s.level}">
+        <span class="num">${i+1}.</span>
+        <span class="name">${s.name}</span>
+        <span class="mark">${s.mark}</span>
+      </div>
+    `).join('');
+
+    const html = `
+      <div class="recording-detail">
+        <h2>${data.title}</h2>
+        <div class="meta">${data.meta}</div>
+
+        <div class="player">
+          <div class="player-controls">
+            <button class="play-circle">▶️</button>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+              ${markersHtml}
+            </div>
+            <span class="timecode">01:08 / 04:32</span>
+          </div>
+          <div class="markers-legend">${legendHtml}</div>
+        </div>
+
+        <div class="scorecard">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); margin-bottom: 10px;">🤖 AI-скоркард 7 навыков</div>
+          <div class="scorecard-grid">${skillsHtml}</div>
+          <div class="scorecard-total">
+            <span style="color: rgba(255,255,255,0.55);">Итог:</span>
+            <span class="score">${data.score}</span>
+            <span style="color: rgba(255,255,255,0.55); margin-left: 12px;">Главная проблема:</span>
+            <b style="color:#ff453a;">${data.problem}</b>
+          </div>
+          <div class="transcript-highlight">${data.transcript}</div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(48,209,88,0.04); border-color: rgba(48,209,88,0.18);">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #30d158; margin-bottom: 8px;">💡 Что РОП делает на 1:1</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55;">
+          Включает запись с маркера ${data.markers[0].time}. Клоузер слышит как звучит со стороны. Разбирают вместе. Дальше — конкретная рекомендация по замене фразы (например: <i>«Давайте разберём по шагам»</i> вместо <i>«${data.markers[0].label === 'Грубый тон' ? 'Вы не понимаете, давайте быстрее' : data.markers[0].label}»</i>).
+        </div>
+      </div>
+    `;
+
+    document.getElementById('view-recording').innerHTML = html;
+  }
+
+  function jumpToMarker(time) {
+    alert('▶️ Воспроизведение с ' + time + '\n\n(В продакшене — реальный плеер с записью из Манго)');
+  }
+
+  // ════════ Init ════════
+  renderClosersList();
+</script>
+
+</body>
+</html>
