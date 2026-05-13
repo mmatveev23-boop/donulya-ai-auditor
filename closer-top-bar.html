@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ДоНуля · Виджет в шапке amoCRM · интерактив</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+    background: #0a0c10;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ════════ Page header ════════ */
+  .page-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .page-header h1 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .page-header .sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .back-btn, .toggle-btn {
+    background: rgba(82,167,255,0.10);
+    color: #52a7ff;
+    border: 1px solid rgba(82,167,255,0.25);
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .back-btn:hover, .toggle-btn:hover {
+    background: rgba(82,167,255,0.18);
+  }
+
+  .toggle-btn.active {
+    background: #2aabee;
+    color: #fff;
+    border-color: #2aabee;
+  }
+
+  /* ════════ Зона переключения клоузера ════════ */
+  .zone-switcher {
+    max-width: 1280px;
+    margin: 20px auto;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.025);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .zone-switcher .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .zone-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .zone-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .zone-btn:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .zone-btn.active {
+    border-color: rgba(255,255,255,0.40);
+    background: rgba(255,255,255,0.10);
+  }
+
+  /* ════════ amoCRM Mock ════════ */
+  .amocrm-window {
+    max-width: 1280px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.40);
+    overflow: hidden;
+    color: #333;
+    transition: all 0.3s;
+  }
+
+  /* Шапка amoCRM */
+  .amocrm-top {
+    background: #f5f6f8;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 12px;
+  }
+
+  .amocrm-top .left {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .amocrm-top .logo {
+    font-size: 14px;
+    font-weight: 800;
+    color: #265abf;
+  }
+  .amocrm-top .logo span { color: #f5a623; }
+
+  .amocrm-top .url { font-size: 11px; color: #999; }
+
+  .amocrm-top .tabs {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .amocrm-top .tabs span {
+    padding: 3px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .amocrm-top .tabs .active {
+    background: #265abf;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .amocrm-top .tabs .inactive { color: #666; }
+
+  .amocrm-top .right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #666;
+    font-size: 11px;
+  }
+
+  .amocrm-top .avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #4caf50; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+
+  /* ════════ ВИДЖЕТ В ШАПКЕ ════════ */
+  .top-widget {
+    color: #fff;
+    transition: all 0.3s;
+  }
+
+  .top-widget.zone-green {
+    background: linear-gradient(180deg, #30d158 0%, #28b449 100%);
+  }
+
+  .top-widget.zone-yellow {
+    background: linear-gradient(180deg, #ffd60a 0%, #e6b800 100%);
+    color: #333;
+  }
+
+  .top-widget.zone-orange {
+    background: linear-gradient(180deg, #ff9f0a 0%, #ff8000 100%);
+  }
+
+  .top-widget.zone-red {
+    background: linear-gradient(180deg, #ff453a 0%, #d63b32 100%);
+  }
+
+  /* Свёрнутая шапка */
+  .widget-collapsed {
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+
+  .widget-collapsed:hover { filter: brightness(1.05); }
+
+  .widget-collapsed .left {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .widget-collapsed .status-text {
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .widget-collapsed .raskladka {
+    opacity: 0.90;
+  }
+
+  .widget-collapsed .effect {
+    opacity: 0.85;
+    font-size: 12px;
+  }
+
+  .widget-collapsed .right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .widget-collapsed .pill {
+    background: rgba(255,255,255,0.18);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .widget-collapsed .pill:hover { background: rgba(255,255,255,0.28); }
+
+  .widget-collapsed .pill b { font-weight: 800; }
+
+  .top-widget.zone-yellow .widget-collapsed .pill {
+    background: rgba(0,0,0,0.10);
+  }
+
+  .toggle-icon {
+    font-size: 12px;
+    transition: transform 0.2s;
+  }
+
+  .top-widget.expanded .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Развёрнутая часть */
+  .widget-expanded {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-out;
+  }
+
+  .top-widget.expanded .widget-expanded {
+    max-height: 500px;
+  }
+
+  /* Внутри развёрнутой полоски */
+  .expanded-body {
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.2fr auto;
+    gap: 18px;
+    font-size: 11.5px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .top-widget.zone-yellow .expanded-body {
+    border-top-color: rgba(0,0,0,0.10);
+  }
+
+  .expanded-col .col-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.70;
+    margin-bottom: 6px;
+  }
+
+  .expanded-col .col-body {
+    line-height: 1.55;
+  }
+
+  .expanded-col .col-body b {
+    font-weight: 800;
+  }
+
+  .top-list {
+    display: grid;
+    gap: 4px;
+  }
+
+  .top-list .deal-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 6px;
+    align-items: center;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 11px;
+  }
+
+  .top-list .deal-row:hover {
+    background: rgba(255,255,255,0.20);
+  }
+
+  .top-widget.zone-yellow .top-list .deal-row { background: rgba(0,0,0,0.06); }
+  .top-widget.zone-yellow .top-list .deal-row:hover { background: rgba(0,0,0,0.12); }
+
+  .top-list .deal-row .num {
+    font-weight: 800;
+    opacity: 0.6;
+  }
+
+  .top-list .deal-row .name { font-weight: 700; }
+
+  .top-list .deal-row .hours { opacity: 0.7; font-size: 10.5px; }
+
+  .expanded-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .expanded-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+
+  .expanded-btn.primary {
+    background: #fff;
+    color: #ff8000;
+  }
+
+  .top-widget.zone-green .expanded-btn.primary { color: #28b449; }
+  .top-widget.zone-yellow .expanded-btn.primary { color: #b89000; }
+  .top-widget.zone-red .expanded-btn.primary { color: #d63b32; }
+
+  .expanded-btn.primary:hover { filter: brightness(0.92); }
+
+  .expanded-btn.secondary {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.30);
+  }
+
+  .top-widget.zone-yellow .expanded-btn.secondary {
+    background: rgba(0,0,0,0.08);
+    color: #333;
+    border-color: rgba(0,0,0,0.20);
+  }
+
+  .expanded-btn.secondary:hover { background: rgba(255,255,255,0.28); }
+
+  /* AI signals row */
+  .ai-signals-row {
+    padding: 9px 16px;
+    background: rgba(0,0,0,0.12);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 11px;
+    border-top: 1px solid rgba(255,255,255,0.10);
+    flex-wrap: wrap;
+  }
+
+  .top-widget.zone-yellow .ai-signals-row {
+    background: rgba(0,0,0,0.05);
+    border-top-color: rgba(0,0,0,0.10);
+  }
+
+  .ai-signals-row .label {
+    font-weight: 700;
+  }
+
+  .ai-chip {
+    background: rgba(255,255,255,0.18);
+    padding: 4px 9px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .ai-chip:hover {
+    background: rgba(255,255,255,0.28);
+  }
+
+  .top-widget.zone-yellow .ai-chip {
+    background: rgba(0,0,0,0.08);
+    color: #333;
+  }
+
+  /* Контент страницы */
+  .page-content {
+    padding: 32px;
+    color: #aaa;
+    font-style: italic;
+    font-size: 12px;
+    text-align: center;
+    min-height: 100px;
+  }
+
+  /* Описание под мокапом */
+  .description {
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.025);
+    border-radius: 12px;
+  }
+
+  .description h2 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .description ul {
+    margin-left: 18px;
+    color: rgba(255,255,255,0.75);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  .description b { color: #fff; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Page header -->
+<div class="page-header">
+  <div>
+    <h1>📌 Виджет в шапке amoCRM · интерактивный мокап</h1>
+    <div class="sub">Глобальная полоска · видна на ВСЕХ страницах amoCRM · клик на полоску → раскрытие</div>
+  </div>
+  <div class="controls">
+    <button class="toggle-btn" onclick="toggleWidget()" id="toggle-state">▼ Раскрыть</button>
+    <a href="index-rop.html" class="back-btn">← К дашборду</a>
+  </div>
+</div>
+
+<!-- Переключатель зоны клоузера -->
+<div class="zone-switcher">
+  <div class="label">👤 Под каким клоузером:</div>
+  <div class="zone-btns">
+    <button class="zone-btn" onclick="setZone('green')">🟢 Лим Елена (2%)</button>
+    <button class="zone-btn" onclick="setZone('yellow')">🟡 Петрова Д. (12%)</button>
+    <button class="zone-btn active" onclick="setZone('orange')">🟠 Мифтахов Р. (22%)</button>
+    <button class="zone-btn" onclick="setZone('red')">🔴 Ляшенко А. (34%)</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ amoCRM Window ═══════════════════════════════════════════ -->
+<div class="amocrm-window">
+
+  <!-- Шапка amoCRM -->
+  <div class="amocrm-top">
+    <div class="left">
+      <div class="logo">amo<span>CRM</span></div>
+      <div class="url">donula.amocrm.ru</div>
+      <div class="tabs">
+        <span class="active">Сделки</span>
+        <span class="inactive">Списки</span>
+        <span class="inactive">Задачи</span>
+        <span class="inactive">Аналитика</span>
+      </div>
+    </div>
+    <div class="right">
+      <span>🔍 Поиск</span>
+      <span>🔔 3</span>
+      <div class="avatar" id="avatar-letter">М</div>
+      <span id="closer-name">Мифтахов Р.</span>
+    </div>
+  </div>
+
+  <!-- НАШ ВИДЖЕТ В ШАПКЕ -->
+  <div class="top-widget zone-orange" id="topWidget">
+
+    <!-- Свёрнутое состояние -->
+    <div class="widget-collapsed" onclick="toggleWidget()">
+      <div class="left">
+        <span class="status-text" id="status-text">🚦 Твой статус: 🟠 22% красных</span>
+        <span class="raskladka" id="raskladka">8🔴 / 5🟡 / 24🟢 / 7🔇</span>
+        <span class="effect" id="effect">⚠ Поток −50% · премия −20%</span>
+      </div>
+      <div class="right">
+        <span class="pill" onclick="event.stopPropagation(); jumpToQueue()">📋 Очередь: <b id="queue-count">5</b></span>
+        <span class="pill" onclick="event.stopPropagation(); jumpToAi()">🤖 AI-сигналов: <b>3</b></span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+
+    <!-- Развёрнутая часть -->
+    <div class="widget-expanded">
+      <div class="expanded-body">
+
+        <!-- Колонка 1: Чтобы выйти -->
+        <div class="expanded-col">
+          <div class="col-label">🎯 Чтобы выйти в <span id="next-zone-icon">🟡</span></div>
+          <div class="col-body" id="exit-strategy">
+            Разгреби <b>1 из 8</b> красных сделок → 7/35 = 20% → 🟡 (норма)<br/>
+            <span style="opacity: 0.85; font-size: 10.5px;">Дальше: разгреби ещё 3 → выйдешь в 🟢 (+30% к потоку)</span>
+          </div>
+        </div>
+
+        <!-- Колонка 2: На сегодня -->
+        <div class="expanded-col">
+          <div class="col-label">📋 На сегодня</div>
+          <div class="col-body" id="today-stats">
+            🔴 <b>8</b> красных<br/>
+            🟡 <b>5</b> жёлтых до 18:00<br/>
+            🔇 <b>7</b> молчат (защита)
+          </div>
+        </div>
+
+        <!-- Колонка 3: Топ-3 по сумме -->
+        <div class="expanded-col">
+          <div class="col-label">🔥 Топ-3 по сумме</div>
+          <div class="top-list" id="top-deals">
+            <div class="deal-row" onclick="openDeal('Прохоров')">
+              <span class="num">1.</span>
+              <span><span class="name">Прохоров А.</span> · 220к</span>
+              <span class="hours">50ч</span>
+            </div>
+            <div class="deal-row" onclick="openDeal('Орлов')">
+              <span class="num">2.</span>
+              <span><span class="name">Орлов М.</span> · 180к</span>
+              <span class="hours">84ч</span>
+            </div>
+            <div class="deal-row" onclick="openDeal('Морозов')">
+              <span class="num">3.</span>
+              <span><span class="name">Морозов И.</span> · 180к</span>
+              <span class="hours">60ч</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Колонка 4: Кнопки -->
+        <div class="expanded-col">
+          <div class="col-label">⚡ Действия</div>
+          <div class="expanded-actions">
+            <button class="expanded-btn primary" onclick="goDashboard()">📊 Полный дашборд</button>
+            <button class="expanded-btn secondary" onclick="goRed()">📋 К красным сделкам</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI-сигналы за день -->
+      <div class="ai-signals-row" id="ai-signals">
+        <span class="label">🤖 AI-сигналы за день (3):</span>
+        <span class="ai-chip" onclick="openAiSignal('expiring')">⏰ Куделькин истекает через 6ч</span>
+        <span class="ai-chip" onclick="openAiSignal('rude')">🎭 Беляев — грубый тон на звонке</span>
+        <span class="ai-chip" onclick="openAiSignal('fake')">❌ Морозов — фейк-касание не засчитано</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Контент страницы amoCRM (заглушка) -->
+  <div class="page-content">
+    ⋯ контент страницы amoCRM (сделки, воронка, отчёты, задачи) ⋯<br/>
+    клоузер видит полоску статуса <b style="color: #265abf;">на любой странице</b>, не нужно открывать дашборд
+  </div>
+</div>
+
+<!-- Описание -->
+<div class="description">
+
+  <h2>📋 Что в развёрнутом виджете (для клоузера)</h2>
+  <div class="grid-2">
+    <div>
+      <ul>
+        <li><b>🎯 Чтобы выйти в следующую зону</b> — конкретный план: «разгреби 1 из 8 → 7/35 = 20% → 🟡». Не общее «работай лучше», а математическое условие.</li>
+        <li><b>📋 На сегодня</b> — сколько 🔴 / 🟡 / 🔇 в работе. Сразу понятно <b>что критично</b>.</li>
+        <li><b>🔥 Топ-3 по сумме</b> — конкретные сделки которые нужно разгрести в первую очередь (большие деньги, давно молчат). Клик → переход в карточку.</li>
+        <li><b>⚡ Кнопки действий</b> — [📊 Полный дашборд] (детальная аналитика) и [📋 К красным сделкам] (фильтрованный kanban).</li>
+        <li><b>🤖 AI-сигналы за день</b> — что AI пометил по конкретным сделкам. Клик на чип → переход к этой сделке с маркером на проблеме.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>🎨 Цвет виджета меняется по зоне</h2>
+      <ul>
+        <li><b>🟢 Зелёный</b> — клоузер в норме (+30% к потоку лидов)</li>
+        <li><b>🟡 Жёлтый</b> — предупреждение (норма + сигнал)</li>
+        <li><b>🟠 Оранжевый</b> — поток −50% · премия −20%</li>
+        <li><b>🔴 Красный</b> — 0 новых лидов · премия 0 · 🚫 блок</li>
+      </ul>
+      <p style="margin-top: 8px; color: rgba(255,255,255,0.65); font-size: 12px;">Попробуй переключить зону вверху страницы — увидишь как меняется виджет.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 20px;">🛠 Технически (для программиста)</h2>
+  <ul>
+    <li><b>Точка монтирования:</b> <code>top_panel</code> в amoCRM Widgets API · глобальная шапка</li>
+    <li><b>API:</b> <code>GET /api/widget/closer/{closer_id}</code> · обновление polling 2 минуты</li>
+    <li><b>Реакция на события:</b> webhook от amoCRM (звонок завершён, сделка изменилась) → форс-обновление</li>
+    <li><b>Авторизация:</b> amoCRM OAuth token клоузера → API возвращает только его данные</li>
+    <li><b>Размер свёрнутой:</b> 36-40 px высоты, не мешает работе</li>
+    <li><b>Подключение:</b> single-page JS через <code>manifest.json</code> в amoCRM Marketplace</li>
+  </ul>
+
+  <h2 style="margin-top: 20px;">🎬 Интерактив на этой странице</h2>
+  <ul>
+    <li>Клик на полоску (или кнопку «▼ Раскрыть» сверху) → разворачивается виджет с 4 колонками</li>
+    <li>Клик на сделку в «Топ-3» → симуляция перехода в карточку</li>
+    <li>Клик на AI-чип внизу → симуляция перехода к проблемному звонку</li>
+    <li>Клик на кнопку «📊 Полный дашборд» → ведёт на наш rop-workplace.html</li>
+    <li>Кнопки «🟢 / 🟡 / 🟠 / 🔴» вверху страницы → меняют зону клоузера (всё в виджете подстраивается)</li>
+  </ul>
+</div>
+
+<script>
+  // Состояние
+  let isExpanded = false;
+
+  // Данные по зонам
+  const zones = {
+    green: {
+      cls: 'zone-green',
+      avatar: 'Л',
+      name: 'Лим Елена',
+      status: '🚦 Твой статус: 🟢 2% красных',
+      raskladka: '1🔴 / 0🟡 / 35🟢 / 2🔇',
+      effect: '✓ +30% к потоку лидов · полная премия',
+      queue: 1,
+      nextZone: '— уже топ',
+      exitStrategy: '<b>Ты уже в зелёной!</b> Просто продолжай в том же темпе.<br/><span style="opacity: 0.85; font-size: 10.5px;">+30% к потоку новых лидов · бонус за дисциплину начислен.</span>',
+      todayStats: '🔴 <b>1</b> красная<br/>🟡 <b>0</b> жёлтых<br/>🔇 <b>2</b> молчат (защита)',
+      deals: [
+        ['Соколов И.', '150к', '52ч'],
+        ['Лебедев Г.', '210к', '6ч'],
+        ['Морозова А.', '85к', '8 дней'],
+      ],
+    },
+    yellow: {
+      cls: 'zone-yellow',
+      avatar: 'П',
+      name: 'Петрова Д.',
+      status: '🚦 Твой статус: 🟡 12% красных',
+      raskladka: '4🔴 / 3🟡 / 26🟢 / 4🔇',
+      effect: '⚠ Норма + предупреждение · следи',
+      queue: 4,
+      nextZone: '🟢',
+      exitStrategy: 'Разгреби <b>1 из 4</b> красных → 3/33 = 9% → 🟢 (норма + полный поток)<br/><span style="opacity: 0.85; font-size: 10.5px;">Если станет 20%+ — попадёшь в 🟠 (−50% лидов)</span>',
+      todayStats: '🔴 <b>4</b> красных (3 на грани оранжевой)<br/>🟡 <b>3</b> жёлтых до 18:00<br/>🔇 <b>4</b> молчат (защита)',
+      deals: [
+        ['Гаврилов Н.', '180к', '50ч'],
+        ['Никитин В.', '180к', '55ч'],
+        ['Орлова К.', '120к', '64ч'],
+      ],
+    },
+    orange: {
+      cls: 'zone-orange',
+      avatar: 'М',
+      name: 'Мифтахов Р.',
+      status: '🚦 Твой статус: 🟠 22% красных',
+      raskladka: '8🔴 / 5🟡 / 24🟢 / 7🔇',
+      effect: '⚠ Поток −50% · премия −20%',
+      queue: 5,
+      nextZone: '🟡',
+      exitStrategy: 'Разгреби <b>1 из 8</b> красных сделок → 7/35 = 20% → 🟡 (норма)<br/><span style="opacity: 0.85; font-size: 10.5px;">Дальше: разгреби ещё 3 → выйдешь в 🟢 (+30% к потоку)</span>',
+      todayStats: '🔴 <b>8</b> красных<br/>🟡 <b>5</b> жёлтых до 18:00<br/>🔇 <b>7</b> молчат (защита)',
+      deals: [
+        ['Прохоров А.', '220к', '50ч'],
+        ['Орлов М.', '180к', '84ч'],
+        ['Морозов И.', '180к', '60ч'],
+      ],
+    },
+    red: {
+      cls: 'zone-red',
+      avatar: 'Л',
+      name: 'Ляшенко А.',
+      status: '🚦 Твой статус: 🔴 34% красных',
+      raskladka: '12🔴 / 5🟡 / 18🟢 / 8🔇',
+      effect: '🚫 0 новых лидов · премия 0',
+      queue: 12,
+      nextZone: '🟠',
+      exitStrategy: 'Разгреби <b>2 из 12</b> красных → 10/35 = 29% → 🟠 (−50% лидов вернутся)<br/><span style="opacity: 0.85; font-size: 10.5px;">Твои лиды уходят: Лим, Гальков, Алиев. Пока ты в 🔴 — 0 новых.</span>',
+      todayStats: '🔴 <b>12</b> красных (4 жалобы клиентов в WhatsApp!)<br/>🟡 <b>5</b> жёлтых до 18:00<br/>🔇 <b>8</b> молчат (защита)',
+      deals: [
+        ['Куделькин С.', '110к', '49ч'],
+        ['Беляев М.', '120к', '65ч (🚨 жалоба)'],
+        ['Орлов А.', '180к', '60ч'],
+      ],
+    },
+  };
+
+  function toggleWidget() {
+    isExpanded = !isExpanded;
+    const w = document.getElementById('topWidget');
+    const btn = document.getElementById('toggle-state');
+    if (isExpanded) {
+      w.classList.add('expanded');
+      btn.textContent = '▲ Свернуть';
+      btn.classList.add('active');
+    } else {
+      w.classList.remove('expanded');
+      btn.textContent = '▼ Раскрыть';
+      btn.classList.remove('active');
+    }
+  }
+
+  function setZone(zone) {
+    const z = zones[zone];
+    if (!z) return;
+
+    // Активная кнопка зоны
+    document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Применить класс к виджету
+    const w = document.getElementById('topWidget');
+    w.className = `top-widget ${z.cls}`;
+    if (isExpanded) w.classList.add('expanded');
+
+    // Обновить контент
+    document.getElementById('avatar-letter').textContent = z.avatar;
+    document.getElementById('closer-name').textContent = z.name;
+    document.getElementById('status-text').textContent = z.status;
+    document.getElementById('raskladka').textContent = z.raskladka;
+    document.getElementById('effect').textContent = z.effect;
+    document.getElementById('queue-count').textContent = z.queue;
+    document.getElementById('next-zone-icon').textContent = z.nextZone;
+    document.getElementById('exit-strategy').innerHTML = z.exitStrategy;
+    document.getElementById('today-stats').innerHTML = z.todayStats;
+
+    // Топ-3 сделок
+    const dealsHtml = z.deals.map((d, i) => `
+      <div class="deal-row" onclick="openDeal('${d[0]}')">
+        <span class="num">${i+1}.</span>
+        <span><span class="name">${d[0]}</span> · ${d[1]}</span>
+        <span class="hours">${d[2]}</span>
+      </div>
+    `).join('');
+    document.getElementById('top-deals').innerHTML = dealsHtml;
+  }
+
+  function openDeal(name) {
+    alert(`📲 Открываем карточку сделки в amoCRM:\n${name}\n\nВ продакшене → переход в /leads/detail/<id>\nа справа сразу виджет «🚦 Светофор сделки»`);
+  }
+
+  function openAiSignal(type) {
+    const messages = {
+      expiring: '⏰ Куделькин С. — последнее касание 42 часа назад\nЧерез 6 часов станет 🔴 и попадёт в твой % красных\n\n→ Открываем карточку Куделькина',
+      rude: '🎭 Беляев М. — AI услышал агрессивный тон на 00:48\n"Вы не понимаете, давайте быстрее"\nКлиент через 8 сек: "положу трубку"\n\n→ Открываем запись звонка с маркером 00:48',
+      fake: '❌ Морозов А. — твой звонок 35 сек не засчитан\nНужно: >60 сек + продвижение в карточке\n\n→ Открываем карточку Морозова',
+    };
+    alert(messages[type] || 'AI-сигнал');
+  }
+
+  function jumpToQueue() {
+    alert('📋 Очередь · переход к фильтрованному списку 🔴 + 🟡 сделок');
+  }
+
+  function jumpToAi() {
+    if (!isExpanded) toggleWidget();
+    document.getElementById('ai-signals').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function goDashboard() {
+    window.location.href = 'rop-workplace.html';
+  }
+
+  function goRed() {
+    alert('📋 К красным сделкам · переход в kanban с фильтром по статусу 🔴');
+  }
+</script>
+
+</body>
+</html>
