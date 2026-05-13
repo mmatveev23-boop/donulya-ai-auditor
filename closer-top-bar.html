@@ -82,6 +82,25 @@
     gap: 12px;
   }
 
+  .zone-switcher {
+    border: 1px dashed rgba(255,255,255,0.18);
+    position: relative;
+  }
+  .zone-switcher::before {
+    content: "🛠 DEV";
+    position: absolute;
+    top: -8px;
+    left: 14px;
+    background: #1a1a1a;
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px dashed rgba(255,255,255,0.20);
+  }
+
   .zone-switcher .label {
     font-size: 10.5px;
     font-weight: 700;
@@ -89,6 +108,14 @@
     letter-spacing: 0.08em;
     color: rgba(255,255,255,0.45);
     padding-left: 8px;
+  }
+  .zone-switcher .label::after {
+    content: " · в прод-сборке не виден";
+    color: rgba(255,255,255,0.30);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 10px;
   }
 
   .zone-btns {
@@ -380,6 +407,44 @@
   .widget-collapsed .pill:hover { background: rgba(255,255,255,0.28); }
 
   .widget-collapsed .pill b { font-weight: 800; }
+
+  /* Social-badge "ранг в команде" — кликабельный, ведёт в rop-workplace.html */
+  .widget-collapsed .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    padding: 4px 10px 4px 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    transition: all 0.15s;
+    letter-spacing: -0.005em;
+  }
+  .widget-collapsed .rank-badge:hover {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .widget-collapsed .rank-badge .rk {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+  }
+  .widget-collapsed .rank-badge .arr {
+    opacity: 0.6;
+    font-size: 10px;
+    transform: translateY(-0.5px);
+  }
+  /* Цвет точки rank-badge — signal-color по позиции (1 = best, last = worst) */
+  .widget-collapsed .rank-badge::before {
+    content: "🏆";
+    font-size: 12px;
+    margin-right: 1px;
+  }
 
   .top-widget.zone-yellow .widget-collapsed .pill {
     background: rgba(0,0,0,0.10);
@@ -924,6 +989,10 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
+        <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); goRopLeaderboard()" title="Открыть полный leaderboard команды">
+          <span class="rk" id="rank-text">#3 из 4</span>
+          <span class="arr">↗</span>
+        </span>
         <span class="pill" onclick="event.stopPropagation(); jumpToQueue()">📋 Очередь: <b id="queue-count">5</b></span>
         <span class="toggle-icon">▼</span>
       </div>
@@ -1331,6 +1400,10 @@
       `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`
     );
     document.getElementById('red-list-count').textContent = z.reds.length;
+
+    // Rank-badge: позиция в команде
+    const { rank, total } = computeRank(zone);
+    document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
   function renderDealsList(elId, items, label, metaFn) {
@@ -1360,6 +1433,22 @@
   function jumpToQueue() {
     if (!isExpanded) toggleWidget();
     document.getElementById('red-list').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function goRopLeaderboard() {
+    // В проде → переход в rop-workplace.html (полный leaderboard) или anchor #leaderboard
+    window.location.href = 'rop-workplace.html#leaderboard';
+  }
+
+  // Ранжирование команды по % красных (asc — меньше красных = выше rank)
+  // Source of truth = zones объект. В проде это придёт с бекенда.
+  function computeRank(currentZone) {
+    const order = Object.entries(zones)
+      .map(([key, z]) => ({ key, pct: parseInt(z.status.match(/(\d+)%/)?.[1] || '0', 10) }))
+      .sort((a, b) => a.pct - b.pct);
+    const total = order.length;
+    const idx = order.findIndex(o => o.key === currentZone);
+    return { rank: idx + 1, total };
   }
 
   function goDashboard() {
