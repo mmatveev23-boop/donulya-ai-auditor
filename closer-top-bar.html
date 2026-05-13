@@ -1049,6 +1049,226 @@
     transition: all 0.15s;
   }
   .modal-foot .btn-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  /* ════ Inline-раскрытие сделки + 3 действия ════ */
+  .deal-row-c {
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+  }
+  .deal-row-c .channel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    margin-right: 6px;
+    vertical-align: middle;
+    color: #fff;
+    letter-spacing: 0;
+  }
+  .deal-row-c .channel.wa  { background: #25D366; }
+  .deal-row-c .channel.tg  { background: #2AABEE; }
+  .deal-row-c .channel.sms { background: #888; }
+  .deal-row-c .channel.vk  { background: #0077FF; }
+  .deal-row-c .channel.max { background: #FF7A00; }
+  .deal-row-c.expanded { background: rgba(0,0,0,0.05); }
+
+  .deal-extra {
+    display: none;
+    padding: 8px 10px 4px;
+    grid-column: 1 / -1;
+    border-top: 1px dashed rgba(0,0,0,0.10);
+    margin-top: 6px;
+    animation: slideDownE 0.2s ease;
+  }
+  .deal-row-c.expanded .deal-extra { display: block; }
+  @keyframes slideDownE { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .deal-history {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .deal-history .ht { font-weight: 700; color: #333; margin-bottom: 4px; }
+  .deal-history .hr { display: flex; gap: 6px; }
+  .deal-history .hr .icn { width: 14px; text-align: center; }
+  .deal-history .hr .when { color: #888; min-width: 70px; }
+  .deal-history .hr .what { color: #333; }
+
+  .deal-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .da-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 7px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .da-btn:hover { background: #f5f5f5; border-color: rgba(0,0,0,0.22); transform: translateY(-1px); }
+  .da-btn.primary {
+    background: #1976d2;
+    color: #fff;
+    border-color: #1976d2;
+  }
+  .da-btn.primary:hover { background: #1565c0; border-color: #1565c0; }
+  .da-btn .ic { font-size: 13px; }
+
+  /* ════ Модалки сообщения/примечания ════ */
+  .act-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    display: none;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.18s ease;
+  }
+  .act-backdrop.open { display: flex; }
+
+  .act-card {
+    background: #1f1f1f;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.50);
+    overflow: hidden;
+    color: #fff;
+    animation: slideUp 0.22s ease;
+  }
+  .act-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .act-head .ttl { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .act-head .sub { font-size: 11.5px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  .act-head .x {
+    background: rgba(255,255,255,0.06);
+    border: none; color: rgba(255,255,255,0.65);
+    width: 28px; height: 28px; border-radius: 8px;
+    font-size: 16px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .act-head .x:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+  .act-body { padding: 16px 20px 12px; }
+
+  .tpl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .tpl-chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.82);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tpl-chip:hover { background: rgba(255,255,255,0.10); }
+  .tpl-chip.active {
+    background: rgba(25,118,210,0.18);
+    border-color: rgba(25,118,210,0.55);
+    color: #fff;
+  }
+  .tpl-chip .e { font-size: 14px; }
+
+  .act-body textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 110px;
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-family: inherit;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .act-body textarea:focus {
+    outline: none;
+    border-color: rgba(25,118,210,0.55);
+    background: #1a1a1a;
+  }
+
+  .act-foot {
+    padding: 12px 20px 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .act-foot .l { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .act-foot .r { display: flex; gap: 8px; }
+  .act-btn {
+    border: 1px solid rgba(255,255,255,0.18);
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .act-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .act-btn.primary {
+    background: #1976d2;
+    border-color: #1976d2;
+    color: #fff;
+  }
+  .act-btn.primary:hover { background: #1565c0; }
+
+  /* Quick-chips для note */
+  .note-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  .note-chips .nc {
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .note-chips .nc:hover { background: rgba(255,255,255,0.10); color: #fff; }
+
 </style>
 </head>
 <body>
@@ -1555,17 +1775,217 @@
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
+  // ════ Дополнительные данные сделок: канал + история касаний ════
+  // В проде это пришло бы из API. Здесь — детерминированный mock.
+  const CHANNELS = ['wa', 'tg', 'sms', 'vk', 'max'];
+  function getChannel(name) {
+    // Детерминированный выбор канала на основе имени (чтобы при перерендере не прыгало)
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+    return CHANNELS[h % CHANNELS.length];
+  }
+  function getChannelLabel(ch) {
+    return { wa: 'WhatsApp', tg: 'Telegram', sms: 'SMS', vk: 'ВКонтакте', max: 'MAX' }[ch] || ch.toUpperCase();
+  }
+  // Mock-история — 2-3 последних касания
+  function getHistory(name) {
+    const histories = [
+      [{ ic: '📞', when: '3 дня назад', what: 'не дозвон (45 сек)' },
+       { ic: '💬', when: '5 дней назад', what: 'отправил КП' },
+       { ic: '📞', when: '7 дней назад', what: 'говорили 4 мин · тема: цена' }],
+      [{ ic: '💬', when: '2 дня назад', what: 'не ответил' },
+       { ic: '📞', when: '4 дня назад', what: 'дозвонился · 6 мин · возражение времени' }],
+      [{ ic: '📞', when: '5 дней назад', what: 'не дозвон (3 попытки)' },
+       { ic: '💬', when: '7 дней назад', what: 'отправил кейс' }],
+    ];
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 17 + name.charCodeAt(i)) & 0xff;
+    return histories[h % histories.length];
+  }
+
+  // Фейк-телефоны
+  function getPhone(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xfffffff;
+    const d = String(h).padStart(7, '0').slice(-7);
+    return `+7 9${d.slice(0,2)} ${d.slice(2,5)}-${d.slice(5,7)}-${('' + (h & 0xff)).padStart(2,'0').slice(0,2)}`;
+  }
+
   function renderDealsList(elId, items, label, metaFn) {
     const html = items.length > 0
-      ? items.map(d => `
-          <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDeal('${d.name}')">
-            <span class="name">${d.name}</span>
+      ? items.map(d => {
+          const ch = getChannel(d.name);
+          return `
+          <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" id="deal-${cssId(d.name)}" onclick="expandDeal('${d.name}', this)">
+            <span class="name">
+              <span class="channel ${ch}" title="${getChannelLabel(ch)}">${ch.toUpperCase()}</span>${d.name}
+            </span>
             ${metaFn(d)}
+            <div class="deal-extra" onclick="event.stopPropagation()">
+              ${renderHistory(d.name)}
+              <div class="deal-actions">
+                <button class="da-btn primary" onclick="dialDeal('${d.name}')"><span class="ic">📞</span>Позвонить</button>
+                <button class="da-btn" onclick="openMsg('${d.name}')"><span class="ic">💬</span>Написать</button>
+                <button class="da-btn" onclick="openNote('${d.name}')"><span class="ic">📝</span>Примечание</button>
+              </div>
+            </div>
           </div>
-        `).join('')
+        `;
+        }).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
     document.getElementById(elId).innerHTML = html;
   }
+
+  function cssId(s) { return s.replace(/[^A-Za-zА-Яа-я0-9]/g, '_'); }
+
+  function renderHistory(name) {
+    const h = getHistory(name);
+    if (!h || !h.length) return '';
+    return `
+      <div class="deal-history">
+        <div class="ht">⏪ Последние касания:</div>
+        ${h.map(x => `<div class="hr"><span class="icn">${x.ic}</span><span class="when">${x.when}</span><span class="what">${x.what}</span></div>`).join('')}
+      </div>`;
+  }
+
+  let _expandedDeal = null;
+  function expandDeal(name, el) {
+    // Закрыть предыдущую раскрытую (одна открыта одновременно)
+    if (_expandedDeal && _expandedDeal !== el) _expandedDeal.classList.remove('expanded');
+    el.classList.toggle('expanded');
+    _expandedDeal = el.classList.contains('expanded') ? el : null;
+  }
+
+  function dialDeal(name) {
+    alert(`📞 Звоню ${name} через Oki-Toki\nТелефон: ${getPhone(name)}\n\nВ продакшене → click-to-call API\nПри дозвоне (>30 сек) → 🔴 снимается автоматически`);
+  }
+
+  // ════ Шаблоны сообщений (в проде хранятся в БД, РОП правит через админку) ════
+  const TEMPLATES = [
+    {
+      icon: '👋', title: 'Мягкий повтор',
+      body: '{name}, добрый день!\n\nЭто {manager} из Донули. Помню, мы общались {days} дн. назад. Подскажите — вопрос по списанию долгов ещё актуален? Удобно созвониться на этой неделе?\n\nС уважением, {manager}',
+    },
+    {
+      icon: '🎯', title: 'Договоренность забыта',
+      body: '{name}, здравствуйте!\n\n{manager} на связи. Мы с вами договаривались созвониться, но я не получил ответа. Хочу убедиться что у нас сохраняется интерес — или поставить вашу сделку на паузу.\n\nЧто скажете?',
+    },
+    {
+      icon: '💰', title: 'Возражение по цене',
+      body: '{name}, добрый день!\n\nВспомнил наш разговор — вы говорили что сумма обсудима. У нас есть рассрочка на 6 мес без переплаты + первый месяц бесплатно. Может это снимет напряжение?\n\nГотов созвониться 5 минут и обсудить.\n\n— {manager}',
+    },
+    {
+      icon: '⏰', title: 'Назначение времени',
+      body: '{name}, добрый день!\n\nЕсть слот завтра в 14:00 — 15 минут разбираем ваш вопрос по списанию. Удобно?\n\nЕсли нет — напишите когда удобно, подстроюсь.\n\n— {manager}',
+    },
+    {
+      icon: '❓', title: 'Узнать настроение',
+      body: '{name}, как ваши дела?\n\nМы общались по вопросу списания {days} дн. назад. Просто хочу понять — двигаемся дальше или пока пауза?\n\nЛюбой ответ ОК — главное знать.\n\n— {manager}',
+    },
+    {
+      icon: '📦', title: 'Прислать материалы',
+      body: '{name}, здравствуйте!\n\nПодумал что вам пригодится наш кейс — похожая ситуация, человек списал 1.2 млн ₽ через 6 месяцев работы с нами:\n\n→ https://donula.ru/cases/example\n\nПрочитайте если найдёте 3 минуты. Готов созвониться обсудить.\n\n— {manager}',
+    },
+  ];
+
+  const NOTE_CHIPS_LIST = [
+    '⚡ Не дозвонился',
+    '⚡ Перезвонить позже',
+    '⚡ Клиент думает',
+    '⚡ Отправил материалы',
+    '⚡ Просит время до завтра',
+  ];
+
+  // Подстановка переменных в шаблон
+  function personalize(tpl, dealName) {
+    const closerName = document.getElementById('closer-name').textContent.trim();
+    // days_ago — детерминированный mock
+    let h = 0;
+    for (let i = 0; i < dealName.length; i++) h = (h * 13 + dealName.charCodeAt(i)) & 0xff;
+    const days = (h % 6) + 2; // 2-7 дней
+    return tpl
+      .replace(/\{name\}/g, dealName)
+      .replace(/\{manager\}/g, closerName)
+      .replace(/\{days\}/g, days);
+  }
+
+  let _currentMsgDeal = null;
+  function openMsg(dealName) {
+    _currentMsgDeal = dealName;
+    const ch = getChannel(dealName);
+    document.getElementById('msg-deal').textContent = dealName;
+    document.getElementById('msg-channel').textContent = getChannelLabel(ch);
+    document.getElementById('msg-phone').textContent = getPhone(dealName);
+
+    // Рендер шаблонов
+    const grid = document.getElementById('tpl-grid');
+    grid.innerHTML = TEMPLATES.map((t, i) => `
+      <button class="tpl-chip ${i === 0 ? 'active' : ''}" onclick="selectTpl(${i}, this)">
+        <span class="e">${t.icon}</span>${t.title}
+      </button>
+    `).join('');
+
+    // Сразу подставить первый шаблон
+    document.getElementById('msg-text').value = personalize(TEMPLATES[0].body, dealName);
+
+    document.getElementById('msgModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function selectTpl(idx, btn) {
+    document.querySelectorAll('#tpl-grid .tpl-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('msg-text').value = personalize(TEMPLATES[idx].body, _currentMsgDeal);
+  }
+
+  function closeMsg(ev) {
+    if (ev && ev.target.classList && !ev.target.classList.contains('act-backdrop') && !ev.target.classList.contains('x')) return;
+    document.getElementById('msgModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function sendMsg() {
+    const ch = getChannel(_currentMsgDeal);
+    const txt = document.getElementById('msg-text').value;
+    alert(`✉ Отправлено в ${getChannelLabel(ch)}\n\nКому: ${_currentMsgDeal}\nТекст:\n${txt.slice(0, 120)}${txt.length > 120 ? '…' : ''}\n\nВ продакшене → отправка через интеграцию + activity в сделке`);
+    closeMsg({ target: { classList: { contains: () => true } } });
+  }
+
+  let _currentNoteDeal = null;
+  function openNote(dealName) {
+    _currentNoteDeal = dealName;
+    document.getElementById('note-deal').textContent = dealName;
+    document.getElementById('note-text').value = '';
+
+    const chips = document.getElementById('note-chips');
+    chips.innerHTML = NOTE_CHIPS_LIST.map(c => `
+      <span class="nc" onclick="document.getElementById('note-text').value = '${c.replace(/^⚡ /, '').replace(/'/g, '\\\'')}'">${c}</span>
+    `).join('');
+
+    document.getElementById('noteModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNote(ev) {
+    if (ev && ev.target.classList && !ev.target.classList.contains('act-backdrop') && !ev.target.classList.contains('x')) return;
+    document.getElementById('noteModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function saveNote() {
+    const txt = document.getElementById('note-text').value.trim();
+    if (!txt) { alert('Напиши хотя бы что-то 🙂'); return; }
+    alert(`📝 Примечание сохранено в сделку:\n\n${_currentNoteDeal}\n${txt}\n\nВ продакшене → POST /api/v4/leads/{id}/notes`);
+    closeNote({ target: { classList: { contains: () => true } } });
+  }
+
+  // Esc — закрывает любую модалку
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMsg();
+      closeNote();
+    }
+  });
 
   function currentZone() {
     const cls = document.getElementById('topWidget').className;
@@ -1672,6 +2092,59 @@
     <div class="modal-foot">
       <span class="hint">Нажми <kbd style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;font-size:10px;font-family:monospace;">Esc</kbd> чтобы закрыть</span>
       <a class="btn-link" href="rop-workplace.html#leaderboard">Полная аналитика РОПа →</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- Модалка: написать сообщение -->
+<div class="act-backdrop" id="msgModal" onclick="closeMsg(event)">
+  <div class="act-card" onclick="event.stopPropagation()">
+    <div class="act-head">
+      <div>
+        <div class="ttl">💬 Сообщение · <span id="msg-deal">—</span></div>
+        <div class="sub">Канал: <span id="msg-channel">—</span> · <span id="msg-phone">—</span></div>
+      </div>
+      <button class="x" onclick="closeMsg()">✕</button>
+    </div>
+    <div class="act-body">
+      <div class="tpl-grid" id="tpl-grid">
+        <!-- генерируется JS -->
+      </div>
+      <textarea id="msg-text" placeholder="Текст сообщения..."></textarea>
+    </div>
+    <div class="act-foot">
+      <span class="l">Esc — закрыть · переменные подставлены автоматически</span>
+      <div class="r">
+        <button class="act-btn" onclick="closeMsg()">Отмена</button>
+        <button class="act-btn primary" onclick="sendMsg()">Отправить →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модалка: примечание -->
+<div class="act-backdrop" id="noteModal" onclick="closeNote(event)">
+  <div class="act-card" onclick="event.stopPropagation()">
+    <div class="act-head">
+      <div>
+        <div class="ttl">📝 Примечание · <span id="note-deal">—</span></div>
+        <div class="sub">Запись в карточку сделки · не учитывается как касание</div>
+      </div>
+      <button class="x" onclick="closeNote()">✕</button>
+    </div>
+    <div class="act-body">
+      <div class="note-chips" id="note-chips">
+        <!-- генерируется JS -->
+      </div>
+      <textarea id="note-text" placeholder="Свой текст или клик на шаблон выше..."></textarea>
+    </div>
+    <div class="act-foot">
+      <span class="l">Esc — закрыть</span>
+      <div class="r">
+        <button class="act-btn" onclick="closeNote()">Отмена</button>
+        <button class="act-btn primary" onclick="saveNote()">Сохранить</button>
+      </div>
     </div>
   </div>
 </div>
