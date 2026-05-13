@@ -287,13 +287,13 @@
     transform: rotate(180deg);
   }
 
-  /* Развёрнутая часть · нейтральная тёмная подложка (НЕ цветная) */
+  /* Развёрнутая часть · светлая пастельная подложка */
   .widget-expanded {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease-out;
-    background: #1a1f2a;
-    color: rgba(255,255,255,0.90);
+    background: #f5f7fa;
+    color: #333;
   }
 
   .top-widget.expanded .widget-expanded {
@@ -411,28 +411,28 @@
     font-style: italic;
   }
 
-  /* Колонки списков · 3 категории · каждая в своём цвете */
+  /* Колонки списков · 3 категории · светлые пастельные */
   .deals-col {
     display: flex;
     flex-direction: column;
     min-height: 0;
     padding: 12px;
     border-radius: 10px;
-    color: #fff;
+    color: #333;
   }
 
-  /* Цвет колонки по категории · насыщенные пастельные */
+  /* Цвет колонки по категории · светлые пастельные */
   .deals-col.col-yellow {
-    background: linear-gradient(180deg, rgba(255,214,10,0.18) 0%, rgba(255,214,10,0.10) 100%);
-    border: 1px solid rgba(255,214,10,0.30);
+    background: #fff8db;
+    border: 1px solid #ffe580;
   }
   .deals-col.col-orange {
-    background: linear-gradient(180deg, rgba(255,159,10,0.22) 0%, rgba(255,159,10,0.12) 100%);
-    border: 1px solid rgba(255,159,10,0.35);
+    background: #ffe9d4;
+    border: 1px solid #ffcd92;
   }
   .deals-col.col-red {
-    background: linear-gradient(180deg, rgba(255,69,58,0.22) 0%, rgba(255,69,58,0.12) 100%);
-    border: 1px solid rgba(255,69,58,0.35);
+    background: #ffe0e0;
+    border: 1px solid #ffb3b3;
   }
 
   .deals-col-head {
@@ -446,24 +446,24 @@
     align-items: center;
   }
 
-  .col-yellow .deals-col-head { color: #ffd60a; }
-  .col-orange .deals-col-head { color: #ff9f0a; }
-  .col-red    .deals-col-head { color: #ff453a; }
+  .col-yellow .deals-col-head { color: #b8860b; }
+  .col-orange .deals-col-head { color: #d97706; }
+  .col-red    .deals-col-head { color: #c62828; }
 
   .deals-col-head .dot-big { font-size: 14px; margin-right: 6px; }
 
   .deals-col-head .count {
-    background: rgba(255,255,255,0.15);
-    color: #fff;
+    background: #fff;
+    color: #333;
     padding: 3px 10px;
     border-radius: 12px;
     font-size: 12px;
     font-weight: 800;
   }
 
-  .col-yellow .deals-col-head .count { background: rgba(255,214,10,0.30); color: #ffd60a; }
-  .col-orange .deals-col-head .count { background: rgba(255,159,10,0.30); color: #ff9f0a; }
-  .col-red    .deals-col-head .count { background: rgba(255,69,58,0.30); color: #ff453a; }
+  .col-yellow .deals-col-head .count { background: #fff5b8; color: #b8860b; }
+  .col-orange .deals-col-head .count { background: #ffd9ac; color: #d97706; }
+  .col-red    .deals-col-head .count { background: #ffcccc; color: #c62828; }
 
   .deals-list {
     display: grid;
@@ -474,7 +474,7 @@
 
   .deals-list::-webkit-scrollbar { width: 4px; }
   .deals-list::-webkit-scrollbar-track { background: transparent; }
-  .deals-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 2px; }
+  .deals-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
 
   .deal-row-c {
     display: grid;
@@ -482,39 +482,42 @@
     gap: 8px;
     align-items: center;
     padding: 10px 12px;
-    background: rgba(255,255,255,0.08);
+    background: #fff;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
     font-size: 12.5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .deal-row-c:hover {
-    background: rgba(255,255,255,0.16);
+    background: #fff;
     transform: translateX(2px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
   }
 
-  .deal-row-c .name { font-weight: 700; color: #fff; }
+  .deal-row-c .name { font-weight: 700; color: #333; }
 
   .deal-row-c .meta {
     font-size: 11.5px;
-    color: rgba(255,255,255,0.85);
+    color: #666;
     font-feature-settings: "tnum";
     text-align: right;
     white-space: nowrap;
   }
 
-  .deal-row-c .meta b { font-weight: 800; }
+  .deal-row-c .meta b { font-weight: 800; color: #333; }
 
   /* Urgent (≤4ч до 🔴) */
   .deal-row-c.urgent {
-    background: rgba(255,69,58,0.40);
-    border: 1px solid rgba(255,69,58,0.60);
+    background: #ff453a;
+    border: 1px solid #d63b32;
     animation: pulse 2s infinite;
   }
 
   .deal-row-c.urgent .name { color: #fff; }
   .deal-row-c.urgent .meta { color: #fff; font-weight: 700; }
+  .deal-row-c.urgent .meta b { color: #fff; }
 
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
@@ -525,10 +528,10 @@
   .empty-state {
     padding: 16px 12px;
     text-align: center;
-    background: rgba(48,209,88,0.10);
-    border: 1px solid rgba(48,209,88,0.25);
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
     border-radius: 6px;
-    color: #30d158;
+    color: #2e7d32;
     font-weight: 600;
     font-size: 12px;
   }
@@ -714,8 +717,8 @@
     <div class="widget-collapsed" onclick="toggleWidget()">
       <div class="left">
         <span class="status-text" id="status-text">🚦 Твой статус: 🟠 <span class="big">22%</span> красных</span>
-        <span class="raskladka" id="raskladka">8 🔴 / 5 🟡 / 24 🟢 / 7 🔇</span>
-        <span class="effect" id="effect">⚠ Поток −50% · премия −20%</span>
+        <span class="raskladka" id="raskladka">8 🔴 / 5 🟡 / 24 🟢</span>
+        <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
         <span class="pill" onclick="event.stopPropagation(); jumpToQueue()">📋 Очередь: <b id="queue-count">5</b></span>
@@ -739,7 +742,7 @@
           <div class="big-effect" id="big-effect">
             <div class="effect-num" id="effect-num">−50%</div>
             <div class="effect-label" id="effect-lbl">поток лидов</div>
-            <div class="effect-hint">⚠ премия за дисциплину −20%</div>
+            <div class="effect-hint">⚠ половина лидов уходит другим</div>
           </div>
         </div>
 
@@ -777,10 +780,10 @@
         </div>
       </div>
 
-      <!-- Футер · нейтральный -->
-      <div style="padding: 12px 18px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03);">
-        <span style="font-size: 12px; color: rgba(255,255,255,0.70);">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
-        <button onclick="goDashboard()" style="background: rgba(255,255,255,0.10); color: #fff; border: 1px solid rgba(255,255,255,0.20); border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
+      <!-- Футер · нейтральный светлый -->
+      <div style="padding: 12px 18px; border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.03);">
+        <span style="font-size: 12px; color: #666;">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
+        <button onclick="goDashboard()" style="background: #fff; color: #333; border: 1px solid rgba(0,0,0,0.15); border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
       </div>
     </div>
   </div>
@@ -805,7 +808,7 @@
     <div>
       <ul>
         <li><b>🎯 Чтобы выйти в следующую зону</b> — конкретный план: «разгреби 1 из 8 → 7/35 = 20% → 🟡». Не общее «работай лучше», а математическое условие.</li>
-        <li><b>📋 На сегодня</b> — сколько 🔴 / 🟡 / 🔇 в работе. Сразу понятно <b>что критично</b>.</li>
+        <li><b>📋 На сегодня</b> — сколько 🔴 / 🟡 / 🟢 в работе. Сразу понятно <b>что критично</b>.</li>
         <li><b>🔥 Топ-3 по сумме</b> — конкретные сделки которые нужно разгрести в первую очередь (большие деньги среди красных). Клик → переход в карточку сделки.</li>
         <li><b>⚡ Кнопка «Открыть дашборд»</b> — если нужны детали по всем сделкам, статистика, история.</li>
       </ul>
@@ -815,8 +818,8 @@
       <ul>
         <li><b>🟢 Зелёный</b> — клоузер в норме (+30% к потоку лидов)</li>
         <li><b>🟡 Жёлтый</b> — предупреждение (норма + сигнал)</li>
-        <li><b>🟠 Оранжевый</b> — поток −50% · премия −20%</li>
-        <li><b>🔴 Красный</b> — 0 новых лидов · премия 0 · 🚫 блок</li>
+        <li><b>🟠 Оранжевый</b> — поток лидов −50%</li>
+        <li><b>🔴 Красный</b> — 0 новых лидов · 🚫 блок</li>
       </ul>
       <p style="margin-top: 8px; color: rgba(255,255,255,0.65); font-size: 12px;">Попробуй переключить зону вверху страницы — увидишь как меняется виджет.</p>
     </div>
@@ -872,7 +875,7 @@
       avatar: 'Л',
       name: 'Лим Елена',
       status: '🚦 Твой статус: 🟢 <span class="big">2%</span> красных',
-      raskladka: '1 🔴 / 0 🟡 / 35 🟢 / 2 🔇',
+      raskladka: '1 🔴 / 0 🟡 / 35 🟢',
       effect: '✓ +30% к потоку лидов',
       bigEffect: '+30%',
       effectLabel: 'к потоку лидов',
@@ -889,7 +892,7 @@
       avatar: 'П',
       name: 'Петрова Д.',
       status: '🚦 Твой статус: 🟡 <span class="big">12%</span> красных',
-      raskladka: '4 🔴 / 3 🟡 / 26 🟢 / 4 🔇',
+      raskladka: '4 🔴 / 3 🟡 / 26 🟢',
       effect: '⚠ Норма + предупреждение',
       bigEffect: 'норма',
       effectLabel: 'предупреждение',
@@ -914,8 +917,8 @@
       avatar: 'М',
       name: 'Мифтахов Р.',
       status: '🚦 Твой статус: 🟠 <span class="big">22%</span> красных',
-      raskladka: '8 🔴 / 5 🟡 / 24 🟢 / 7 🔇',
-      effect: '⚠ Поток −50% · премия −20%',
+      raskladka: '8 🔴 / 5 🟡 / 24 🟢',
+      effect: '⚠ Поток −50%',
       bigEffect: '−50%',
       effectLabel: 'поток лидов',
       effectColor: 'bad',
@@ -945,8 +948,8 @@
       avatar: 'Л',
       name: 'Ляшенко А.',
       status: '🚦 Твой статус: 🔴 <span class="big">34%</span> красных',
-      raskladka: '12 🔴 / 5 🟡 / 18 🟢 / 8 🔇',
-      effect: '🚫 0 новых лидов · премия 0',
+      raskladka: '12 🔴 / 5 🟡 / 18 🟢',
+      effect: '🚫 0 новых лидов',
       bigEffect: '0',
       effectLabel: 'новых лидов',
       effectColor: 'critical',
@@ -1034,10 +1037,10 @@
     document.getElementById('effect-lbl').textContent = z.effectLabel;
 
     const effectHints = {
-      good: '✓ полная премия начислена',
-      warn: 'премия — норма',
-      bad: '⚠ премия за дисциплину −20%',
-      critical: '🚫 премия за дисциплину 0',
+      good: '✓ полный поток лидов',
+      warn: 'следи за дисциплиной',
+      bad: '⚠ половина лидов уходит другим',
+      critical: '🚫 новые лиды ушли · разгребай',
     };
     effectEl.querySelector('.effect-hint').textContent = effectHints[z.effectColor] || '';
 
