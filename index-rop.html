@@ -9256,6 +9256,215 @@
 </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- 🎬 СЦЕНАРИИ РАБОТЫ КЛОУЗЕРА С ВИДЖЕТОМ (col-6 на всю ширину) -->
+<div class="mc-card col-6 accent-green">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">🎬</div>
+<div class="mc-card-label">Сценарии работы клоузера с виджетом <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">3 типичных сценария от клика до результата · что видит и что делает</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 18px;">
+  Как клоузер использует виджет в реальной работе. Каждый сценарий показан по шагам — от «увидел в воронке» до «статус обновился».
+</div>
+
+<!-- ═══ СЦЕНАРИЙ 1: Спасение красной сделки ═══ -->
+<div style="margin-bottom: 22px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #ff453a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">1</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">🔴 Спасение красной сделки</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Клоузер увидел просрочку → раскрыл карточку → позвонил → AI засчитал → 🔴 стал 🟢</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+    <!-- Шаг 1 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 1 · Заметил в воронке</div>
+      <div style="background: #fff; border-left: 3px solid #f44336; border-radius: 4px; padding: 6px 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); font-size: 10px;">
+        <div style="color: #999; font-size: 9px;">08.05.2026</div>
+        <div style="color: #1976d2; font-weight: 700;">🔴 Наталья</div>
+        <div style="color: #d32f2f; font-weight: 600;">⚠ 52ч молчит</div>
+      </div>
+      <div style="margin-top: 8px; font-size: 10px; color: #666; font-style: italic;">Клик на карточку</div>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 2 · Раскрылась карточка</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="color: #1976d2; font-weight: 700; margin-bottom: 4px;">🔴 Наталья · 150к ₽</div>
+        <div style="background: rgba(244,67,54,0.1); padding: 6px; border-left: 2px solid #f44336; border-radius: 3px; margin-bottom: 4px; font-size: 9.5px; color: #555;">
+          🤖 AI: Не предложил частичку<br/>Звонок 38с — фейк
+        </div>
+        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 600;">🎯 Позвонить + частичка 15к</div>
+        <button style="margin-top: 4px; background: #2aabee; color: #fff; border: none; border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">📞 Позвонить</button>
+      </div>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 3 · Позвонил (4 мин)</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 700; margin-bottom: 4px;">✓ Касание засчитано</div>
+        <div style="font-size: 9.5px; color: #666; line-height: 1.4;">
+          🤖 AI разобрал звонок:<br/>
+          ✓ Холд возражения (+)<br/>
+          ✓ Предложил частичку (+)<br/>
+          → Согласовали 20к на завтра
+        </div>
+        <div style="margin-top: 4px; padding: 4px 6px; background: rgba(48,209,88,0.15); color: #2e7d32; border-radius: 3px; font-size: 9.5px; font-weight: 700; text-align: center;">Новая дата касания: 26.05</div>
+      </div>
+    </div>
+
+    <!-- Шаг 4 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 4 · Статус 🔴 → 🟢</div>
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); font-size: 10px;">
+        <div style="color: #999; font-size: 9px;">08.05.2026</div>
+        <div style="color: #1976d2; font-weight: 700;">🟢 Наталья</div>
+        <div style="color: #666;">2 мин назад · 5 касаний</div>
+      </div>
+      <div style="margin-top: 8px; padding: 6px; background: rgba(255,159,10,0.10); border-radius: 4px; font-size: 9.5px; color: #f57c00; font-weight: 700; text-align: center;">
+        🚦 Полоска: 22% → 19% 🟠→🟡
+      </div>
+      <div style="margin-top: 4px; font-size: 9px; color: #666; font-style: italic; text-align: center;">Перешёл в жёлтую зону · поток лидов вернулся</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ СЦЕНАРИЙ 2: Защитный 🔇 ═══ -->
+<div style="margin-bottom: 22px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #b084ff; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">2</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">🔇 Клиент молчит — клоузер защищён</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Кликает 🔇 → видит историю попыток → понимает что система его прикрывает</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+    <!-- Шаг 1 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 1 · Кликнул 🔇 Виктория</div>
+      <div style="background: #fff; border-left: 3px solid #9c27b0; border-radius: 4px; padding: 6px 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); font-size: 10px;">
+        <div style="color: #999; font-size: 9px;">17.04.2026</div>
+        <div style="color: #1976d2; font-weight: 700;">🔇 Виктория</div>
+        <div style="color: #7b1fa2;">Молчит 9 дней · реан.</div>
+      </div>
+      <div style="margin-top: 8px; font-size: 10px; color: #666; font-style: italic;">«Это не моя вина — клиент не отвечает»</div>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 2 · История попыток</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 9.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); line-height: 1.55; color: #555;">
+        <div style="color: #2e7d32; font-weight: 700; margin-bottom: 4px;">✓ Ты сделал 6 попыток:</div>
+        14.04 · Звонок 4 мин ✓<br/>
+        15.04 · WhatsApp ✓<br/>
+        15.04 · Звонок 12 сек<br/>
+        16.04 · WhatsApp ✓<br/>
+        16.04 · Звонок 8 мин ✓<br/>
+        17.04 · WhatsApp ✓<br/>
+        <div style="margin-top: 4px; color: #d32f2f; font-weight: 700;">❌ Клиент не отвечает 9 дней</div>
+      </div>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 3 · Видит защиту</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 700;">✓ Сделка снята с твоего % красных</div>
+        <div style="margin-top: 6px; font-size: 9.5px; color: #555; line-height: 1.5;">
+          📨 Сегодня бот напишет реанимационное сообщение клиенту.<br/><br/>
+          📦 Через 5 дней без ответа — авто-закрытие «Без контакта» (не отказ).
+        </div>
+        <button style="margin-top: 6px; background: rgba(176,132,255,0.15); color: #7b1fa2; border: 1px solid rgba(176,132,255,0.30); border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">📨 Ещё одна попытка</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ СЦЕНАРИЙ 3: Алерт из Telegram → прямо в карточку ═══ -->
+<div>
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #2aabee; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">3</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">📲 Из Telegram-алерта прямо в сделку</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Бот написал в TG → клоузер тапнул → открылся amoCRM с карточкой и AI-разбором</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+    <!-- Шаг 1: TG алерт -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 1 · TG · алерт от бота</div>
+      <div style="background: #17212b; border-radius: 8px; padding: 10px; color: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 6px;">
+          <div style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #2aabee, #1a7fb8); display: flex; align-items: center; justify-content: center; font-size: 11px;">🤖</div>
+          <div style="font-size: 10px; font-weight: 700; color: #fff;">ДоНуля · Бот</div>
+        </div>
+        <div style="background: rgba(42,171,238,0.10); border-left: 2px solid #2aabee; border-radius: 4px; padding: 6px 8px; font-size: 9.5px; line-height: 1.4; color: #ddd;">
+          🎭 Звонок с <b style="color:#fff;">Беляевым</b> (10 мин назад)<br/>
+          AI услышал агрессию:<br/>
+          <i>"Вы не понимаете..."</i> (00:48)
+        </div>
+        <button style="margin-top: 6px; background: #2aabee; color: #fff; border: none; border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">▶️ Послушать запись</button>
+      </div>
+    </div>
+
+    <!-- Шаг 2: amoCRM открыт -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 2 · Открылся amoCRM</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-size: 9.5px; color: #1976d2; font-weight: 700; margin-bottom: 4px;">👤 Беляев М. · 120к ₽</div>
+        <div style="font-size: 9.5px; color: #999; margin-bottom: 6px;">#25516247 · сделка в работе</div>
+        <div style="background: rgba(244,67,54,0.10); border-left: 2px solid #f44336; border-radius: 3px; padding: 5px 7px; font-size: 9.5px; color: #555; line-height: 1.45;">
+          🤖 AI на 00:48:<br/>
+          <i>«Вы не понимаете, давайте быстрее»</i><br/>
+          → клиент через 8с: «положу трубку»
+        </div>
+        <div style="margin-top: 4px; font-size: 9px; color: #666; font-style: italic;">Виджет «Светофор сделки» сразу справа →</div>
+      </div>
+    </div>
+
+    <!-- Шаг 3: Действия -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 3 · Конкретные действия</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 700; margin-bottom: 4px;">🎯 Что делать:</div>
+        <div style="font-size: 9.5px; color: #555; line-height: 1.55;">
+          1. <b>Послушать</b> запись 5 мин (▶️)<br/>
+          2. <b>Перезвонить</b> Беляеву с извинением<br/>
+          3. <b>Использовать</b> скрипт «эмпатия»:<br/>
+          <i style="color: #2e7d32;">«Иван, давайте разберём по шагам»</i>
+        </div>
+        <button style="margin-top: 6px; background: rgba(48,209,88,0.15); color: #2e7d32; border: 1px solid rgba(48,209,88,0.30); border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">📖 Открыть скрипт «эмпатия»</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Итоговая логика -->
+<div style="margin-top: 20px; padding: 14px 16px; background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.15); border-radius: 10px;">
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #30d158; margin-bottom: 8px;">⚙️ Главная логика: realtime-обновление в обе стороны</div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.55;">
+    <div>
+      <b style="color:#fff;">amoCRM → AI:</b><br/>
+      Клиент позвонил → Манго отправил запись → Yandex SpeechKit транскрибирует → YandexGPT 5.1 Pro проверил 7 регламентов → результат в нашу базу.
+    </div>
+    <div>
+      <b style="color:#fff;">AI → amoCRM (виджет):</b><br/>
+      База обновилась → виджет в карточке/воронке/шапке подгружает новые данные раз в 2 мин → клоузер видит свежий статус без перезагрузки страницы.
+    </div>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  <b>Главное:</b> клоузер работает в amoCRM как обычно, но виджет постоянно подсказывает что не так. Не нужно открывать дашборд, AI-страницу или Telegram — всё внутри одного интерфейса. <b>Программисту:</b> 3 точки монтирования + общий backend API (PocketBase) + Telegram-бот с deep-link'ами на amoCRM-сделки.
+</div>
+</div>
+
 <!-- 📋 Расхождения · Расторги · Сливы (col-6 — 5 компактных плиток-индикаторов в стиле Виктории v5) -->
 <div class="mc-card col-6 accent-red">
 <div class="mc-card-arrow">→</div>
