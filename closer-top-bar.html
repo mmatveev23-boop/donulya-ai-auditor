@@ -1127,6 +1127,30 @@
   .da-btn.primary:hover { background: #1565c0; border-color: #1565c0; }
   .da-btn .ic { font-size: 13px; }
 
+  /* Ссылка-кнопка 'Открыть в amoCRM' — выделена как secondary, link-style */
+  .da-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: 1px dashed rgba(0,0,0,0.18);
+    border-radius: 7px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #265abf;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    margin-left: auto;   /* выровнять по правому краю в .deal-actions */
+  }
+  .da-link:hover {
+    background: rgba(38,90,191,0.06);
+    border-color: rgba(38,90,191,0.45);
+    border-style: solid;
+  }
+  .da-link .arr { font-size: 11px; opacity: 0.7; }
+
   /* ════ Модалки сообщения/примечания ════ */
   .act-backdrop {
     position: fixed;
@@ -1827,6 +1851,7 @@
                 <button class="da-btn primary" onclick="dialDeal('${d.name}')"><span class="ic">📞</span>Позвонить</button>
                 <button class="da-btn" onclick="openMsg('${d.name}')"><span class="ic">💬</span>Написать</button>
                 <button class="da-btn" onclick="openNote('${d.name}')"><span class="ic">📝</span>Примечание</button>
+                <button class="da-link" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM (детали, AI-разбор, история, шкурный интерес)">Открыть в amoCRM <span class="arr">↗</span></button>
               </div>
             </div>
           </div>
@@ -1856,8 +1881,27 @@
     _expandedDeal = el.classList.contains('expanded') ? el : null;
   }
 
+  // Mock deal-id → в проде придёт из API. Здесь — детерминированный по имени.
+  function getDealId(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 7 + name.charCodeAt(i)) & 0xffffff;
+    return 41000000 + (h % 999999);   // диапазон похожий на реальные ID amoCRM
+  }
+  function getDealUrl(name) {
+    return `https://donula.amocrm.ru/leads/detail/${getDealId(name)}`;
+  }
+
+  function openDealCard(name) {
+    // Открыть карточку в новой вкладке — менеджер вернётся в виджет по cmd+tab
+    window.open(getDealUrl(name), '_blank', 'noopener');
+  }
+
   function dialDeal(name) {
-    alert(`📞 Звоню ${name} через Oki-Toki\nТелефон: ${getPhone(name)}\n\nВ продакшене → click-to-call API\nПри дозвоне (>30 сек) → 🔴 снимается автоматически`);
+    // 1. Параллельно открываем карточку сделки — менеджеру нужны детали
+    //    последнего звонка / AI-разбор / шкурный интерес пока клиент говорит «алло»
+    openDealCard(name);
+    // 2. И самый звонок через Oki-Toki
+    alert(`📞 Звоню ${name} через Oki-Toki\nТелефон: ${getPhone(name)}\n\nКарточка сделки открыта в соседней вкладке —\nтам AI-разбор последнего звонка + история.\n\nВ продакшене → click-to-call API\nПри дозвоне (>30 сек) → 🔴 снимается автоматически`);
   }
 
   // ════ Шаблоны сообщений (в проде хранятся в БД, РОП правит через админку) ════
