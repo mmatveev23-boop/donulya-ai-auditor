@@ -717,11 +717,13 @@
     gap: 5px;
     max-height: 240px;
     overflow-y: auto;
+    /* Скрываем scrollbar (визуально мешал — выглядел как розовая полоса внизу
+       красной колонки). Прокрутка колёсиком/тачем работает. */
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE / старый Edge */
   }
 
-  .deals-list::-webkit-scrollbar { width: 4px; }
-  .deals-list::-webkit-scrollbar-track { background: transparent; }
-  .deals-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+  .deals-list::-webkit-scrollbar { display: none; }   /* WebKit / Blink */
 
   .deal-row-c {
     display: grid;
