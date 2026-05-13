@@ -311,7 +311,7 @@
     border-top-color: rgba(0,0,0,0.10);
   }
 
-  /* Левая колонка — огромное число красных */
+  /* Левая колонка — огромное число жёлтых (предотвратить!) */
   .big-counter {
     display: flex;
     flex-direction: column;
@@ -343,89 +343,145 @@
 
   .big-counter .strategy {
     margin-top: 12px;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.12);
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.15);
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 12.5px;
     text-align: center;
     line-height: 1.45;
     width: 100%;
+    font-weight: 600;
   }
 
-  .top-widget.zone-yellow .big-counter .strategy { background: rgba(0,0,0,0.10); }
+  .top-widget.zone-yellow .big-counter .strategy { background: rgba(0,0,0,0.12); }
 
   .big-counter .strategy b { font-weight: 800; }
 
-  /* Правая колонка — список красных */
-  .red-list-wrap {
+  .big-counter .red-summary {
+    margin-top: 10px;
+    padding: 7px 10px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 6px;
+    font-size: 11px;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .top-widget.zone-yellow .big-counter .red-summary { background: rgba(0,0,0,0.15); color: #333; }
+
+  .big-counter .red-summary:hover { background: rgba(0,0,0,0.30); }
+
+  .big-counter .red-summary b { font-weight: 800; }
+
+  /* Правая колонка · списки */
+  .deals-section {
     display: flex;
     flex-direction: column;
     min-height: 0;
   }
 
-  .red-list-head {
+  .section-head {
     font-size: 10.5px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    opacity: 0.85;
+    opacity: 0.90;
     margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .red-list {
+  .deals-list {
     display: grid;
-    gap: 4px;
-    max-height: 220px;
+    gap: 5px;
+    max-height: 240px;
     overflow-y: auto;
   }
 
-  .red-list::-webkit-scrollbar { width: 6px; }
-  .red-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
-  .red-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 3px; }
+  .deals-list::-webkit-scrollbar { width: 6px; }
+  .deals-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+  .deals-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 3px; }
 
-  .red-list .red-row {
+  .deal-row-y {
     display: grid;
-    grid-template-columns: 22px 1fr auto auto;
+    grid-template-columns: 22px 1fr 130px auto;
     gap: 10px;
     align-items: center;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.10);
-    border-left: 3px solid #fff;
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.12);
+    border-left: 3px solid #ffd60a;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
     font-size: 12.5px;
   }
 
-  .top-widget.zone-yellow .red-list .red-row {
+  .top-widget.zone-yellow .deal-row-y {
     background: rgba(0,0,0,0.06);
     color: #333;
-    border-left-color: #333;
   }
 
-  .red-list .red-row:hover {
-    background: rgba(255,255,255,0.20);
+  .deal-row-y:hover {
+    background: rgba(255,255,255,0.22);
     transform: translateX(2px);
   }
 
-  .top-widget.zone-yellow .red-list .red-row:hover { background: rgba(0,0,0,0.12); }
+  .top-widget.zone-yellow .deal-row-y:hover { background: rgba(0,0,0,0.12); }
 
-  .red-list .red-row .dot { font-size: 14px; line-height: 1; }
-  .red-list .red-row .name { font-weight: 700; }
-  .red-list .red-row .hours {
+  .deal-row-y.urgent {
+    background: rgba(255,69,58,0.22);
+    border-left-color: #ff453a;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
+    50% { box-shadow: 0 0 0 4px rgba(255,69,58,0.30); }
+  }
+
+  .deal-row-y .dot { font-size: 14px; line-height: 1; }
+  .deal-row-y .name { font-weight: 700; }
+  .deal-row-y .countdown {
     font-feature-settings: "tnum";
     font-weight: 700;
-    opacity: 0.85;
     font-size: 12px;
+    background: rgba(0,0,0,0.18);
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
   }
-  .red-list .red-row .amount {
-    opacity: 0.75;
+
+  .top-widget.zone-yellow .deal-row-y .countdown { background: rgba(0,0,0,0.12); color: #333; }
+
+  .deal-row-y.urgent .countdown {
+    background: #ff453a;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.20);
+  }
+
+  .deal-row-y .amount {
+    opacity: 0.80;
     font-size: 11.5px;
     font-feature-settings: "tnum";
   }
+
+  /* Пустое состояние */
+  .empty-state {
+    padding: 18px;
+    text-align: center;
+    background: rgba(48,209,88,0.10);
+    border: 1px solid rgba(48,209,88,0.25);
+    border-radius: 8px;
+    color: #30d158;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .top-widget.zone-yellow .empty-state { color: #2e7d32; }
 
   /* Кнопка дашборда внизу */
   .expanded-footer {
@@ -621,27 +677,30 @@
     <div class="widget-expanded">
       <div class="expanded-body">
 
-        <!-- Левая колонка · Большое число красных + стратегия выхода -->
+        <!-- Левая колонка · Большое число жёлтых (превентивно) + красные счётчик -->
         <div class="big-counter">
-          <div class="num" id="red-count">8</div>
-          <div class="label">🔴 Красных сделок<br/>без касания &gt; 48 ч</div>
-          <div class="strategy" id="exit-strategy">
-            🎯 Разгреби <b>1</b> → выйдешь в <b id="next-zone-icon">🟡</b>
+          <div class="num" id="yellow-count">5</div>
+          <div class="label">🟡 На грани<br/>скоро станут 🔴</div>
+          <div class="strategy" id="prevent-text">
+            🎯 Позвони <b>5 сейчас</b> → не дай им стать 🔴
+          </div>
+          <div class="red-summary" onclick="scrollToReds()" id="red-summary">
+            🔴 Уже красных: <b id="red-count-mini">8</b> · разгрести позже
           </div>
         </div>
 
-        <!-- Правая колонка · Список красных сделок -->
-        <div class="red-list-wrap">
-          <div class="red-list-head">
-            <span>🔴 Все красные · клик → карточка</span>
-            <span style="font-weight: 400; opacity: 0.75;" id="red-list-counter">8 сделок</span>
+        <!-- Правая колонка · СПИСОК ЖЁЛТЫХ (главный фокус) -->
+        <div class="deals-section">
+          <div class="section-head">
+            <span>🎯 На грани · позвонить сейчас!</span>
+            <span style="font-weight: 400; opacity: 0.75;" id="yellow-list-counter">5 сделок</span>
           </div>
-          <div class="red-list" id="red-list">
+          <div class="deals-list" id="yellow-list">
             <!-- генерируется JS -->
           </div>
 
           <div class="expanded-footer">
-            <span class="footer-hint">Сделки отсортированы по часам молчания</span>
+            <span class="footer-hint">🟡 Сортированы по времени до 🔴 (срочные сверху)</span>
             <button class="footer-btn" onclick="goDashboard()">📊 Открыть дашборд →</button>
           </div>
         </div>
@@ -726,7 +785,8 @@
   // Состояние
   let isExpanded = false;
 
-  // Данные по зонам · каждая зона имеет полный список красных сделок
+  // Данные по зонам · ФОКУС: жёлтые сделки = превентивно (не дать им стать красными)
+  // hoursLeft = сколько часов до перехода в 🔴 (48ч − текущие часы без касания)
   const zones = {
     green: {
       cls: 'zone-green',
@@ -735,10 +795,11 @@
       status: '🚦 Твой статус: 🟢 <span class="big">2%</span> красных',
       raskladka: '1 🔴 / 0 🟡 / 35 🟢 / 2 🔇',
       effect: '✓ +30% к потоку лидов · полная премия',
-      queue: 1,
+      queue: 0,
+      yellowCount: 0,
       redCount: 1,
-      exitText: '<b>Ты уже в зелёной!</b><br/>Просто продолжай.',
-      nextZone: '🟢',
+      preventText: '<b>В жёлтой зоне никого нет ✓</b><br/>Продолжай в том же темпе',
+      yellows: [], // нет жёлтых
       reds: [
         { name: 'Соколов И.', hours: 52, amount: '150к ₽' },
       ],
@@ -750,10 +811,15 @@
       status: '🚦 Твой статус: 🟡 <span class="big">12%</span> красных',
       raskladka: '4 🔴 / 3 🟡 / 26 🟢 / 4 🔇',
       effect: '⚠ Норма + предупреждение · следи',
-      queue: 4,
+      queue: 3,
+      yellowCount: 3,
       redCount: 4,
-      exitText: '🎯 Разгреби <b>1</b> → выйдешь в <b>🟢</b>',
-      nextZone: '🟢',
+      preventText: '🎯 Позвони <b>3 сейчас</b> → не дай им стать 🔴',
+      yellows: [
+        { name: 'Захаров Б.',  hours: 40, hoursLeft: 8,  amount: '85к ₽' },
+        { name: 'Лебедев К.',  hours: 36, hoursLeft: 12, amount: '180к ₽' },
+        { name: 'Михайлов А.', hours: 28, hoursLeft: 20, amount: '120к ₽' },
+      ],
       reds: [
         { name: 'Гаврилов Н.', hours: 50, amount: '180к ₽' },
         { name: 'Никитин В.', hours: 55, amount: '180к ₽' },
@@ -769,9 +835,16 @@
       raskladka: '8 🔴 / 5 🟡 / 24 🟢 / 7 🔇',
       effect: '⚠ Поток −50% · премия −20%',
       queue: 5,
+      yellowCount: 5,
       redCount: 8,
-      exitText: '🎯 Разгреби <b>1</b> → выйдешь в <b>🟡</b>',
-      nextZone: '🟡',
+      preventText: '🎯 Позвони <b>5 сейчас</b> → не дай им стать 🔴',
+      yellows: [
+        { name: 'Назаров П.',   hours: 47, hoursLeft: 1,  amount: '95к ₽',  urgent: true },
+        { name: 'Капитанов И.', hours: 44, hoursLeft: 4,  amount: '180к ₽', urgent: true },
+        { name: 'Сергеев А.',   hours: 42, hoursLeft: 6,  amount: '120к ₽' },
+        { name: 'Иванов С.',    hours: 40, hoursLeft: 8,  amount: '180к ₽' },
+        { name: 'Петров К.',    hours: 32, hoursLeft: 16, amount: '95к ₽'  },
+      ],
       reds: [
         { name: 'Прохоров А.', hours: 50, amount: '220к ₽' },
         { name: 'Дроздов Ф.', hours: 55, amount: '95к ₽' },
@@ -790,10 +863,17 @@
       status: '🚦 Твой статус: 🔴 <span class="big">34%</span> красных',
       raskladka: '12 🔴 / 5 🟡 / 18 🟢 / 8 🔇',
       effect: '🚫 0 новых лидов · премия 0',
-      queue: 12,
+      queue: 5,
+      yellowCount: 5,
       redCount: 12,
-      exitText: '🎯 Разгреби <b>2</b> → выйдешь в <b>🟠</b>',
-      nextZone: '🟠',
+      preventText: '🎯 <b>5 жёлтых горят</b> — звони чтобы они не пополнили 12 красных',
+      yellows: [
+        { name: 'Васильев А.',  hours: 47, hoursLeft: 1,  amount: '95к ₽',  urgent: true },
+        { name: 'Андреев П.',   hours: 45, hoursLeft: 3,  amount: '150к ₽', urgent: true },
+        { name: 'Семёнов Г.',   hours: 42, hoursLeft: 6,  amount: '180к ₽' },
+        { name: 'Степанов И.',  hours: 38, hoursLeft: 10, amount: '120к ₽' },
+        { name: 'Орлов К.',     hours: 30, hoursLeft: 18, amount: '95к ₽'  },
+      ],
       reds: [
         { name: 'Куделькин С.', hours: 49, amount: '110к ₽' },
         { name: 'Морозов А.', hours: 55, amount: '85к ₽' },
@@ -848,21 +928,38 @@
     document.getElementById('effect').textContent = z.effect;
     document.getElementById('queue-count').textContent = z.queue;
 
-    // Большое число красных + стратегия выхода
-    document.getElementById('red-count').textContent = z.redCount;
-    document.getElementById('exit-strategy').innerHTML = z.exitText;
+    // Большое число ЖЁЛТЫХ (фокус превентивный) + счётчик красных
+    document.getElementById('yellow-count').textContent = z.yellowCount;
+    document.getElementById('prevent-text').innerHTML = z.preventText;
+    document.getElementById('red-count-mini').textContent = z.redCount;
 
-    // Список красных сделок (отсортирован по часам — самые молчащие сверху)
-    const redsHtml = z.reds.map(r => `
-      <div class="red-row" onclick="openDeal('${r.name}')">
-        <span class="dot">🔴</span>
-        <span class="name">${r.name}</span>
-        <span class="hours">${r.hours}ч</span>
-        <span class="amount">${r.amount}</span>
-      </div>
-    `).join('');
-    document.getElementById('red-list').innerHTML = redsHtml;
-    document.getElementById('red-list-counter').textContent = `${z.reds.length} сделок`;
+    // Список ЖЁЛТЫХ сделок (отсортирован по hoursLeft — срочные сверху)
+    const yellowsHtml = z.yellows.length > 0
+      ? z.yellows.map(y => `
+          <div class="deal-row-y ${y.urgent ? 'urgent' : ''}" onclick="openDeal('${y.name}')">
+            <span class="dot">🟡</span>
+            <span class="name">${y.name}</span>
+            <span class="countdown">⏱ ${y.hoursLeft}ч до 🔴</span>
+            <span class="amount">${y.amount}</span>
+          </div>
+        `).join('')
+      : '<div class="empty-state">✓ Нет жёлтых сделок · отлично!<br/>Продолжай работать в том же темпе.</div>';
+    document.getElementById('yellow-list').innerHTML = yellowsHtml;
+    document.getElementById('yellow-list-counter').textContent = z.yellows.length > 0
+      ? `${z.yellows.length} ${z.yellows.length === 1 ? 'сделка' : (z.yellows.length < 5 ? 'сделки' : 'сделок')}`
+      : '0';
+  }
+
+  function scrollToReds() {
+    alert(`🔴 Уже красных: ${zones[currentZone()].redCount}\n\nЭти сделки уже потеряли первый шанс. Сейчас фокус на жёлтых — спаси их от перехода в красные!\n\nДля разбора красных → открой полный дашборд.`);
+  }
+
+  function currentZone() {
+    const cls = document.getElementById('topWidget').className;
+    if (cls.includes('zone-green')) return 'green';
+    if (cls.includes('zone-yellow')) return 'yellow';
+    if (cls.includes('zone-orange')) return 'orange';
+    return 'red';
   }
 
   function openDeal(name) {
