@@ -721,20 +721,24 @@
 
   .deal-row-c .meta b { font-weight: 800; color: #333; }
 
-  /* Urgent (≤4ч до 🔴) */
+  /* Urgent (оранжевая сделка <2-4ч до перехода в 🔴):
+     - НЕ сплошной красный (путал с реальными красными в правой колонке)
+     - оранжевый тон + красная левая каёмка-индикатор + мягкая пульсация */
   .deal-row-c.urgent {
-    background: #ff453a;
-    border: 1px solid #d63b32;
-    animation: pulse 2s infinite;
+    background: #ffd9ac;                         /* насыщенный оранжевый, заметнее обычной оранжевой колонки */
+    border-left: 4px solid #ff453a;              /* красная каёмка — индикатор «скоро в 🔴» */
+    padding-left: 8px;                            /* компенсация толщины каёмки */
+    animation: pulseUrgent 2.2s infinite;
   }
 
-  .deal-row-c.urgent .name { color: #fff; }
-  .deal-row-c.urgent .meta { color: #fff; font-weight: 700; }
-  .deal-row-c.urgent .meta b { color: #fff; }
+  .deal-row-c.urgent .name { color: #5a3010; font-weight: 700; }
+  .deal-row-c.urgent .meta { color: #6b2a00; font-weight: 700; }
+  .deal-row-c.urgent .meta b { color: #c62828; }
+  .deal-row-c.urgent .channel { box-shadow: 0 0 0 2px rgba(198,40,40,0.20); }
 
-  @keyframes pulse {
+  @keyframes pulseUrgent {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
-    50% { box-shadow: 0 0 0 4px rgba(255,69,58,0.40); }
+    50%      { box-shadow: 0 0 0 3px rgba(255,69,58,0.18); }
   }
 
   /* Пустое состояние */
