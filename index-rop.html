@@ -8725,92 +8725,6 @@
 </div>
 </div>
 
-<!-- 🤖 Шаблоны Telegram-бота — автосообщения клоузерам когда AI что-то нашёл (col-6) -->
-<div class="mc-card col-6 accent-purple">
-<div class="mc-card-arrow">→</div>
-<div class="mc-card-icon">🤖</div>
-<div class="mc-card-label">Шаблоны Telegram-бота <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">16 авто-сообщений · бот пишет клоузеру когда AI что-то заметил · клик → пример как выглядит в Телеграме</span></div>
-
-<!-- 4 категории шаблонов с табами -->
-<div style="margin-top: 12px;">
-  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px;">
-
-    <!-- Триггерные -->
-    <div>
-      <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #ff453a; margin-bottom: 6px;">🚨 Триггерные · по событию AI</div>
-      <div style="display: grid; gap: 4px;">
-        <div class="clickable-num" onclick="openDrillDown('template-touch-expiring')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ffd60a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">⏰ Касание истекает через 6ч</div>
-        <div class="clickable-num" onclick="openDrillDown('template-deal-red')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🔴 Сделка стала красной</div>
-        <div class="clickable-num" onclick="openDrillDown('template-rude-tone')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🎭 AI услышал грубый тон</div>
-        <div class="clickable-num" onclick="openDrillDown('template-fake-touch')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff9f0a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">❌ Фейк-касание не засчитано</div>
-        <div class="clickable-num" onclick="openDrillDown('template-template-msg')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff9f0a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">📝 Шаблонное сообщение</div>
-      </div>
-    </div>
-
-    <!-- Утренние и зональные -->
-    <div>
-      <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #52a7ff; margin-bottom: 6px;">☀️ Утренние и зональные</div>
-      <div style="display: grid; gap: 4px;">
-        <div class="clickable-num" onclick="openDrillDown('template-morning-plan')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #52a7ff; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">☀️ План на день (9:00)</div>
-        <div class="clickable-num" onclick="openDrillDown('template-top-praise')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #30d158; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🏆 Поздравление топа</div>
-        <div class="clickable-num" onclick="openDrillDown('template-yellow-zone')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ffd60a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🟡 Перешёл в жёлтую зону</div>
-        <div class="clickable-num" onclick="openDrillDown('template-orange-zone')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff9f0a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🟠 Перешёл в оранжевую</div>
-        <div class="clickable-num" onclick="openDrillDown('template-red-zone')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🔴 Перешёл в красную</div>
-        <div class="clickable-num" onclick="openDrillDown('template-back-orange')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #30d158; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">✓ Вышел из красной</div>
-      </div>
-    </div>
-
-    <!-- Защитные -->
-    <div>
-      <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #b084ff; margin-bottom: 6px;">🛡️ Защитные · 🔇 Молчания</div>
-      <div style="display: grid; gap: 4px;">
-        <div class="clickable-num" onclick="openDrillDown('template-silence')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #b084ff; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🔇 Сделка перешла в Молчит</div>
-        <div class="clickable-num" onclick="openDrillDown('template-revival-response')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #30d158; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">✓ Клиент откликнулся</div>
-        <div class="clickable-num" onclick="openDrillDown('template-silence-revival')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #b084ff; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">📨 Реанимация клиенту (день 7)</div>
-        <div class="clickable-num" onclick="openDrillDown('template-auto-close')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid rgba(255,255,255,0.3); border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">📦 Авто-закрытие «Без контакта»</div>
-      </div>
-    </div>
-
-    <!-- Для РОПа -->
-    <div>
-      <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #ff453a; margin-bottom: 6px;">👔 Для РОПа · только критика</div>
-      <div style="display: grid; gap: 4px;">
-        <div class="clickable-num" onclick="openDrillDown('template-team-red')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">🚨 Команда в красной зоне</div>
-        <div class="clickable-num" onclick="openDrillDown('template-closer-3days')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">⚠ Клоузер 3 дня в 🔴</div>
-        <div class="clickable-num" onclick="openDrillDown('template-client-complaint')" style="padding: 7px 10px; background: rgba(255,255,255,0.03); border-left: 2px solid #ff453a; border-radius: 5px; cursor: pointer; font-size: 11.5px; color: rgba(255,255,255,0.85);">📣 Жалоба клиента в WhatsApp</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Статистика отправок -->
-  <div style="padding: 10px 12px; background: rgba(82,167,255,0.04); border: 1px solid rgba(82,167,255,0.15); border-radius: 8px; margin-bottom: 10px;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 11px;">
-      <div>
-        <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Отправлено сегодня</div>
-        <div style="color:#fff; font-weight:800; font-size:18px; margin-top:2px;">47</div>
-      </div>
-      <div>
-        <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Клики на «Открыть»</div>
-        <div style="color:#30d158; font-weight:800; font-size:18px; margin-top:2px;">34 <small style="font-weight:400; font-size:11px;">(72%)</small></div>
-      </div>
-      <div>
-        <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Разгребли после алерта</div>
-        <div style="color:#30d158; font-weight:800; font-size:18px; margin-top:2px;">21 <small style="font-weight:400; font-size:11px;">(45%)</small></div>
-      </div>
-      <div>
-        <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Спам-лимит (10/день)</div>
-        <div style="color:#fff; font-weight:800; font-size:18px; margin-top:2px;">8/10 max <small style="color:rgba(255,255,255,0.4); font-weight:400; font-size:11px;">(Ляшенко)</small></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="mc-card-sub" style="margin-top: 12px;">
-  <b>Защита от спама:</b> 1 алерт/сделку/сутки · максимум 10 алертов клоузеру/день · похвала ≤1/неделю. Сверх лимита — накопительный отчёт вечером. <b>Бот:</b> @donula_dispatcher_bot в Telegram. Подключается к WhatsApp Business API для реанимации клиентов на 7-й день молчания.
-</div>
-</div>
-
 <!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
 <!-- 📲 ВИДЖЕТ amoCRM · превью встраивания в карточку сделки (col-6 на всю ширину) -->
 <div class="mc-card col-6 accent-orange">
@@ -8989,7 +8903,7 @@
       </div>
       <div style="display: flex; gap: 12px; align-items: center;">
         <span style="background: rgba(255,255,255,0.15); padding: 3px 9px; border-radius: 12px;">📋 Очередь: <b>5</b></span>
-        <span style="background: rgba(255,255,255,0.15); padding: 3px 9px; border-radius: 12px;">🤖 Алертов: <b>3</b></span>
+        <span style="background: rgba(255,255,255,0.15); padding: 3px 9px; border-radius: 12px;">🤖 AI-сигналов: <b>3</b></span>
         <span style="font-size: 11px; opacity: 0.85;">▼ Раскрыть</span>
       </div>
     </div>
@@ -9046,7 +8960,7 @@
           <div style="line-height: 1.6;">
             🔴 <b>8</b> красных<br/>
             🟡 <b>5</b> жёлтых до 18:00<br/>
-            🔇 <b>7</b> молчат (бот реан.)
+            🔇 <b>7</b> молчат (защита)
           </div>
         </div>
 
@@ -9063,16 +8977,16 @@
         <!-- Колонка 4: Кнопки -->
         <div style="display: flex; flex-direction: column; gap: 6px; align-items: stretch;">
           <button style="background: #fff; color: #ff8000; border: none; border-radius: 6px; padding: 9px 14px; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap;">📊 Полный дашборд</button>
-          <button style="background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.30); border-radius: 6px; padding: 9px 14px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap;">💬 Открыть бот</button>
+          <button style="background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.30); border-radius: 6px; padding: 9px 14px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap;">📋 К красным сделкам</button>
         </div>
       </div>
 
-      <!-- Алерты от бота (свёрнуто внизу) -->
-      <div style="padding: 10px 16px; background: rgba(0,0,0,0.10); display: flex; gap: 10px; align-items: center; font-size: 11px; border-top: 1px solid rgba(255,255,255,0.10);">
-        <span style="font-weight: 700;">🤖 Алерты бота сегодня (3):</span>
-        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">⏰ Куделькин истекает 6ч</span>
-        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">🎭 Беляев — грубый тон</span>
-        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">❌ Морозов — фейк-касание</span>
+      <!-- AI-сигналы за день -->
+      <div style="padding: 10px 16px; background: rgba(0,0,0,0.10); display: flex; gap: 10px; align-items: center; font-size: 11px; border-top: 1px solid rgba(255,255,255,0.10); flex-wrap: wrap;">
+        <span style="font-weight: 700;">🤖 AI-сигналы за день (3):</span>
+        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">⏰ Куделькин истекает через 6ч</span>
+        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">🎭 Беляев — грубый тон на звонке</span>
+        <span style="background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px;">❌ Морозов — фейк-касание не засчитано</span>
       </div>
     </div>
 
@@ -9385,69 +9299,72 @@
   </div>
 </div>
 
-<!-- ═══ СЦЕНАРИЙ 3: Алерт из Telegram → прямо в карточку ═══ -->
+<!-- ═══ СЦЕНАРИЙ 3: Выход из оранжевой зоны за час · полный цикл через виджет ═══ -->
 <div>
   <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
-    <div style="width: 36px; height: 36px; border-radius: 50%; background: #2aabee; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">3</div>
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #ff9f0a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">3</div>
     <div>
-      <div style="font-size: 14px; font-weight: 800; color: #fff;">📲 Из Telegram-алерта прямо в сделку</div>
-      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Бот написал в TG → клоузер тапнул → открылся amoCRM с карточкой и AI-разбором</div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">🟠 → 🟡 → 🟢 · Выход из оранжевой за час</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Утром клоузер открыл amoCRM → увидел полоску 🟠 → разгрёб 3 красных → к обеду полный поток лидов</div>
     </div>
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-    <!-- Шаг 1: TG алерт -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+    <!-- Шаг 1: Открыл amoCRM в 9:00 -->
     <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
-      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 1 · TG · алерт от бота</div>
-      <div style="background: #17212b; border-radius: 8px; padding: 10px; color: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 6px;">
-          <div style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #2aabee, #1a7fb8); display: flex; align-items: center; justify-content: center; font-size: 11px;">🤖</div>
-          <div style="font-size: 10px; font-weight: 700; color: #fff;">ДоНуля · Бот</div>
-        </div>
-        <div style="background: rgba(42,171,238,0.10); border-left: 2px solid #2aabee; border-radius: 4px; padding: 6px 8px; font-size: 9.5px; line-height: 1.4; color: #ddd;">
-          🎭 Звонок с <b style="color:#fff;">Беляевым</b> (10 мин назад)<br/>
-          AI услышал агрессию:<br/>
-          <i>"Вы не понимаете..."</i> (00:48)
-        </div>
-        <button style="margin-top: 6px; background: #2aabee; color: #fff; border: none; border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">▶️ Послушать запись</button>
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 1 · 9:00 · открыл amoCRM</div>
+      <div style="background: linear-gradient(90deg, #ff9f0a, #ff8000); color: #fff; border-radius: 6px; padding: 8px 10px; font-size: 9.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-weight: 800; margin-bottom: 4px;">🚦 Ты: 🟠 22% красных</div>
+        <div style="opacity: 0.9;">8 🔴 / 5 🟡 / 24 🟢 / 7 🔇</div>
+        <div style="margin-top: 4px; opacity: 0.9;">⚠ Поток −50% · премия −20%</div>
       </div>
+      <div style="margin-top: 8px; font-size: 10px; color: #666; font-style: italic;">«Сегодня цель — разгрести 1 красную → 🟡»</div>
     </div>
 
-    <!-- Шаг 2: amoCRM открыт -->
+    <!-- Шаг 2: Раскрыл полоску, увидел топ-3 -->
     <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
-      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 2 · Открылся amoCRM</div>
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 2 · 9:05 · раскрыл полоску</div>
       <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
-        <div style="font-size: 9.5px; color: #1976d2; font-weight: 700; margin-bottom: 4px;">👤 Беляев М. · 120к ₽</div>
-        <div style="font-size: 9.5px; color: #999; margin-bottom: 6px;">#25516247 · сделка в работе</div>
-        <div style="background: rgba(244,67,54,0.10); border-left: 2px solid #f44336; border-radius: 3px; padding: 5px 7px; font-size: 9.5px; color: #555; line-height: 1.45;">
-          🤖 AI на 00:48:<br/>
-          <i>«Вы не понимаете, давайте быстрее»</i><br/>
-          → клиент через 8с: «положу трубку»
-        </div>
-        <div style="margin-top: 4px; font-size: 9px; color: #666; font-style: italic;">Виджет «Светофор сделки» сразу справа →</div>
-      </div>
-    </div>
-
-    <!-- Шаг 3: Действия -->
-    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
-      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 3 · Конкретные действия</div>
-      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
-        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 700; margin-bottom: 4px;">🎯 Что делать:</div>
+        <div style="font-size: 9.5px; color: #ff8000; font-weight: 700; margin-bottom: 4px;">🔥 Топ-3 по сумме:</div>
         <div style="font-size: 9.5px; color: #555; line-height: 1.55;">
-          1. <b>Послушать</b> запись 5 мин (▶️)<br/>
-          2. <b>Перезвонить</b> Беляеву с извинением<br/>
-          3. <b>Использовать</b> скрипт «эмпатия»:<br/>
-          <i style="color: #2e7d32;">«Иван, давайте разберём по шагам»</i>
+          1. <b>Прохоров А.</b> · 220к (50ч)<br/>
+          2. <b>Орлов М.</b> · 180к (84ч)<br/>
+          3. <b>Морозов И.</b> · 180к (60ч)
         </div>
-        <button style="margin-top: 6px; background: rgba(48,209,88,0.15); color: #2e7d32; border: 1px solid rgba(48,209,88,0.30); border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">📖 Открыть скрипт «эмпатия»</button>
+        <button style="margin-top: 6px; background: #fff; color: #ff8000; border: 1px solid #ff8000; border-radius: 4px; padding: 5px; font-size: 9.5px; font-weight: 700; width: 100%; cursor: pointer;">📋 К красным сделкам →</button>
       </div>
+    </div>
+
+    <!-- Шаг 3: Разгрёб 3 за час -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 3 · 9:05–10:00 · позвонил всем</div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; font-size: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-size: 9.5px; color: #2e7d32; font-weight: 700; margin-bottom: 4px;">✓ Касания засчитаны AI:</div>
+        <div style="font-size: 9.5px; color: #555; line-height: 1.55;">
+          ✓ Прохоров — 6 мин, частичка 30к<br/>
+          ✓ Орлов — 4 мин, обещание 27.04<br/>
+          ✓ Морозов — 8 мин, дожали на полную
+        </div>
+        <div style="margin-top: 4px; font-size: 9.5px; color: #2e7d32; font-weight: 700;">3 сделки 🔴 → 🟢</div>
+      </div>
+    </div>
+
+    <!-- Шаг 4: Полоска поменялась в realtime -->
+    <div style="background: #f5f6f8; border-radius: 8px; padding: 12px; color: #333;">
+      <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 8px;">Шаг 4 · 10:05 · полоска обновилась</div>
+      <div style="background: linear-gradient(90deg, #30d158, #28b449); color: #fff; border-radius: 6px; padding: 8px 10px; font-size: 9.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);">
+        <div style="font-weight: 800; margin-bottom: 4px;">🚦 Ты: 🟢 14% красных</div>
+        <div style="opacity: 0.9;">5 🔴 / 5 🟡 / 27 🟢 / 7 🔇</div>
+        <div style="margin-top: 4px; opacity: 0.9;">✓ Поток +30% · полная премия</div>
+      </div>
+      <div style="margin-top: 8px; font-size: 10px; color: #2e7d32; font-style: italic; font-weight: 700;">+30% к потоку лидов · разблокирован</div>
     </div>
   </div>
 </div>
 
 <!-- Итоговая логика -->
 <div style="margin-top: 20px; padding: 14px 16px; background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.15); border-radius: 10px;">
-  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #30d158; margin-bottom: 8px;">⚙️ Главная логика: realtime-обновление в обе стороны</div>
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #30d158; margin-bottom: 8px;">⚙️ Главная логика: всё через виджет, без сторонних каналов</div>
   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.55;">
     <div>
       <b style="color:#fff;">amoCRM → AI:</b><br/>
@@ -9457,6 +9374,9 @@
       <b style="color:#fff;">AI → amoCRM (виджет):</b><br/>
       База обновилась → виджет в карточке/воронке/шапке подгружает новые данные раз в 2 мин → клоузер видит свежий статус без перезагрузки страницы.
     </div>
+  </div>
+  <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(48,209,88,0.15); font-size: 11px; color: rgba(255,255,255,0.65);">
+    <b style="color:#30d158;">Telegram-бот пока не делаем.</b> Все сигналы и алерты живут внутри виджета — клоузер не покидает amoCRM. Бот можно добавить позже как дополнительный канал.
   </div>
 </div>
 
@@ -15545,398 +15465,6 @@
             ['🔇 Семёнов Р.',    '150к ₽', '9 дней',     '6 поп. (0 отв.)','🔇 На реанимацию'],
             ['(+ ещё 4 🟡 + 17 🟢 + 7 🔇)', '', '', '', ''],
           ],
-        },
-
-        // ═══ Drill-down: Шаблоны Telegram-бота ═══
-        // Спец-рендер с TG-мокапом сообщения. Структура: tg = { trigger, recipient, recipientLabel, time, text, example, button, action, limit }
-
-        'template-touch-expiring': {
-          title: '⏰ Касание истекает через 6ч',
-          sub: 'Бот шлёт клоузеру за 6 часов до того как сделка станет 🔴. Шанс спасти статус.',
-          stats: [
-            { num: '42ч', lbl: 'триггер срабатывает' },
-            { num: '1×', lbl: 'на сделку в сутки' },
-            { num: '~93%', lbl: 'успешно разгребают' },
-          ],
-          tg: {
-            trigger: 'Касание сделки 42ч назад · через 6ч станет 🔴',
-            recipient: 'Клоузер (личный @ник)',
-            recipientLabel: 'Ляшенко А.',
-            time: '15:32',
-            text: '⏰ {{клиент}}, {{сумма}} — последнее касание {{часов}}ч назад.\n\nЧерез 6 часов сделка станет 🔴 и попадёт в твой % красных.\n\n→ Позвонить сейчас',
-            example: '⏰ <b>Куделькин С., 110к ₽</b> — последнее касание 42ч назад.\n\nЧерез 6 часов сделка станет 🔴 и попадёт в твой % красных.\n\n→ Позвонить сейчас',
-            exampleButtons: ['📞 Позвонить', '💬 Написать'],
-            action: 'Открыть карточку сделки в amoCRM (deep-link)',
-            limit: '1 алерт/сделку/сутки · макс 10/день',
-          },
-        },
-
-        'template-deal-red': {
-          title: '🔴 Сделка стала красной',
-          sub: 'Бот шлёт клоузеру когда сделка перешла в 🔴. Показывает новый % дисциплины и зону.',
-          stats: [
-            { num: '48ч', lbl: 'триггер' },
-            { num: '~70%', lbl: 'разгребают в день' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'Сделка перешла в 🔴 (касание >48ч)',
-            recipient: 'Клоузер',
-            recipientLabel: 'Ляшенко А.',
-            time: 'только что',
-            text: '🔴 {{клиент}}, {{сумма}} — без касания 48ч.\n\nТвой % красных: {{новый%}} (был {{старый%}}). Ты в {{зона}} — {{последствие}}.\n\n→ Дожми сегодня чтобы вернуть в 🟢',
-            example: '🔴 <b>Куделькин С., 110к ₽</b> — без касания 48ч.\n\nТвой % красных: <b>33%</b> (был 30%). Ты в 🟠 — поток −50%.\n\n→ Дожми сегодня чтобы вернуть в 🟢',
-            exampleButtons: ['🚨 Открыть карточку'],
-            action: 'Открыть карточку в amoCRM',
-            limit: '1 алерт/сделку/сутки',
-          },
-        },
-
-        'template-rude-tone': {
-          title: '🎭 AI услышал грубый тон',
-          sub: 'Срабатывает когда Yandex SpeechKit Emotions + YandexGPT детектят агрессивный тон. С готовым предложением замены фразы.',
-          stats: [
-            { num: '~5 мин', lbl: 'после звонка' },
-            { num: '3×', lbl: 'в день max' },
-            { num: '~85%', lbl: 'клоузер слушает' },
-          ],
-          tg: {
-            trigger: 'AI пометил звонок флагом «грубый тон» (Emotions: aggressive)',
-            recipient: 'Клоузер',
-            recipientLabel: 'Ляшенко А.',
-            time: '5 мин назад',
-            text: '🎭 Звонок с {{клиент}} ({{время}}) — AI услышал агрессивный тон:\n\n"{{цитата}}" ({{таймкод}})\nКлиент через {{сек}}: "{{реакция}}"\n\n⚠ Замени фразу. Используй:\n«{{рекомендация}}»\n\n→ Послушать запись',
-            example: '🎭 Звонок с <b>Куделькиным</b> (5 мин назад) — AI услышал агрессивный тон:\n\n"<b>Вы не понимаете, давайте быстрее</b>" (00:48)\nКлиент через 8 сек: "Я положу трубку"\n\n⚠ Замени фразу. Используй:\n«Давайте разберём по шагам, что вам важно»\n\n→ Послушать запись',
-            exampleButtons: ['▶️ Послушать запись', '📖 Скрипт'],
-            action: 'Открыть карточку звонка с маркером на 00:48',
-            limit: '3 алерта/день max',
-          },
-        },
-
-        'template-fake-touch': {
-          title: '❌ Фейк-касание не засчитано',
-          sub: 'Бот объясняет почему попытка не зачлась + что нужно сделать чтобы засчиталось.',
-          stats: [
-            { num: '~1 мин', lbl: 'после события' },
-            { num: '5×', lbl: 'в день max' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'AI отметил попытку как фейк (звонок <10 сек / шаблон / стикер)',
-            recipient: 'Клоузер',
-            recipientLabel: 'Ляшенко А.',
-            time: '1 мин назад',
-            text: '❌ Твой {{тип}} с {{клиент}} ({{длительность}}) — AI не засчитал как касание.\n\nНужно: <b>>60 сек + продвижение в карточке</b> (новая дата/статус/заметка).\n\n{{клиент}} всё ещё считается без касания.',
-            example: '❌ Твой <b>звонок</b> с Морозовым (<b>35 сек</b>) — AI не засчитал как касание.\n\nНужно: <b>>60 сек + продвижение в карточке</b> (новая дата/статус/заметка).\n\nМорозов всё ещё считается без касания.',
-            exampleButtons: ['↩️ Перезвонить'],
-            action: 'Открыть карточку сделки',
-            limit: '5/день max',
-          },
-        },
-
-        'template-template-msg': {
-          title: '📝 Шаблонное сообщение',
-          sub: 'Бот ловит когда клоузер отправляет одну фразу разным клиентам. Просит переписать персонально.',
-          stats: [
-            { num: '~1 мин', lbl: 'после отправки' },
-            { num: '3+', lbl: 'повторов' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'AI нашёл совпадение фразы с предыдущими 3+ сообщениями разным клиентам',
-            recipient: 'Клоузер',
-            recipientLabel: 'Яковлева А.',
-            time: 'только что',
-            text: '📝 Ты отправил {{клиент}} фразу:\n\n«{{цитата}}»\n\n— точно такую же ты слал {{N}} другим клиентам за неделю. AI не засчитает как касание.\n\nПерепиши персонально (имя, сумма, ситуация клиента).',
-            example: '📝 Ты отправил <b>Иванчуку</b> фразу:\n\n«Здравствуйте, как ваше решение?»\n\n— точно такую же ты слала <b>4 другим клиентам</b> за неделю. AI не засчитает как касание.\n\nПерепиши персонально (имя, сумма, ситуация клиента).',
-            exampleButtons: ['✏️ Переписать'],
-            action: 'Открыть переписку с Иванчуком',
-            limit: '3/день max',
-          },
-        },
-
-        'template-morning-plan': {
-          title: '☀️ План на день · каждое утро в 9:00',
-          sub: 'Утренний дайджест каждому клоузеру. Светофор + цель дня + топ-сделки на разгребание.',
-          stats: [
-            { num: '9:00', lbl: 'ежедневно' },
-            { num: '1×', lbl: 'в день' },
-            { num: '8/8', lbl: 'клоузеров' },
-          ],
-          tg: {
-            trigger: 'Cron: ежедневно в 9:00 (пн-пт)',
-            recipient: 'Каждый клоузер',
-            recipientLabel: 'Ляшенко А.',
-            time: '09:00',
-            text: '☀️ Доброе утро, {{имя}}!\n\nТвоя дисциплина: <b>{{зона}} {{%}}</b> красных\nПоток лидов: {{статус}}\n\n📋 На сегодня:\n   🔴 {{N}} красных\n   🟡 {{N}} жёлтых\n   🟢 {{N}} в норме\n   🔇 {{N}} молчат\n\n🎯 Цель: разгрести {{N}} красных → вернёшься в {{зона+1}}',
-            example: '☀️ Доброе утро, <b>Ляшенко!</b>\n\nТвоя дисциплина: <b>🔴 34%</b> красных\nПоток лидов: 🚫 заблокирован\n\n📋 На сегодня:\n   🔴 12 красных\n   🟡 5 жёлтых\n   🟢 18 в норме\n   🔇 8 молчат\n\n🎯 Цель: разгрести <b>4 красных</b> → вернёшься в 🟠, получишь лиды',
-            exampleButtons: ['📊 Открыть дашборд'],
-            action: 'Открыть дашборд клоузера',
-            limit: '1× в день',
-          },
-        },
-
-        'template-top-praise': {
-          title: '🏆 Поздравление топа',
-          sub: 'Шлётся клоузерам которые держат 🟢 несколько дней подряд. Закрепляет позитивное поведение.',
-          stats: [
-            { num: '14+ дней', lbl: 'в 🟢' },
-            { num: '1×', lbl: 'в неделю' },
-            { num: 'топы', lbl: 'получатели' },
-          ],
-          tg: {
-            trigger: 'Клоузер в 🟢 более 7-14 дней подряд',
-            recipient: 'Топ-клоузер',
-            recipientLabel: 'Лим Елена',
-            time: '09:05',
-            text: '🏆 {{имя}}, ты в 🟢 уже <b>{{дней}} дней подряд</b>!\n\nВчера: {{продаж}} продаж, средний цикл {{часов}}ч.\nСегодня тебе <b>+30% к потоку лидов</b>.\n\nПремия за дисциплину начислена в полном объёме.',
-            example: '🏆 <b>Лим</b>, ты в 🟢 уже <b>14 дней подряд</b>!\n\nВчера: <b>5 продаж</b>, средний цикл 21ч.\nСегодня тебе <b>+30% к потоку лидов</b>.\n\nПремия за дисциплину начислена в полном объёме. 🎯',
-            exampleButtons: ['📊 Моя статистика'],
-            action: 'Открыть личный кабинет',
-            limit: '1× в неделю',
-          },
-        },
-
-        'template-yellow-zone': {
-          title: '🟡 Перешёл в жёлтую зону',
-          sub: 'Раннее предупреждение. Без последствий, но если 20%+ — будет −50% лидов. С топ-3 для разгребания.',
-          stats: [
-            { num: '10-20%', lbl: 'диапазон' },
-            { num: 'мгновенно', lbl: 'триггер' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'Клоузер перешёл из 🟢 в 🟡',
-            recipient: 'Клоузер',
-            recipientLabel: 'Петрова Д.',
-            time: '15:48',
-            text: '🟡 Ты перешёл в жёлтую зону: <b>{{%}} красных</b>.\n\nПока без последствий, но если станет 20%+ — поток лидов −50%, премия −20%.\n\n→ У тебя {{N}} красных сделок. Разгреби сегодня:\n{{топ-3}}',
-            example: '🟡 Ты перешёл в жёлтую зону: <b>12% красных</b>.\n\nПока без последствий, но если станет 20%+ — поток лидов −50%, премия −20%.\n\n→ У тебя <b>3 красных</b>. Разгреби сегодня:\n  🔴 Куделькин (49ч)\n  🔴 Морозов (55ч)\n  🔴 Орлов (60ч)',
-            exampleButtons: ['📋 Мои красные'],
-            action: 'Открыть список красных сделок',
-            limit: '1× на переход зоны',
-          },
-        },
-
-        'template-orange-zone': {
-          title: '🟠 Перешёл в оранжевую',
-          sub: 'Серьёзный алерт. С конкретикой: что делать чтобы вернуться + топ-3 по сумме денег.',
-          stats: [
-            { num: '20-30%', lbl: 'диапазон' },
-            { num: 'поток −50%', lbl: 'последствие' },
-            { num: 'премия −20%', lbl: 'дисциплина' },
-          ],
-          tg: {
-            trigger: 'Клоузер перешёл из 🟡 в 🟠',
-            recipient: 'Клоузер',
-            recipientLabel: 'Мифтахов Р.',
-            time: '11:22',
-            text: '🟠 Ты в оранжевой зоне: <b>{{%}} красных</b>.\n\n⚠ Твой поток новых лидов <b>−50%</b>\n⚠ Премия за дисциплину <b>−20%</b>\n\nЧтобы вернуться в 🟡: разгреби {{N}} из твоих {{всего}} красных.\n\n🔴 Топ-3 по сумме:\n{{топ-3-сделок}}',
-            example: '🟠 Ты в оранжевой зоне: <b>22% красных</b>.\n\n⚠ Поток новых лидов <b>−50%</b>\n⚠ Премия за дисциплину <b>−20%</b>\n\nРазгреби 1 из 8 красных → 7/35 = 20% → вернёшься в 🟡.\n\n🔴 Топ-3 по сумме:\n  1. Прохоров — 220к (50ч)\n  2. Орлов — 180к (84ч)\n  3. Морозов — 180к (60ч)',
-            exampleButtons: ['🚨 Открыть красные'],
-            action: 'Открыть список красных сделок отсортированных по сумме',
-            limit: '1× на переход зоны',
-          },
-        },
-
-        'template-red-zone': {
-          title: '🔴 Перешёл в красную',
-          sub: 'Самый жёсткий алерт. Лиды клоузера перенаправляются другим. Прямой шкурный мотив исправиться.',
-          stats: [
-            { num: '>30%', lbl: 'диапазон' },
-            { num: '0 лидов', lbl: 'последствие' },
-            { num: 'премия 0', lbl: 'дисциплина' },
-          ],
-          tg: {
-            trigger: 'Клоузер перешёл из 🟠 в 🔴',
-            recipient: 'Клоузер + копия РОПу',
-            recipientLabel: 'Ляшенко А.',
-            time: '14:07',
-            text: '🔴 Ты в красной зоне: <b>{{%}} красных</b>.\n\n🚫 <b>0 новых лидов</b> до выхода в 🟠\n🚫 <b>Премия за дисциплину 0</b>\n\nТвои новые трипваеры ({{≈N}}/нед) уходят:\n{{топ-3-имена}}\n\nЧтобы вернуться в 🟠 (поток −50%):\nразгреби {{N}} из {{всего}} красных.',
-            example: '🔴 Ты в красной зоне: <b>34% красных</b>.\n\n🚫 <b>0 новых лидов</b> до выхода в 🟠\n🚫 <b>Премия за дисциплину 0</b>\n\nТвои новые трипваеры (≈75/нед) уходят:\n  🟢 Лим Елена (+30% к норме)\n  🟢 Гальков Н. (+30%)\n  🟢 Алиев Камран (+30%)\n\nЧтобы вернуться в 🟠:\nразгреби 2 из 12 красных → 10/35 = 29%',
-            exampleButtons: ['🚨 Все 12 красных', '📞 Срочно звонить'],
-            action: 'Открыть полный список красных сделок',
-            limit: '1× на переход зоны',
-          },
-        },
-
-        'template-back-orange': {
-          title: '✓ Вышел из красной',
-          sub: 'Поздравление + следующая цель. Закрепляет что прогресс заметен.',
-          stats: [
-            { num: 'мгновенно', lbl: 'триггер' },
-            { num: '+50% лидов', lbl: 'возврат' },
-            { num: '+премия', lbl: 'восстановлена' },
-          ],
-          tg: {
-            trigger: 'Клоузер перешёл из 🔴 в 🟠 (≤30% красных)',
-            recipient: 'Клоузер',
-            recipientLabel: 'Ляшенко А.',
-            time: '17:14',
-            text: '🟠 Ты вышел из красной зоны: <b>{{%}}</b> (было {{старый%}}).\n\n✓ Поток новых лидов <b>восстановлен на 50%</b>\n✓ Премия за дисциплину начисляется с −20%\n\nСледующая цель: 🟡 (≤20%) → разгреби ещё {{N}} красных → полный поток + полная премия.',
-            example: '🟠 Ты вышел из красной: <b>28%</b> (было 34%).\n\n✓ Поток новых лидов <b>восстановлен на 50%</b>\n✓ Премия с −20%\n\nСледующая цель: 🟡 ≤20% → разгреби ещё <b>3 красных</b> → полный поток + полная премия.',
-            exampleButtons: ['🎯 Продолжить'],
-            action: 'Открыть дашборд',
-            limit: '1× на переход зоны',
-          },
-        },
-
-        'template-silence': {
-          title: '🔇 Сделка перешла в Молчит',
-          sub: 'Успокаивает клоузера. Сделка снята с его таймера, бот сам реанимирует на 7-й день.',
-          stats: [
-            { num: '6+ попыток', lbl: 'триггер' },
-            { num: '+0 в %', lbl: 'не давит' },
-            { num: 'бот реанимирует', lbl: 'день 7' },
-          ],
-          tg: {
-            trigger: '6+ реальных попыток клоузера + 0 ответов клиента за 48ч',
-            recipient: 'Клоузер',
-            recipientLabel: 'Яковлева А.',
-            time: '13:55',
-            text: '🔇 {{клиент}}, {{сумма}} — после <b>{{N}} твоих попыток</b> клиент не отвечает.\n\nСделка снята с твоего таймера красных. Бот сам напишет реанимацию через 7 дней. Если не ответит за 14 дней — авто-закрытие.\n\n✓ Ты сделал всё что мог. Не давит.',
-            example: '🔇 <b>Иванчук М., 320к ₽</b> — после <b>6 твоих попыток</b> клиент не отвечает.\n\nСделка снята с твоего таймера красных. Бот напишет реанимацию через 7 дней. Если не ответит за 14 дней — авто-закрытие.\n\n✓ Ты сделал всё что мог. Не давит.',
-            exampleButtons: ['📋 Карточка'],
-            action: 'Открыть карточку (read-only, в работу вернётся при ответе клиента)',
-            limit: '1× на сделку (никогда не дубль)',
-          },
-        },
-
-        'template-revival-response': {
-          title: '✓ Клиент откликнулся после реанимации',
-          sub: 'Когда молчавший клиент ответил на сообщение бота. Сделка возвращается клоузеру.',
-          stats: [
-            { num: 'мгновенно', lbl: 'триггер' },
-            { num: '~30%', lbl: 'success rate' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'Клиент в статусе 🔇 ответил на реанимационное сообщение бота',
-            recipient: 'Клоузер',
-            recipientLabel: 'Яковлева А.',
-            time: '10:43',
-            text: '✓ {{клиент}} (молчал {{дней}} дней) — <b>ответил на реанимацию!</b>\n\n"{{ответ-клиента}}"\n\n→ Сделка вернулась к тебе в активные. Звони сегодня.',
-            example: '✓ <b>Иванчук М.</b> (молчал 7 дней) — <b>ответил на реанимацию!</b>\n\n"Извините, был в командировке. Готов поговорить"\n\n→ Сделка вернулась к тебе в активные. Звони сегодня.',
-            exampleButtons: ['📞 Звонить сейчас'],
-            action: 'Открыть карточку + телефон',
-            limit: 'каждый ответ',
-          },
-        },
-
-        'template-silence-revival': {
-          title: '📨 Реанимация клиенту · день 7',
-          sub: 'Шлёт бот САМОМУ КЛИЕНТУ (не клоузеру) через WhatsApp/TG. Цель — вернуть в диалог.',
-          stats: [
-            { num: '7 дней', lbl: 'триггер' },
-            { num: '~30%', lbl: 'отвечают' },
-            { num: 'клиент', lbl: 'получатель' },
-          ],
-          tg: {
-            botEmoji: '🏛',
-            botName: 'ДоНуля',
-            botSub: 'WhatsApp Business',
-            trigger: 'Сделка в 🔇 ровно 7 дней (cron daily)',
-            recipient: 'КЛИЕНТ (в его WA/TG где общались)',
-            recipientLabel: 'клиенту',
-            time: '11:00',
-            text: '{{имя_клиента}}, добрый день. Это снова ДоНуля.\n\nМы давно не общались. Если ваш вопрос о банкротстве ещё актуален и вы хотите вернуться к работе — просто ответьте «<b>актуально</b>» и {{имя_клоузера}} перезвонит.\n\nЕсли решили иначе или нашли другое решение — напишите «<b>закрыто</b>», и мы не будем беспокоить.',
-            example: '<b>Иван</b>, добрый день. Это снова ДоНуля.\n\nМы давно не общались. Если ваш вопрос о банкротстве ещё актуален и вы хотите вернуться к работе — просто ответьте «<b>актуально</b>» и Яковлева А. перезвонит.\n\nЕсли решили иначе или нашли другое решение — напишите «<b>закрыто</b>», и мы не будем беспокоить.',
-            exampleButtons: ['Актуально', 'Закрыто'],
-            action: 'Если «актуально» → сделка возвращается клоузеру. Если «закрыто» → авто-закрытие сразу.',
-            limit: '1× на сделку (только день 7)',
-          },
-        },
-
-        'template-auto-close': {
-          title: '📦 Авто-закрытие «Без контакта»',
-          sub: 'Молчит уже 14 дней. Бот закрывает сделку нейтрально (не отказ, не продажа). Шлёт клоузеру информ.',
-          stats: [
-            { num: '14 дней', lbl: 'триггер' },
-            { num: 'нейтрально', lbl: 'не отказ' },
-            { num: 'клоузер', lbl: 'получатель' },
-          ],
-          tg: {
-            trigger: 'Сделка в 🔇 ровно 14 дней + 0 ответов на реанимацию',
-            recipient: 'Клоузер',
-            recipientLabel: 'Яковлева А.',
-            time: '11:00',
-            text: '📦 {{клиент}}, {{сумма}} — клиент молчит 14 дней, не ответил на реанимацию.\n\nСделка закрыта со статусом <b>«Без контакта»</b> (не в продажу, не в отказ — нейтрально).\nНе влияет на твою конверсию.\n\nЕсли клиент вернётся — система откроет заново.',
-            example: '📦 <b>Зайцева М., 120к ₽</b> — клиент молчит 14 дней, не ответил на реанимацию.\n\nСделка закрыта со статусом <b>«Без контакта»</b> (не в продажу, не в отказ — нейтрально).\nНе влияет на твою конверсию.\n\nЕсли клиент вернётся — система откроет заново.',
-            action: 'Архив сделки. Без действий клоузера.',
-            limit: '1× на сделку',
-          },
-        },
-
-        'template-team-red': {
-          title: '🚨 Команда в красной зоне · сигнал РОПу',
-          sub: 'Срабатывает когда средний % красных по команде превышает норму. Сигнал что проблема системная, не личная.',
-          stats: [
-            { num: '>15%', lbl: 'триггер по команде' },
-            { num: '1×', lbl: 'в день max' },
-            { num: 'РОП', lbl: 'получатель' },
-          ],
-          tg: {
-            botEmoji: '👔',
-            botName: 'ДоНуля · РОП-алерт',
-            botSub: '@donula_rop_bot',
-            trigger: 'Средний % красных по команде >15% (норма ≤15%)',
-            recipient: 'Только РОП',
-            recipientLabel: 'Виктория (РОП)',
-            time: '09:01',
-            text: '🚨 РОП, средний % красных по команде = <b>{{%}}</b> (норма ≤15%).\n\nВ красной: {{N}} ({{имена}})\nВ оранжевой: {{N}} ({{имена}})\n\n→ Завтра общая планёрка на 30 мин (вместо 15)?',
-            example: '🚨 РОП, средний % красных по команде = <b>28%</b> (норма ≤15%).\n\nВ красной: 1 (Ляшенко 34%)\nВ оранжевой: 2 (Мифтахов 22%, Яковлева 28%)\n\n→ Завтра общая планёрка на 30 мин (вместо 15)?',
-            exampleButtons: ['📊 Светофор', '📅 30 мин планёрка'],
-            action: 'Открыть Светофор команды + кнопка изменить расписание планёрки',
-            limit: '1× в день · не дубль с утренним huddle-отчётом',
-          },
-        },
-
-        'template-closer-3days': {
-          title: '⚠ Клоузер 3 дня в 🔴',
-          sub: 'Когда клоузер не справляется сам. Готовый материал для встречи РОПа с ним.',
-          stats: [
-            { num: '3 рабочих дня', lbl: 'триггер' },
-            { num: '1×', lbl: 'на клоузера' },
-            { num: 'РОП', lbl: 'получатель' },
-          ],
-          tg: {
-            botEmoji: '👔',
-            botName: 'ДоНуля · РОП-алерт',
-            botSub: '@donula_rop_bot',
-            trigger: 'Клоузер в 🔴 3-й рабочий день подряд',
-            recipient: 'Только РОП',
-            recipientLabel: 'Виктория (РОП)',
-            time: '09:15',
-            text: '🚨 {{имя}} <b>3-й день подряд в 🔴 ({{%}})</b>. Не разгребает сам. Время на 1:1.\n\nГотовый материал:\n• {{N}} красных сделок (с цитатами AI)\n• {{N}} жалоб клиентов\n• Топ-проблема: {{проблема}}\n\n→ Открыть карточку {{имя}} для 1:1',
-            example: '🚨 <b>Ляшенко</b> 3-й день подряд в 🔴 (34%). Не разгребает. Готовый материал:\n\n• <b>12 красных сделок</b> (с цитатами AI)\n• <b>4 жалобы клиентов</b> в WhatsApp\n• Топ-проблема: <b>грубый тон + не предлагает частичку</b>\n\n→ Открыть карточку Ляшенко для 1:1',
-            exampleButtons: ['📋 Карточка Ляшенко', '📅 Назначить 1:1'],
-            action: 'Открыть готовую карточку для 1:1 с подсветкой звонков с грубым тоном',
-            limit: '1× на клоузера за период в 🔴',
-          },
-        },
-
-        'template-client-complaint': {
-          title: '📣 Жалоба клиента в WhatsApp',
-          sub: 'Самый критичный алерт. Срабатывает когда клиент пишет негативную обратную связь в WhatsApp.',
-          stats: [
-            { num: 'мгновенно', lbl: 'триггер' },
-            { num: 'каждая', lbl: 'жалоба' },
-            { num: 'РОП', lbl: 'получатель' },
-          ],
-          tg: {
-            botEmoji: '🚨',
-            botName: 'ДоНуля · Жалоба!',
-            botSub: 'критический алерт',
-            trigger: 'AI обнаружил негативный sentiment <3/10 в исходящем сообщении клиента',
-            recipient: 'Только РОП (мгновенно)',
-            recipientLabel: 'Виктория (РОП)',
-            time: 'только что',
-            text: '📣 РОП, <b>жалоба клиента!</b>\n\n{{клиент}}, {{сумма}} (клоузер {{имя_клоузера}}) написал в WhatsApp:\n\n"{{текст_жалобы}}"\n\nAI-sentiment: <b>{{оценка}}/10</b> (негативно)\n\n→ Срочно послушать последний звонок + связаться с клиентом лично.',
-            example: '📣 РОП, <b>жалоба клиента!</b>\n\n<b>Беляев М., 120к ₽</b> (клоузер Ляшенко) написал в WhatsApp:\n\n"Перестаньте мне звонить, ваш сотрудник был очень груб"\n\nAI-sentiment: <b>2/10</b> (негативно)\n\n→ Срочно послушать последний звонок + связаться с клиентом лично.',
-            exampleButtons: ['▶️ Звонок', '📞 Связаться'],
-            action: 'Открыть запись звонка с маркером проблемы + телефон клиента',
-            limit: 'без лимита (критично)',
-          },
         },
 
         // ═══ Drill-down контура молчаний — категории по AI ═══
