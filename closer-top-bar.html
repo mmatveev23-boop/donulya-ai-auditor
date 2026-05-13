@@ -721,25 +721,51 @@
 
   .deal-row-c .meta b { font-weight: 800; color: #333; }
 
-  /* Urgent (оранжевая сделка <2-4ч до перехода в 🔴):
-     - НЕ сплошной красный (путал с реальными красными в правой колонке)
-     - оранжевый тон + красная левая каёмка-индикатор + мягкая пульсация */
-  .deal-row-c.urgent {
-    background: #ffd9ac;                         /* насыщенный оранжевый, заметнее обычной оранжевой колонки */
-    border-left: 4px solid #ff453a;              /* красная каёмка — индикатор «скоро в 🔴» */
-    padding-left: 8px;                            /* компенсация толщины каёмки */
-    animation: pulseUrgent 2.2s infinite;
-  }
+  /* ════ Визуальная иерархия срочности (от спокойного к кричащему) ════
+     🟡 жёлтые          — спокойный белый фон (стандарт deal-row-c)
+     🟠 оранжевые       — спокойный фон от .col-orange колонки
+     🟠 urgent (<4ч)    — оранжевый bg + красная каёмка слева (БЕЗ пульса)
+     🔴 красные (.col-red) — НАСЫЩЕННЫЙ красный + пульс + жирные часы
+                              (приоритет №1 — менеджер должен бежать)
+  */
 
+  /* Urgent: «скоро будет красной» — оранжевый с красной каёмкой, без пульса */
+  .deal-row-c.urgent {
+    background: #ffd9ac;
+    border-left: 4px solid #ff453a;
+    padding-left: 8px;
+  }
   .deal-row-c.urgent .name { color: #5a3010; font-weight: 700; }
   .deal-row-c.urgent .meta { color: #6b2a00; font-weight: 700; }
   .deal-row-c.urgent .meta b { color: #c62828; }
-  .deal-row-c.urgent .channel { box-shadow: 0 0 0 2px rgba(198,40,40,0.20); }
 
-  @keyframes pulseUrgent {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
-    50%      { box-shadow: 0 0 0 3px rgba(255,69,58,0.18); }
+  /* Красные — главный приоритет: яркий насыщенный фон, пульсация, жирные часы.
+     Менеджер должен бежать в первую очередь именно сюда. */
+  .col-red .deal-row-c {
+    background: #ffe5e0;
+    border-left: 4px solid #ff453a;
+    padding-left: 8px;
+    animation: pulseRed 2.2s infinite;
   }
+  .col-red .deal-row-c:hover {
+    background: #ffd5cf;
+  }
+  .col-red .deal-row-c .name { color: #8b1f15; font-weight: 800; }
+  .col-red .deal-row-c .meta { color: #b91c1c; font-weight: 700; }
+  .col-red .deal-row-c .meta b {
+    color: #b91c1c;
+    font-weight: 900;
+    font-size: 13px;
+    text-shadow: 0 0 0.5px rgba(185,28,28,0.4);
+  }
+
+  @keyframes pulseRed {
+    0%, 100% { box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 0 0 0 rgba(255,69,58,0); }
+    50%      { box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 0 0 3px rgba(255,69,58,0.22); }
+  }
+
+  /* В раскрытом виде пульс остановить — иначе глаза устают */
+  .col-red .deal-row-c.expanded { animation: none; }
 
   /* Пустое состояние */
   .empty-state {
