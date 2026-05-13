@@ -4763,8 +4763,8 @@
       }
       .traffic-row {
         display: grid;
-        grid-template-columns: 28px 1.25fr 1.4fr 0.75fr 0.75fr 0.85fr 1.1fr;
-        gap: 12px;
+        grid-template-columns: 28px 1.1fr 1.2fr 0.7fr 0.7fr 0.8fr 1.0fr 0.9fr;
+        gap: 10px;
         align-items: center;
         padding: 10px 12px;
         background: rgba(255,255,255,0.03);
@@ -4803,6 +4803,37 @@
       }
       .traffic-row.green .sales { color: #30d158; }
       .traffic-row.red   .sales { color: rgba(255,255,255,0.55); }
+
+      /* ── Флаги аномалий уровней 2 (анти-фрод) и 3 (outcome) ── */
+      .anomaly-flags {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .anomaly-flag {
+        font-size: 9.5px;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+      .anomaly-flag.fraud {
+        background: rgba(255,159,10,0.18);
+        color: #ff9f0a;
+        border: 1px solid rgba(255,159,10,0.30);
+      }
+      .anomaly-flag.outcome {
+        background: rgba(255,69,58,0.18);
+        color: #ff453a;
+        border: 1px solid rgba(255,69,58,0.30);
+      }
+      .anomaly-flag.clean {
+        color: rgba(255,255,255,0.35);
+        font-weight: 400;
+        font-size: 10px;
+      }
       .traffic-row:hover {
         background: rgba(255,255,255,0.05);
         transform: translateX(2px);
@@ -8452,6 +8483,7 @@
     <span class="silent">5% <small>🔇</small></span>
     <span class="sales">23 <small>продаж</small></span>
     <span class="effect">+30% к потоку лидов</span>
+    <span class="anomaly-flags"><span class="anomaly-flag clean">✓ чисто</span></span>
   </div>
   <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-galkov')" title="Гальков — 19 продаж">
     <span class="dot">🟢</span>
@@ -8461,6 +8493,7 @@
     <span class="silent">8% <small>🔇</small></span>
     <span class="sales">19 <small>продаж</small></span>
     <span class="effect">+30% к потоку лидов</span>
+    <span class="anomaly-flags"><span class="anomaly-flag clean">✓ чисто</span></span>
   </div>
   <div class="traffic-row green clickable-num" onclick="openDrillDown('traffic-aliev')" title="Алиев — 21 продажа">
     <span class="dot">🟢</span>
@@ -8470,6 +8503,7 @@
     <span class="silent">10% <small>🔇</small></span>
     <span class="sales">21 <small>продажа</small></span>
     <span class="effect">+30% к потоку лидов</span>
+    <span class="anomaly-flags"><span class="anomaly-flag clean">✓ чисто</span></span>
   </div>
   <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-petrova')" title="Петрова — 17, близко к оранжевой">
     <span class="dot">🟡</span>
@@ -8479,6 +8513,7 @@
     <span class="silent">12% <small>🔇</small></span>
     <span class="sales">17 <small>продаж</small></span>
     <span class="effect">поток норма · предупреждение</span>
+    <span class="anomaly-flags"><span class="anomaly-flag clean">✓ чисто</span></span>
   </div>
   <div class="traffic-row yellow clickable-num" onclick="openDrillDown('traffic-marchenko')" title="Марченко — 15">
     <span class="dot">🟡</span>
@@ -8488,6 +8523,7 @@
     <span class="silent">15% <small>🔇</small></span>
     <span class="sales">15 <small>продаж</small></span>
     <span class="effect">поток норма · предупреждение</span>
+    <span class="anomaly-flags"><span class="anomaly-flag clean">✓ чисто</span></span>
   </div>
   <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-miftakhov')" title="Мифтахов — 12, оранжевая">
     <span class="dot">🟠</span>
@@ -8497,6 +8533,7 @@
     <span class="silent high">19% <small>🔇</small></span>
     <span class="sales">12 <small>продаж</small></span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
+    <span class="anomaly-flags"><span class="anomaly-flag fraud" title="AI поймал 5+ шаблонных сообщений">🛡 ШАБЛОНЫ</span></span>
   </div>
   <div class="traffic-row orange clickable-num" onclick="openDrillDown('traffic-yakovleva')" title="Яковлева — 10, шаблоны">
     <span class="dot">🟠</span>
@@ -8506,6 +8543,7 @@
     <span class="silent high">21% <small>🔇</small></span>
     <span class="sales">10 <small>продаж</small></span>
     <span class="effect">⚠ поток −50% · премия −20%</span>
+    <span class="anomaly-flags"><span class="anomaly-flag fraud" title="Шаблонные сообщения + повторы">🛡 ШАБЛОНЫ</span></span>
   </div>
   <div class="traffic-row red clickable-num" onclick="openDrillDown('traffic-lyashenko')" title="Ляшенко — 7, заблокирован">
     <span class="dot">🔴</span>
@@ -8515,6 +8553,7 @@
     <span class="silent high">23% <small>🔇</small></span>
     <span class="sales">7 <small>продаж</small></span>
     <span class="effect">🚫 0 новых лидов · премия 0</span>
+    <span class="anomaly-flags"><span class="anomaly-flag fraud" title="Звонки <10 сек составляют 70% попыток">🛡 ФЕЙК</span><span class="anomaly-flag outcome" title="Встреч много, продаж 0 — аномалия">🚨 OUTCOME</span></span>
   </div>
 </div>
 
@@ -8573,6 +8612,122 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+
+<!-- 🛡 3 уровня контроля касаний — Светофор + Анти-фрод + Outcome (col-6) -->
+<div class="mc-card col-6 accent-purple">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">🛡</div>
+<div class="mc-card-label">3 уровня контроля касаний <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">Светофор (есть ли работа) + Анти-фрод (валидна ли) + Outcome (даёт ли результат) · защита от накрутки</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 16px;">
+  Когда клоузер «бросает» работу — Светофор отрезает поток новых лидов. Чтобы клоузер не накручивал фейк-касания ради зачёта — три уровня проверок работают параллельно.
+</div>
+
+<!-- 3 уровня вертикально -->
+<div style="display: grid; gap: 12px; margin-bottom: 16px;">
+
+  <!-- Уровень 1 · Светофор -->
+  <div style="background: rgba(82,167,255,0.05); border: 1px solid rgba(82,167,255,0.25); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #52a7ff; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">1</div>
+      <div style="flex: 1;">
+        <div style="font-size: 13px; font-weight: 800; color: #52a7ff; margin-bottom: 4px;">🚦 СВЕТОФОР · работает ли клоузер вообще?</div>
+        <div style="font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.5;">
+          Считаем сколько касаний клоузер сделал по каждой сделке. Норма: <b style="color:#fff">≥3 касания за 48 часов</b>.<br/>
+          <span style="color:rgba(255,255,255,0.5);">Не делает → 🟠 зона: −50% новых лидов · 🔴 зона: 0 новых лидов</span>
+        </div>
+        <div style="margin-top: 8px; padding: 8px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 11px; color: rgba(255,255,255,0.65);">
+          ↓ если касания есть, идём дальше · <b style="color:#52a7ff;">плитка «🚦 Светофор команды» уже отрабатывает</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Уровень 2 · Анти-фрод -->
+  <div style="background: rgba(255,159,10,0.05); border: 1px solid rgba(255,159,10,0.25); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #ff9f0a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">2</div>
+      <div style="flex: 1;">
+        <div style="font-size: 13px; font-weight: 800; color: #ff9f0a; margin-bottom: 4px;">🛡 АНТИ-ФРОД · касания качественные?</div>
+        <div style="font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.55;">
+          Каждое касание проходит 6 фильтров AI · <b style="color:#fff">только валидные засчитываются в Светофор:</b><br/>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 6px; font-size: 11px;">
+            <div>• Звонок <b style="color:#fff;">≥10 сек</b></div>
+            <div>• Touch-mix <b style="color:#fff;">≥2 канала</b> (звонки + WhatsApp)</div>
+            <div>• <b style="color:#fff;">Cooldown 60 мин</b> между звонками</div>
+            <div>• WhatsApp <b style="color:#fff;">delivered</b> (не sent)</div>
+            <div>• Не повтор-шаблон (hash сравнение)</div>
+            <div>• В окне <b style="color:#fff;">9:00–21:00</b> МСК</div>
+          </div>
+        </div>
+        <div style="margin-top: 8px; padding: 8px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 11px; color: rgba(255,255,255,0.65);">
+          ↓ невалидные не засчитываются · флаг <span class="anomaly-flag fraud" style="display:inline-block; vertical-align:middle;">🛡 ШАБЛОНЫ</span> у клоузера в светофоре
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Уровень 3 · Outcome -->
+  <div style="background: rgba(255,69,58,0.05); border: 1px solid rgba(255,69,58,0.25); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #ff453a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">3</div>
+      <div style="flex: 1;">
+        <div style="font-size: 13px; font-weight: 800; color: #ff453a; margin-bottom: 4px;">🚨 OUTCOME · касания дают результат?</div>
+        <div style="font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.55;">
+          Главная защита в США (Vouris, Gong) · смотрим на <b style="color:#fff">соотношение касаний к продажам</b>.<br/>
+          Если у клоузера касаний много, продаж 0 — <b style="color:#fff">аномалия</b>, не штрафуем — идём слушать звонки.
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; font-size: 11px;">
+          <div style="padding: 8px; background: rgba(255,255,255,0.04); border-radius: 6px;">
+            <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Команда (медиана)</div>
+            <div style="color: #fff; font-weight: 700; margin-top: 2px;">80 касаний → 8 встреч → 2 продажи</div>
+          </div>
+          <div style="padding: 8px; background: rgba(48,209,88,0.05); border: 1px solid rgba(48,209,88,0.15); border-radius: 6px;">
+            <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Лим (хороший)</div>
+            <div style="color: #30d158; font-weight: 700; margin-top: 2px;">80 → 10 → 3 · ✓ норма</div>
+          </div>
+          <div style="padding: 8px; background: rgba(255,69,58,0.05); border: 1px solid rgba(255,69,58,0.15); border-radius: 6px;">
+            <div style="color: rgba(255,255,255,0.45); font-size: 10px;">Ляшенко (аномалия)</div>
+            <div style="color: #ff453a; font-weight: 700; margin-top: 2px;">80 → 12 → 0 · 🚨 проверь</div>
+          </div>
+        </div>
+        <div style="margin-top: 8px; padding: 8px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 11px; color: rgba(255,255,255,0.65);">
+          Срабатывает когда: касаний валидных >50, продаж = 0 (или <50% медианы) · флаг <span class="anomaly-flag outcome" style="display:inline-block; vertical-align:middle;">🚨 OUTCOME</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Логика на пример Ляшенко -->
+<div style="background: rgba(255,255,255,0.02); border-radius: 10px; padding: 14px;">
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.55); margin-bottom: 10px;">📋 Как 3 уровня ловят Ляшенко · пример</div>
+  <div style="display: grid; gap: 6px; font-size: 12px;">
+    <div style="display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding: 8px 10px; background: rgba(82,167,255,0.05); border-radius: 6px;">
+      <div style="color: #52a7ff; font-weight: 700;">1.</div>
+      <div style="color: rgba(255,255,255,0.85);">
+        <b style="color:#fff;">Светофор:</b> 34% красных сделок → 🔴 зона → 0 новых лидов · <span style="color: rgba(255,255,255,0.5);">это уже работает</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding: 8px 10px; background: rgba(255,159,10,0.05); border-radius: 6px;">
+      <div style="color: #ff9f0a; font-weight: 700;">2.</div>
+      <div style="color: rgba(255,255,255,0.85);">
+        <b style="color:#fff;">Анти-фрод:</b> Из 250 «попыток» валидных всего 80 · отсеяно 200 звонков &lt;10 сек, 35 WhatsApp-шаблонов, 15 звонков вне окна · <span style="color: #ff9f0a;">флаг 🛡 ФЕЙК</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding: 8px 10px; background: rgba(255,69,58,0.05); border-radius: 6px;">
+      <div style="color: #ff453a; font-weight: 700;">3.</div>
+      <div style="color: rgba(255,255,255,0.85);">
+        <b style="color:#fff;">Outcome:</b> 80 валидных касаний → 12 встреч → 0 продаж · команда: 80 → 8 → 2 · <span style="color: #ff453a;">аномалия: встречи проводит, но не закрывает · флаг 🚨 OUTCOME → РОП слушает 3 встречи</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  <b>Главный принцип:</b> Светофор обязателен (касания нужны — иначе нет лидов). Но касаний недостаточно — нужны валидные касания, дающие результат. <b>3 проверки одновременно</b> закрывают все 3 типа проблем: ленивый клоузер (1), грубый фейкер (2), тонкий фейкер или плохо разговаривающий (3).
 </div>
 </div>
 
