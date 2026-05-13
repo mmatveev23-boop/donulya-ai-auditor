@@ -9381,7 +9381,329 @@
 </div>
 
 <div class="mc-card-sub" style="margin-top: 12px;">
-  <b>Главное:</b> клоузер работает в amoCRM как обычно, но виджет постоянно подсказывает что не так. Не нужно открывать дашборд, AI-страницу или Telegram — всё внутри одного интерфейса. <b>Программисту:</b> 3 точки монтирования + общий backend API (PocketBase) + Telegram-бот с deep-link'ами на amoCRM-сделки.
+  <b>Главное:</b> клоузер работает в amoCRM как обычно, но виджет постоянно подсказывает что не так. Не нужно открывать дашборд или AI-страницу — всё внутри одного интерфейса amoCRM. <b>Программисту:</b> 3 точки монтирования + общий backend API (PocketBase).
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- 🎯 РАБОЧЕЕ МЕСТО РОПа · 4 ситуации взаимодействия с системой (col-6) -->
+<div class="mc-card col-6 accent-blue">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">🎯</div>
+<div class="mc-card-label">Рабочее место РОПа · день из жизни <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">4 ситуации · сводка команды + drill-down + прослушка + email-алерты</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 18px;">
+  Клоузеры работают в виджете внутри amoCRM. РОП работает <b>в этом дашборде</b> — открывает раз в день утром (или встроен iframe'ом в amoCRM Рабочий стол). Плюс получает <b>email-алерты</b> на критичные события.
+</div>
+
+<!-- СИТУАЦИЯ 1: Утро 9:00 — сводка команды -->
+<div style="margin-bottom: 22px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #30d158; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">1</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">☀️ Утро 9:00 · общая сводка команды</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Открывает дашборд → сразу видит HERO (план) + Светофор (кто проблемный)</div>
+    </div>
+  </div>
+
+  <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+    <!-- Имитация двух плиток рядом -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+      <!-- HERO mini -->
+      <div style="background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.20); border-radius: 8px; padding: 12px;">
+        <div style="font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); margin-bottom: 6px;">🎯 Главные KPI команды</div>
+        <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+          <span style="font-size: 28px; font-weight: 800; color: #30d158;">30%</span>
+          <span style="font-size: 11px; color: rgba(255,255,255,0.55);">Конверсия в продажу</span>
+        </div>
+        <div style="font-size: 10.5px; color: rgba(255,255,255,0.55);">план ≥30% ✓ · <b style="color:#fff">179</b> из <b style="color:#fff">600</b></div>
+        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 10.5px; color: rgba(255,255,255,0.65);">
+          ✓ План выполняется. Но падает дисциплина: средний % красных по команде 14% (норма ≤10%).
+        </div>
+      </div>
+
+      <!-- Светофор mini -->
+      <div style="background: rgba(82,167,255,0.04); border: 1px solid rgba(82,167,255,0.20); border-radius: 8px; padding: 12px;">
+        <div style="font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); margin-bottom: 6px;">🚦 Светофор команды</div>
+        <div style="display: grid; gap: 3px; font-size: 10.5px;">
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟢</span><span style="flex:1; color:#fff;">Лим Елена</span><span style="color:#30d158; font-weight:700;">2%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟢</span><span style="flex:1; color:#fff;">Гальков Н.</span><span style="color:#30d158; font-weight:700;">3%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟢</span><span style="flex:1; color:#fff;">Алиев Камран</span><span style="color:#30d158; font-weight:700;">7%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟡</span><span style="flex:1; color:#fff;">Петрова Д.</span><span style="color:#ffd60a; font-weight:700;">12%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟡</span><span style="flex:1; color:#fff;">Марченко С.</span><span style="color:#ffd60a; font-weight:700;">14%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟠</span><span style="flex:1; color:#fff;">Мифтахов Р.</span><span style="color:#ff9f0a; font-weight:700;">22%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center;"><span>🟠</span><span style="flex:1; color:#fff;">Яковлева А.</span><span style="color:#ff9f0a; font-weight:700;">28%</span></div>
+          <div style="display: flex; gap: 8px; align-items: center; padding: 2px 4px; background: rgba(255,69,58,0.10); border-radius: 4px;"><span>🔴</span><span style="flex:1; color:#fff; font-weight:700;">Ляшенко А.</span><span style="color:#ff453a; font-weight:800;">34%</span></div>
+        </div>
+        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 10px; color: rgba(255,69,58,0.85); font-weight: 700;">⚠ Ляшенко в 🔴 уже 3-й день — пора 1:1</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.02); border-radius: 8px; font-size: 11px; color: rgba(255,255,255,0.65);">
+      <b style="color:#fff;">Что РОП решает за 30 секунд:</b> «Команда в норме (30% конверсия), но Ляшенко 3-й день в 🔴 → надо к нему на 1:1 сегодня». Клик на «Ляшенко А.» → переход к ситуации 2.
+    </div>
+  </div>
+</div>
+
+<!-- СИТУАЦИЯ 2: Drill-down проблемного клоузера -->
+<div style="margin-bottom: 22px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #ff9f0a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">2</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">🔍 Drill-down · все сделки клоузера со светофором</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Клик на «Ляшенко» → раскрывается весь его пайплайн с цветовыми метками и AI-разбором</div>
+    </div>
+  </div>
+
+  <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,69,58,0.20);">
+    <!-- Заголовок drill-down -->
+    <div style="margin-bottom: 12px;">
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">🔴 Ляшенко А. · 7 продаж · ЗАБЛОКИРОВАН · ГРУБЫЙ ТОН</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px;">12 🔴 / 5 🟡 / 18 🟢 / 8 🔇 · 43 активных · 0 новых лидов · 4 жалобы клиентов в WhatsApp</div>
+    </div>
+
+    <!-- 3 stat карточки -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+      <div style="background: rgba(255,69,58,0.10); border: 1px solid rgba(255,69,58,0.20); border-radius: 6px; padding: 8px; text-align: center;">
+        <div style="font-size: 18px; font-weight: 800; color: #ff453a;">12</div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">🔴 бросил</div>
+      </div>
+      <div style="background: rgba(176,132,255,0.10); border: 1px solid rgba(176,132,255,0.20); border-radius: 6px; padding: 8px; text-align: center;">
+        <div style="font-size: 18px; font-weight: 800; color: #b084ff;">8</div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">🔇 молчат · выше нормы</div>
+      </div>
+      <div style="background: rgba(255,159,10,0.10); border: 1px solid rgba(255,159,10,0.20); border-radius: 6px; padding: 8px; text-align: center;">
+        <div style="font-size: 18px; font-weight: 800; color: #ff9f0a;">2</div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">🔴 до 🟠</div>
+      </div>
+    </div>
+
+    <!-- Топ-3 проблемных сделок -->
+    <div style="background: rgba(255,255,255,0.02); border-radius: 6px; padding: 10px; font-size: 11px;">
+      <div style="font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); margin-bottom: 6px;">Топ-3 для разбора на 1:1:</div>
+      <div style="display: grid; gap: 4px;">
+        <div style="display: grid; grid-template-columns: 24px 1fr 80px 1fr 100px; gap: 8px; align-items: center; padding: 5px 8px; background: rgba(255,69,58,0.05); border-radius: 4px; font-size: 11px;">
+          <span>🔴</span>
+          <span style="color:#fff; font-weight: 600;">Куделькин С.</span>
+          <span style="color:#30d158;">110к</span>
+          <span style="color:rgba(255,255,255,0.65);">AI: перебивал 4 раза</span>
+          <button style="background: rgba(82,167,255,0.18); color: #52a7ff; border: 1px solid rgba(82,167,255,0.30); border-radius: 4px; padding: 4px 8px; font-size: 10px; font-weight: 700; cursor: pointer;">▶️ Запись</button>
+        </div>
+        <div style="display: grid; grid-template-columns: 24px 1fr 80px 1fr 100px; gap: 8px; align-items: center; padding: 5px 8px; background: rgba(255,69,58,0.05); border-radius: 4px; font-size: 11px;">
+          <span>🔴</span>
+          <span style="color:#fff; font-weight: 600;">Беляев М.</span>
+          <span style="color:#30d158;">120к</span>
+          <span style="color:rgba(255,69,58,0.85);">🚨 Жалоба клиента</span>
+          <button style="background: rgba(82,167,255,0.18); color: #52a7ff; border: 1px solid rgba(82,167,255,0.30); border-radius: 4px; padding: 4px 8px; font-size: 10px; font-weight: 700; cursor: pointer;">▶️ Запись</button>
+        </div>
+        <div style="display: grid; grid-template-columns: 24px 1fr 80px 1fr 100px; gap: 8px; align-items: center; padding: 5px 8px; background: rgba(255,69,58,0.05); border-radius: 4px; font-size: 11px;">
+          <span>🔴</span>
+          <span style="color:#fff; font-weight: 600;">Орлов А.</span>
+          <span style="color:#30d158;">180к</span>
+          <span style="color:rgba(255,255,255,0.65);">AI: «вы не понимаете»</span>
+          <button style="background: rgba(82,167,255,0.18); color: #52a7ff; border: 1px solid rgba(82,167,255,0.30); border-radius: 4px; padding: 4px 8px; font-size: 10px; font-weight: 700; cursor: pointer;">▶️ Запись</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.02); border-radius: 8px; font-size: 11px; color: rgba(255,255,255,0.65);">
+      <b style="color:#fff;">Что РОП решает:</b> «Видно паттерн — грубый тон + не предлагает частичку. Готов материал для 1:1 (3 записи). Клик на ▶️ → ситуация 3.»
+    </div>
+  </div>
+</div>
+
+<!-- СИТУАЦИЯ 3: Прослушка звонка с AI-разбором -->
+<div style="margin-bottom: 22px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #b084ff; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">3</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">▶️ Прослушка звонка с AI-разбором</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Клик [▶️ Запись] → плеер с маркерами + транскрипт + AI-скоркард 7 навыков</div>
+    </div>
+  </div>
+
+  <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; border: 1px solid rgba(176,132,255,0.20);">
+    <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px;">📞 Куделькин С. · 110к ₽ · Ляшенко А. · 25.04.2026</div>
+    <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 12px;">Длительность: 4:32 · AI-скоркард: 2/5</div>
+
+    <!-- Плеер с маркерами -->
+    <div style="background: rgba(176,132,255,0.06); border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <button style="width: 32px; height: 32px; border-radius: 50%; background: #b084ff; color: #fff; border: none; cursor: pointer; font-size: 12px;">▶️</button>
+        <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.10); border-radius: 3px; position: relative;">
+          <div style="position: absolute; top: 0; left: 0; width: 25%; height: 100%; background: #b084ff; border-radius: 3px;"></div>
+          <!-- маркеры нарушений -->
+          <div style="position: absolute; top: -3px; left: 18%; width: 4px; height: 12px; background: #ff453a; border-radius: 2px;" title="00:48 — грубый тон"></div>
+          <div style="position: absolute; top: -3px; left: 32%; width: 4px; height: 12px; background: #ff9f0a; border-radius: 2px;" title="01:25 — не предложил частичку"></div>
+          <div style="position: absolute; top: -3px; left: 68%; width: 4px; height: 12px; background: #ff453a; border-radius: 2px;" title="03:05 — клиент: положу трубку"></div>
+        </div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.55); font-feature-settings: 'tnum';">01:08 / 04:32</div>
+      </div>
+      <div style="display: flex; gap: 6px; font-size: 9.5px; color: rgba(255,255,255,0.55);">
+        <span style="display: flex; gap: 3px; align-items: center;"><span style="width: 6px; height: 6px; background: #ff453a; border-radius: 50%;"></span>00:48 грубый тон</span>
+        <span style="display: flex; gap: 3px; align-items: center;"><span style="width: 6px; height: 6px; background: #ff9f0a; border-radius: 50%;"></span>01:25 нет частички</span>
+        <span style="display: flex; gap: 3px; align-items: center;"><span style="width: 6px; height: 6px; background: #ff453a; border-radius: 50%;"></span>03:05 клиент сорвался</span>
+      </div>
+    </div>
+
+    <!-- AI-скоркард 7 навыков -->
+    <div style="background: rgba(255,255,255,0.02); border-radius: 6px; padding: 10px;">
+      <div style="font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); margin-bottom: 8px;">🤖 AI-скоркард 7 навыков</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 10.5px;">
+        <div style="display: flex; gap: 6px;"><span>1.</span><span style="flex:1; color: rgba(255,255,255,0.85);">Приветствие</span><span style="color:#30d158;">✓</span></div>
+        <div style="display: flex; gap: 6px;"><span>2.</span><span style="flex:1; color: rgba(255,255,255,0.85);">Квалификация</span><span style="color:#30d158;">✓</span></div>
+        <div style="display: flex; gap: 6px;"><span>3.</span><span style="flex:1; color: rgba(255,255,255,0.85);">SPIN</span><span style="color:#ffd60a;">~</span></div>
+        <div style="display: flex; gap: 6px;"><span>4.</span><span style="flex:1; color: #ff453a;">Холд возражений</span><span style="color:#ff453a;">✗</span></div>
+        <div style="display: flex; gap: 6px;"><span>5.</span><span style="flex:1; color: #ff453a;">Предложил частичку</span><span style="color:#ff453a;">✗</span></div>
+        <div style="display: flex; gap: 6px;"><span>6.</span><span style="flex:1; color: #ff453a;">Тон/эмпатия</span><span style="color:#ff453a;">✗</span></div>
+        <div style="display: flex; gap: 6px;"><span>7.</span><span style="flex:1; color: #ff453a;">Закрытие/next step</span><span style="color:#ff453a;">✗</span></div>
+      </div>
+      <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 11px;">
+        <span style="color: rgba(255,255,255,0.55);">Итог: </span><b style="color:#ff453a; font-size: 13px;">2/5</b>
+        <span style="color: rgba(255,255,255,0.55); margin-left: 12px;">Главная проблема: <b style="color:#ff453a;">давление + нет дожима</b></span>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.02); border-radius: 8px; font-size: 11px; color: rgba(255,255,255,0.65);">
+      <b style="color:#fff;">Что РОП делает на 1:1:</b> Включает запись с маркера 00:48 («Вы не понимаете...»). Ляшенко слышит как звучит со стороны. Разбирают вместе: вместо давления — «давайте разберём по шагам».
+    </div>
+  </div>
+</div>
+
+<!-- СИТУАЦИЯ 4: Email-алерты для РОПа -->
+<div>
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: #ff453a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">4</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 800; color: #fff;">📧 Email-алерты для РОПа (не для клоузеров!)</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Критичные события приходят на email Виктории · Telegram-канал РОПа опционально</div>
+    </div>
+  </div>
+
+  <!-- Email мокап -->
+  <div style="background: #f5f6f8; border-radius: 10px; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); overflow: hidden;">
+    <!-- Шапка Gmail -->
+    <div style="background: #fff; padding: 12px 16px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <span style="font-size: 11px; color: #999;">📧 Inbox · 3 новых от ДоНуля</span>
+      </div>
+      <div style="font-size: 11px; color: #666;">Виктория · РОП</div>
+    </div>
+
+    <!-- Список писем -->
+    <div style="background: #fff;">
+      <!-- Email 1: КРИТИЧНОЕ -->
+      <div style="padding: 12px 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer; background: rgba(255,69,58,0.04);">
+        <div style="display: flex; justify-content: space-between; align-items: start; gap: 10px;">
+          <div style="flex: 1;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="background: #ff453a; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;">КРИТИЧНО</span>
+              <span style="font-size: 12px; font-weight: 700; color: #333;">🚨 ДоНуля · Жалоба клиента в WhatsApp</span>
+            </div>
+            <div style="font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4;">
+              <b>Беляев М.</b> (120к, клоузер Ляшенко) написал: «Перестаньте мне звонить, ваш сотрудник был очень груб». AI-sentiment: 2/10. Срочно послушать запись + связаться с клиентом.
+            </div>
+            <div style="margin-top: 6px; display: flex; gap: 8px;">
+              <button style="background: #265abf; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; font-size: 10px; font-weight: 700; cursor: pointer;">▶️ Запись</button>
+              <button style="background: #fff; color: #265abf; border: 1px solid #265abf; border-radius: 4px; padding: 4px 10px; font-size: 10px; font-weight: 700; cursor: pointer;">📞 Связаться с клиентом</button>
+            </div>
+          </div>
+          <span style="font-size: 10px; color: #999; white-space: nowrap;">11:23</span>
+        </div>
+      </div>
+
+      <!-- Email 2: ВАЖНОЕ -->
+      <div style="padding: 12px 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer; background: rgba(255,159,10,0.04);">
+        <div style="display: flex; justify-content: space-between; align-items: start; gap: 10px;">
+          <div style="flex: 1;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="background: #ff9f0a; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;">ВАЖНО</span>
+              <span style="font-size: 12px; font-weight: 700; color: #333;">⚠ Ляшенко 3-й день в красной зоне</span>
+            </div>
+            <div style="font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4;">
+              Ляшенко А. в 🔴 (34%) уже 3 рабочих дня. Не разгребает сам. Время на 1:1. Готов материал: 12 красных сделок с цитатами AI, 4 жалобы клиентов, топ-проблема — грубый тон + не предлагает частичку.
+            </div>
+            <div style="margin-top: 6px;">
+              <button style="background: #265abf; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; font-size: 10px; font-weight: 700; cursor: pointer;">📋 Карточка для 1:1</button>
+            </div>
+          </div>
+          <span style="font-size: 10px; color: #999; white-space: nowrap;">09:15</span>
+        </div>
+      </div>
+
+      <!-- Email 3: СВОДНЫЙ -->
+      <div style="padding: 12px 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; gap: 10px;">
+          <div style="flex: 1;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="background: #4caf50; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;">УТРО</span>
+              <span style="font-size: 12px; font-weight: 700; color: #333;">📊 ДоНуля · Утренний дайджест</span>
+            </div>
+            <div style="font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4;">
+              Команда в норме (30% конверсия ✓), но дисциплина падает (14% средних красных, было 11%). 1 клоузер в 🔴 (Ляшенко), 2 в 🟠 (Мифтахов, Яковлева). За вчера 5 продаж: Лим 2, Гальков 2, Алиев 1.
+            </div>
+            <div style="margin-top: 6px;">
+              <button style="background: #265abf; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; font-size: 10px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд</button>
+            </div>
+          </div>
+          <span style="font-size: 10px; color: #999; white-space: nowrap;">09:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Типы алертов -->
+  <div style="margin-top: 14px; padding: 12px 14px; background: rgba(82,167,255,0.04); border: 1px solid rgba(82,167,255,0.15); border-radius: 8px;">
+    <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.55); margin-bottom: 8px;">📨 Какие алерты получает РОП</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11.5px;">
+      <div style="display: grid; grid-template-columns: 70px 1fr; gap: 6px; align-items: center; padding: 4px 8px; background: rgba(255,69,58,0.05); border-radius: 4px;">
+        <span style="background:#ff453a; color:#fff; font-size:9px; padding:2px 6px; border-radius:3px; font-weight:700; text-align:center;">КРИТИЧНО</span>
+        <span style="color: rgba(255,255,255,0.85);">Жалоба клиента в WhatsApp · мгновенно</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 70px 1fr; gap: 6px; align-items: center; padding: 4px 8px; background: rgba(255,159,10,0.05); border-radius: 4px;">
+        <span style="background:#ff9f0a; color:#fff; font-size:9px; padding:2px 6px; border-radius:3px; font-weight:700; text-align:center;">ВАЖНО</span>
+        <span style="color: rgba(255,255,255,0.85);">Клоузер 3-й день в 🔴 · 1× в день</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 70px 1fr; gap: 6px; align-items: center; padding: 4px 8px; background: rgba(255,159,10,0.05); border-radius: 4px;">
+        <span style="background:#ff9f0a; color:#fff; font-size:9px; padding:2px 6px; border-radius:3px; font-weight:700; text-align:center;">ВАЖНО</span>
+        <span style="color: rgba(255,255,255,0.85);">Команда в красной (>15% средних) · 1× в день</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 70px 1fr; gap: 6px; align-items: center; padding: 4px 8px; background: rgba(48,209,88,0.05); border-radius: 4px;">
+        <span style="background:#30d158; color:#fff; font-size:9px; padding:2px 6px; border-radius:3px; font-weight:700; text-align:center;">УТРО</span>
+        <span style="color: rgba(255,255,255,0.85);">Дайджест команды · 09:00 пн-пт</span>
+      </div>
+    </div>
+    <div style="margin-top: 10px; font-size: 11px; color: rgba(255,255,255,0.55);">
+      <b style="color:#fff;">Канал:</b> email Виктории + опционально Telegram-канал «РОП ДоНуля» (для срочных). <b style="color:#fff;">Лимит:</b> не больше 5 писем/день — остальное в утренний дайджест.
+    </div>
+  </div>
+</div>
+
+<!-- ИТОГ: режим дня РОПа -->
+<div style="margin-top: 20px; padding: 14px 16px; background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.15); border-radius: 10px;">
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #30d158; margin-bottom: 10px;">⏰ Режим дня РОПа · 4 точки контакта с системой</div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 11.5px;">
+    <div>
+      <div style="color: #30d158; font-weight: 800; font-size: 12px;">9:00 · 5 мин</div>
+      <div style="color: rgba(255,255,255,0.75); margin-top: 2px;">Email-дайджест · открыл, прочитал сводку команды</div>
+    </div>
+    <div>
+      <div style="color: #30d158; font-weight: 800; font-size: 12px;">9:15 · 15 мин</div>
+      <div style="color: rgba(255,255,255,0.75); margin-top: 2px;">Daily huddle с командой (см. roadmap)</div>
+    </div>
+    <div>
+      <div style="color: #30d158; font-weight: 800; font-size: 12px;">11:00-12:00</div>
+      <div style="color: rgba(255,255,255,0.75); margin-top: 2px;">1:1 с одним проблемным клоузером (по алерту)</div>
+    </div>
+    <div>
+      <div style="color: #30d158; font-weight: 800; font-size: 12px;">17:00 · 5 мин</div>
+      <div style="color: rgba(255,255,255,0.75); margin-top: 2px;">Финальная проверка зон команды на конец дня</div>
+    </div>
+  </div>
+  <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(48,209,88,0.15); font-size: 11px; color: rgba(255,255,255,0.65);">
+    <b style="color:#30d158;">Итого:</b> ~1.5 часа в день на работу с системой. Остальное время РОП делает другую работу (стратегия, обучение, развитие команды). Раз в неделю — 30-мин pipeline review (пятница).
+  </div>
 </div>
 </div>
 
