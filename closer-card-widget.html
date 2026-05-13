@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ДоНуля · Карточка сделки · виджет клоузера</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+    background: #0a0c10;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ════════ Page header ════════ */
+  .page-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .page-header h1 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .page-header .sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+
+  .back-btn {
+    background: rgba(82,167,255,0.10);
+    color: #52a7ff;
+    border: 1px solid rgba(82,167,255,0.25);
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  /* ════════ amoCRM Mock ════════ */
+  .amocrm-window {
+    margin: 20px auto;
+    max-width: 1280px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.40);
+    overflow: hidden;
+    color: #333;
+  }
+
+  .amocrm-top {
+    background: #f5f6f8;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 12px;
+  }
+
+  .amocrm-top .left {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .amocrm-top .logo {
+    font-size: 14px;
+    font-weight: 800;
+    color: #265abf;
+  }
+  .amocrm-top .logo span { color: #f5a623; }
+
+  .amocrm-top .url {
+    font-size: 11px;
+    color: #999;
+  }
+
+  .amocrm-top .tabs {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .amocrm-top .tabs span {
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+
+  .amocrm-top .tabs .active {
+    background: #265abf;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .amocrm-top .tabs .inactive { color: #666; }
+
+  .amocrm-top .right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #666;
+    font-size: 11px;
+  }
+
+  .amocrm-top .avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #4caf50; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+
+  /* ════════ Полоска статуса клоузера (НАШ виджет шапки) ════════ */
+  .closer-bar {
+    background: linear-gradient(90deg, #ff9f0a 0%, #ff8000 100%);
+    color: #fff;
+    padding: 9px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .closer-bar .left {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .closer-bar .status {
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .closer-bar .pill {
+    background: rgba(255,255,255,0.15);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+
+  /* ════════ Карточка сделки · 2-колоночный layout ════════ */
+  .deal-card {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    min-height: 700px;
+  }
+
+  .deal-main {
+    padding: 16px 20px;
+    background: #fff;
+    color: #333;
+    border-right: 1px solid #e0e0e0;
+  }
+
+  /* Заголовок сделки */
+  .deal-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .deal-header .name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .deal-header .meta {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .deal-header .meta .id { color: #1976d2; }
+
+  /* Статус сделки в воронке */
+  .stage-bar {
+    background: linear-gradient(90deg, #ff9f0a 0%, #f57c00 100%);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Поля */
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .field {
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+  }
+
+  .field .lbl {
+    font-size: 9.5px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .field .val {
+    font-size: 12.5px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .field .val.link {
+    color: #1976d2;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* История / заметки */
+  .history-section {
+    margin-bottom: 16px;
+  }
+
+  .history-section h3 {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .history-item {
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-left: 3px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .history-item .time {
+    font-size: 10px;
+    color: #999;
+    margin-bottom: 3px;
+  }
+
+  .history-item .text {
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .history-item.call { border-left-color: #1976d2; }
+  .history-item.note { border-left-color: #888; }
+  .history-item.wa { border-left-color: #25d366; }
+  .history-item.bad { border-left-color: #f44336; background: #fef2f2; }
+
+  /* ════════ ВИДЖЕТ КЛОУЗЕРА · правая колонка ════════ */
+  .widget-panel {
+    background: #f5f6f8;
+    padding: 14px;
+    overflow-y: auto;
+  }
+
+  .widget-section-title {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  /* Большой виджет светофора сделки */
+  .deal-widget {
+    background: linear-gradient(135deg, #ff453a 0%, #d63b32 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+
+  .deal-widget .deal-widget-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .deal-widget .title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deal-widget .powered {
+    font-size: 10px;
+    opacity: 0.75;
+  }
+
+  .deal-widget .status-big {
+    text-align: center;
+    padding: 8px 0 12px;
+  }
+
+  .deal-widget .status-big .icon {
+    font-size: 38px;
+    line-height: 1;
+  }
+
+  .deal-widget .status-big .label {
+    font-size: 15px;
+    font-weight: 800;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deal-widget .status-big .sub {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 3px;
+  }
+
+  .deal-widget .countdown {
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 11.5px;
+  }
+
+  .deal-widget .countdown b {
+    font-size: 14px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Блоки виджета */
+  .widget-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .widget-card.attention {
+    border-left: 3px solid #f44336;
+    background: #fef9f9;
+  }
+
+  .widget-card.action {
+    border-left: 3px solid #4caf50;
+    background: #f1f8e9;
+  }
+
+  .widget-card.warning {
+    border-left: 3px solid #ff9800;
+    background: #fff8e1;
+  }
+
+  .widget-card .head {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .widget-card .body {
+    font-size: 12.5px;
+    color: #333;
+    line-height: 1.55;
+  }
+
+  /* Касания */
+  .touches-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 11.5px;
+    margin-bottom: 4px;
+  }
+
+  .touches-row.good { color: #2e7d32; }
+  .touches-row.bad { color: #c62828; }
+
+  .touches-row b {
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  /* AI разбор */
+  .ai-quotes {
+    background: #fef2f2;
+    border-left: 3px solid #f44336;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: #333;
+    line-height: 1.45;
+  }
+
+  .ai-quotes b { color: #c62828; }
+  .ai-quotes .quote {
+    font-style: italic;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .play-btn {
+    margin-top: 8px;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .play-btn:hover { background: #1565c0; }
+
+  /* Действия снизу */
+  .action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .action-btn {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .action-btn.primary {
+    background: #2aabee;
+    color: #fff;
+  }
+
+  .action-btn.primary:hover {
+    background: #1d92cc;
+  }
+
+  .action-btn.secondary {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+  }
+
+  .action-btn.help {
+    grid-column: span 2;
+    background: rgba(244,67,54,0.10);
+    color: #c62828;
+    border: 1px solid rgba(244,67,54,0.25);
+  }
+
+  .action-btn.help:hover {
+    background: rgba(244,67,54,0.18);
+  }
+
+  /* Шкурный интерес */
+  .skin-card {
+    background: linear-gradient(135deg, #ff9f0a 0%, #f57c00 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .skin-card b {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Footer виджета */
+  .widget-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+  }
+
+  /* Other widgets stack */
+  .other-widgets {
+    margin-top: 14px;
+    opacity: 0.45;
+  }
+
+  .other-widget {
+    background: #fff;
+    border-radius: 6px;
+    padding: 7px 10px;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: #555;
+  }
+
+  .other-widget.highlighted {
+    background: #265abf;
+    color: #fff;
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  /* Annotations */
+  .annotation {
+    margin: 16px auto;
+    max-width: 1280px;
+    padding: 12px 16px;
+    background: rgba(82,167,255,0.08);
+    border: 1px solid rgba(82,167,255,0.20);
+    border-radius: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.80);
+    line-height: 1.5;
+  }
+
+  .annotation b { color: #fff; }
+
+  /* Тёмная подложка между секциями */
+  .description {
+    max-width: 1280px;
+    margin: 16px auto;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.025);
+    border-radius: 12px;
+  }
+
+  .description h2 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .description ul {
+    margin-left: 18px;
+    color: rgba(255,255,255,0.75);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  .description b { color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- Page header -->
+<div class="page-header">
+  <div>
+    <h1>📲 Карточка сделки в amoCRM · виджет клоузера</h1>
+    <div class="sub">Мокап того что видит Ляшенко А. когда открывает сделку Куделькина С.</div>
+  </div>
+  <a href="index-rop.html" class="back-btn">← К дашборду</a>
+</div>
+
+<!-- Аннотация -->
+<div class="annotation">
+  <b>👤 Логин:</b> Ляшенко А. (клоузер · 🔴 зона 34% красных) ·
+  <b>📋 Сделка:</b> #25516191 · Куделькин С. · 110к ₽ ·
+  <b>⏱ Касание:</b> 49 часов назад
+</div>
+
+<!-- ═══════════════════════════════════════════ amoCRM Window ═══════════════════════════════════════════ -->
+<div class="amocrm-window">
+
+  <!-- Шапка amoCRM -->
+  <div class="amocrm-top">
+    <div class="left">
+      <div class="logo">amo<span>CRM</span></div>
+      <div class="url">donula.amocrm.ru</div>
+      <div class="tabs">
+        <span class="active">Сделки</span>
+        <span class="inactive">Списки</span>
+        <span class="inactive">Задачи</span>
+      </div>
+    </div>
+    <div class="right">
+      <span>🔍 Поиск</span>
+      <span>🔔 3</span>
+      <div class="avatar">Л</div>
+      <span>Ляшенко А.</span>
+    </div>
+  </div>
+
+  <!-- Полоска статуса клоузера (наш глобальный виджет шапки) -->
+  <div class="closer-bar">
+    <div class="left">
+      <span class="status">🚦 Твой статус: 🔴 34% красных</span>
+      <span style="opacity: 0.85;">12🔴 / 5🟡 / 18🟢 / 8🔇</span>
+      <span style="opacity: 0.85;">🚫 0 новых лидов · премия 0</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <span class="pill">📋 Очередь: 12</span>
+      <span class="pill">🤖 AI: 4</span>
+      <span>▼</span>
+    </div>
+  </div>
+
+  <!-- Карточка сделки · 2 колонки -->
+  <div class="deal-card">
+
+    <!-- ═══ Левая часть · поля сделки ═══ -->
+    <div class="deal-main">
+      <!-- Заголовок -->
+      <div class="deal-header">
+        <div class="name">👤 Куделькин С.</div>
+        <div class="meta">
+          <span class="id">#25516191</span> · Рефинансирование · <b>110 000 ₽</b>
+        </div>
+      </div>
+
+      <!-- Этап воронки -->
+      <div class="stage-bar">
+        📅 Счёт выставлен · ждём оплату до 24.04
+      </div>
+
+      <!-- Поля -->
+      <div class="field-grid">
+        <div class="field">
+          <div class="lbl">МПП</div>
+          <div class="val">Ляшенко А.</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Источник</div>
+          <div class="val">Трипваер 99₽ (Яндекс)</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Долг</div>
+          <div class="val">1.2 млн ₽</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Согласие</div>
+          <div class="val">не подписано</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Дата платежа</div>
+          <div class="val">24.04.2026 (просрочена)</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Последний контакт</div>
+          <div class="val">25.04 · звонок 4 мин</div>
+        </div>
+      </div>
+
+      <!-- История -->
+      <div class="history-section">
+        <h3>📜 История</h3>
+
+        <div class="history-item bad">
+          <div class="time">26.04 · 14:23 · Звонок (38 сек)</div>
+          <div class="text">❌ AI не засчитал как касание (звонок &lt;60 сек, нет продвижения в карточке)</div>
+        </div>
+
+        <div class="history-item call">
+          <div class="time">25.04 · 15:00 · Звонок (4 мин 32 сек)</div>
+          <div class="text">✓ Куделькин С. согласился рассмотреть. <b>Не предложил частичку (AI зафиксировал нарушение)</b>. Сказал что подумает.</div>
+        </div>
+
+        <div class="history-item note">
+          <div class="time">25.04 · 14:30 · Примечание</div>
+          <div class="text">Выставил счёт 110к на 24.04. Клиент попросил подумать сутки.</div>
+        </div>
+
+        <div class="history-item wa">
+          <div class="time">24.04 · 09:15 · WhatsApp</div>
+          <div class="text">Отправил презентацию услуг. Прочитано в 09:22, без ответа.</div>
+        </div>
+
+        <div class="history-item call">
+          <div class="time">23.04 · 18:00 · Звонок (5 мин 10 сек)</div>
+          <div class="text">Первичный звонок после трипваера. Согласовали встречу на 25.04.</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 20px; color: #aaa; font-style: italic; font-size: 11px;">
+        ⋯ остальные поля amoCRM (чек-листы, документы, задачи) ⋯
+      </div>
+    </div>
+
+    <!-- ═══ Правая часть · НАШ виджет светофора ═══ -->
+    <div class="widget-panel">
+
+      <div class="widget-section-title">📦 Виджеты</div>
+
+      <!-- Большой виджет светофора сделки -->
+      <div class="deal-widget">
+        <div class="deal-widget-head">
+          <span class="title">🚦 Светофор сделки</span>
+          <span class="powered">ДоНуля AI</span>
+        </div>
+
+        <div class="status-big">
+          <div class="icon">🔴</div>
+          <div class="label">Просрочена</div>
+          <div class="sub">Без касания <b>49 часов</b></div>
+        </div>
+
+        <div class="countdown">
+          ⏱ Уже <b>2-й день в красной зоне</b>
+        </div>
+      </div>
+
+      <!-- 📞 Касания -->
+      <div class="widget-card">
+        <div class="head">📞 Касания (всего 2)</div>
+        <div class="body">
+          <div class="touches-row good">
+            <span>✓</span>
+            <b>1</b>
+            <span>реальное — звонок 4 мин (25.04)</span>
+          </div>
+          <div class="touches-row bad">
+            <span>❌</span>
+            <b>1</b>
+            <span>фейк — звонок 38 сек (26.04)</span>
+          </div>
+          <div style="margin-top: 8px; padding: 8px 10px; background: #fff8e1; border-radius: 4px; font-size: 11px; color: #6c4d00;">
+            <b>⚠ AI отметил фейк-касание.</b> Чтобы засчиталось — звонок &gt;60 сек + продвижение в карточке.
+          </div>
+        </div>
+      </div>
+
+      <!-- 🤖 AI разбор -->
+      <div class="widget-card attention">
+        <div class="head">🤖 AI · последний звонок</div>
+        <div class="body">
+          <div style="margin-bottom: 6px;">
+            ✗ Не предложил частичку<br/>
+            ✗ Тон давления в 00:48<br/>
+            ✗ Клиент: «положу трубку»
+          </div>
+          <div class="ai-quotes">
+            <b>Цитата (00:48):</b>
+            <div class="quote">«Вы не понимаете, давайте быстрее»</div>
+          </div>
+          <button class="play-btn">▶️ Послушать с 00:48</button>
+        </div>
+      </div>
+
+      <!-- 🎯 Что делать -->
+      <div class="widget-card action">
+        <div class="head">🎯 Что делать сейчас</div>
+        <div class="body">
+          <div style="line-height: 1.65;">
+            <span style="color: #2e7d32; font-weight: 700;">1.</span> Позвонить + дожать частичку 15к<br/>
+            <span style="color: #2e7d32; font-weight: 700;">2.</span> Если не отвечает — WhatsApp с расчётом<br/>
+            <span style="color: #2e7d32; font-weight: 700;">3.</span> 6 попыток без ответа → 🔇 защита
+          </div>
+        </div>
+      </div>
+
+      <!-- ⚠ Шкурный интерес -->
+      <div class="skin-card">
+        <b>⚠ Шкурный интерес</b>
+        Ты в 🔴 (<b>0 новых лидов</b>) · премия 0<br/>
+        Дожмёшь — конверсия +1 · приближаешься к 🟠
+      </div>
+
+      <!-- Кнопки действий -->
+      <div class="widget-card" style="border-left: none; padding: 0; background: transparent;">
+        <div class="action-row">
+          <button class="action-btn primary">📞 Позвонить</button>
+          <button class="action-btn secondary">💬 Написать</button>
+          <button class="action-btn help">🆘 Запросить помощь РОПа</button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="widget-footer">
+        ДоНуля Виджет · обновляется каждые 30 сек
+      </div>
+
+      <!-- Другие виджеты (имитация) -->
+      <div class="other-widgets">
+        <div class="widget-section-title" style="opacity: 0.6;">📦 Другие виджеты</div>
+        <div class="other-widget">Sensei</div>
+        <div class="other-widget">Wappi (WhatsApp)</div>
+        <div class="other-widget">OkiDoki</div>
+        <div class="other-widget">HyperScript</div>
+        <div class="other-widget">Билайн</div>
+        <div class="other-widget">ДоНуля (бренд)</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ Описание ═══════════════════════════════════════════ -->
+<div class="description">
+  <h2>📋 Что внутри виджета · подробно</h2>
+  <ul>
+    <li><b>🚦 Главный статус сделки</b> — большой эмодзи + цвет фона (🔴 красный = просрочена). Сразу видно «эта сделка в беде».</li>
+    <li><b>⏱ Счётчик времени</b> — «49 часов · 2-й день в красной зоне». Не нужно считать сам.</li>
+    <li><b>📞 Касания: 1 реальное + 1 фейк</b> — AI отдельно показывает что засчитано, что отброшено. Защита от анти-фрод фильтра.</li>
+    <li><b>🤖 AI-разбор последнего звонка</b> — конкретные нарушения с таймкодом + цитата клиента. Кнопка [▶️ Послушать с 00:48] открывает запись с маркера.</li>
+    <li><b>🎯 «Что делать сейчас»</b> — пошаговая рекомендация от AI (1-2-3) с конкретными цифрами (частичка 15к, 6 попыток).</li>
+    <li><b>⚠ Шкурный интерес</b> — напоминание что ты в 🔴 (0 лидов · 0 премии). Дожмёшь — выйдешь.</li>
+    <li><b>📞 / 💬 / 🆘 Кнопки действий</b> — позвонить (deep-link в Манго), написать (открыть WhatsApp), запросить помощь РОПа (email/Slack с контекстом).</li>
+  </ul>
+
+  <h2 style="margin-top: 16px;">🔧 Что виджет НЕ показывает клоузеру</h2>
+  <ul>
+    <li>❌ Сравнение с другими клоузерами (демотивирует)</li>
+    <li>❌ Outcome correlation (это диагностика для РОПа)</li>
+    <li>❌ Флаги 🛡 ФЕЙК / 🚨 OUTCOME на нём (РОП видит, клоузер просто чувствует ограничения)</li>
+    <li>❌ Email-алерты «Жалоба клиента» (идут только РОПу)</li>
+    <li>❌ Светофор всей команды</li>
+  </ul>
+
+  <h2 style="margin-top: 16px;">🛠 Технически</h2>
+  <ul>
+    <li><b>Точка монтирования:</b> <code style="background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:3px;">lead_card</code> · правый sidebar amoCRM</li>
+    <li><b>API:</b> <code style="background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:3px;">GET /api/widget/deal/{deal_id}</code> · обновление 30 сек</li>
+    <li><b>Авторизация:</b> amoCRM OAuth token клоузера · видит только свои сделки</li>
+    <li><b>Webhook от Манго:</b> новый звонок → AI-pipeline → обновление виджета через 2 мин</li>
+  </ul>
+</div>
+
+</body>
+</html>
