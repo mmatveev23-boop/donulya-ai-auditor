@@ -68,12 +68,13 @@
   }
 
   /* ════════ Зона переключения клоузера ════════ */
+  /* Leaderboard команды (HubSpot-style pills · signal-color по % красных) */
   .zone-switcher {
     max-width: 1280px;
     margin: 20px auto;
-    padding: 14px 20px;
+    padding: 10px 14px;
     background: rgba(255,255,255,0.025);
-    border-radius: 10px;
+    border-radius: 999px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -82,37 +83,73 @@
   }
 
   .zone-switcher .label {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.45);
+    padding-left: 8px;
   }
 
   .zone-btns {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: wrap;
   }
 
+  /* Pill: компактная капсула с signal-dot слева */
   .zone-btn {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 6px;
-    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 5px 12px 5px 8px;
     font-size: 12px;
-    color: #fff;
+    font-weight: 500;
+    color: rgba(255,255,255,0.78);
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.15s ease;
+    letter-spacing: -0.005em;
   }
+
+  /* Signal-dot — цветная точка слева от имени (зелёная/жёлтая/оранжевая/красная по % касаний) */
+  .zone-btn::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .zone-btn[data-signal="green"]::before  { background: #30d158; box-shadow: 0 0 0 2px rgba(48,209,88,0.18); }
+  .zone-btn[data-signal="yellow"]::before { background: #ffd60a; box-shadow: 0 0 0 2px rgba(255,214,10,0.18); }
+  .zone-btn[data-signal="orange"]::before { background: #ff9f0a; box-shadow: 0 0 0 2px rgba(255,159,10,0.18); }
+  .zone-btn[data-signal="red"]::before    { background: #ff453a; box-shadow: 0 0 0 2px rgba(255,69,58,0.18); }
 
   .zone-btn:hover {
     background: rgba(255,255,255,0.08);
+    color: #fff;
   }
 
+  /* Активный pill = ты (highlighted: яркая каёмка signal-color, заметно выделен) */
   .zone-btn.active {
-    border-color: rgba(255,255,255,0.40);
-    background: rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    font-weight: 600;
+  }
+  .zone-btn.active[data-signal="green"]  { box-shadow: 0 0 0 1.5px rgba(48,209,88,0.55), 0 2px 8px rgba(48,209,88,0.18); }
+  .zone-btn.active[data-signal="yellow"] { box-shadow: 0 0 0 1.5px rgba(255,214,10,0.55), 0 2px 8px rgba(255,214,10,0.18); }
+  .zone-btn.active[data-signal="orange"] { box-shadow: 0 0 0 1.5px rgba(255,159,10,0.55), 0 2px 8px rgba(255,159,10,0.18); }
+  .zone-btn.active[data-signal="red"]    { box-shadow: 0 0 0 1.5px rgba(255,69,58,0.55),  0 2px 8px rgba(255,69,58,0.18); }
+
+  /* Процент = monospace, чуть мутнее имени (вторичная инфа) */
+  .zone-btn .pct {
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    opacity: 0.75;
+    margin-left: 2px;
   }
 
   /* ════════ amoCRM Mock ════════ */
@@ -301,187 +338,6 @@
     max-height: 900px;
   }
 
-  /* ════════ ВИДЖЕТ ЗАДАЧ (вторая полоска) ════════ */
-  .tasks-widget {
-    color: #fff;
-    transition: all 0.3s;
-    border-top: 2px solid rgba(0,0,0,0.15);
-  }
-
-  .tasks-widget.rate-good {
-    background: linear-gradient(180deg, #30d158 0%, #28b449 100%);
-  }
-
-  .tasks-widget.rate-warn {
-    background: linear-gradient(180deg, #ffd60a 0%, #e6b800 100%);
-    color: #333;
-  }
-
-  .tasks-widget.rate-bad {
-    background: linear-gradient(180deg, #ff453a 0%, #d63b32 100%);
-  }
-
-  /* Свёрнутая полоска задач */
-  .tasks-collapsed {
-    padding: 12px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 700;
-    transition: all 0.15s;
-  }
-
-  .tasks-collapsed:hover { filter: brightness(1.05); }
-
-  .tasks-collapsed .left {
-    display: flex;
-    gap: 22px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .tasks-collapsed .promise-text {
-    font-size: 17px;
-    font-weight: 800;
-  }
-  .tasks-collapsed .promise-text .big {
-    font-size: 26px;
-    font-weight: 900;
-    margin: 0 4px;
-  }
-
-  .tasks-collapsed .tasks-count {
-    opacity: 0.95;
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .tasks-collapsed .overdue-count {
-    background: rgba(0,0,0,0.30);
-    color: #fff;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 800;
-  }
-
-  .tasks-widget.rate-warn .tasks-collapsed .overdue-count {
-    background: rgba(180,60,60,0.85);
-    color: #fff;
-  }
-
-  .tasks-widget.rate-good .tasks-collapsed .overdue-count {
-    display: none;
-  }
-
-  .tasks-collapsed .right {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .tasks-collapsed .pill {
-    background: rgba(255,255,255,0.18);
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.15s;
-  }
-
-  .tasks-collapsed .pill:hover { background: rgba(255,255,255,0.28); }
-
-  .tasks-widget.rate-warn .tasks-collapsed .pill {
-    background: rgba(0,0,0,0.10);
-    color: #333;
-  }
-
-  .tasks-widget.expanded .tasks-collapsed .toggle-icon {
-    transform: rotate(180deg);
-  }
-
-  /* Развёрнутая часть задач */
-  .tasks-expanded {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: #f5f7fa;
-    color: #333;
-  }
-
-  .tasks-widget.expanded .tasks-expanded {
-    max-height: 600px;
-  }
-
-  .tasks-expanded-body {
-    padding: 16px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
-
-  /* Колонки задач */
-  .tasks-col {
-    padding: 12px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-
-  .tasks-col.col-overdue {
-    background: #ffe0e0;
-    border: 1px solid #ffb3b3;
-  }
-  .tasks-col.col-today {
-    background: #fff8db;
-    border: 1px solid #ffe580;
-  }
-  .tasks-col.col-tomorrow {
-    background: #e3f2fd;
-    border: 1px solid #90caf9;
-  }
-
-  .tasks-col-head {
-    font-size: 13px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .col-overdue .tasks-col-head { color: #c62828; }
-  .col-today .tasks-col-head { color: #b8860b; }
-  .col-tomorrow .tasks-col-head { color: #1565c0; }
-
-  .tasks-col-head .count {
-    background: #fff;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 800;
-  }
-
-  .col-overdue .tasks-col-head .count { background: #ffcccc; color: #c62828; }
-  .col-today .tasks-col-head .count { background: #fff5b8; color: #b8860b; }
-  .col-tomorrow .tasks-col-head .count { background: #bbdefb; color: #1565c0; }
-
-  .tasks-list {
-    display: grid;
-    gap: 5px;
-    max-height: 240px;
-    overflow-y: auto;
-  }
-
-  .tasks-list::-webkit-scrollbar { width: 4px; }
-  .tasks-list::-webkit-scrollbar-track { background: transparent; }
-  .tasks-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
 
   .task-item {
     background: #fff;
@@ -928,12 +784,12 @@
 
 <!-- Переключатель зоны клоузера -->
 <div class="zone-switcher">
-  <div class="label">👤 Под каким клоузером:</div>
+  <div class="label">🏆 Команда · % касаний</div>
   <div class="zone-btns">
-    <button class="zone-btn" onclick="setZone('green', this)">🟢 Лим Елена (2%)</button>
-    <button class="zone-btn" onclick="setZone('yellow', this)">🟡 Петрова Д. (12%)</button>
-    <button class="zone-btn active" onclick="setZone('orange', this)">🟠 Мифтахов Р. (22%)</button>
-    <button class="zone-btn" onclick="setZone('red', this)">🔴 Ляшенко А. (34%)</button>
+    <button class="zone-btn" data-signal="green"  onclick="setZone('green', this)">Лим Елена<span class="pct">2%</span></button>
+    <button class="zone-btn" data-signal="yellow" onclick="setZone('yellow', this)">Петрова Д.<span class="pct">12%</span></button>
+    <button class="zone-btn active" data-signal="orange" onclick="setZone('orange', this)">Мифтахов Р.<span class="pct">22%</span></button>
+    <button class="zone-btn" data-signal="red"    onclick="setZone('red', this)">Ляшенко А.<span class="pct">34%</span></button>
   </div>
 </div>
 
@@ -1038,70 +894,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════ ВТОРАЯ ПОЛОСКА · ВИДЖЕТ ЗАДАЧ ═══════════════ -->
-  <div class="tasks-widget rate-bad" id="tasksWidget">
-
-    <!-- Свёрнутая полоска задач -->
-    <div class="tasks-collapsed" onclick="toggleTasksWidget()">
-      <div class="left">
-        <span class="promise-text" id="promise-text">🤝 Обещания: <span class="big">65%</span></span>
-        <span class="tasks-count" id="tasks-count">📋 18 задач</span>
-        <span class="overdue-count" id="overdue-count">⏰ 3 просрочено</span>
-      </div>
-      <div class="right">
-        <span class="pill" onclick="event.stopPropagation(); goToAmoTasks()">📋 Задачи в amoCRM</span>
-        <span class="toggle-icon">▼</span>
-      </div>
-    </div>
-
-    <!-- Развёрнутая часть задач · 3 колонки: ПРОСРОЧЕННЫЕ / СЕГОДНЯ / ЗАВТРА -->
-    <div class="tasks-expanded">
-      <div class="tasks-expanded-body">
-
-        <!-- Колонка просроченных -->
-        <div class="tasks-col col-overdue">
-          <div class="tasks-col-head">
-            <span>🚨 Просроченные</span>
-            <span class="count" id="overdue-tasks-count">3</span>
-          </div>
-          <div class="tasks-list" id="overdue-tasks-list">
-            <!-- генерируется JS -->
-          </div>
-        </div>
-
-        <!-- Колонка на сегодня -->
-        <div class="tasks-col col-today">
-          <div class="tasks-col-head">
-            <span>⏰ На сегодня</span>
-            <span class="count" id="today-tasks-count">5</span>
-          </div>
-          <div class="tasks-list" id="today-tasks-list">
-            <!-- генерируется JS -->
-          </div>
-        </div>
-
-        <!-- Колонка на завтра -->
-        <div class="tasks-col col-tomorrow">
-          <div class="tasks-col-head">
-            <span>📅 На завтра</span>
-            <span class="count" id="tomorrow-tasks-count">8</span>
-          </div>
-          <div class="tasks-list" id="tomorrow-tasks-list">
-            <!-- генерируется JS -->
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Футер задач -->
-      <div style="padding: 10px 18px; border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.03);">
-        <span style="font-size: 12px; color: #666;">Типы: 📞 Звонок · 💬 Написать · 🤝 Встреча · Просрочка задачи = нарушенное обещание</span>
-        <span style="font-size: 11px; color: #888;">Порог зоны: <b style="color:#2e7d32;">≥80% ✓</b> · <b style="color:#d97706;">60-80% ⚠</b> · <b style="color:#c62828;">&lt;60% 🚫</b></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Контент страницы amoCRM (заглушка) -->
+    <!-- Контент страницы amoCRM (заглушка) -->
   <div class="page-content">
     ⋯ контент страницы amoCRM (сделки, воронка, отчёты, задачи) ⋯<br/>
     клоузер видит полоску статуса <b style="color: #265abf;">на любой странице</b>, не нужно открывать дашборд
@@ -1177,7 +970,6 @@
 <script>
   // Состояние
   let isExpanded = false;
-  let isTasksExpanded = false;
 
   // Данные по зонам · 3 категории касаний:
   // 🟡 Жёлтые: 24-36ч (рано звонить, не критично)
@@ -1376,17 +1168,6 @@
     }
   }
 
-  function toggleTasksWidget() {
-    isTasksExpanded = !isTasksExpanded;
-    const w = document.getElementById('tasksWidget');
-    if (isTasksExpanded) w.classList.add('expanded');
-    else w.classList.remove('expanded');
-  }
-
-  function goToAmoTasks() {
-    alert('📋 Открываем раздел «Задачи» в amoCRM\n\nВ продакшене → /tasks/list/');
-  }
-
   function setZone(zone, btn) {
     const z = zones[zone];
     if (!z) return;
@@ -1453,9 +1234,6 @@
       `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`
     );
     document.getElementById('red-list-count').textContent = z.reds.length;
-
-    // ════ Виджет задач (вторая полоска) ════
-    renderTasksWidget(z);
   }
 
   function renderDealsList(elId, items, label, metaFn) {
@@ -1468,66 +1246,6 @@
         `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
     document.getElementById(elId).innerHTML = html;
-  }
-
-  function renderTasksList(elId, items, label, tagFn, whenFn) {
-    const el = document.getElementById(elId);
-    if (!items || items.length === 0) {
-      el.innerHTML = `<div class="tasks-empty">✓ Нет ${label}</div>`;
-      return;
-    }
-    el.innerHTML = items.map(t => `
-      <div class="task-item" onclick="openDeal('${t.deal}')">
-        <span class="task-type">${t.type}</span>
-        <span class="task-meta">${t.label} · <span class="deal-name">${t.deal}</span><span class="when">${whenFn(t)}</span></span>
-        <span class="task-tag">${tagFn(t)}</span>
-      </div>
-    `).join('');
-  }
-
-  function renderTasksWidget(z) {
-    // Класс цвета по % обещаний
-    const rate = z.promiseRate;
-    let rateCls = 'rate-good';
-    if (rate < 60) rateCls = 'rate-bad';
-    else if (rate < 80) rateCls = 'rate-warn';
-
-    const w = document.getElementById('tasksWidget');
-    w.className = `tasks-widget ${rateCls}`;
-    if (isTasksExpanded) w.classList.add('expanded');
-
-    // Свёрнутая полоска
-    document.getElementById('promise-text').innerHTML = `🤝 Обещания: <span class="big">${rate}%</span>`;
-    document.getElementById('tasks-count').textContent = `📋 ${z.tasksTotal} задач`;
-
-    const overdueLen = (z.overdueTasks || []).length;
-    const todayLen = (z.todayTasks || []).length;
-    const tomorrowLen = (z.tomorrowTasks || []).length;
-    const overdueEl = document.getElementById('overdue-count');
-    if (overdueLen === 0) {
-      overdueEl.textContent = '✓ обещания в норме';
-    } else {
-      overdueEl.textContent = `⏰ ${overdueLen} просрочен${overdueLen === 1 ? 'а' : overdueLen < 5 ? 'ы' : 'о'}`;
-    }
-
-    // Счётчики колонок
-    document.getElementById('overdue-tasks-count').textContent = overdueLen;
-    document.getElementById('today-tasks-count').textContent = todayLen;
-    document.getElementById('tomorrow-tasks-count').textContent = tomorrowLen;
-
-    // Списки
-    renderTasksList('overdue-tasks-list', z.overdueTasks, 'просроченных',
-      t => t.delay,
-      t => `обещал ${t.promised}`
-    );
-    renderTasksList('today-tasks-list', z.todayTasks, 'на сегодня',
-      t => 'СЕГОДНЯ',
-      t => t.when
-    );
-    renderTasksList('tomorrow-tasks-list', z.tomorrowTasks, 'на завтра',
-      t => 'ЗАВТРА',
-      t => t.when
-    );
   }
 
   function currentZone() {
