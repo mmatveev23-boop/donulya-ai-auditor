@@ -298,13 +298,13 @@
     max-height: 500px;
   }
 
-  /* ── Внутри развёрнутой полоски ── */
+  /* ── Внутри развёрнутой полоски · 4 колонки ── */
   .expanded-body {
     padding: 16px;
     border-top: 1px solid rgba(255,255,255,0.15);
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 18px;
+    grid-template-columns: 200px 1fr 1fr 1fr;
+    gap: 12px;
   }
 
   .top-widget.zone-yellow .expanded-body {
@@ -346,7 +346,7 @@
     padding: 10px 12px;
     background: rgba(255,255,255,0.15);
     border-radius: 6px;
-    font-size: 12.5px;
+    font-size: 12px;
     text-align: center;
     line-height: 1.45;
     width: 100%;
@@ -357,128 +357,154 @@
 
   .big-counter .strategy b { font-weight: 800; }
 
-  .big-counter .red-summary {
-    margin-top: 10px;
-    padding: 7px 10px;
-    background: rgba(0,0,0,0.18);
-    border-radius: 6px;
-    font-size: 11px;
-    text-align: center;
+  /* Крупный блок «Поток −50%» — важная цифра */
+  .big-effect {
+    margin-top: 12px;
+    padding: 14px 12px;
+    background: rgba(0,0,0,0.22);
+    border-radius: 8px;
     width: 100%;
-    cursor: pointer;
-    transition: background 0.15s;
+    text-align: center;
+    border: 2px solid rgba(255,255,255,0.20);
   }
 
-  .top-widget.zone-yellow .big-counter .red-summary { background: rgba(0,0,0,0.15); color: #333; }
+  .top-widget.zone-yellow .big-effect {
+    background: rgba(0,0,0,0.15);
+    color: #333;
+    border-color: rgba(0,0,0,0.20);
+  }
 
-  .big-counter .red-summary:hover { background: rgba(0,0,0,0.30); }
+  .big-effect .effect-num {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    font-feature-settings: "tnum";
+  }
 
-  .big-counter .red-summary b { font-weight: 800; }
+  .big-effect.bad .effect-num,
+  .big-effect.critical .effect-num { color: #ff453a; }
+  .big-effect.warn .effect-num { color: #ffd60a; }
+  .big-effect.good .effect-num { color: #30d158; }
 
-  /* Правая колонка · списки */
-  .deals-section {
+  .top-widget.zone-yellow .big-effect.bad .effect-num,
+  .top-widget.zone-yellow .big-effect.critical .effect-num { color: #c62828; }
+
+  .big-effect .effect-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    opacity: 0.90;
+  }
+
+  .big-effect .effect-hint {
+    font-size: 10.5px;
+    opacity: 0.75;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* Колонки списков · 3 категории */
+  .deals-col {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    padding: 10px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
   }
 
-  .section-head {
-    font-size: 10.5px;
+  .top-widget.zone-yellow .deals-col { background: rgba(0,0,0,0.08); }
+
+  .deals-col-head {
+    font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.90;
+    letter-spacing: 0.06em;
     margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  .deals-col-head .dot-big { font-size: 14px; margin-right: 5px; }
+
+  .deals-col-head .count {
+    background: rgba(255,255,255,0.20);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .top-widget.zone-yellow .deals-col-head .count { background: rgba(0,0,0,0.15); }
+
   .deals-list {
     display: grid;
-    gap: 5px;
-    max-height: 240px;
+    gap: 4px;
+    max-height: 200px;
     overflow-y: auto;
   }
 
-  .deals-list::-webkit-scrollbar { width: 6px; }
-  .deals-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
-  .deals-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 3px; }
+  .deals-list::-webkit-scrollbar { width: 4px; }
+  .deals-list::-webkit-scrollbar-track { background: transparent; }
+  .deals-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 2px; }
 
-  .deal-row-y {
+  .deal-row-c {
     display: grid;
-    grid-template-columns: 22px 1fr 130px auto;
-    gap: 10px;
+    grid-template-columns: 14px 1fr auto;
+    gap: 6px;
     align-items: center;
-    padding: 9px 12px;
-    background: rgba(255,255,255,0.12);
-    border-left: 3px solid #ffd60a;
-    border-radius: 6px;
+    padding: 6px 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 5px;
     cursor: pointer;
     transition: all 0.15s;
-    font-size: 12.5px;
+    font-size: 11.5px;
   }
 
-  .top-widget.zone-yellow .deal-row-y {
-    background: rgba(0,0,0,0.06);
-    color: #333;
+  .top-widget.zone-yellow .deal-row-c { background: rgba(0,0,0,0.05); color: #333; }
+
+  .deal-row-c:hover { background: rgba(255,255,255,0.20); transform: translateX(2px); }
+  .top-widget.zone-yellow .deal-row-c:hover { background: rgba(0,0,0,0.10); }
+
+  .deal-row-c .name { font-weight: 700; }
+
+  .deal-row-c .meta {
+    font-size: 10.5px;
+    opacity: 0.85;
+    font-feature-settings: "tnum";
+    text-align: right;
   }
 
-  .deal-row-y:hover {
-    background: rgba(255,255,255,0.22);
-    transform: translateX(2px);
-  }
+  .deal-row-c .meta b { font-weight: 700; }
 
-  .top-widget.zone-yellow .deal-row-y:hover { background: rgba(0,0,0,0.12); }
-
-  .deal-row-y.urgent {
-    background: rgba(255,69,58,0.22);
-    border-left-color: #ff453a;
+  /* Urgent (≤4ч до 🔴) */
+  .deal-row-c.urgent {
+    background: rgba(255,69,58,0.30);
     animation: pulse 2s infinite;
+  }
+
+  .deal-row-c.urgent .meta {
+    color: #fff;
+    font-weight: 700;
   }
 
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
-    50% { box-shadow: 0 0 0 4px rgba(255,69,58,0.30); }
-  }
-
-  .deal-row-y .dot { font-size: 14px; line-height: 1; }
-  .deal-row-y .name { font-weight: 700; }
-  .deal-row-y .countdown {
-    font-feature-settings: "tnum";
-    font-weight: 700;
-    font-size: 12px;
-    background: rgba(0,0,0,0.18);
-    padding: 3px 8px;
-    border-radius: 4px;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .top-widget.zone-yellow .deal-row-y .countdown { background: rgba(0,0,0,0.12); color: #333; }
-
-  .deal-row-y.urgent .countdown {
-    background: #ff453a;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.20);
-  }
-
-  .deal-row-y .amount {
-    opacity: 0.80;
-    font-size: 11.5px;
-    font-feature-settings: "tnum";
+    50% { box-shadow: 0 0 0 3px rgba(255,69,58,0.40); }
   }
 
   /* Пустое состояние */
   .empty-state {
-    padding: 18px;
+    padding: 14px 10px;
     text-align: center;
-    background: rgba(48,209,88,0.10);
-    border: 1px solid rgba(48,209,88,0.25);
-    border-radius: 8px;
+    background: rgba(48,209,88,0.15);
+    border-radius: 6px;
     color: #30d158;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11.5px;
   }
 
   .top-widget.zone-yellow .empty-state { color: #2e7d32; }
@@ -673,37 +699,64 @@
       </div>
     </div>
 
-    <!-- Развёрнутая часть -->
+    <!-- Развёрнутая часть · 4 колонки: ИТОГ / ЖЁЛТЫЕ / ОРАНЖЕВЫЕ / КРАСНЫЕ -->
     <div class="widget-expanded">
       <div class="expanded-body">
 
-        <!-- Левая колонка · Большое число жёлтых (превентивно) + красные счётчик -->
+        <!-- ════ КОЛОНКА 1 · Большое число + Поток ════ -->
         <div class="big-counter">
-          <div class="num" id="yellow-count">5</div>
-          <div class="label">🟡 На грани<br/>скоро станут 🔴</div>
-          <div class="strategy" id="prevent-text">
-            🎯 Позвони <b>5 сейчас</b> → не дай им стать 🔴
+          <div class="num" id="red-count">8</div>
+          <div class="label">🔴 Красных<br/>без касания &gt; 48 ч</div>
+          <div class="strategy" id="strategy-text">
+            🎯 Разгреби <b>1</b> → выйдешь в <b>🟡</b>
           </div>
-          <div class="red-summary" onclick="scrollToReds()" id="red-summary">
-            🔴 Уже красных: <b id="red-count-mini">8</b> · разгрести позже
+
+          <!-- КРУПНЫЙ блок «Поток −50%» -->
+          <div class="big-effect" id="big-effect">
+            <div class="effect-num" id="effect-num">−50%</div>
+            <div class="effect-label" id="effect-lbl">поток лидов</div>
+            <div class="effect-hint">⚠ премия за дисциплину −20%</div>
           </div>
         </div>
 
-        <!-- Правая колонка · СПИСОК ЖЁЛТЫХ (главный фокус) -->
-        <div class="deals-section">
-          <div class="section-head">
-            <span>🎯 На грани · позвонить сейчас!</span>
-            <span style="font-weight: 400; opacity: 0.75;" id="yellow-list-counter">5 сделок</span>
+        <!-- ════ КОЛОНКА 2 · ЖЁЛТЫЕ (24-36ч) ════ -->
+        <div class="deals-col">
+          <div class="deals-col-head">
+            <span><span class="dot-big">🟡</span>Жёлтые</span>
+            <span class="count" id="yellow-count">3</span>
           </div>
           <div class="deals-list" id="yellow-list">
             <!-- генерируется JS -->
           </div>
+        </div>
 
-          <div class="expanded-footer">
-            <span class="footer-hint">🟡 Сортированы по времени до 🔴 (срочные сверху)</span>
-            <button class="footer-btn" onclick="goDashboard()">📊 Открыть дашборд →</button>
+        <!-- ════ КОЛОНКА 3 · ОРАНЖЕВЫЕ (36-48ч, скоро 🔴) ════ -->
+        <div class="deals-col">
+          <div class="deals-col-head">
+            <span><span class="dot-big">🟠</span>Оранжевые</span>
+            <span class="count" id="orange-count">2</span>
+          </div>
+          <div class="deals-list" id="orange-list">
+            <!-- генерируется JS -->
           </div>
         </div>
+
+        <!-- ════ КОЛОНКА 4 · КРАСНЫЕ (>48ч) ════ -->
+        <div class="deals-col">
+          <div class="deals-col-head">
+            <span><span class="dot-big">🔴</span>Красные</span>
+            <span class="count" id="red-list-count">8</span>
+          </div>
+          <div class="deals-list" id="red-list">
+            <!-- генерируется JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Футер -->
+      <div style="padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.10);">
+        <span style="font-size: 11px; opacity: 0.85;">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
+        <button class="footer-btn" onclick="goDashboard()" style="background: rgba(255,255,255,0.20); color: #fff; border: 1px solid rgba(255,255,255,0.30); border-radius: 6px; padding: 7px 14px; font-size: 11.5px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
       </div>
     </div>
   </div>
@@ -785,8 +838,10 @@
   // Состояние
   let isExpanded = false;
 
-  // Данные по зонам · ФОКУС: жёлтые сделки = превентивно (не дать им стать красными)
-  // hoursLeft = сколько часов до перехода в 🔴 (48ч − текущие часы без касания)
+  // Данные по зонам · 3 категории касаний:
+  // 🟡 Жёлтые: 24-36ч (рано звонить, не критично)
+  // 🟠 Оранжевые: 36-48ч (СКОРО красные, действовать срочно!)
+  // 🔴 Красные: >48ч (уже потеряны, разгрести позже)
   const zones = {
     green: {
       cls: 'zone-green',
@@ -794,12 +849,13 @@
       name: 'Лим Елена',
       status: '🚦 Твой статус: 🟢 <span class="big">2%</span> красных',
       raskladka: '1 🔴 / 0 🟡 / 35 🟢 / 2 🔇',
-      effect: '✓ +30% к потоку лидов · полная премия',
-      queue: 0,
-      yellowCount: 0,
-      redCount: 1,
-      preventText: '<b>В жёлтой зоне никого нет ✓</b><br/>Продолжай в том же темпе',
-      yellows: [], // нет жёлтых
+      effect: '✓ +30% к потоку лидов',
+      bigEffect: '+30%',
+      effectLabel: 'к потоку лидов',
+      effectColor: 'good',
+      queue: 1,
+      yellows: [],
+      oranges: [],
       reds: [
         { name: 'Соколов И.', hours: 52, amount: '150к ₽' },
       ],
@@ -810,15 +866,17 @@
       name: 'Петрова Д.',
       status: '🚦 Твой статус: 🟡 <span class="big">12%</span> красных',
       raskladka: '4 🔴 / 3 🟡 / 26 🟢 / 4 🔇',
-      effect: '⚠ Норма + предупреждение · следи',
-      queue: 3,
-      yellowCount: 3,
-      redCount: 4,
-      preventText: '🎯 Позвони <b>3 сейчас</b> → не дай им стать 🔴',
+      effect: '⚠ Норма + предупреждение',
+      bigEffect: 'норма',
+      effectLabel: 'предупреждение',
+      effectColor: 'warn',
+      queue: 7,
       yellows: [
-        { name: 'Захаров Б.',  hours: 40, hoursLeft: 8,  amount: '85к ₽' },
-        { name: 'Лебедев К.',  hours: 36, hoursLeft: 12, amount: '180к ₽' },
-        { name: 'Михайлов А.', hours: 28, hoursLeft: 20, amount: '120к ₽' },
+        { name: 'Михайлов А.', hoursLeft: 20, amount: '120к ₽' },
+        { name: 'Лебедев К.',  hoursLeft: 14, amount: '180к ₽' },
+      ],
+      oranges: [
+        { name: 'Захаров Б.', hoursLeft: 8, amount: '85к ₽' },
       ],
       reds: [
         { name: 'Гаврилов Н.', hours: 50, amount: '180к ₽' },
@@ -834,16 +892,18 @@
       status: '🚦 Твой статус: 🟠 <span class="big">22%</span> красных',
       raskladka: '8 🔴 / 5 🟡 / 24 🟢 / 7 🔇',
       effect: '⚠ Поток −50% · премия −20%',
-      queue: 5,
-      yellowCount: 5,
-      redCount: 8,
-      preventText: '🎯 Позвони <b>5 сейчас</b> → не дай им стать 🔴',
+      bigEffect: '−50%',
+      effectLabel: 'поток лидов',
+      effectColor: 'bad',
+      queue: 13,
       yellows: [
-        { name: 'Назаров П.',   hours: 47, hoursLeft: 1,  amount: '95к ₽',  urgent: true },
-        { name: 'Капитанов И.', hours: 44, hoursLeft: 4,  amount: '180к ₽', urgent: true },
-        { name: 'Сергеев А.',   hours: 42, hoursLeft: 6,  amount: '120к ₽' },
-        { name: 'Иванов С.',    hours: 40, hoursLeft: 8,  amount: '180к ₽' },
-        { name: 'Петров К.',    hours: 32, hoursLeft: 16, amount: '95к ₽'  },
+        { name: 'Петров К.',   hoursLeft: 18, amount: '95к ₽'  },
+        { name: 'Иванов С.',   hoursLeft: 16, amount: '180к ₽' },
+        { name: 'Сергеев А.',  hoursLeft: 14, amount: '120к ₽' },
+      ],
+      oranges: [
+        { name: 'Назаров П.',   hoursLeft: 1,  amount: '95к ₽',  urgent: true },
+        { name: 'Капитанов И.', hoursLeft: 4,  amount: '180к ₽', urgent: true },
       ],
       reds: [
         { name: 'Прохоров А.', hours: 50, amount: '220к ₽' },
@@ -863,16 +923,18 @@
       status: '🚦 Твой статус: 🔴 <span class="big">34%</span> красных',
       raskladka: '12 🔴 / 5 🟡 / 18 🟢 / 8 🔇',
       effect: '🚫 0 новых лидов · премия 0',
-      queue: 5,
-      yellowCount: 5,
-      redCount: 12,
-      preventText: '🎯 <b>5 жёлтых горят</b> — звони чтобы они не пополнили 12 красных',
+      bigEffect: '0',
+      effectLabel: 'новых лидов',
+      effectColor: 'critical',
+      queue: 17,
       yellows: [
-        { name: 'Васильев А.',  hours: 47, hoursLeft: 1,  amount: '95к ₽',  urgent: true },
-        { name: 'Андреев П.',   hours: 45, hoursLeft: 3,  amount: '150к ₽', urgent: true },
-        { name: 'Семёнов Г.',   hours: 42, hoursLeft: 6,  amount: '180к ₽' },
-        { name: 'Степанов И.',  hours: 38, hoursLeft: 10, amount: '120к ₽' },
-        { name: 'Орлов К.',     hours: 30, hoursLeft: 18, amount: '95к ₽'  },
+        { name: 'Орлов К.',     hoursLeft: 18, amount: '95к ₽'  },
+        { name: 'Степанов И.',  hoursLeft: 14, amount: '120к ₽' },
+        { name: 'Семёнов Г.',   hoursLeft: 10, amount: '180к ₽' },
+      ],
+      oranges: [
+        { name: 'Васильев А.',  hoursLeft: 1, amount: '95к ₽',  urgent: true },
+        { name: 'Андреев П.',   hoursLeft: 3, amount: '150к ₽', urgent: true },
       ],
       reds: [
         { name: 'Куделькин С.', hours: 49, amount: '110к ₽' },
@@ -928,30 +990,62 @@
     document.getElementById('effect').textContent = z.effect;
     document.getElementById('queue-count').textContent = z.queue;
 
-    // Большое число ЖЁЛТЫХ (фокус превентивный) + счётчик красных
-    document.getElementById('yellow-count').textContent = z.yellowCount;
-    document.getElementById('prevent-text').innerHTML = z.preventText;
-    document.getElementById('red-count-mini').textContent = z.redCount;
+    // Большое число красных + стратегия выхода
+    const totalRed = z.reds.length;
+    document.getElementById('red-count').textContent = totalRed;
 
-    // Список ЖЁЛТЫХ сделок (отсортирован по hoursLeft — срочные сверху)
-    const yellowsHtml = z.yellows.length > 0
-      ? z.yellows.map(y => `
-          <div class="deal-row-y ${y.urgent ? 'urgent' : ''}" onclick="openDeal('${y.name}')">
-            <span class="dot">🟡</span>
-            <span class="name">${y.name}</span>
-            <span class="countdown">⏱ ${y.hoursLeft}ч до 🔴</span>
-            <span class="amount">${y.amount}</span>
-          </div>
-        `).join('')
-      : '<div class="empty-state">✓ Нет жёлтых сделок · отлично!<br/>Продолжай работать в том же темпе.</div>';
-    document.getElementById('yellow-list').innerHTML = yellowsHtml;
-    document.getElementById('yellow-list-counter').textContent = z.yellows.length > 0
-      ? `${z.yellows.length} ${z.yellows.length === 1 ? 'сделка' : (z.yellows.length < 5 ? 'сделки' : 'сделок')}`
-      : '0';
+    // Стратегия выхода из зоны
+    const strategies = {
+      green: '<b>Ты уже в зелёной ✓</b><br/>Продолжай.',
+      yellow: '🎯 Разгреби <b>1</b> → выйдешь в <b>🟢</b>',
+      orange: '🎯 Разгреби <b>1</b> → выйдешь в <b>🟡</b>',
+      red: '🎯 Разгреби <b>2</b> → выйдешь в <b>🟠</b>',
+    };
+    document.getElementById('strategy-text').innerHTML = strategies[currentZone()] || '';
+
+    // Крупный блок «Поток X%»
+    const effectEl = document.getElementById('big-effect');
+    effectEl.className = 'big-effect ' + z.effectColor;
+    document.getElementById('effect-num').textContent = z.bigEffect;
+    document.getElementById('effect-lbl').textContent = z.effectLabel;
+
+    const effectHints = {
+      good: '✓ полная премия начислена',
+      warn: 'премия — норма',
+      bad: '⚠ премия за дисциплину −20%',
+      critical: '🚫 премия за дисциплину 0',
+    };
+    effectEl.querySelector('.effect-hint').textContent = effectHints[z.effectColor] || '';
+
+    // Список ЖЁЛТЫХ (24-36ч)
+    renderDealsList('yellow-list', z.yellows, 'жёлтых', y =>
+      `<span class="meta">⏱ <b>${y.hoursLeft}ч</b> до 🔴 · ${y.amount}</span>`
+    );
+    document.getElementById('yellow-count').textContent = z.yellows.length;
+
+    // Список ОРАНЖЕВЫХ (36-48ч)
+    renderDealsList('orange-list', z.oranges, 'оранжевых', o =>
+      `<span class="meta">⏱ <b>${o.hoursLeft}ч</b> до 🔴 · ${o.amount}</span>`
+    );
+    document.getElementById('orange-count').textContent = z.oranges.length;
+
+    // Список КРАСНЫХ (>48ч)
+    renderDealsList('red-list', z.reds, 'красных', r =>
+      `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`
+    );
+    document.getElementById('red-list-count').textContent = z.reds.length;
   }
 
-  function scrollToReds() {
-    alert(`🔴 Уже красных: ${zones[currentZone()].redCount}\n\nЭти сделки уже потеряли первый шанс. Сейчас фокус на жёлтых — спаси их от перехода в красные!\n\nДля разбора красных → открой полный дашборд.`);
+  function renderDealsList(elId, items, label, metaFn) {
+    const html = items.length > 0
+      ? items.map(d => `
+          <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDeal('${d.name}')">
+            <span class="name">${d.name}</span>
+            ${metaFn(d)}
+          </div>
+        `).join('')
+      : `<div class="empty-state">✓ Нет ${label}</div>`;
+    document.getElementById(elId).innerHTML = html;
   }
 
   function currentZone() {
