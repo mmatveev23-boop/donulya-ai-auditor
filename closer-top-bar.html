@@ -213,12 +213,12 @@
 
   /* Свёрнутая шапка */
   .widget-collapsed {
-    padding: 10px 16px;
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    font-size: 12.5px;
+    font-size: 15px;
     font-weight: 600;
     transition: all 0.15s;
   }
@@ -227,32 +227,32 @@
 
   .widget-collapsed .left {
     display: flex;
-    gap: 16px;
+    gap: 22px;
     align-items: center;
     flex-wrap: wrap;
   }
 
   .widget-collapsed .status-text {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 800;
   }
 
   .widget-collapsed .status-text .big {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 900;
     margin: 0 4px;
   }
 
   .widget-collapsed .raskladka {
     opacity: 0.95;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
   }
 
   .widget-collapsed .effect {
-    opacity: 0.85;
-    font-size: 13px;
-    font-weight: 600;
+    opacity: 0.90;
+    font-size: 15px;
+    font-weight: 700;
   }
 
   .widget-collapsed .right {
@@ -287,15 +287,17 @@
     transform: rotate(180deg);
   }
 
-  /* Развёрнутая часть */
+  /* Развёрнутая часть · нейтральная тёмная подложка (НЕ цветная) */
   .widget-expanded {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease-out;
+    transition: max-height 0.4s ease-out;
+    background: #1a1f2a;
+    color: rgba(255,255,255,0.90);
   }
 
   .top-widget.expanded .widget-expanded {
-    max-height: 500px;
+    max-height: 700px;
   }
 
   /* ── Внутри развёрнутой полоски · 4 колонки ── */
@@ -311,21 +313,25 @@
     border-top-color: rgba(0,0,0,0.10);
   }
 
-  /* Левая колонка — огромное число жёлтых (предотвратить!) */
+  /* Левая колонка · окрашена в цвет зоны клоузера */
   .big-counter {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 14px;
-    background: rgba(255,255,255,0.10);
+    justify-content: flex-start;
+    padding: 18px 14px;
     border-radius: 10px;
+    color: #fff;
   }
 
-  .top-widget.zone-yellow .big-counter { background: rgba(0,0,0,0.08); }
+  /* Цвет левой колонки = зона клоузера */
+  .top-widget.zone-green .big-counter   { background: linear-gradient(135deg, #30d158 0%, #28b449 100%); }
+  .top-widget.zone-yellow .big-counter  { background: linear-gradient(135deg, #ffd60a 0%, #e6b800 100%); color: #333; }
+  .top-widget.zone-orange .big-counter  { background: linear-gradient(135deg, #ff9f0a 0%, #ff8000 100%); }
+  .top-widget.zone-red .big-counter     { background: linear-gradient(135deg, #ff453a 0%, #d63b32 100%); }
 
   .big-counter .num {
-    font-size: 64px;
+    font-size: 70px;
     font-weight: 900;
     line-height: 1;
     font-feature-settings: "tnum";
@@ -342,40 +348,40 @@
   }
 
   .big-counter .strategy {
-    margin-top: 12px;
+    margin-top: 14px;
     padding: 10px 12px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.20);
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
     line-height: 1.45;
     width: 100%;
-    font-weight: 600;
+    font-weight: 700;
   }
 
-  .top-widget.zone-yellow .big-counter .strategy { background: rgba(0,0,0,0.12); }
+  .top-widget.zone-yellow .big-counter .strategy { background: rgba(0,0,0,0.15); }
 
   .big-counter .strategy b { font-weight: 800; }
 
   /* Крупный блок «Поток −50%» — важная цифра */
   .big-effect {
-    margin-top: 12px;
-    padding: 14px 12px;
-    background: rgba(0,0,0,0.22);
-    border-radius: 8px;
+    margin-top: 14px;
+    padding: 16px 12px;
+    background: rgba(0,0,0,0.30);
+    border-radius: 10px;
     width: 100%;
     text-align: center;
-    border: 2px solid rgba(255,255,255,0.20);
+    border: 2px solid rgba(255,255,255,0.30);
   }
 
   .top-widget.zone-yellow .big-effect {
-    background: rgba(0,0,0,0.15);
+    background: rgba(0,0,0,0.20);
     color: #333;
-    border-color: rgba(0,0,0,0.20);
+    border-color: rgba(0,0,0,0.25);
   }
 
   .big-effect .effect-num {
-    font-size: 36px;
+    font-size: 44px;
     font-weight: 900;
     line-height: 1;
     font-feature-settings: "tnum";
@@ -390,60 +396,79 @@
   .top-widget.zone-yellow .big-effect.critical .effect-num { color: #c62828; }
 
   .big-effect .effect-label {
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 4px;
-    opacity: 0.90;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+    opacity: 0.95;
   }
 
   .big-effect .effect-hint {
-    font-size: 10.5px;
-    opacity: 0.75;
+    font-size: 11px;
+    opacity: 0.80;
     margin-top: 6px;
     font-style: italic;
   }
 
-  /* Колонки списков · 3 категории */
+  /* Колонки списков · 3 категории · каждая в своём цвете */
   .deals-col {
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding: 10px;
-    background: rgba(0,0,0,0.15);
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    color: #fff;
   }
 
-  .top-widget.zone-yellow .deals-col { background: rgba(0,0,0,0.08); }
+  /* Цвет колонки по категории · насыщенные пастельные */
+  .deals-col.col-yellow {
+    background: linear-gradient(180deg, rgba(255,214,10,0.18) 0%, rgba(255,214,10,0.10) 100%);
+    border: 1px solid rgba(255,214,10,0.30);
+  }
+  .deals-col.col-orange {
+    background: linear-gradient(180deg, rgba(255,159,10,0.22) 0%, rgba(255,159,10,0.12) 100%);
+    border: 1px solid rgba(255,159,10,0.35);
+  }
+  .deals-col.col-red {
+    background: linear-gradient(180deg, rgba(255,69,58,0.22) 0%, rgba(255,69,58,0.12) 100%);
+    border: 1px solid rgba(255,69,58,0.35);
+  }
 
   .deals-col-head {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .deals-col-head .dot-big { font-size: 14px; margin-right: 5px; }
+  .col-yellow .deals-col-head { color: #ffd60a; }
+  .col-orange .deals-col-head { color: #ff9f0a; }
+  .col-red    .deals-col-head { color: #ff453a; }
+
+  .deals-col-head .dot-big { font-size: 14px; margin-right: 6px; }
 
   .deals-col-head .count {
-    background: rgba(255,255,255,0.20);
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 800;
   }
 
-  .top-widget.zone-yellow .deals-col-head .count { background: rgba(0,0,0,0.15); }
+  .col-yellow .deals-col-head .count { background: rgba(255,214,10,0.30); color: #ffd60a; }
+  .col-orange .deals-col-head .count { background: rgba(255,159,10,0.30); color: #ff9f0a; }
+  .col-red    .deals-col-head .count { background: rgba(255,69,58,0.30); color: #ff453a; }
 
   .deals-list {
     display: grid;
-    gap: 4px;
-    max-height: 200px;
+    gap: 5px;
+    max-height: 240px;
     overflow-y: auto;
   }
 
@@ -453,61 +478,60 @@
 
   .deal-row-c {
     display: grid;
-    grid-template-columns: 14px 1fr auto;
-    gap: 6px;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
     align-items: center;
-    padding: 6px 8px;
+    padding: 10px 12px;
     background: rgba(255,255,255,0.08);
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
-    font-size: 11.5px;
+    font-size: 12.5px;
   }
 
-  .top-widget.zone-yellow .deal-row-c { background: rgba(0,0,0,0.05); color: #333; }
+  .deal-row-c:hover {
+    background: rgba(255,255,255,0.16);
+    transform: translateX(2px);
+  }
 
-  .deal-row-c:hover { background: rgba(255,255,255,0.20); transform: translateX(2px); }
-  .top-widget.zone-yellow .deal-row-c:hover { background: rgba(0,0,0,0.10); }
-
-  .deal-row-c .name { font-weight: 700; }
+  .deal-row-c .name { font-weight: 700; color: #fff; }
 
   .deal-row-c .meta {
-    font-size: 10.5px;
-    opacity: 0.85;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.85);
     font-feature-settings: "tnum";
     text-align: right;
+    white-space: nowrap;
   }
 
-  .deal-row-c .meta b { font-weight: 700; }
+  .deal-row-c .meta b { font-weight: 800; }
 
   /* Urgent (≤4ч до 🔴) */
   .deal-row-c.urgent {
-    background: rgba(255,69,58,0.30);
+    background: rgba(255,69,58,0.40);
+    border: 1px solid rgba(255,69,58,0.60);
     animation: pulse 2s infinite;
   }
 
-  .deal-row-c.urgent .meta {
-    color: #fff;
-    font-weight: 700;
-  }
+  .deal-row-c.urgent .name { color: #fff; }
+  .deal-row-c.urgent .meta { color: #fff; font-weight: 700; }
 
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0); }
-    50% { box-shadow: 0 0 0 3px rgba(255,69,58,0.40); }
+    50% { box-shadow: 0 0 0 4px rgba(255,69,58,0.40); }
   }
 
   /* Пустое состояние */
   .empty-state {
-    padding: 14px 10px;
+    padding: 16px 12px;
     text-align: center;
-    background: rgba(48,209,88,0.15);
+    background: rgba(48,209,88,0.10);
+    border: 1px solid rgba(48,209,88,0.25);
     border-radius: 6px;
     color: #30d158;
     font-weight: 600;
-    font-size: 11.5px;
+    font-size: 12px;
   }
-
-  .top-widget.zone-yellow .empty-state { color: #2e7d32; }
 
   /* Кнопка дашборда внизу */
   .expanded-footer {
@@ -720,7 +744,7 @@
         </div>
 
         <!-- ════ КОЛОНКА 2 · ЖЁЛТЫЕ (24-36ч) ════ -->
-        <div class="deals-col">
+        <div class="deals-col col-yellow">
           <div class="deals-col-head">
             <span><span class="dot-big">🟡</span>Жёлтые</span>
             <span class="count" id="yellow-count">3</span>
@@ -731,7 +755,7 @@
         </div>
 
         <!-- ════ КОЛОНКА 3 · ОРАНЖЕВЫЕ (36-48ч, скоро 🔴) ════ -->
-        <div class="deals-col">
+        <div class="deals-col col-orange">
           <div class="deals-col-head">
             <span><span class="dot-big">🟠</span>Оранжевые</span>
             <span class="count" id="orange-count">2</span>
@@ -742,7 +766,7 @@
         </div>
 
         <!-- ════ КОЛОНКА 4 · КРАСНЫЕ (>48ч) ════ -->
-        <div class="deals-col">
+        <div class="deals-col col-red">
           <div class="deals-col-head">
             <span><span class="dot-big">🔴</span>Красные</span>
             <span class="count" id="red-list-count">8</span>
@@ -753,10 +777,10 @@
         </div>
       </div>
 
-      <!-- Футер -->
-      <div style="padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.10);">
-        <span style="font-size: 11px; opacity: 0.85;">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
-        <button class="footer-btn" onclick="goDashboard()" style="background: rgba(255,255,255,0.20); color: #fff; border: 1px solid rgba(255,255,255,0.30); border-radius: 6px; padding: 7px 14px; font-size: 11.5px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
+      <!-- Футер · нейтральный -->
+      <div style="padding: 12px 18px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03);">
+        <span style="font-size: 12px; color: rgba(255,255,255,0.70);">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
+        <button onclick="goDashboard()" style="background: rgba(255,255,255,0.10); color: #fff; border: 1px solid rgba(255,255,255,0.20); border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
       </div>
     </div>
   </div>
