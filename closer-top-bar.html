@@ -255,6 +255,26 @@
     font-weight: 700;
   }
 
+  .widget-collapsed .tasks-summary {
+    opacity: 0.95;
+    font-size: 15px;
+    font-weight: 700;
+    padding-left: 18px;
+    border-left: 1px solid rgba(255,255,255,0.30);
+  }
+
+  .top-widget.zone-yellow .widget-collapsed .tasks-summary {
+    border-left-color: rgba(0,0,0,0.18);
+  }
+
+  .widget-collapsed .tasks-summary .overdue {
+    color: #fff2b0;
+    font-weight: 800;
+  }
+
+  .top-widget.zone-yellow .widget-collapsed .tasks-summary .overdue { color: #b8860b; }
+  .top-widget.zone-red .widget-collapsed .tasks-summary .overdue { color: #fff; background: rgba(0,0,0,0.30); padding: 1px 6px; border-radius: 4px; }
+
   .widget-collapsed .right {
     display: flex;
     gap: 8px;
@@ -297,7 +317,88 @@
   }
 
   .top-widget.expanded .widget-expanded {
-    max-height: 700px;
+    max-height: 900px;
+  }
+
+  /* ── Блок просроченных задач (сверху раскрытого виджета) ── */
+  .overdue-tasks-bar {
+    padding: 12px 16px;
+    background: linear-gradient(90deg, #fff0f0 0%, #ffe5e5 100%);
+    border-bottom: 1px solid #ffb3b3;
+  }
+
+  .overdue-tasks-bar.empty {
+    background: linear-gradient(90deg, #e8f5e9 0%, #d4edda 100%);
+    border-bottom-color: #a5d6a7;
+  }
+
+  .overdue-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .overdue-head .overdue-icon { font-size: 16px; }
+  .overdue-head .overdue-title { color: #c62828; font-weight: 800; }
+  .overdue-tasks-bar.empty .overdue-head .overdue-title { color: #2e7d32; }
+
+  .overdue-head .promise-rate {
+    margin-left: auto;
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+    border: 1px solid rgba(0,0,0,0.10);
+  }
+
+  .overdue-head .promise-rate b { font-weight: 900; }
+  .overdue-head .promise-rate.bad b { color: #c62828; }
+  .overdue-head .promise-rate.warn b { color: #d97706; }
+  .overdue-head .promise-rate.good b { color: #2e7d32; }
+
+  .overdue-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px;
+  }
+
+  .overdue-item {
+    background: #fff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ffb3b3;
+    transition: all 0.15s;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .overdue-item:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+  .overdue-item .task-type { font-size: 14px; }
+  .overdue-item .task-meta { color: #333; font-weight: 700; }
+  .overdue-item .task-meta .deal-name { color: #c62828; font-weight: 800; }
+  .overdue-item .task-delay {
+    background: #c62828;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .overdue-empty {
+    padding: 4px 8px;
+    color: #2e7d32;
+    font-weight: 700;
+    font-size: 12.5px;
   }
 
   /* ── Внутри развёрнутой полоски · 4 колонки ── */
@@ -478,10 +579,9 @@
 
   .deal-row-c {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    align-items: center;
-    padding: 10px 12px;
+    grid-template-rows: auto auto;
+    gap: 4px;
+    padding: 9px 12px;
     background: #fff;
     border-radius: 6px;
     cursor: pointer;
@@ -496,6 +596,13 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.10);
   }
 
+  .deal-row-c .top-line {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+
   .deal-row-c .name { font-weight: 700; color: #333; }
 
   .deal-row-c .meta {
@@ -507,6 +614,23 @@
   }
 
   .deal-row-c .meta b { font-weight: 800; color: #333; }
+
+  .deal-row-c .task-line {
+    font-size: 11px;
+    padding-top: 4px;
+    border-top: 1px dashed rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #666;
+  }
+
+  .deal-row-c .task-line.late { color: #c62828; font-weight: 700; }
+  .deal-row-c .task-line.today { color: #d97706; font-weight: 700; }
+  .deal-row-c .task-line.tomorrow { color: #555; }
+  .deal-row-c .task-line.none { color: #999; font-style: italic; }
+
+  .deal-row-c .task-line .task-type { font-size: 12px; }
 
   /* Urgent (≤4ч до 🔴) */
   .deal-row-c.urgent {
@@ -719,6 +843,7 @@
         <span class="status-text" id="status-text">🚦 Твой статус: 🟠 <span class="big">22%</span> красных</span>
         <span class="raskladka" id="raskladka">8 🔴 / 5 🟡 / 24 🟢</span>
         <span class="effect" id="effect">⚠ Поток −50%</span>
+        <span class="tasks-summary" id="tasks-summary">📋 <b>14</b> задач · <span class="overdue">⏰ 3 просрочены</span></span>
       </div>
       <div class="right">
         <span class="pill" onclick="event.stopPropagation(); jumpToQueue()">📋 Очередь: <b id="queue-count">5</b></span>
@@ -728,6 +853,19 @@
 
     <!-- Развёрнутая часть · 4 колонки: ИТОГ / ЖЁЛТЫЕ / ОРАНЖЕВЫЕ / КРАСНЫЕ -->
     <div class="widget-expanded">
+
+      <!-- ════ БЛОК ПРОСРОЧЕННЫХ ЗАДАЧ (= нарушенные обещания) ════ -->
+      <div class="overdue-tasks-bar" id="overdue-tasks-bar">
+        <div class="overdue-head">
+          <span class="overdue-icon">🚨</span>
+          <span class="overdue-title">Просроченные задачи: <b id="overdue-count">3</b></span>
+          <span class="promise-rate bad" id="promise-rate">🤝 Обещания: <b>70%</b></span>
+        </div>
+        <div class="overdue-list" id="overdue-list">
+          <!-- генерируется JS -->
+        </div>
+      </div>
+
       <div class="expanded-body">
 
         <!-- ════ КОЛОНКА 1 · Большое число + Поток ════ -->
@@ -881,10 +1019,14 @@
       effectLabel: 'к потоку лидов',
       effectColor: 'good',
       queue: 1,
+      tasksTotal: 12,
+      promiseRate: 95,
+      overdueTasks: [],
       yellows: [],
       oranges: [],
       reds: [
-        { name: 'Соколов И.', hours: 52, amount: '150к ₽' },
+        { name: 'Соколов И.', hours: 52, amount: '150к ₽',
+          task: { type: '📞', label: 'Позвонить', when: 'сегодня 16:00', status: 'today' } },
       ],
     },
     yellow: {
@@ -898,18 +1040,30 @@
       effectLabel: 'предупреждение',
       effectColor: 'warn',
       queue: 7,
+      tasksTotal: 14,
+      promiseRate: 82,
+      overdueTasks: [
+        { deal: 'Гаврилов Н.', type: '📞', label: 'Звонок', promised: 'вчера 15:00', delay: '21ч' },
+      ],
       yellows: [
-        { name: 'Михайлов А.', hoursLeft: 20, amount: '120к ₽' },
-        { name: 'Лебедев К.',  hoursLeft: 14, amount: '180к ₽' },
+        { name: 'Михайлов А.', hoursLeft: 20, amount: '120к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 14:00', status: 'today' } },
+        { name: 'Лебедев К.',  hoursLeft: 14, amount: '180к ₽',
+          task: { type: '💬', label: 'Написать', when: 'завтра 10:00', status: 'tomorrow' } },
       ],
       oranges: [
-        { name: 'Захаров Б.', hoursLeft: 8, amount: '85к ₽' },
+        { name: 'Захаров Б.', hoursLeft: 8, amount: '85к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 11:00', status: 'today' } },
       ],
       reds: [
-        { name: 'Гаврилов Н.', hours: 50, amount: '180к ₽' },
-        { name: 'Никитин В.', hours: 55, amount: '180к ₽' },
-        { name: 'Орлова К.', hours: 64, amount: '120к ₽' },
-        { name: 'Сергеев П.', hours: 70, amount: '95к ₽' },
+        { name: 'Гаврилов Н.', hours: 50, amount: '180к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'вчера 15:00', status: 'late', delay: '21ч' } },
+        { name: 'Никитин В.', hours: 55, amount: '180к ₽',
+          task: null },
+        { name: 'Орлова К.', hours: 64, amount: '120к ₽',
+          task: { type: '🤝', label: 'Встреча', when: 'завтра 12:00', status: 'tomorrow' } },
+        { name: 'Сергеев П.', hours: 70, amount: '95к ₽',
+          task: null },
       ],
     },
     orange: {
@@ -923,24 +1077,40 @@
       effectLabel: 'поток лидов',
       effectColor: 'bad',
       queue: 13,
+      tasksTotal: 18,
+      promiseRate: 65,
+      overdueTasks: [
+        { deal: 'Прохоров А.', type: '📞', label: 'Звонок', promised: 'вчера 12:00', delay: '24ч' },
+        { deal: 'Дроздов Ф.',  type: '💬', label: 'Написать', promised: 'вчера 18:00', delay: '18ч' },
+        { deal: 'Морозов И.',  type: '🤝', label: 'Встреча', promised: 'сегодня 09:00', delay: '3ч' },
+      ],
       yellows: [
-        { name: 'Петров К.',   hoursLeft: 18, amount: '95к ₽'  },
-        { name: 'Иванов С.',   hoursLeft: 16, amount: '180к ₽' },
-        { name: 'Сергеев А.',  hoursLeft: 14, amount: '120к ₽' },
+        { name: 'Петров К.',   hoursLeft: 18, amount: '95к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 15:00', status: 'today' } },
+        { name: 'Иванов С.',   hoursLeft: 16, amount: '180к ₽',
+          task: { type: '💬', label: 'Написать', when: 'завтра 11:00', status: 'tomorrow' } },
+        { name: 'Сергеев А.',  hoursLeft: 14, amount: '120к ₽',
+          task: null },
       ],
       oranges: [
-        { name: 'Назаров П.',   hoursLeft: 1,  amount: '95к ₽',  urgent: true },
-        { name: 'Капитанов И.', hoursLeft: 4,  amount: '180к ₽', urgent: true },
+        { name: 'Назаров П.',   hoursLeft: 1,  amount: '95к ₽',  urgent: true,
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 13:00', status: 'today' } },
+        { name: 'Капитанов И.', hoursLeft: 4,  amount: '180к ₽', urgent: true,
+          task: null },
       ],
       reds: [
-        { name: 'Прохоров А.', hours: 50, amount: '220к ₽' },
-        { name: 'Дроздов Ф.', hours: 55, amount: '95к ₽' },
-        { name: 'Морозов И.', hours: 60, amount: '180к ₽' },
-        { name: 'Кузьмин Р.', hours: 64, amount: '120к ₽' },
-        { name: 'Власов А.', hours: 70, amount: '85к ₽' },
-        { name: 'Зайцев К.', hours: 76, amount: '150к ₽' },
-        { name: 'Орлов М.', hours: 84, amount: '180к ₽' },
-        { name: 'Лебедева А.', hours: 96, amount: '120к ₽' },
+        { name: 'Прохоров А.', hours: 50, amount: '220к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'вчера 12:00', status: 'late', delay: '24ч' } },
+        { name: 'Дроздов Ф.', hours: 55, amount: '95к ₽',
+          task: { type: '💬', label: 'Написать', when: 'вчера 18:00', status: 'late', delay: '18ч' } },
+        { name: 'Морозов И.', hours: 60, amount: '180к ₽',
+          task: { type: '🤝', label: 'Встреча', when: 'сегодня 09:00', status: 'late', delay: '3ч' } },
+        { name: 'Кузьмин Р.', hours: 64, amount: '120к ₽',
+          task: null },
+        { name: 'Власов А.', hours: 70, amount: '85к ₽', task: null },
+        { name: 'Зайцев К.', hours: 76, amount: '150к ₽', task: null },
+        { name: 'Орлов М.', hours: 84, amount: '180к ₽', task: null },
+        { name: 'Лебедева А.', hours: 96, amount: '120к ₽', task: null },
       ],
     },
     red: {
@@ -954,28 +1124,45 @@
       effectLabel: 'новых лидов',
       effectColor: 'critical',
       queue: 17,
+      tasksTotal: 23,
+      promiseRate: 48,
+      overdueTasks: [
+        { deal: 'Куделькин С.',  type: '📞', label: 'Звонок', promised: 'вчера 11:00', delay: '25ч' },
+        { deal: 'Морозов А.',    type: '📞', label: 'Звонок', promised: 'вчера 16:00', delay: '20ч' },
+        { deal: 'Беляев М.',     type: '🤝', label: 'Встреча', promised: '2 дня назад', delay: '48ч' },
+        { deal: 'Григорьев С.',  type: '💬', label: 'Написать', promised: 'сегодня 08:00', delay: '4ч' },
+        { deal: 'Соколов Р.',    type: '📞', label: 'Звонок', promised: 'сегодня 10:00', delay: '2ч' },
+      ],
       yellows: [
-        { name: 'Орлов К.',     hoursLeft: 18, amount: '95к ₽'  },
-        { name: 'Степанов И.',  hoursLeft: 14, amount: '120к ₽' },
-        { name: 'Семёнов Г.',   hoursLeft: 10, amount: '180к ₽' },
+        { name: 'Орлов К.',     hoursLeft: 18, amount: '95к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 14:00', status: 'today' } },
+        { name: 'Степанов И.',  hoursLeft: 14, amount: '120к ₽', task: null },
+        { name: 'Семёнов Г.',   hoursLeft: 10, amount: '180к ₽',
+          task: { type: '💬', label: 'Написать', when: 'завтра', status: 'tomorrow' } },
       ],
       oranges: [
-        { name: 'Васильев А.',  hoursLeft: 1, amount: '95к ₽',  urgent: true },
-        { name: 'Андреев П.',   hoursLeft: 3, amount: '150к ₽', urgent: true },
+        { name: 'Васильев А.',  hoursLeft: 1, amount: '95к ₽',  urgent: true, task: null },
+        { name: 'Андреев П.',   hoursLeft: 3, amount: '150к ₽', urgent: true,
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 12:00', status: 'today' } },
       ],
       reds: [
-        { name: 'Куделькин С.', hours: 49, amount: '110к ₽' },
-        { name: 'Морозов А.', hours: 55, amount: '85к ₽' },
-        { name: 'Орлов А.', hours: 60, amount: '180к ₽' },
-        { name: 'Беляев М. 🚨', hours: 65, amount: '120к ₽' },
-        { name: 'Григорьев С.', hours: 72, amount: '95к ₽' },
-        { name: 'Соколов Р.', hours: 80, amount: '150к ₽' },
-        { name: 'Никитин В.', hours: 92, amount: '180к ₽' },
-        { name: 'Кузнецова Л.', hours: 110, amount: '95к ₽' },
-        { name: 'Тимошенко П.', hours: 125, amount: '120к ₽' },
-        { name: 'Захарова Б.', hours: 140, amount: '85к ₽' },
-        { name: 'Михайлов Р.', hours: 160, amount: '180к ₽' },
-        { name: 'Орлова К.', hours: 180, amount: '120к ₽' },
+        { name: 'Куделькин С.', hours: 49, amount: '110к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'вчера 11:00', status: 'late', delay: '25ч' } },
+        { name: 'Морозов А.', hours: 55, amount: '85к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'вчера 16:00', status: 'late', delay: '20ч' } },
+        { name: 'Орлов А.', hours: 60, amount: '180к ₽', task: null },
+        { name: 'Беляев М. 🚨', hours: 65, amount: '120к ₽',
+          task: { type: '🤝', label: 'Встреча', when: '2 дня назад', status: 'late', delay: '48ч' } },
+        { name: 'Григорьев С.', hours: 72, amount: '95к ₽',
+          task: { type: '💬', label: 'Написать', when: 'сегодня 08:00', status: 'late', delay: '4ч' } },
+        { name: 'Соколов Р.', hours: 80, amount: '150к ₽',
+          task: { type: '📞', label: 'Звонок', when: 'сегодня 10:00', status: 'late', delay: '2ч' } },
+        { name: 'Никитин В.', hours: 92, amount: '180к ₽', task: null },
+        { name: 'Кузнецова Л.', hours: 110, amount: '95к ₽', task: null },
+        { name: 'Тимошенко П.', hours: 125, amount: '120к ₽', task: null },
+        { name: 'Захарова Б.', hours: 140, amount: '85к ₽', task: null },
+        { name: 'Михайлов Р.', hours: 160, amount: '180к ₽', task: null },
+        { name: 'Орлова К.', hours: 180, amount: '120к ₽', task: null },
       ],
     },
   };
@@ -1061,18 +1248,75 @@
       `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`
     );
     document.getElementById('red-list-count').textContent = z.reds.length;
+
+    // ════ Задачи · сводка в свёрнутой полоске ════
+    const overdueCount = (z.overdueTasks || []).length;
+    const tasksTotal = z.tasksTotal || 0;
+    const tasksSummaryEl = document.getElementById('tasks-summary');
+    if (overdueCount === 0) {
+      tasksSummaryEl.innerHTML = `📋 <b>${tasksTotal}</b> задач · ✓ обещания в норме`;
+    } else {
+      tasksSummaryEl.innerHTML = `📋 <b>${tasksTotal}</b> задач · <span class="overdue">⏰ ${overdueCount} просрочен${overdueCount === 1 ? 'а' : overdueCount < 5 ? 'ы' : 'о'}</span>`;
+    }
+
+    // ════ Блок просроченных задач (вверху раскрытого виджета) ════
+    document.getElementById('overdue-count').textContent = overdueCount;
+    renderOverdueList(z.overdueTasks);
+
+    // % обещаний — цвет по порогу
+    const promiseRate = z.promiseRate;
+    const promiseEl = document.getElementById('promise-rate');
+    let rateCls = 'good';
+    if (promiseRate < 60) rateCls = 'bad';
+    else if (promiseRate < 80) rateCls = 'warn';
+    promiseEl.className = `promise-rate ${rateCls}`;
+    promiseEl.innerHTML = `🤝 Обещания: <b>${promiseRate}%</b>`;
+  }
+
+  function renderTaskLine(task) {
+    if (!task) {
+      return `<div class="task-line none"><span class="task-type">⏸</span>нет назначенной задачи</div>`;
+    }
+    const cls = task.status || 'none';
+    const prefix = {
+      late: `🚨 Просрочено ${task.delay || ''} ·`,
+      today: '⏰ Сегодня ·',
+      tomorrow: '📅 Завтра ·',
+    }[cls] || '';
+    return `<div class="task-line ${cls}"><span class="task-type">${task.type || '📋'}</span>${prefix} ${task.label} ${task.when ? `· ${task.when}` : ''}</div>`;
   }
 
   function renderDealsList(elId, items, label, metaFn) {
     const html = items.length > 0
       ? items.map(d => `
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDeal('${d.name}')">
-            <span class="name">${d.name}</span>
-            ${metaFn(d)}
+            <div class="top-line">
+              <span class="name">${d.name}</span>
+              ${metaFn(d)}
+            </div>
+            ${renderTaskLine(d.task)}
           </div>
         `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
     document.getElementById(elId).innerHTML = html;
+  }
+
+  function renderOverdueList(items) {
+    const bar = document.getElementById('overdue-tasks-bar');
+    const list = document.getElementById('overdue-list');
+    if (!items || items.length === 0) {
+      bar.classList.add('empty');
+      list.innerHTML = `<div class="overdue-empty">✓ Все обещания выполнены вовремя</div>`;
+      return;
+    }
+    bar.classList.remove('empty');
+    list.innerHTML = items.map(t => `
+      <div class="overdue-item" onclick="openDeal('${t.deal}')">
+        <span class="task-type">${t.type}</span>
+        <span class="task-meta">${t.label} · <span class="deal-name">${t.deal}</span><br/><span style="font-size:11px;color:#999;font-weight:500;">обещал ${t.promised}</span></span>
+        <span class="task-delay">${t.delay}</span>
+      </div>
+    `).join('');
   }
 
   function currentZone() {
