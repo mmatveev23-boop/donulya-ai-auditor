@@ -8811,6 +8811,296 @@
 </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- 📲 ВИДЖЕТ amoCRM · превью встраивания в карточку сделки (col-6 на всю ширину) -->
+<div class="mc-card col-6 accent-orange">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">📲</div>
+<div class="mc-card-label">Виджет в карточке сделки amoCRM <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">превью встраивания в правый sidebar · клоузер видит светофор не выходя из amoCRM</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 14px;">
+  Это макет как виджет будет выглядеть внутри настоящей amoCRM (правая колонка, рядом с Sensei, Wappi, OkiDoki, Билайн, ДоНуля). Программист берёт дизайн 1-в-1 и реализует через amoCRM Widgets API.
+</div>
+
+<!-- Имитация amoCRM dark theme окружения -->
+<div style="background: #2c3340; border-radius: 10px; padding: 16px; border: 1px solid rgba(255,255,255,0.06);">
+  <div style="display: grid; grid-template-columns: 1fr 320px; gap: 14px;">
+
+    <!-- Левая часть — имитация открытой карточки сделки -->
+    <div style="background: #21252e; border-radius: 8px; padding: 14px; min-height: 480px;">
+      <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px;">👤 Александр</div>
+      <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 14px;">#25516191 · Рефинансирование · МПП 2 уровень</div>
+
+      <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px; margin-bottom: 8px;">
+        <div style="font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Статус</div>
+        <div style="font-size: 12px; color: #fff;">Оплачено 990 (Сегодня)</div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px; margin-bottom: 8px;">
+        <div style="font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">МПП 2 уровень</div>
+        <div style="font-size: 12px; color: #fff;">Мифтахов Рафаэль</div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px;">
+        <div style="font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Последний контакт</div>
+        <div style="font-size: 12px; color: #fff;">Звонок 38 сек · 49ч назад</div>
+      </div>
+
+      <div style="margin-top: 14px; padding: 10px; background: rgba(255,255,255,0.025); border-radius: 6px; font-size: 11px; color: rgba(255,255,255,0.5); font-style: italic;">
+        ⋯ заметки, история звонков, переписка ⋯
+      </div>
+    </div>
+
+    <!-- Правая часть — наш виджет светофора -->
+    <div>
+      <!-- Имитация заголовка раздела "Виджеты" как в amoCRM -->
+      <div style="font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">📦 Виджеты</div>
+
+      <!-- НАШ ВИДЖЕТ "Светофор сделки" -->
+      <div style="background: linear-gradient(135deg, #ff453a 0%, #d63b32 100%); border-radius: 10px 10px 0 0; padding: 12px 14px; color: #fff;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚦 Светофор сделки</div>
+          <div style="font-size: 11px; opacity: 0.85;">ДоНуля AI</div>
+        </div>
+      </div>
+
+      <div style="background: #21252e; border-radius: 0 0 10px 10px; padding: 14px; border: 1px solid rgba(255,69,58,0.30); border-top: none;">
+        <!-- Статус сделки крупно -->
+        <div style="text-align: center; padding: 10px 0 14px;">
+          <div style="font-size: 32px; line-height: 1;">🔴</div>
+          <div style="font-size: 14px; font-weight: 800; color: #ff453a; margin-top: 4px;">ПРОСРОЧЕНА · 49ч</div>
+          <div style="font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 2px;">2-й день в красной зоне</div>
+        </div>
+
+        <!-- 📞 Касания -->
+        <div style="background: rgba(255,255,255,0.03); border-radius: 6px; padding: 9px 11px; margin-bottom: 6px;">
+          <div style="font-size: 9.5px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">📞 Касаний всего</div>
+          <div style="display: flex; gap: 8px; font-size: 11px; align-items: center;">
+            <span style="color: #30d158; font-weight: 700;">✓ 1</span>
+            <span style="color: rgba(255,255,255,0.55);">реальное (звонок 4 мин)</span>
+          </div>
+          <div style="display: flex; gap: 8px; font-size: 11px; align-items: center; margin-top: 3px;">
+            <span style="color: #ff453a; font-weight: 700;">❌ 1</span>
+            <span style="color: rgba(255,255,255,0.55);">фейк (звонок 38 сек)</span>
+          </div>
+        </div>
+
+        <!-- 🤖 AI разбор -->
+        <div style="background: rgba(255,69,58,0.06); border-left: 3px solid #ff453a; border-radius: 6px; padding: 9px 11px; margin-bottom: 6px;">
+          <div style="font-size: 9.5px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">🤖 AI · Последний звонок</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.45;">
+            • Не предложил частичку<br/>
+            • Тон давления в 00:48<br/>
+            • Клиент: «положу трубку»
+          </div>
+          <button style="margin-top: 8px; background: rgba(82,167,255,0.18); color: #52a7ff; border: 1px solid rgba(82,167,255,0.30); border-radius: 5px; padding: 5px 9px; font-size: 10.5px; font-weight: 600; width: 100%; cursor: pointer;">▶️ Послушать (00:48)</button>
+        </div>
+
+        <!-- 🎯 Что делать -->
+        <div style="background: rgba(48,209,88,0.05); border-left: 3px solid #30d158; border-radius: 6px; padding: 9px 11px; margin-bottom: 6px;">
+          <div style="font-size: 9.5px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">🎯 Что делать сейчас</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.5;">
+            <span style="color: #30d158; font-weight:700;">1.</span> Позвонить + дожать частичку 15к<br/>
+            <span style="color: #30d158; font-weight:700;">2.</span> Если не отвечает — TG/WA<br/>
+            <span style="color: #30d158; font-weight:700;">3.</span> 6 попыток без ответа → 🔇
+          </div>
+        </div>
+
+        <!-- ⚠ Шкурный интерес -->
+        <div style="background: rgba(255,159,10,0.05); border-left: 3px solid #ff9f0a; border-radius: 6px; padding: 9px 11px; margin-bottom: 10px;">
+          <div style="font-size: 9.5px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">⚠ Шкурный интерес</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.5;">
+            Ты в <b style="color:#ff9f0a;">🟠 22%</b> (поток −50%, премия −20%)<br/>
+            Бросишь — −2пп · Дожмёшь — +1 продажа
+          </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <button style="background: #2aabee; color: #fff; border: none; border-radius: 6px; padding: 9px; font-size: 11px; font-weight: 700; cursor: pointer;">📞 Позвонить</button>
+          <button style="background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 9px; font-size: 11px; font-weight: 700; cursor: pointer;">💬 Написать</button>
+        </div>
+        <button style="margin-top: 6px; background: rgba(255,69,58,0.10); color: #ff453a; border: 1px solid rgba(255,69,58,0.25); border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 600; cursor: pointer; width: 100%;">🆘 Запросить помощь РОПа</button>
+
+        <!-- Footer -->
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 9.5px; color: rgba(255,255,255,0.35); text-align: center;">
+          ДоНуля Виджет · обновляется каждые 2 мин
+        </div>
+      </div>
+
+      <!-- Другие виджеты ниже (имитация) -->
+      <div style="margin-top: 10px; opacity: 0.4;">
+        <div style="background: #21252e; border-radius: 8px; padding: 9px 12px; margin-bottom: 6px; font-size: 11px; color: #fff;">📦 Wappi Widget</div>
+        <div style="background: #21252e; border-radius: 8px; padding: 9px 12px; margin-bottom: 6px; font-size: 11px; color: #fff;">📦 OkiDoki</div>
+        <div style="background: #21252e; border-radius: 8px; padding: 9px 12px; margin-bottom: 6px; font-size: 11px; color: #fff;">📦 HyperScript</div>
+        <div style="background: #21252e; border-radius: 8px; padding: 9px 12px; font-size: 11px; color: #fff;">📦 ДоНуля</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  <b>Где встраивается:</b> правый sidebar карточки сделки (рядом с Sensei/Wappi/Билайн). <b>Что показывает:</b> статус ЭТОЙ сделки + AI-разбор последнего звонка + что делать + шкурный интерес. <b>API:</b> webhook AMO → запрос к нашему PocketBase → render виджета. <b>Подключение:</b> amoCRM Widgets API через manifest.json (точка монтирования `lead_card`).
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- 📊 ВИДЖЕТ amoCRM · превью встраивания в воронку с цветными метками (col-6) -->
+<div class="mc-card col-6 accent-blue">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">📊</div>
+<div class="mc-card-label">Виджет в воронке amoCRM <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">цветные метки на карточках сделок + статус-полоска клоузера сверху</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 14px;">
+  Это макет воронки «МПП 2 уровень» как сейчас в amoCRM, но с цветовыми метками светофора на каждой сделке. Клоузер открывает воронку и видит <b>где провисает</b> без открытия каждой карточки.
+</div>
+
+<!-- Имитация amoCRM воронки -->
+<div style="background: #f5f6f8; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06); color: #333;">
+  <!-- НАШ ВИДЖЕТ "Статус клоузера" сверху воронки -->
+  <div style="background: linear-gradient(90deg, #ff9f0a 0%, #ff8000 100%); color: #fff; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚦 Твой статус: 🟠 ОРАНЖЕВАЯ ЗОНА · 22% красных</div>
+      <div style="font-size: 11px; opacity: 0.9; margin-top: 2px;">⚠ Поток новых лидов −50% · Премия за дисциплину −20% · Разгреби 1 из 8 🔴 → вернёшься в 🟡</div>
+    </div>
+    <div style="text-align: right;">
+      <div style="font-size: 18px; font-weight: 800;">8 🔴 / 5 🟡 / 24 🟢 / 7 🔇</div>
+      <div style="font-size: 10.5px; opacity: 0.85;">сделок в работе: 44</div>
+    </div>
+  </div>
+
+  <!-- Заголовок воронки -->
+  <div style="font-size: 14px; font-weight: 700; color: #333; margin-bottom: 4px;">МПП 2 УРОВЕНЬ</div>
+  <div style="font-size: 11px; color: #666; margin-bottom: 12px;">328 сделок · 5 столбцов · цветной dot слева = светофор</div>
+
+  <!-- 5 столбцов воронки -->
+  <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+
+    <!-- Столбец 1: Оплачено 990 -->
+    <div>
+      <div style="font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; border-bottom: 2px solid #4caf50; margin-bottom: 6px;">Оплачено 990<br/><span style="color:#aaa; font-weight:400; font-size: 9.5px;">15 сделок · 0₽</span></div>
+
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Сегодня 10:54</div>
+        <div style="color: #1976d2; font-weight: 600;">🟢 Людмила</div>
+        <div style="color: #666;">ФССП</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Сегодня 09:08</div>
+        <div style="color: #1976d2; font-weight: 600;">🟢 Эдик</div>
+        <div style="color: #666;">Рефин.</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #ffc107; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Сегодня 08:14</div>
+        <div style="color: #1976d2; font-weight: 600;">🟡 Александр</div>
+        <div style="color: #666;">Рефин · 32ч молчит</div>
+      </div>
+    </div>
+
+    <!-- Столбец 2: Недозвон -->
+    <div>
+      <div style="font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; border-bottom: 2px solid #ff9800; margin-bottom: 6px;">Недозвон<br/><span style="color:#aaa; font-weight:400; font-size: 9.5px;">5 сделок · 0₽</span></div>
+
+      <div style="background: #fff; border-left: 3px solid #f44336; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">08.05.2026</div>
+        <div style="color: #1976d2; font-weight: 600;">🔴 Наталья</div>
+        <div style="color: #d32f2f; font-weight: 600;">⚠ 52ч молчит</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #f44336; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">30.04.2026</div>
+        <div style="color: #1976d2; font-weight: 600;">🔴 Лид с сайта</div>
+        <div style="color: #d32f2f; font-weight: 600;">⚠ 60ч молчит</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #9c27b0; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">17.04.2026</div>
+        <div style="color: #1976d2; font-weight: 600;">🔇 Виктория</div>
+        <div style="color: #7b1fa2;">Молчит 9 дней · реан.</div>
+      </div>
+    </div>
+
+    <!-- Столбец 3: Записан на видеовстречу -->
+    <div>
+      <div style="font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; border-bottom: 2px solid #2196f3; margin-bottom: 6px;">Записан на встречу<br/><span style="color:#aaa; font-weight:400; font-size: 9.5px;">4 сделки · 0₽</span></div>
+
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 10:48</div>
+        <div style="color: #1976d2; font-weight: 600;">🟢 Алексей</div>
+        <div style="color: #666;">Сегодня встреча</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #ffc107; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">11.05.2026</div>
+        <div style="color: #1976d2; font-weight: 600;">🟡 Евгения</div>
+        <div style="color: #666;">Завтра встреча · 28ч</div>
+      </div>
+    </div>
+
+    <!-- Столбец 4: Думает -->
+    <div>
+      <div style="font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; border-bottom: 2px solid #ffc107; margin-bottom: 6px;">Думает<br/><span style="color:#aaa; font-weight:400; font-size: 9.5px;">123 сделки · 0₽</span></div>
+
+      <div style="background: #fff; border-left: 3px solid #f44336; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 15:31</div>
+        <div style="color: #1976d2; font-weight: 600;">🔴 Татьяна</div>
+        <div style="color: #d32f2f; font-weight: 600;">⚠ 56ч молчит</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #ff9800; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 14:54</div>
+        <div style="color: #1976d2; font-weight: 600;">🟠 Ксения</div>
+        <div style="color: #f57c00;">36ч · скоро 🔴</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 13:55</div>
+        <div style="color: #1976d2; font-weight: 600;">🟢 Наталья</div>
+        <div style="color: #666;">2ч назад · активна</div>
+      </div>
+    </div>
+
+    <!-- Столбец 5: Счёт выставлен -->
+    <div>
+      <div style="font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; border-bottom: 2px solid #4caf50; margin-bottom: 6px;">Счёт выставлен<br/><span style="color:#aaa; font-weight:400; font-size: 9.5px;">128 сделок · 0₽</span></div>
+
+      <div style="background: #fff; border-left: 3px solid #f44336; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 12:18</div>
+        <div style="color: #1976d2; font-weight: 600;">🔴 Анна</div>
+        <div style="color: #d32f2f; font-weight: 600;">⚠ 76ч · просрочка</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #9c27b0; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">Вчера 12:12</div>
+        <div style="color: #1976d2; font-weight: 600;">🔇 Павел</div>
+        <div style="color: #7b1fa2;">Молчит 8 дней</div>
+      </div>
+
+      <div style="background: #fff; border-left: 3px solid #4caf50; border-radius: 4px; padding: 6px 8px; margin-bottom: 4px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+        <div style="color: #999; font-size: 9px;">11.05.2026</div>
+        <div style="color: #1976d2; font-weight: 600;">🟢 Анзор</div>
+        <div style="color: #666;">Оплата 26.04</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Легенда -->
+  <div style="margin-top: 14px; padding: 10px 12px; background: #fff; border-radius: 6px; font-size: 10.5px; color: #555; display: flex; gap: 16px; flex-wrap: wrap;">
+    <span><span style="color:#4caf50; font-weight:700;">🟢</span> <b>Зелёная</b> — касание &lt;24ч</span>
+    <span><span style="color:#ffc107; font-weight:700;">🟡</span> <b>Жёлтая</b> — 24–48ч</span>
+    <span><span style="color:#ff9800; font-weight:700;">🟠</span> <b>Оранжевая</b> — 36–47ч (скоро 🔴)</span>
+    <span><span style="color:#f44336; font-weight:700;">🔴</span> <b>Красная</b> — &gt;48ч (просрочка)</span>
+    <span><span style="color:#9c27b0; font-weight:700;">🔇</span> <b>Молчит</b> — клиент не отвечает</span>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  <b>Где встраивается:</b> вверху воронки — полоска статуса клоузера (всегда видна). На каждой карточке сделки — цветной dot слева + краткий статус «X часов молчит». <b>Что закрывает:</b> клоузер открывает воронку и сразу видит ⚠ красные сделки — не нужно открывать каждую. <b>Подключение:</b> amoCRM Widgets API (точки `lead_card_list` + `pipeline_top_bar`).
+</div>
+</div>
+
 <!-- 📋 Расхождения · Расторги · Сливы (col-6 — 5 компактных плиток-индикаторов в стиле Виктории v5) -->
 <div class="mc-card col-6 accent-red">
 <div class="mc-card-arrow">→</div>
