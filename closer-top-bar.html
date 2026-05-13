@@ -873,6 +873,182 @@
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: 11px;
   }
+  /* ════ Modal: leaderboard команды (вызывается по клику на rank-badge) ════ */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    display: none;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.18s ease;
+  }
+  .modal-backdrop.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.50);
+    overflow: hidden;
+    animation: slideUp 0.22s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .modal-head h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .modal-head .sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.50);
+    margin-top: 2px;
+  }
+  .modal-close {
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: rgba(255,255,255,0.65);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+  .modal-body { padding: 8px 12px 12px; }
+
+  /* Строка клоузера в модальном leaderboard */
+  .lb-row {
+    display: grid;
+    grid-template-columns: 22px 32px 1fr auto auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 10px;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .lb-row:hover { background: rgba(255,255,255,0.04); }
+  .lb-row .lb-pos {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.40);
+    text-align: right;
+  }
+  .lb-row .lb-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  }
+  .lb-row[data-signal="green"]  .lb-avatar { background: linear-gradient(135deg, #30d158, #28b449); }
+  .lb-row[data-signal="yellow"] .lb-avatar { background: linear-gradient(135deg, #ffd60a, #e6b800); color: #5a4a00; }
+  .lb-row[data-signal="orange"] .lb-avatar { background: linear-gradient(135deg, #ff9f0a, #ff7f00); }
+  .lb-row[data-signal="red"]    .lb-avatar { background: linear-gradient(135deg, #ff453a, #d8332a); }
+
+  .lb-row .lb-meta { min-width: 0; }
+  .lb-row .lb-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    letter-spacing: -0.005em;
+  }
+  .lb-row .lb-me-tag {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(0,0,0,0.7);
+    background: #ffd60a;
+    padding: 1px 6px;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+  .lb-row .lb-bar {
+    width: 90px;
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .lb-row .lb-bar > i {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    width: var(--bar-pct, 0%);
+  }
+  .lb-row[data-signal="green"]  .lb-bar > i { background: linear-gradient(90deg, #30d158, #28b449); }
+  .lb-row[data-signal="yellow"] .lb-bar > i { background: linear-gradient(90deg, #ffd60a, #e6b800); }
+  .lb-row[data-signal="orange"] .lb-bar > i { background: linear-gradient(90deg, #ff9f0a, #ff7f00); }
+  .lb-row[data-signal="red"]    .lb-bar > i { background: linear-gradient(90deg, #ff453a, #d8332a); }
+  .lb-row .lb-pct {
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 38px;
+    text-align: right;
+  }
+
+  /* Строка "ты" — подсветка */
+  .lb-row.lb-me {
+    background: rgba(255,255,255,0.06);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+  }
+  .lb-row.lb-me .lb-name { color: #fff; }
+
+  .modal-foot {
+    padding: 12px 20px 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .modal-foot .hint {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.45);
+  }
+  .modal-foot .btn-link {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.88);
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.15s;
+  }
+  .modal-foot .btn-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
 </style>
 </head>
 <body>
@@ -962,7 +1138,7 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
-        <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); goRopLeaderboard()" title="Открыть полный leaderboard команды">
+        <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); openLeaderboard()" title="Открыть полный leaderboard команды">
           <span class="rk" id="rank-text">#3 из 4</span>
           <span class="arr">↗</span>
         </span>
@@ -1408,10 +1584,57 @@
     document.getElementById('red-list').scrollIntoView({ behavior: 'smooth' });
   }
 
-  function goRopLeaderboard() {
-    // В проде → переход в rop-workplace.html (полный leaderboard) или anchor #leaderboard
-    window.location.href = 'rop-workplace.html#leaderboard';
+  function openLeaderboard() {
+    const modal = document.getElementById('lbModal');
+    const rowsEl = document.getElementById('lb-rows');
+    const currentZone = (function() {
+      const cls = document.getElementById('topWidget').className;
+      if (cls.includes('zone-green')) return 'green';
+      if (cls.includes('zone-yellow')) return 'yellow';
+      if (cls.includes('zone-orange')) return 'orange';
+      return 'red';
+    })();
+
+    // Собираем список → сортируем по % asc → рендерим
+    const items = Object.entries(zones).map(([key, z]) => {
+      const initial = z.name.charAt(0);
+      const pct = parseInt(z.status.match(/(\d+)%/)?.[1] || '0', 10);
+      // bar-ширина: × 3 чтобы маленькие % были видны (как в leaderboard pills сверху)
+      const barPct = Math.min(100, pct * 3);
+      return { key, name: z.name, initial, signal: key, pct, barPct };
+    }).sort((a, b) => a.pct - b.pct);
+
+    rowsEl.innerHTML = items.map((it, idx) => {
+      const isMe = it.key === currentZone;
+      const meTag = isMe ? '<span class="lb-me-tag">Ты</span>' : '';
+      return `
+        <div class="lb-row ${isMe ? 'lb-me' : ''}" data-signal="${it.signal}" style="--bar-pct: ${it.barPct}%">
+          <span class="lb-pos">#${idx + 1}</span>
+          <span class="lb-avatar">${it.initial}</span>
+          <span class="lb-meta">
+            <span class="lb-name">${it.name}${meTag}</span>
+          </span>
+          <span class="lb-bar"><i></i></span>
+          <span class="lb-pct">${it.pct}%</span>
+        </div>
+      `;
+    }).join('');
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeLeaderboard(ev) {
+    // Если клик внутри карточки — не закрывать
+    if (ev && ev.target.classList && !ev.target.classList.contains('modal-backdrop') && !ev.target.classList.contains('modal-close')) return;
+    document.getElementById('lbModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Esc — закрывает модалку
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLeaderboard();
+  });
 
   // Ранжирование команды по % красных (asc — меньше красных = выше rank)
   // Source of truth = zones объект. В проде это придёт с бекенда.
@@ -1431,6 +1654,27 @@
   // Инициализация: оранжевая (Мифтахов) по умолчанию
   setZone('orange', document.querySelector('.zone-btn.active'));
 </script>
+
+
+<!-- Modal: leaderboard команды (открывается кликом по rank-badge в полосе) -->
+<div class="modal-backdrop" id="lbModal" onclick="closeLeaderboard(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div>
+        <h3>🏆 Светофор команды</h3>
+        <div class="sub">Сортировка по % красных · меньше = выше место</div>
+      </div>
+      <button class="modal-close" onclick="closeLeaderboard()">✕</button>
+    </div>
+    <div class="modal-body" id="lb-rows">
+      <!-- генерируется JS -->
+    </div>
+    <div class="modal-foot">
+      <span class="hint">Нажми <kbd style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;font-size:10px;font-family:monospace;">Esc</kbd> чтобы закрыть</span>
+      <a class="btn-link" href="rop-workplace.html#leaderboard">Полная аналитика РОПа →</a>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
