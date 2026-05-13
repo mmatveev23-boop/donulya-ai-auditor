@@ -68,18 +68,18 @@
   }
 
   /* ════════ Зона переключения клоузера ════════ */
-  /* Leaderboard команды (HubSpot-style pills · signal-color по % красных) */
+  /* Leaderboard команды (HubSpot Sales Hub стиль) — аватар + имя + % + мини-bar */
   .zone-switcher {
     max-width: 1280px;
     margin: 20px auto;
-    padding: 10px 14px;
+    padding: 12px 16px;
     background: rgba(255,255,255,0.025);
-    border-radius: 999px;
+    border-radius: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
   }
 
   .zone-switcher .label {
@@ -93,64 +93,133 @@
 
   .zone-btns {
     display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-
-  /* Pill: компактная капсула с signal-dot слева */
-  .zone-btn {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid transparent;
-    border-radius: 999px;
-    padding: 5px 12px 5px 8px;
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.78);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    letter-spacing: -0.005em;
+    flex-wrap: wrap;
+    align-items: stretch;
   }
 
-  /* Signal-dot — цветная точка слева от имени (зелёная/жёлтая/оранжевая/красная по % касаний) */
-  .zone-btn::before {
-    content: "";
-    display: inline-block;
-    width: 8px;
-    height: 8px;
+  /* Pill leaderboard: аватар-кружок (signal-color) + имя + % + мини-progress-bar снизу */
+  .zone-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 7px 12px 8px 7px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    min-width: 138px;
+    position: relative;
+  }
+  .zone-btn:hover {
+    background: rgba(255,255,255,0.09);
+    transform: translateY(-1px);
+  }
+
+  /* Верхняя строка pill: аватар + имя + процент */
+  .zone-btn .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Аватар = цветной кружок с инициалом, цвет = signal по % касаний */
+  .zone-btn .avatar {
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     flex-shrink: 0;
-  }
-  .zone-btn[data-signal="green"]::before  { background: #30d158; box-shadow: 0 0 0 2px rgba(48,209,88,0.18); }
-  .zone-btn[data-signal="yellow"]::before { background: #ffd60a; box-shadow: 0 0 0 2px rgba(255,214,10,0.18); }
-  .zone-btn[data-signal="orange"]::before { background: #ff9f0a; box-shadow: 0 0 0 2px rgba(255,159,10,0.18); }
-  .zone-btn[data-signal="red"]::before    { background: #ff453a; box-shadow: 0 0 0 2px rgba(255,69,58,0.18); }
-
-  .zone-btn:hover {
-    background: rgba(255,255,255,0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10.5px;
+    font-weight: 800;
     color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    letter-spacing: 0;
+    transition: all 0.18s;
   }
+  .zone-btn[data-signal="green"]  .avatar { background: linear-gradient(135deg, #30d158, #28b449); }
+  .zone-btn[data-signal="yellow"] .avatar { background: linear-gradient(135deg, #ffd60a, #e6b800); color: #5a4a00; }
+  .zone-btn[data-signal="orange"] .avatar { background: linear-gradient(135deg, #ff9f0a, #ff7f00); }
+  .zone-btn[data-signal="red"]    .avatar { background: linear-gradient(135deg, #ff453a, #d8332a); }
 
-  /* Активный pill = ты (highlighted: яркая каёмка signal-color, заметно выделен) */
-  .zone-btn.active {
-    background: rgba(255,255,255,0.14);
-    color: #fff;
+  /* Имя клоузера */
+  .zone-btn .nm {
+    font-size: 12.5px;
     font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: -0.005em;
+    white-space: nowrap;
   }
-  .zone-btn.active[data-signal="green"]  { box-shadow: 0 0 0 1.5px rgba(48,209,88,0.55), 0 2px 8px rgba(48,209,88,0.18); }
-  .zone-btn.active[data-signal="yellow"] { box-shadow: 0 0 0 1.5px rgba(255,214,10,0.55), 0 2px 8px rgba(255,214,10,0.18); }
-  .zone-btn.active[data-signal="orange"] { box-shadow: 0 0 0 1.5px rgba(255,159,10,0.55), 0 2px 8px rgba(255,159,10,0.18); }
-  .zone-btn.active[data-signal="red"]    { box-shadow: 0 0 0 1.5px rgba(255,69,58,0.55),  0 2px 8px rgba(255,69,58,0.18); }
 
-  /* Процент = monospace, чуть мутнее имени (вторичная инфа) */
+  /* Процент справа */
   .zone-btn .pct {
+    margin-left: auto;
     font-variant-numeric: tabular-nums;
-    font-size: 11px;
-    opacity: 0.75;
-    margin-left: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.55);
+    padding: 1px 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
   }
+
+  /* Нижняя строка pill: мини-progress-bar (визуальное отображение % красных) */
+  .zone-btn .bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 2px;
+    margin-left: 30px; /* выровнять под имя (отступ под аватар + gap) */
+  }
+  .zone-btn .bar > i {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    width: var(--bar-pct, 0%);
+    transition: width 0.4s ease;
+  }
+  .zone-btn[data-signal="green"]  .bar > i { background: linear-gradient(90deg, #30d158, #28b449); }
+  .zone-btn[data-signal="yellow"] .bar > i { background: linear-gradient(90deg, #ffd60a, #e6b800); }
+  .zone-btn[data-signal="orange"] .bar > i { background: linear-gradient(90deg, #ff9f0a, #ff7f00); }
+  .zone-btn[data-signal="red"]    .bar > i { background: linear-gradient(90deg, #ff453a, #d8332a); }
+
+  /* ════ Активный pill = ты — заметно крупнее и ярче ════ */
+  .zone-btn.active {
+    background: rgba(255,255,255,0.13);
+    padding: 9px 14px 10px 9px;
+    transform: scale(1.04);
+    min-width: 158px;
+  }
+  .zone-btn.active .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .zone-btn.active .nm {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .zone-btn.active .pct {
+    color: #fff;
+    background: rgba(255,255,255,0.18);
+  }
+  .zone-btn.active .bar {
+    height: 4px;
+    margin-left: 36px;
+  }
+  /* Активный — цветной обвод по signal */
+  .zone-btn.active[data-signal="green"]  { box-shadow: 0 0 0 1.5px rgba(48,209,88,0.55), 0 4px 12px rgba(48,209,88,0.20); }
+  .zone-btn.active[data-signal="yellow"] { box-shadow: 0 0 0 1.5px rgba(255,214,10,0.55), 0 4px 12px rgba(255,214,10,0.20); }
+  .zone-btn.active[data-signal="orange"] { box-shadow: 0 0 0 1.5px rgba(255,159,10,0.55), 0 4px 12px rgba(255,159,10,0.20); }
+  .zone-btn.active[data-signal="red"]    { box-shadow: 0 0 0 1.5px rgba(255,69,58,0.55),  0 4px 12px rgba(255,69,58,0.20); }
+  .zone-btn.active:hover { transform: scale(1.04); }   /* не двигаем активный на hover */
 
   /* ════════ amoCRM Mock ════════ */
   .amocrm-window {
@@ -786,10 +855,38 @@
 <div class="zone-switcher">
   <div class="label">🏆 Команда · % касаний</div>
   <div class="zone-btns">
-    <button class="zone-btn" data-signal="green"  onclick="setZone('green', this)">Лим Елена<span class="pct">2%</span></button>
-    <button class="zone-btn" data-signal="yellow" onclick="setZone('yellow', this)">Петрова Д.<span class="pct">12%</span></button>
-    <button class="zone-btn active" data-signal="orange" onclick="setZone('orange', this)">Мифтахов Р.<span class="pct">22%</span></button>
-    <button class="zone-btn" data-signal="red"    onclick="setZone('red', this)">Ляшенко А.<span class="pct">34%</span></button>
+    <button class="zone-btn" data-signal="green" onclick="setZone('green', this)" style="--bar-pct: 6%">
+      <div class="row">
+        <span class="avatar">Л</span>
+        <span class="nm">Лим Елена</span>
+        <span class="pct">2%</span>
+      </div>
+      <div class="bar"><i></i></div>
+    </button>
+    <button class="zone-btn" data-signal="yellow" onclick="setZone('yellow', this)" style="--bar-pct: 35%">
+      <div class="row">
+        <span class="avatar">П</span>
+        <span class="nm">Петрова Д.</span>
+        <span class="pct">12%</span>
+      </div>
+      <div class="bar"><i></i></div>
+    </button>
+    <button class="zone-btn active" data-signal="orange" onclick="setZone('orange', this)" style="--bar-pct: 65%">
+      <div class="row">
+        <span class="avatar">М</span>
+        <span class="nm">Мифтахов Р.</span>
+        <span class="pct">22%</span>
+      </div>
+      <div class="bar"><i></i></div>
+    </button>
+    <button class="zone-btn" data-signal="red" onclick="setZone('red', this)" style="--bar-pct: 100%">
+      <div class="row">
+        <span class="avatar">Л</span>
+        <span class="nm">Ляшенко А.</span>
+        <span class="pct">34%</span>
+      </div>
+      <div class="bar"><i></i></div>
+    </button>
   </div>
 </div>
 
