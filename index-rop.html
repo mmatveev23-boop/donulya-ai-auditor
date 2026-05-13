@@ -9541,6 +9541,151 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- 👤 ВИДЖЕТ ГЛАЗАМИ КЛОУЗЕРА · что видит и не видит (col-6) -->
+<div class="mc-card col-6 accent-green">
+<div class="mc-card-arrow">→</div>
+<div class="mc-card-icon">👤</div>
+<div class="mc-card-label">Виджет глазами клоузера <span style="color: rgba(255,255,255,0.45); font-weight: 500; font-size: 10.5px; margin-left: 6px;">что клоузер видит в amoCRM · что закрыто от него</span></div>
+
+<div class="mc-card-sub" style="margin-bottom: 18px;">
+  Клоузер видит <b>только себя + свои сделки + что делать сейчас</b>. Сравнения с другими клоузерами, 3 уровня контроля, outcome correlation — для РОПа, не для клоузера.
+</div>
+
+<!-- Side-by-side: клоузер vs РОП -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+
+  <!-- КЛОУЗЕР видит -->
+  <div style="background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.20); border-radius: 10px; padding: 14px;">
+    <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #30d158; margin-bottom: 10px;">👤 Что КЛОУЗЕР видит</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.7;">
+      ✓ Свой статус (🟢🟡🟠🔴) + % красных<br/>
+      ✓ Свою раскладку: 🔴🟡🟢🔇<br/>
+      ✓ Свои последствия (поток лидов / премия)<br/>
+      ✓ Свою очередь на сегодня (топ-3 по сумме)<br/>
+      ✓ Свои сделки со светофором<br/>
+      ✓ AI-разбор своих звонков (цитаты)<br/>
+      ✓ Что делать прямо сейчас (рекомендация)<br/>
+      ✓ Цветной dot на каждой своей сделке в воронке
+    </div>
+  </div>
+
+  <!-- РОП видит -->
+  <div style="background: rgba(82,167,255,0.04); border: 1px solid rgba(82,167,255,0.20); border-radius: 10px; padding: 14px;">
+    <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #52a7ff; margin-bottom: 10px;">👔 Что РОП видит дополнительно</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.7;">
+      ✓ Светофор всей команды (8 клоузеров)<br/>
+      ✓ Сравнения между клоузерами<br/>
+      ✓ Drill-down любого клоузера<br/>
+      ✓ Прослушка любой записи<br/>
+      ✓ <b>3 уровня контроля</b> (анти-фрод + outcome)<br/>
+      ✓ <b>Флаги аномалий</b> (🛡 ФЕЙК / 🚨 OUTCOME)<br/>
+      ✓ Email-алерты (жалобы клиентов, 3-й день в 🔴)<br/>
+      ✓ AI-аналитика по команде + экономика
+    </div>
+  </div>
+</div>
+
+<!-- 3 точки монтирования виджета клоузера -->
+<div style="display: grid; gap: 14px;">
+
+  <!-- Точка 1: Шапка amoCRM -->
+  <div style="background: rgba(255,255,255,0.02); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start; margin-bottom: 10px;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #ff9f0a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">1</div>
+      <div>
+        <div style="font-size: 13px; font-weight: 800; color: #fff;">📌 Шапка amoCRM · всегда видна</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.55);">На любой странице amoCRM (Сделки / Списки / Задачи / Отчёты)</div>
+      </div>
+    </div>
+
+    <!-- Реальный мокап полоски -->
+    <div style="background: linear-gradient(90deg, #ff9f0a 0%, #ff8000 100%); color: #fff; padding: 9px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600;">
+      <div style="display: flex; gap: 14px; align-items: center;">
+        <span style="font-weight: 800;">🚦 Твой статус: 🟠 22% красных</span>
+        <span style="opacity: 0.85;">8🔴 / 5🟡 / 24🟢 / 7🔇</span>
+        <span style="opacity: 0.85;">⚠ −50% поток · −20% премии</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <span style="background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; font-size: 11px;">📋 Очередь: 5</span>
+        <span style="background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; font-size: 11px;">▼</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px; font-size: 11.5px; color: rgba(255,255,255,0.70);">
+      <b style="color: #fff;">Что внутри (для клоузера):</b><br/>
+      • Своя зона · свой % красных · своя раскладка<br/>
+      • Свои последствия (−50% / 0 лидов / премия)<br/>
+      • Своя очередь на сегодня (топ-3 по сумме)<br/>
+      • Клик ▼ → раскрытие с подсказкой «как выйти в 🟡»
+    </div>
+  </div>
+
+  <!-- Точка 2: Карточка сделки -->
+  <div style="background: rgba(255,255,255,0.02); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start; margin-bottom: 10px;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #ff453a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">2</div>
+      <div>
+        <div style="font-size: 13px; font-weight: 800; color: #fff;">📲 Карточка сделки · правый sidebar</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Когда клоузер открыл конкретную сделку</div>
+      </div>
+    </div>
+
+    <div style="font-size: 11.5px; color: rgba(255,255,255,0.70); line-height: 1.7;">
+      <b style="color: #fff;">Что внутри (для клоузера):</b><br/>
+      • Статус ЭТОЙ сделки (🟢🟡🔴🔇)<br/>
+      • Часы без касания + сколько до следующей зоны<br/>
+      • Касаний всего · реальные + фейк (AI отметил)<br/>
+      • AI-разбор последнего звонка с цитатами<br/>
+      • Кнопка [▶️ Послушать с маркера]<br/>
+      • Рекомендация «что делать» от AI<br/>
+      • Кнопки: [📞 Позвонить] [💬 Написать] [🆘 Помощь РОПа]
+    </div>
+
+    <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,69,58,0.08); border-left: 3px solid #ff453a; border-radius: 4px; font-size: 11px; color: rgba(255,255,255,0.75);">
+      <b style="color: #fff;">Не видит:</b> сравнения с другими клоузерами, их сделки, флаги анти-фрода других, outcome correlation команды.
+    </div>
+  </div>
+
+  <!-- Точка 3: Воронка -->
+  <div style="background: rgba(255,255,255,0.02); border-radius: 10px; padding: 14px;">
+    <div style="display: flex; gap: 12px; align-items: start; margin-bottom: 10px;">
+      <div style="width: 30px; height: 30px; border-radius: 50%; background: #52a7ff; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0;">3</div>
+      <div>
+        <div style="font-size: 13px; font-weight: 800; color: #fff;">📊 Воронка · цветные dots на карточках</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Когда клоузер на странице воронки (kanban)</div>
+      </div>
+    </div>
+
+    <div style="font-size: 11.5px; color: rgba(255,255,255,0.70); line-height: 1.7;">
+      <b style="color: #fff;">Что внутри (для клоузера):</b><br/>
+      • Цветной dot слева на каждой <b>его</b> сделке (🟢🟡🔴🔇)<br/>
+      • Краткий статус «52ч молчит» прямо на карточке<br/>
+      • Сверху воронки — та же полоска что в шапке<br/>
+      • Видит только свои сделки в воронке (фильтр)
+    </div>
+
+    <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,69,58,0.08); border-left: 3px solid #ff453a; border-radius: 4px; font-size: 11px; color: rgba(255,255,255,0.75);">
+      <b style="color: #fff;">Не видит:</b> сделки других клоузеров (в фильтре «Все» — обычная воронка amoCRM без светофора, только свои сделки с dots).
+    </div>
+  </div>
+</div>
+
+<!-- Главный принцип -->
+<div style="margin-top: 18px; padding: 14px 16px; background: rgba(48,209,88,0.04); border: 1px solid rgba(48,209,88,0.15); border-radius: 10px;">
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #30d158; margin-bottom: 8px;">💡 Принцип разделения</div>
+  <div style="font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55;">
+    Клоузер видит то что <b>зависит от него</b>: свои сделки, свои AI-разборы, свой статус, свои действия. <br/><br/>
+    РОП видит <b>командные сравнения и диагностику</b>: 3 уровня контроля, флаги анти-фрода, outcome correlation. <br/><br/>
+    <span style="color: #30d158;">→ Клоузер не демотивируется чужим рейтингом · РОП не зашумлён мелочами одной сделки.</span>
+  </div>
+</div>
+
+<div class="mc-card-sub" style="margin-top: 12px;">
+  <b>Программисту:</b> в API <code>GET /api/widget/closer/{closer_id}</code> возвращать только данные этого клоузера. Для РОПа отдельный endpoint <code>GET /api/widget/zones</code> с командой 8 клоузеров. Авторизация через amoCRM OAuth — token определяет роль (closer vs rop), фильтр на стороне API.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════ -->
 <!-- 🎯 РАБОЧЕЕ МЕСТО РОПа · 4 ситуации взаимодействия с системой (col-6) -->
 <div class="mc-card col-6 accent-blue">
 <div class="mc-card-arrow">→</div>
