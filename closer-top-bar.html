@@ -1429,65 +1429,6 @@
   .deal-row-c.verdict-good .verdict-tag.good { display: inline-flex; background: #d1fae5; color: #065f46; }
   .deal-row-c.verdict-bad  .verdict-tag.bad  { display: inline-flex; background: #fee2e2; color: #991b1b; }
 
-  /* AI-блок в раскрытой части — компактно, всё в одной строке */
-  .ai-verdict {
-    display: none;
-    margin-top: 8px;
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 11.5px;
-    line-height: 1.4;
-  }
-  .deal-row-c.verdict-good .ai-verdict.good { display: block; background: #ecfdf5; border: 1px solid #a7f3d0; }
-  .deal-row-c.verdict-bad  .ai-verdict.bad  { display: block; background: #fef2f2; border: 1px solid #fecaca; }
-  .ai-verdict .ai-head {
-    font-weight: 800;
-    font-size: 12px;
-    margin-bottom: 4px;
-  }
-  .ai-verdict.good .ai-head { color: #065f46; }
-  .ai-verdict.bad  .ai-head { color: #991b1b; }
-  /* Все 3 критерия одной строкой через chips */
-  .ai-verdict .ai-crits {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 6px;
-  }
-  .ai-verdict .ai-crit {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    font-size: 10.5px;
-    font-weight: 700;
-    background: rgba(0,0,0,0.04);
-    color: #374151;
-    cursor: help;
-  }
-  .ai-verdict .ai-crit.ok { background: #d1fae5; color: #065f46; }
-  .ai-verdict .ai-crit.no { background: #fee2e2; color: #991b1b; }
-  .ai-verdict .ai-crit .pts { opacity: 0.75; font-variant-numeric: tabular-nums; margin-left: 2px; }
-  .ai-verdict .ai-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-  .ai-verdict .ai-btn {
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.15);
-    color: #1a1a1a;
-    padding: 5px 11px;
-    border-radius: 6px;
-    font-size: 11.5px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .ai-verdict .ai-btn:hover { background: #f5f5f5; }
-  .ai-verdict .ai-btn.primary { background: #1976d2; border-color: #1976d2; color: #fff; }
-  .ai-verdict .ai-btn.primary:hover { background: #1565c0; }
 
   /* Penalty-pill в свёрнутой полосе — компактная плашка штрафов */
   .widget-collapsed .penalty-pill {
@@ -1507,6 +1448,154 @@
   }
   .widget-collapsed .penalty-pill b { color: #991b1b; font-weight: 900; }
   .widget-collapsed .penalty-pill .neg { color: #b91c1c; }
+
+  /* Компактная AI-плашка в раскрытой сделке (вместо большого блока) */
+  .ai-mini {
+    display: none;
+    margin-top: 8px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 11.5px;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  .ai-mini:hover { filter: brightness(0.97); }
+  .deal-row-c.verdict-good .ai-mini.good { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
+  .deal-row-c.verdict-bad  .ai-mini.bad  { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+  .ai-mini .lbl { font-weight: 800; }
+  .ai-mini .det { font-size: 10.5px; opacity: 0.85; font-weight: 600; }
+  .ai-mini .det::after { content: " ↗"; opacity: 0.65; }
+
+  /* Модалка AI-разбора */
+  .ai-modal-card .ai-criteria {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .ai-modal-card .ai-criterion {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .ai-modal-card .ai-criterion.ok { background: rgba(48,209,88,0.10); border-color: rgba(48,209,88,0.35); }
+  .ai-modal-card .ai-criterion.no { background: rgba(255,69,58,0.10); border-color: rgba(255,69,58,0.35); }
+  .ai-modal-card .ai-criterion .icn { font-size: 18px; font-weight: 900; }
+  .ai-modal-card .ai-criterion.ok .icn { color: #30d158; }
+  .ai-modal-card .ai-criterion.no .icn { color: #ff453a; }
+  .ai-modal-card .ai-criterion .nm { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .ai-modal-card .ai-criterion .note { font-size: 12px; color: rgba(255,255,255,0.65); }
+  .ai-modal-card .ai-criterion .pts {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    padding: 4px 9px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+  }
+
+  .ai-modal-card .ai-total {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ai-modal-card .ai-total.good { background: rgba(48,209,88,0.12); border: 1px solid rgba(48,209,88,0.40); }
+  .ai-modal-card .ai-total.bad  { background: rgba(255,69,58,0.12); border: 1px solid rgba(255,69,58,0.40); }
+  .ai-modal-card .ai-total .label { font-size: 12px; opacity: 0.7; }
+  .ai-modal-card .ai-total .score { font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .ai-modal-card .ai-total.good .score { color: #30d158; }
+  .ai-modal-card .ai-total.bad  .score { color: #ff8478; }
+  .ai-modal-card .ai-total .penalty { color: #ff8478; font-weight: 700; font-size: 13px; }
+
+  /* Журнал AI-вердиктов за неделю */
+  .ai-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 50vh;
+    overflow-y: auto;
+    margin-bottom: 8px;
+  }
+  .ai-history-list::-webkit-scrollbar { width: 6px; }
+  .ai-history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 3px; }
+
+  .aihist-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .aihist-row:hover { background: rgba(255,255,255,0.10); }
+  .aihist-row.good { border-color: rgba(48,209,88,0.30); }
+  .aihist-row.bad  { border-color: rgba(255,69,58,0.30); }
+  .aihist-row .verdict-icon { font-size: 16px; font-weight: 900; width: 22px; text-align: center; }
+  .aihist-row.good .verdict-icon { color: #30d158; }
+  .aihist-row.bad  .verdict-icon { color: #ff453a; }
+  .aihist-row .nm { font-weight: 700; font-size: 13px; color: #fff; }
+  .aihist-row .meta { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  .aihist-row .score { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 13px; color: rgba(255,255,255,0.85); }
+  .aihist-row .pen   { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 11.5px; }
+  .aihist-row.good .pen { color: #65d68b; }
+  .aihist-row.bad  .pen { color: #ff8478; }
+  .aihist-row .ar { color: rgba(255,255,255,0.45); font-size: 14px; }
+
+  /* Summary в шапке журнала */
+  .aihist-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .aihist-summary .stat {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .aihist-summary .stat .lbl { font-size: 10.5px; text-transform: uppercase; opacity: 0.60; letter-spacing: 0.06em; font-weight: 700; }
+  .aihist-summary .stat .val { font-size: 20px; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .aihist-summary .stat.good .val { color: #30d158; }
+  .aihist-summary .stat.bad  .val { color: #ff453a; }
+  .aihist-summary .stat .sub { font-size: 11px; opacity: 0.65; margin-top: 2px; }
+
+  /* Penalty-pill clickable */
+  .widget-collapsed .penalty-pill { cursor: pointer; transition: all 0.15s; }
+  .widget-collapsed .penalty-pill:hover { filter: brightness(1.10); transform: translateY(-1px); }
+
+  /* Позитивная плашка зачтённых — рядом с penalty (зелёная) */
+  .widget-collapsed .pass-pill {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(48,209,88,0.15);
+    border: 1px solid rgba(48,209,88,0.40);
+    color: #065f46;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.005em;
+    transition: all 0.15s;
+  }
+  .widget-collapsed .pass-pill:hover { filter: brightness(1.10); transform: translateY(-1px); }
+  .widget-collapsed .pass-pill b { color: #065f46; font-weight: 900; }
 
 </style>
 </head>
@@ -1597,7 +1686,10 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
-        <span class="penalty-pill" id="penalty-pill" style="display:none;" title="Штрафы за халтурные касания (AI &lt; 5/10) за неделю">
+        <span class="pass-pill" id="pass-pill" onclick="event.stopPropagation(); openAIHistory()" title="История зачтённых касаний (AI ≥ 5/10) за неделю">
+          ✅ <b><span id="pass-count">0</span></b> зачтено
+        </span>
+        <span class="penalty-pill" id="penalty-pill" onclick="event.stopPropagation(); openAIHistory()" style="display:none;" title="История халтурных касаний (AI &lt; 5/10) за неделю — клик для подробностей">
           🤖 <b><span id="penalty-count">0</span></b> · <span class="neg">-<span id="penalty-sum">0</span> ₽</span>
         </span>
         <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); openLeaderboard()" title="Открыть полный leaderboard команды">
@@ -2159,12 +2251,84 @@
   let _penaltyCount = 0;
   let _penaltySum = 0;
 
-  function updatePenaltyStat() {
-    const pill = document.getElementById('penalty-pill');
-    if (!pill) return;
-    document.getElementById('penalty-count').textContent = _penaltyCount;
-    document.getElementById('penalty-sum').textContent = _penaltySum.toLocaleString('ru-RU');
-    pill.style.display = _penaltyCount > 0 ? 'inline-flex' : 'none';
+  // ════ Журнал AI-вердиктов за неделю ════
+  const _aiHistory = [];  // [{ name, ai, score, good, time, disputed }]
+  let _passCount = 0;
+
+  function logAIVerdict(name, ai) {
+    const score = ai.topic.pts + ai.next_step.pts + ai.progress.pts;
+    _aiHistory.unshift({
+      name, ai, score, good: ai.good,
+      time: new Date(),
+      disputed: false,
+    });
+    if (ai.good) _passCount += 1;
+    updateAIStats();
+  }
+
+  function updateAIStats() {
+    const passPill = document.getElementById('pass-pill');
+    const penaltyPill = document.getElementById('penalty-pill');
+    if (passPill) {
+      document.getElementById('pass-count').textContent = _passCount;
+      passPill.style.display = _passCount > 0 ? 'inline-flex' : 'none';
+    }
+    if (penaltyPill) {
+      document.getElementById('penalty-count').textContent = _penaltyCount;
+      document.getElementById('penalty-sum').textContent = _penaltySum.toLocaleString('ru-RU');
+      penaltyPill.style.display = _penaltyCount > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  // alias (для совместимости со старым именем)
+  function updatePenaltyStat() { updateAIStats(); }
+
+  function openAIHistory() {
+    const total = _aiHistory.length;
+    const good = _aiHistory.filter(h => h.good).length;
+    const bad = total - good;
+    const badSum = bad * 300;
+    document.getElementById('hist-total').textContent = total;
+    document.getElementById('hist-good').textContent = good;
+    document.getElementById('hist-good-pct').textContent = total ? `${Math.round(good/total*100)}% от всех` : '—';
+    document.getElementById('hist-bad').textContent = bad;
+    document.getElementById('hist-bad-sum').textContent = badSum.toLocaleString('ru-RU');
+
+    const rows = _aiHistory.length === 0
+      ? `<div style="text-align:center;padding:30px 12px;color:rgba(255,255,255,0.50);font-size:12.5px;">
+           Пока нет AI-вердиктов.<br/>Сделай звонок из очереди — он появится здесь.
+         </div>`
+      : _aiHistory.map((h, idx) => {
+          const ch = getChannel(h.name);
+          const tm = h.time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+          const today = new Date().toDateString() === h.time.toDateString();
+          const dayLbl = today ? 'Сегодня' : h.time.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+          const cls = h.good ? 'good' : 'bad';
+          const icon = h.good ? '✓' : '✗';
+          const penLbl = h.good ? 'зачтено' : (h.disputed ? 'оспорено' : '−300 ₽');
+          return `
+            <div class="aihist-row ${cls}" onclick="closeAIHistory(); openAI('${h.name}')">
+              <span class="verdict-icon">${icon}</span>
+              <div>
+                <div class="nm">${h.name}</div>
+                <div class="meta">${dayLbl} ${tm} · ${getChannelLabel(ch)}</div>
+              </div>
+              <span class="score">${h.score}/10</span>
+              <span class="pen">${penLbl}</span>
+              <span class="ar">↗</span>
+            </div>
+          `;
+        }).join('');
+    document.getElementById('aihist-rows').innerHTML = rows;
+
+    document.getElementById('aiHistModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAIHistory(ev) {
+    if (ev && ev.target.classList && !ev.target.classList.contains('act-backdrop') && !ev.target.classList.contains('x')) return;
+    document.getElementById('aiHistModal').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   function startAIScoring(name) {
@@ -2186,45 +2350,77 @@
       if (!ai.good) {
         _penaltyCount += 1;
         _penaltySum += 300;
-        updatePenaltyStat();
       }
+      logAIVerdict(name, ai);   // ← всегда логируем (и хорошие, и халтурные)
     }, 4000);
   }
 
+  const _aiCache = {};  // dealName -> ai-результат (для попапа)
+
   function renderAIVerdict(row, ai, name) {
+    _aiCache[name] = ai;
     const extra = row.querySelector('.deal-extra');
     if (!extra) return;
-    // Удалим старый блок если был
-    extra.querySelectorAll('.ai-verdict').forEach(e => e.remove());
+    extra.querySelectorAll('.ai-mini').forEach(e => e.remove());
 
     const cls = ai.good ? 'good' : 'bad';
-    const title = ai.good
-      ? `✅ Касание зачтено · AI ${ai.score}/${10}`
-      : `⚠ Халтурное касание · AI ${ai.score}/${10} · штраф 300₽`;
-
-    const criteria = `<div class="ai-crits">${[
-      { name: 'Тема',    short: 'тема',    max: 4, val: ai.topic },
-      { name: 'Шаг',     short: 'шаг',     max: 4, val: ai.next_step },
-      { name: 'Прогресс', short: 'прогресс', max: 2, val: ai.progress },
-    ].map(c => `
-      <span class="ai-crit ${c.val.ok ? 'ok' : 'no'}" title="${c.name}: ${c.val.note}">
-        ${c.val.ok ? '✓' : '✗'} ${c.name}<span class="pts">${c.val.pts}/${c.max}</span>
-      </span>
-    `).join('')}</div>`;
-
-    const actions = ai.good
-      ? `<button class="ai-btn primary" onclick="event.stopPropagation(); alert('Касание зафиксировано. Сделка перейдёт в жёлтую зону.')">Хорошо</button>`
-      : `<button class="ai-btn primary" onclick="event.stopPropagation(); disputeAI('${name}')">Оспорить → РОП</button>
-         <button class="ai-btn" onclick="event.stopPropagation(); dialDeal('${name}')">📞 Позвонить ещё раз</button>`;
-
+    const passed = `${ai.topic.pts + ai.next_step.pts + ai.progress.pts}/10`;
+    const lbl = ai.good
+      ? `✅ Касание зачтено · ${passed}`
+      : `⚠ Халтурное · ${passed} · -300₽`;
     const html = `
-      <div class="ai-verdict ${cls}" onclick="event.stopPropagation()">
-        <div class="ai-head">${title}</div>
-        ${criteria}
-        <div class="ai-actions">${actions}</div>
+      <div class="ai-mini ${cls}" onclick="event.stopPropagation(); openAI('${name}')" title="Кликни для деталей разбора AI">
+        <span class="lbl">${lbl}</span>
+        <span class="det">Подробности</span>
       </div>
     `;
     extra.insertAdjacentHTML('beforeend', html);
+  }
+
+  function openAI(name) {
+    const ai = _aiCache[name];
+    if (!ai) return;
+    document.getElementById('ai-deal-name').textContent = name;
+    const ch = getChannel(name);
+    document.getElementById('ai-deal-channel').textContent = `Канал: ${getChannelLabel(ch)} · ${getPhone(name)}`;
+
+    const score = ai.topic.pts + ai.next_step.pts + ai.progress.pts;
+    const total = document.getElementById('ai-total');
+    total.className = 'ai-total ' + (ai.good ? 'good' : 'bad');
+    document.getElementById('ai-total-label').textContent = ai.good ? 'Касание зачтено · порог 5/10' : 'Халтурное касание · порог 5/10';
+    document.getElementById('ai-total-score').textContent = `${score}/10`;
+    document.getElementById('ai-total-penalty').textContent = ai.good ? '' : '−300 ₽ штраф';
+
+    const items = [
+      { name: 'Затронули главную тему сделки', max: 4, val: ai.topic },
+      { name: 'Назначен конкретный следующий шаг', max: 4, val: ai.next_step },
+      { name: 'Клиент двинулся по воронке', max: 2, val: ai.progress },
+    ];
+    document.getElementById('ai-criteria').innerHTML = items.map(c => `
+      <div class="ai-criterion ${c.val.ok ? 'ok' : 'no'}">
+        <span class="icn">${c.val.ok ? '✓' : '✗'}</span>
+        <div>
+          <div class="nm">${c.name}</div>
+          <div class="note">${c.val.note}</div>
+        </div>
+        <span class="pts">${c.val.pts}/${c.max}</span>
+      </div>
+    `).join('');
+
+    const actions = document.getElementById('ai-actions');
+    actions.innerHTML = ai.good
+      ? `<button class="act-btn primary" onclick="closeAI()">Хорошо</button>`
+      : `<button class="act-btn" onclick="closeAI(); dialDeal('${name}')">📞 Позвонить ещё</button>
+         <button class="act-btn primary" onclick="disputeAI('${name}')">Оспорить → РОП</button>`;
+
+    document.getElementById('aiModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAI(ev) {
+    if (ev && ev.target.classList && !ev.target.classList.contains('act-backdrop') && !ev.target.classList.contains('x')) return;
+    document.getElementById('aiModal').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   function disputeAI(name) {
@@ -2355,6 +2551,8 @@
     if (e.key === 'Escape') {
       closeMsg();
       closeNote();
+      closeAI();
+      closeAIHistory();
     }
   });
 
@@ -2515,6 +2713,62 @@
       <div class="r">
         <button class="act-btn" onclick="closeNote()">Отмена</button>
         <button class="act-btn primary" onclick="saveNote()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Модалка AI-разбора звонка -->
+<div class="act-backdrop" id="aiModal" onclick="closeAI(event)">
+  <div class="act-card ai-modal-card" onclick="event.stopPropagation()">
+    <div class="act-head">
+      <div>
+        <div class="ttl">🤖 AI-разбор звонка · <span id="ai-deal-name">—</span></div>
+        <div class="sub" id="ai-deal-channel">—</div>
+      </div>
+      <button class="x" onclick="closeAI()">✕</button>
+    </div>
+    <div class="act-body">
+      <div class="ai-total" id="ai-total">
+        <div>
+          <div class="label" id="ai-total-label">Итоговая оценка</div>
+          <div class="score" id="ai-total-score">—/10</div>
+        </div>
+        <div class="penalty" id="ai-total-penalty"></div>
+      </div>
+      <div class="ai-criteria" id="ai-criteria"><!-- генерится --></div>
+    </div>
+    <div class="act-foot">
+      <span class="l">Порог: ≥ 5/10 · Esc — закрыть</span>
+      <div class="r" id="ai-actions"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Модалка: журнал AI-вердиктов за неделю -->
+<div class="act-backdrop" id="aiHistModal" onclick="closeAIHistory(event)">
+  <div class="act-card ai-modal-card" onclick="event.stopPropagation()" style="max-width: 640px;">
+    <div class="act-head">
+      <div>
+        <div class="ttl">🤖 Журнал AI-вердиктов за неделю</div>
+        <div class="sub">Все звонки с разбором AI · клик на запись = детали</div>
+      </div>
+      <button class="x" onclick="closeAIHistory()">✕</button>
+    </div>
+    <div class="act-body">
+      <div class="aihist-summary">
+        <div class="stat"><div class="lbl">Всего касаний</div><div class="val" id="hist-total">0</div><div class="sub">за неделю</div></div>
+        <div class="stat good"><div class="lbl">Зачтено</div><div class="val" id="hist-good">0</div><div class="sub" id="hist-good-pct">—</div></div>
+        <div class="stat bad"><div class="lbl">Халтурных</div><div class="val" id="hist-bad">0</div><div class="sub"><span id="hist-bad-sum">0</span> ₽ штрафов</div></div>
+      </div>
+      <div class="ai-history-list" id="aihist-rows"><!-- генерится --></div>
+    </div>
+    <div class="act-foot">
+      <span class="l">Окно «Оспорить» — 48 ч после звонка</span>
+      <div class="r">
+        <button class="act-btn" onclick="closeAIHistory()">Закрыть</button>
       </div>
     </div>
   </div>
