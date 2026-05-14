@@ -305,60 +305,62 @@
        остаётся как было (детальный режим, иной язык)
      ════════════════════════════════════════════════════════════════ */
   .top-widget {
-    color: #f5f5f7;
-    transition: background 0.3s;
-    background: #1c1c1e;                            /* dark mode base */
-    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    transition: all 0.3s;
   }
 
-  /* В раскрытом состоянии — возвращаем цвет зоны (для контекстуального
-     детального view). Свёрнутая полоса всегда нейтральная. */
-  .top-widget.expanded.zone-green  { background: linear-gradient(180deg, #30d158 0%, #28b449 100%); color: #fff; }
-  .top-widget.expanded.zone-yellow { background: linear-gradient(180deg, #ffd60a 0%, #e6b800 100%); color: #333; }
-  .top-widget.expanded.zone-orange { background: linear-gradient(180deg, #ff9f0a 0%, #ff8000 100%); color: #fff; }
-  .top-widget.expanded.zone-red    { background: linear-gradient(180deg, #ff453a 0%, #d63b32 100%); color: #fff; }
+  /* Цвет полосы по зоне — и в свёрнутом, и в раскрытом */
+  .top-widget.zone-green  { background: linear-gradient(180deg, #30d158 0%, #28b449 100%); color: #fff; }
+  .top-widget.zone-yellow { background: linear-gradient(180deg, #ffd60a 0%, #e6b800 100%); color: #333; }
+  .top-widget.zone-orange { background: linear-gradient(180deg, #ff9f0a 0%, #ff8000 100%); color: #fff; }
+  .top-widget.zone-red    { background: linear-gradient(180deg, #ff453a 0%, #d63b32 100%); color: #fff; }
 
   /* Свёрнутая полоса — всегда нейтральная, но с edge-индикатором signal-color */
   .widget-collapsed {
-    padding: 12px 18px;
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.15s;
+    transition: filter 0.15s;
     position: relative;
-    overflow: hidden;
   }
-  .widget-collapsed:hover { background: rgba(255,255,255,0.035); }
+  .widget-collapsed:hover { filter: brightness(1.05); }
 
-  /* Лёгкий tint справа полосы — намёк на signal, не кричит */
-  .top-widget:not(.expanded).zone-orange .widget-collapsed { background: linear-gradient(90deg, transparent 55%, rgba(255,159,10,0.12) 100%); }
-  .top-widget:not(.expanded).zone-red    .widget-collapsed { background: linear-gradient(90deg, transparent 45%, rgba(255,69,58,0.18) 100%); }
-
-  /* Bottom indicator — 2px полоска снизу, дышит при оранжевой/красной зоне */
-  .top-widget:not(.expanded) .widget-collapsed::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 2px;
-    background: transparent;
-    transition: background 0.3s;
+  /* ═══ ОБВОДКА полосы — дышит для оранжевой/красной зоны ═══
+     Внутренняя белая рамка (inset box-shadow) — выглядит как «обводка
+     которая привлекает внимание», не мешает цветному фону. */
+  .top-widget.zone-orange:not(.expanded) {
+    animation: outlineBreathOr 3.2s ease-in-out infinite;
   }
-  .top-widget:not(.expanded).zone-green  .widget-collapsed::after { background: rgba(48,209,88,0.0); }
-  .top-widget:not(.expanded).zone-yellow .widget-collapsed::after { background: rgba(255,214,10,0.30); }
-  .top-widget:not(.expanded).zone-orange .widget-collapsed::after {
-    background: rgba(255,159,10,0.55);
-    animation: bottomBreathe 3.2s ease-in-out infinite;
+  .top-widget.zone-red:not(.expanded) {
+    animation: outlineBreathRd 2.4s ease-in-out infinite;
   }
-  .top-widget:not(.expanded).zone-red    .widget-collapsed::after {
-    background: rgba(255,69,58,0.75);
-    animation: bottomBreathe 2.6s ease-in-out infinite;
+  @keyframes outlineBreathOr {
+    0%, 100% {
+      box-shadow:
+        inset 0 0 0 0 rgba(255,255,255,0),
+        0 0 0 0 rgba(255,159,10,0);
+    }
+    50% {
+      box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,0.35),
+        0 0 14px 2px rgba(255,159,10,0.45);
+    }
   }
-  @keyframes bottomBreathe {
-    0%, 100% { opacity: 0.50; }
-    50%      { opacity: 1.00; }
+  @keyframes outlineBreathRd {
+    0%, 100% {
+      box-shadow:
+        inset 0 0 0 0 rgba(255,255,255,0),
+        0 0 0 0 rgba(255,69,58,0);
+    }
+    50% {
+      box-shadow:
+        inset 0 0 0 4px rgba(255,255,255,0.45),
+        0 0 18px 3px rgba(255,69,58,0.55);
+    }
   }
 
   .widget-collapsed .left {
@@ -368,64 +370,35 @@
     flex-wrap: wrap;
   }
 
-  /* ═══ Main signal pill (слева) — единственный «крикливый» элемент ═══ */
+  /* Status text — большой текст прямо на цветной полосе, без своего pill-фона */
   .widget-collapsed .status-text {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 7px 16px 7px 12px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.10);
-    color: #fff;
+    font-size: 18px;
+    font-weight: 800;
     letter-spacing: -0.005em;
-    position: relative;
-    transition: all 0.25s;
   }
-  /* В зависимости от зоны — окрашивается signal-color (это единственный bg-цвет на полосе) */
-  .zone-green  .widget-collapsed .status-text { background: #30d158; color: #fff; }
-  .zone-yellow .widget-collapsed .status-text { background: #ffd60a; color: #5a4a00; }
-  .zone-orange .widget-collapsed .status-text { background: #ff9f0a; color: #fff; }
-  .zone-red    .widget-collapsed .status-text { background: #ff453a; color: #fff; }
-
-  /* Breath-pulse только на оранжевой и красной — мягкое «дыхание» border-glow */
-  .zone-orange .widget-collapsed .status-text { animation: pillBreathOr 3.2s ease-in-out infinite; }
-  .zone-red    .widget-collapsed .status-text { animation: pillBreathRd 2.6s ease-in-out infinite; }
-  @keyframes pillBreathOr {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,159,10,0.0); }
-    50%      { box-shadow: 0 0 0 6px rgba(255,159,10,0.25); }
-  }
-  @keyframes pillBreathRd {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,58,0.0); }
-    50%      { box-shadow: 0 0 0 7px rgba(255,69,58,0.30); }
-  }
-
   .widget-collapsed .status-text .big {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 900;
-    margin: 0 3px;
+    margin: 0 4px;
     letter-spacing: -0.015em;
   }
 
-  /* Раскладка светофора — КРУПНАЯ для быстрого считывания цифр */
+  /* Раскладка светофора — КРУПНАЯ, читается с первого взгляда */
   .widget-collapsed .raskladka {
     font-size: 18px;
     font-weight: 800;
-    color: rgba(255,255,255,0.92);
+    opacity: 0.97;
     letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
   }
 
-  /* Эффект на поток лидов — крупный sub-info */
+  /* Эффект на поток лидов — крупный, ярче но не главный */
   .widget-collapsed .effect {
     font-size: 16px;
     font-weight: 700;
-    color: rgba(255,255,255,0.65);
+    opacity: 0.92;
     letter-spacing: -0.005em;
   }
-  .zone-orange .widget-collapsed .effect { color: #ffb347; }
-  .zone-red    .widget-collapsed .effect { color: #ff8478; }
 
   .widget-collapsed .right {
     display: flex;
@@ -433,44 +406,40 @@
     align-items: center;
   }
 
-  /* Все правые pills нейтральные — не отвлекают от main signal pill */
   .widget-collapsed .pill {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.92);
-    padding: 6px 14px;
+    background: rgba(255,255,255,0.18);
+    padding: 5px 12px;
     border-radius: 999px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
+    color: inherit;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.14);
-    transition: all 0.15s;
+    border: 1px solid rgba(255,255,255,0.10);
+    transition: background 0.15s;
   }
-  .widget-collapsed .pill:hover {
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.24);
-  }
-  .widget-collapsed .pill b { font-weight: 800; color: #fff; }
+  .widget-collapsed .pill:hover { background: rgba(255,255,255,0.28); }
+  .widget-collapsed .pill b { font-weight: 800; }
 
   /* Social-badge "ранг в команде" — кликабельный, ведёт в rop-workplace.html */
   .widget-collapsed .rank-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.20);
     border-radius: 999px;
     padding: 5px 12px 5px 10px;
     margin-right: 8px;
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
-    color: rgba(255,255,255,0.92);
+    color: inherit;
     transition: all 0.15s;
     letter-spacing: -0.005em;
   }
   .widget-collapsed .rank-badge:hover {
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.24);
+    background: rgba(255,255,255,0.28);
+    border-color: rgba(255,255,255,0.32);
     transform: translateY(-1px);
   }
   .widget-collapsed .rank-badge .rk {
