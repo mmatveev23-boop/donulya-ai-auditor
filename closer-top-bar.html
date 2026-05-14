@@ -448,6 +448,40 @@
   }
   .widget-collapsed .pill b { font-weight: 800; color: #1a1a1a; }
 
+  /* AI-pill в свёрнутой полосе — общий балл AI по всему портфелю клоузера.
+     Клик → модалка со всеми сделками с AI-оценкой касаний. */
+  .widget-collapsed .ai-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff;
+    color: #333;
+    padding: 5px 11px 5px 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border: 1.5px solid rgba(0,0,0,0.10);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.005em;
+    margin-right: 8px;
+  }
+  .widget-collapsed .ai-pill:hover {
+    background: #fafafa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .widget-collapsed .ai-pill b { font-weight: 800; }
+  .widget-collapsed .ai-pill .of { opacity: 0.55; font-size: 10.5px; font-weight: 600; }
+  /* Цвет рамки и балла по диапазону среднего */
+  .widget-collapsed .ai-pill.ai-good { border-color: #66bb6a; background: #f1f8e9; }
+  .widget-collapsed .ai-pill.ai-good b { color: #1b5e20; }
+  .widget-collapsed .ai-pill.ai-mid  { border-color: #fdd835; background: #fffde7; }
+  .widget-collapsed .ai-pill.ai-mid  b { color: #8b6500; }
+  .widget-collapsed .ai-pill.ai-bad  { border-color: #e57373; background: #ffebee; }
+  .widget-collapsed .ai-pill.ai-bad  b { color: #b71c1c; }
+
   /* Social-badge "ранг в команде" — кликабельный, ведёт в rop-workplace.html */
   .widget-collapsed .rank-badge {
     display: inline-flex;
@@ -1479,6 +1513,9 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
+        <span class="ai-pill ai-mid" id="ai-pill" onclick="event.stopPropagation(); openAIDeals('all')" title="AI-оценка качества касаний по всему портфелю · клик = полный список сделок с разбором">
+          🤖 <b id="ai-pill-score">—</b><span class="of">/10</span>
+        </span>
         <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); openLeaderboard()" title="Открыть полный leaderboard команды">
           <span class="rk" id="rank-text">#3 из 4</span>
           <span class="arr">↗</span>
@@ -1990,6 +2027,12 @@
     // Rank-badge: позиция в команде
     const { rank, total } = computeRank(zone);
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
+
+    // AI-pill: средний балл AI по всему портфелю
+    const portfolioAI = computePortfolioAvgAI(z);
+    const aiPillEl = document.getElementById('ai-pill');
+    aiPillEl.className = `ai-pill ${portfolioAI.cls}`;
+    document.getElementById('ai-pill-score').textContent = portfolioAI.avg ? portfolioAI.avg.toFixed(1) : '—';
   }
 
   function renderDealsList(elId, items, label, metaFn, moreCount = 0, showAllBtn = false) {
@@ -2077,54 +2120,120 @@
     return result;
   }
 
-  function openAllGreens() {
+  // ════ Собираем все сделки клоузера в один массив с категорией и meta-полем ════
+  // Категории: red (>48ч без касания) → orange (36-48ч) → yellow (24-36ч) → green (<24ч)
+  function collectDeals(z, filter) {
+    const items = [];
+    if (filter === 'all' || filter === 'red') {
+      z.reds.forEach(d => items.push({
+        name: d.name, amount: d.amount, cat: 'red',
+        hoursMeta: `<b>${d.hours}ч</b> без касания`,
+        sortKey: -d.hours,  // больше часов = выше (срочнее)
+      }));
+    }
+    if (filter === 'all' || filter === 'orange') {
+      z.oranges.forEach(d => items.push({
+        name: d.name, amount: d.amount, cat: 'orange',
+        hoursMeta: `<b>${d.hoursLeft}ч</b> до 🔴`,
+        sortKey: d.hoursLeft,  // меньше часов до 🔴 = выше
+      }));
+    }
+    if (filter === 'all' || filter === 'yellow') {
+      z.yellows.forEach(d => items.push({
+        name: d.name, amount: d.amount, cat: 'yellow',
+        hoursMeta: `<b>${d.hoursLeft}ч</b> до 🔴`,
+        sortKey: d.hoursLeft,
+      }));
+    }
+    if (filter === 'all' || filter === 'green') {
+      const greens = getAllGreens(z);
+      greens.forEach(d => items.push({
+        name: d.name, amount: d.amount, cat: 'green',
+        hoursMeta: `<b>${d.hoursLeft}ч</b> до 🟡`,
+        sortKey: d.hoursLeft,
+      }));
+    }
+    // Глобальная сортировка: red → orange → yellow → green, внутри — по sortKey
+    const catOrder = { red: 0, orange: 1, yellow: 2, green: 3 };
+    items.sort((a, b) => {
+      if (catOrder[a.cat] !== catOrder[b.cat]) return catOrder[a.cat] - catOrder[b.cat];
+      return a.sortKey - b.sortKey;
+    });
+    return items;
+  }
+
+  const CAT_EMOJI = { red: '🔴', orange: '🟠', yellow: '🟡', green: '🟢' };
+
+  // ════ Открыть модалку со всеми сделками (или с фильтром по категории) с AI-оценкой ════
+  function openAIDeals(filter = 'all') {
     const z = zones[currentZone()];
     if (!z) return;
-    const all = getAllGreens(z);
-    // Сортировка: меньше часов слева = ближе к 🟡 (по времени до перехода)
-    all.sort((a, b) => a.hoursLeft - b.hoursLeft);
+    const items = collectDeals(z, filter);
 
     // Считаем распределение AI-оценок + средний балл
     let good = 0, mid = 0, bad = 0, sum = 0;
-    const rows = all.map(g => {
-      const ai = getAIScore(g.name);
+    const rows = items.map(d => {
+      const ai = getAIScore(d.name);
       sum += ai.score;
       if (ai.score >= 7) good++;
       else if (ai.score >= 5) mid++;
       else bad++;
       return `
-        <div class="modal-deal-row" onclick="openDealCard('${g.name}')" title="Открыть в amoCRM">
+        <div class="modal-deal-row" onclick="openDealCard('${d.name}')" title="Открыть в amoCRM">
           <span class="ai-score-badge ${aiCls(ai.score)}">
             <span class="lbl">AI</span> ${ai.score}/10
           </span>
           <div>
-            <div class="name">${g.name}</div>
+            <div class="name">${CAT_EMOJI[d.cat]} ${d.name}</div>
             <div class="ai-summary">${ai.summary}</div>
           </div>
-          <span class="hours">⏱ <b>${g.hoursLeft}ч</b> до 🟡</span>
-          <span class="amount">${g.amount}</span>
+          <span class="hours">⏱ ${d.hoursMeta}</span>
+          <span class="amount">${d.amount}</span>
         </div>
       `;
     });
 
-    document.getElementById('greens-modal-total').textContent = all.length;
+    // Заголовок и подзаголовок — динамические
+    const titles = {
+      all:    { ttl: `🤖 AI-оценка касаний · ${items.length} сделок`,        sub: 'Качество последнего касания (1-10) по всему портфелю · сортировка по срочности' },
+      green:  { ttl: `🟢 Все зелёные сделки · ${items.length} в норме`,      sub: '&lt; 24 ч без касания · AI оценил качество последнего касания' },
+      yellow: { ttl: `🟡 Все жёлтые сделки · ${items.length}`,                sub: '24-36 ч без касания · AI-оценка по каждой' },
+      orange: { ttl: `🟠 Все оранжевые сделки · ${items.length}`,             sub: '36-48 ч без касания · скоро 🔴' },
+      red:    { ttl: `🔴 Все красные сделки · ${items.length}`,               sub: '&gt; 48 ч без касания · разгребай в первую очередь' },
+    };
+    const t = titles[filter] || titles.all;
+    document.getElementById('greens-modal-title').innerHTML = t.ttl;
+    document.getElementById('greens-modal-sub').innerHTML = t.sub;
     document.getElementById('greens-modal-list').innerHTML = rows.join('');
 
     // Сводка AI
     document.getElementById('ai-stat-good').textContent = good;
     document.getElementById('ai-stat-mid').textContent = mid;
     document.getElementById('ai-stat-bad').textContent = bad;
-    const avg = all.length > 0 ? (sum / all.length).toFixed(1) : '—';
+    const avg = items.length > 0 ? (sum / items.length).toFixed(1) : '—';
     document.getElementById('ai-stat-avg').textContent = avg;
 
     document.getElementById('allGreensModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
+  // Обёртка для существующего вызова из кнопки «Показать все N →» в зелёной колонке
+  function openAllGreens() { openAIDeals('green'); }
+
   function closeAllGreens(ev) {
     if (ev && ev.target.classList && !ev.target.classList.contains('modal-backdrop') && !ev.target.classList.contains('x')) return;
     document.getElementById('allGreensModal').classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  // ════ Средний AI-балл по всему портфелю клоузера — для pill в свёрнутой полосе ════
+  function computePortfolioAvgAI(z) {
+    const items = collectDeals(z, 'all');
+    if (items.length === 0) return { avg: 0, cls: 'ai-mid' };
+    let sum = 0;
+    items.forEach(d => { sum += getAIScore(d.name).score; });
+    const avg = sum / items.length;
+    return { avg, cls: aiCls(avg) };
   }
 
   // Mock deal-id → в проде придёт из API. Здесь — детерминированный по имени.
@@ -2233,8 +2342,8 @@
   <div class="greens-modal-card" onclick="event.stopPropagation()">
     <div class="greens-modal-head">
       <div>
-        <h3>🟢 Все зелёные сделки · <span id="greens-modal-total">24</span> в норме</h3>
-        <div class="sub">&lt; 24 ч без касания · AI оценил качество последнего касания (1-10) по всем сделкам</div>
+        <h3 id="greens-modal-title">🤖 AI-оценка касаний</h3>
+        <div class="sub" id="greens-modal-sub">AI оценил качество последнего касания (1-10) по всем сделкам клоузера</div>
       </div>
       <button class="x" onclick="closeAllGreens()">✕</button>
     </div>
