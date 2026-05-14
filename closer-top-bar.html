@@ -1148,31 +1148,12 @@
     transition: all 0.15s;
   }
   .modal-foot .btn-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
-  /* ════ Канал-бейдж в плашке сделки ════ */
+  /* ════ Плашка сделки ════ */
   .deal-row-c {
     cursor: pointer;
     position: relative;
     transition: background 0.15s;
   }
-  .deal-row-c .channel {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 4px;
-    font-size: 9px;
-    font-weight: 800;
-    margin-right: 6px;
-    vertical-align: middle;
-    color: #fff;
-    letter-spacing: 0;
-  }
-  .deal-row-c .channel.wa  { background: #25D366; }
-  .deal-row-c .channel.tg  { background: #2AABEE; }
-  .deal-row-c .channel.sms { background: #888; }
-  .deal-row-c .channel.vk  { background: #0077FF; }
-  .deal-row-c .channel.max { background: #FF7A00; }
 
 </style>
 </head>
@@ -1725,31 +1706,14 @@
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
-  // ════ Канал сделки (для бейджа в плашке) ════
-  // В проде придёт из API. Здесь — детерминированный mock по имени.
-  const CHANNELS = ['wa', 'tg', 'sms', 'vk', 'max'];
-  function getChannel(name) {
-    let h = 0;
-    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
-    return CHANNELS[h % CHANNELS.length];
-  }
-  function getChannelLabel(ch) {
-    return { wa: 'WhatsApp', tg: 'Telegram', sms: 'SMS', vk: 'ВКонтакте', max: 'MAX' }[ch] || ch.toUpperCase();
-  }
-
   function renderDealsList(elId, items, label, metaFn) {
     const html = items.length > 0
-      ? items.map(d => {
-          const ch = getChannel(d.name);
-          return `
+      ? items.map(d => `
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM">
-            <span class="name">
-              <span class="channel ${ch}" title="${getChannelLabel(ch)}">${ch.toUpperCase()}</span>${d.name}
-            </span>
+            <span class="name">${d.name}</span>
             ${metaFn(d)}
           </div>
-        `;
-        }).join('')
+        `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
     document.getElementById(elId).innerHTML = html;
   }
