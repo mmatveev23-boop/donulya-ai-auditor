@@ -602,11 +602,12 @@
     color: #fff;
   }
 
-  /* Цвет левой колонки = зона клоузера */
-  .top-widget.zone-green .big-counter   { background: linear-gradient(135deg, #30d158 0%, #28b449 100%); }
-  .top-widget.zone-yellow .big-counter  { background: linear-gradient(135deg, #ffd60a 0%, #e6b800 100%); color: #333; }
-  .top-widget.zone-orange .big-counter  { background: linear-gradient(135deg, #ff9f0a 0%, #ff8000 100%); }
-  .top-widget.zone-red .big-counter     { background: linear-gradient(135deg, #ff453a 0%, #d63b32 100%); }
+  /* Цвет левой колонки = категория сделок которая ПРОСЕДАЕТ (приоритет: 🔴 > 🟠 > 🟡 > 🟢)
+     Если у тебя есть 🔴 — большой счётчик красный. Нет красных, но есть 🟠 — оранжевый. И так далее. */
+  .big-counter.cat-red    { background: linear-gradient(135deg, #ff453a 0%, #d63b32 100%); }
+  .big-counter.cat-orange { background: linear-gradient(135deg, #ff9f0a 0%, #ff8000 100%); }
+  .big-counter.cat-yellow { background: linear-gradient(135deg, #ffd60a 0%, #e6b800 100%); color: #333; }
+  .big-counter.cat-green  { background: linear-gradient(135deg, #30d158 0%, #28b449 100%); }
 
   .big-counter .num {
     font-size: 70px;
@@ -637,7 +638,7 @@
     font-weight: 700;
   }
 
-  .top-widget.zone-yellow .big-counter .strategy { background: rgba(0,0,0,0.15); }
+  .big-counter.cat-yellow .strategy { background: rgba(0,0,0,0.15); }
 
   .big-counter .strategy b { font-weight: 800; }
 
@@ -1275,10 +1276,12 @@
     <div class="widget-expanded">
       <div class="expanded-body">
 
-        <!-- ════ КОЛОНКА 1 · Большое число + Поток ════ -->
-        <div class="big-counter">
-          <div class="num" id="red-count">8</div>
-          <div class="label">🔴 Красных<br/>без касания &gt; 48 ч</div>
+        <!-- ════ КОЛОНКА 1 · Большое число + Поток ════
+             Большой счётчик показывает категорию которая ПРОСЕДАЕТ:
+             приоритет 🔴 > 🟠 > 🟡 > 🟢. Класс cat-* и содержимое обновляются в setZone(). -->
+        <div class="big-counter cat-red" id="big-counter">
+          <div class="num" id="main-num">8</div>
+          <div class="label" id="main-label">🔴 Красных<br/>без касания &gt; 48 ч</div>
           <div class="strategy" id="strategy-text">
             🎯 Разгреби <b>1</b> → выйдешь в <b>🟡</b>
           </div>
@@ -1420,7 +1423,7 @@
       avatar: 'Л',
       name: 'Лим Елена',
       status: '⏰ <span class="big">2%</span> сделок просрочено',
-      raskladka: '1 🔴 / 0 🟡 / 35 🟢',
+      greens: 35,
       effect: '✓ +30% к потоку лидов',
       bigEffect: '+30%',
       effectLabel: 'к потоку лидов',
@@ -1450,7 +1453,7 @@
       avatar: 'П',
       name: 'Петрова Д.',
       status: '⏰ <span class="big">12%</span> сделок просрочено',
-      raskladka: '4 🔴 / 3 🟡 / 26 🟢',
+      greens: 26,
       effect: '⚠ Норма + предупреждение',
       bigEffect: 'норма',
       effectLabel: 'предупреждение',
@@ -1490,7 +1493,7 @@
       avatar: 'М',
       name: 'Мифтахов Р.',
       status: '⏰ <span class="big">22%</span> сделок просрочено',
-      raskladka: '8 🔴 / 5 🟡 / 24 🟢',
+      greens: 24,
       effect: '⚠ Поток −50%',
       bigEffect: '−50%',
       effectLabel: 'поток лидов',
@@ -1539,7 +1542,7 @@
       avatar: 'Л',
       name: 'Ляшенко А.',
       status: '⏰ <span class="big">34%</span> сделок просрочено',
-      raskladka: '12 🔴 / 5 🟡 / 18 🟢',
+      greens: 18,
       effect: '🚫 0 новых лидов',
       bigEffect: '0',
       effectLabel: 'новых лидов',
@@ -1607,6 +1610,38 @@
     }
   }
 
+  // ════ Большой счётчик показывает категорию которая ПРОСЕДАЕТ ════
+  // Приоритет: 🔴 (потеряли) > 🟠 (скоро потеряем) > 🟡 (пока ок) > 🟢 (всё норм).
+  // Берём первую не-нулевую — это и есть «то что просядет следующим».
+  function pickProsedaetCategory(z) {
+    if (z.reds.length > 0) {
+      return {
+        cat: 'red',
+        num: z.reds.length,
+        label: '🔴 Красных<br/>без касания &gt; 48 ч',
+      };
+    }
+    if (z.oranges.length > 0) {
+      return {
+        cat: 'orange',
+        num: z.oranges.length,
+        label: '🟠 Оранжевых<br/>36-48 ч · скоро 🔴',
+      };
+    }
+    if (z.yellows.length > 0) {
+      return {
+        cat: 'yellow',
+        num: z.yellows.length,
+        label: '🟡 Жёлтых<br/>24-36 ч · следи',
+      };
+    }
+    return {
+      cat: 'green',
+      num: z.greens || 0,
+      label: '🟢 Все сделки<br/>в норме ✓',
+    };
+  }
+
   function setZone(zone, btn) {
     const z = zones[zone];
     if (!z) return;
@@ -1625,15 +1660,26 @@
     document.getElementById('avatar-letter').textContent = z.avatar;
     document.getElementById('closer-name').textContent = z.name;
     document.getElementById('status-text').innerHTML = z.status;
-    document.getElementById('raskladka').textContent = z.raskladka;
     document.getElementById('effect').textContent = z.effect;
     document.getElementById('queue-count').textContent = z.queue;
 
-    // Большое число красных + стратегия выхода
-    const totalRed = z.reds.length;
-    document.getElementById('red-count').textContent = totalRed;
+    // ════ Раскладка по 4 категориям сделок (рассчитывается из массивов, не хардкод) ════
+    const nReds    = z.reds.length;
+    const nOranges = z.oranges.length;
+    const nYellows = z.yellows.length;
+    const nGreens  = z.greens || 0;
+    document.getElementById('raskladka').textContent =
+      `${nReds} 🔴 / ${nOranges} 🟠 / ${nYellows} 🟡 / ${nGreens} 🟢`;
 
-    // Стратегия выхода из зоны
+    // ════ Большой счётчик = категория которая ПРОСЕДАЕТ ════
+    // Приоритет: 🔴 > 🟠 > 🟡 > 🟢. Берём первую не-нулевую.
+    const counter = pickProsedaetCategory(z);
+    const bigEl = document.getElementById('big-counter');
+    bigEl.className = `big-counter cat-${counter.cat}`;
+    document.getElementById('main-num').textContent = counter.num;
+    document.getElementById('main-label').innerHTML = counter.label;
+
+    // Стратегия выхода ИЗ ЗОНЫ КЛОУЗЕРА (не путать с категорией сделок)
     const strategies = {
       green: '<b>Ты уже в зелёной ✓</b><br/>Продолжай.',
       yellow: '🎯 Разгреби <b>1</b> → выйдешь в <b>🟢</b>',
