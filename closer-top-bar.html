@@ -1391,6 +1391,117 @@
   }
   .note-chips .nc:hover { background: rgba(255,255,255,0.10); color: #fff; }
 
+  /* ════ AI-скоринг звонка ════ */
+  .deal-row-c .scoring-tag {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,193,7,0.15);
+    border: 1px solid rgba(255,193,7,0.40);
+    color: #8b5e00;
+    padding: 3px 10px 3px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .deal-row-c .scoring-tag .spin {
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid rgba(139,94,0,0.30);
+    border-top-color: #8b5e00;
+    border-radius: 50%;
+    animation: spinX 0.9s linear infinite;
+  }
+  @keyframes spinX { to { transform: rotate(360deg); } }
+  .deal-row-c.is-scoring .scoring-tag { display: inline-flex; }
+
+  .deal-row-c .verdict-tag {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    margin-left: 8px;
+  }
+  .deal-row-c.verdict-good .verdict-tag.good { display: inline-flex; background: #d1fae5; color: #065f46; }
+  .deal-row-c.verdict-bad  .verdict-tag.bad  { display: inline-flex; background: #fee2e2; color: #991b1b; }
+
+  /* AI-блок в раскрытой части */
+  .ai-verdict {
+    display: none;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .deal-row-c.verdict-good .ai-verdict.good { display: block; background: #ecfdf5; border: 1px solid #a7f3d0; }
+  .deal-row-c.verdict-bad  .ai-verdict.bad  { display: block; background: #fef2f2; border: 1px solid #fecaca; }
+  .ai-verdict .ai-head {
+    font-weight: 800;
+    margin-bottom: 6px;
+    font-size: 12.5px;
+  }
+  .ai-verdict.good .ai-head { color: #065f46; }
+  .ai-verdict.bad  .ai-head { color: #991b1b; }
+  .ai-verdict .ai-crit {
+    display: grid;
+    grid-template-columns: 16px 1fr auto;
+    gap: 6px;
+    margin: 3px 0;
+    font-size: 11.5px;
+  }
+  .ai-verdict .ai-crit .ck.ok  { color: #16a34a; font-weight: 700; }
+  .ai-verdict .ai-crit .ck.no  { color: #dc2626; font-weight: 700; }
+  .ai-verdict .ai-crit .nm     { color: #374151; }
+  .ai-verdict .ai-crit .sc     { color: #6b7280; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .ai-verdict .ai-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .ai-verdict .ai-btn {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.15);
+    color: #1a1a1a;
+    padding: 5px 11px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ai-verdict .ai-btn:hover { background: #f5f5f5; }
+  .ai-verdict .ai-btn.primary { background: #1976d2; border-color: #1976d2; color: #fff; }
+  .ai-verdict .ai-btn.primary:hover { background: #1565c0; }
+
+  /* Счётчик халтурных штрафов в большом блоке слева */
+  .penalty-stat {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 8px;
+    text-align: left;
+    font-size: 12px;
+  }
+  .penalty-stat .ttl {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+    margin-bottom: 3px;
+  }
+  .penalty-stat .val {
+    font-size: 18px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+  }
+  .penalty-stat .val .neg { color: #ffd5d0; }
+
 </style>
 </head>
 <body>
@@ -1497,6 +1608,10 @@
         <div class="big-counter">
           <div class="num" id="red-count">8</div>
           <div class="label">🔴 Красных<br/>без касания &gt; 48 ч</div>
+          <div class="penalty-stat" id="penalty-stat">
+            <div class="ttl">🤖 Халтурных за неделю</div>
+            <div class="val"><span id="penalty-count">0</span> · <span class="neg" id="penalty-sum">0 ₽</span></div>
+          </div>
           <div class="strategy" id="strategy-text">
             🎯 Разгреби <b>1</b> → выйдешь в <b>🟡</b>
           </div>
@@ -1941,6 +2056,9 @@
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" id="deal-${cssId(d.name)}" onclick="expandDeal('${d.name}', this)">
             <span class="name">
               <span class="channel ${ch}" title="${getChannelLabel(ch)}">${ch.toUpperCase()}</span>${d.name}
+              <span class="scoring-tag"><span class="spin"></span>AI скоринг</span>
+              <span class="verdict-tag good">✅ AI</span>
+              <span class="verdict-tag bad">⚠ -300₽</span>
             </span>
             ${metaFn(d)}
             <div class="deal-extra" onclick="event.stopPropagation()">
@@ -1995,11 +2113,116 @@
   }
 
   function dialDeal(name) {
-    // 1. Параллельно открываем карточку сделки — менеджеру нужны детали
-    //    последнего звонка / AI-разбор / шкурный интерес пока клиент говорит «алло»
+    // 1. Открываем карточку сделки параллельно
     openDealCard(name);
-    // 2. И самый звонок через Oki-Toki
-    alert(`📞 Звоню ${name} через Oki-Toki\nТелефон: ${getPhone(name)}\n\nКарточка сделки открыта в соседней вкладке —\nтам AI-разбор последнего звонка + история.\n\nВ продакшене → click-to-call API\nПри дозвоне (>30 сек) → 🔴 снимается автоматически`);
+    // 2. Имитация click-to-call через Oki-Toki
+    //    В продакшене: реальный звонок → webhook call_ended (duration >= 60s)
+    //    → AI-скоринг lite-промпт → gate ≥ 5/10
+    startAIScoring(name);
+  }
+
+  // ════ AI-скоринг звонка (mock) ════
+  // Детерминированный balance halt/good — чтобы менеджер увидел оба сценария
+  function getAIScore(name) {
+    // 60% сделок проходят, 40% халтурят — для демо разнообразие
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 23 + name.charCodeAt(i)) & 0xff;
+    const seed = h % 100;
+    const isGood = seed < 60;
+
+    if (isGood) {
+      // Скор 5-9
+      const score = 5 + (h % 5);
+      return {
+        good: true, score, threshold: 5,
+        topic:     { ok: true,  pts: 4, note: 'Затронули цену клиента' },
+        next_step: { ok: true,  pts: score === 5 ? 1 : 4, note: score === 5 ? '«Перезвоню в среду» — без темы' : 'Назначили среду 14:00 с рассрочкой' },
+        progress:  { ok: score >= 7, pts: score >= 7 ? 2 : 0, note: score >= 7 ? 'Клиент стал теплее' : 'Тон нейтральный' },
+      };
+    } else {
+      // Скор 1-4
+      const score = 1 + (h % 4);
+      return {
+        good: false, score, threshold: 5,
+        topic:     { ok: false, pts: 0,           note: 'Основная тема возражения не обсуждена' },
+        next_step: { ok: false, pts: score >= 3 ? 1 : 0, note: score >= 3 ? '«Перезвоню» без даты и темы' : 'Следующий шаг не назначен' },
+        progress:  { ok: false, pts: 0,           note: 'Клиент остался холодным, новых вопросов нет' },
+      };
+    }
+  }
+
+  let _penaltyCount = 0;
+  let _penaltySum = 0;
+
+  function updatePenaltyStat() {
+    document.getElementById('penalty-count').textContent = _penaltyCount;
+    document.getElementById('penalty-sum').textContent = `-${_penaltySum} ₽`;
+  }
+
+  function startAIScoring(name) {
+    const id = `deal-${cssId(name)}`;
+    const row = document.getElementById(id);
+    if (!row) return;
+    // Чистим предыдущие vердикты на этой сделке
+    row.classList.remove('verdict-good', 'verdict-bad');
+    row.classList.add('is-scoring');
+    if (!row.classList.contains('expanded')) row.classList.add('expanded');
+
+    // Имитация задержки SpeechKit + Gemini Flash
+    // В проде: 30-60 сек. Для демо — 4 сек.
+    setTimeout(() => {
+      const ai = getAIScore(name);
+      row.classList.remove('is-scoring');
+      row.classList.add(ai.good ? 'verdict-good' : 'verdict-bad');
+      renderAIVerdict(row, ai, name);
+      if (!ai.good) {
+        _penaltyCount += 1;
+        _penaltySum += 300;
+        updatePenaltyStat();
+      }
+    }, 4000);
+  }
+
+  function renderAIVerdict(row, ai, name) {
+    const extra = row.querySelector('.deal-extra');
+    if (!extra) return;
+    // Удалим старый блок если был
+    extra.querySelectorAll('.ai-verdict').forEach(e => e.remove());
+
+    const cls = ai.good ? 'good' : 'bad';
+    const title = ai.good
+      ? `✅ Касание зачтено · AI ${ai.score}/${10}`
+      : `⚠ Халтурное касание · AI ${ai.score}/${10} · штраф 300₽`;
+
+    const criteria = [
+      { key: 'topic',     name: 'Затронули главную тему', max: 4, val: ai.topic },
+      { key: 'next_step', name: 'Назначен следующий шаг', max: 4, val: ai.next_step },
+      { key: 'progress',  name: 'Клиент двинулся',        max: 2, val: ai.progress },
+    ].map(c => `
+      <div class="ai-crit">
+        <span class="ck ${c.val.ok ? 'ok' : 'no'}">${c.val.ok ? '✓' : '✗'}</span>
+        <span class="nm">${c.name}: <span style="color:#6b7280;">${c.val.note}</span></span>
+        <span class="sc">${c.val.pts}/${c.max}</span>
+      </div>
+    `).join('');
+
+    const actions = ai.good
+      ? `<button class="ai-btn primary" onclick="event.stopPropagation(); alert('Касание зафиксировано. Сделка перейдёт в жёлтую зону.')">Хорошо</button>`
+      : `<button class="ai-btn primary" onclick="event.stopPropagation(); disputeAI('${name}')">Оспорить → РОП</button>
+         <button class="ai-btn" onclick="event.stopPropagation(); dialDeal('${name}')">📞 Позвонить ещё раз</button>`;
+
+    const html = `
+      <div class="ai-verdict ${cls}" onclick="event.stopPropagation()">
+        <div class="ai-head">${title}</div>
+        ${criteria}
+        <div class="ai-actions">${actions}</div>
+      </div>
+    `;
+    extra.insertAdjacentHTML('beforeend', html);
+  }
+
+  function disputeAI(name) {
+    alert(`📨 Запрос на РОПа: пересмотреть AI-вердикт по сделке ${name}\n\nРОП послушает запись звонка вручную и решит:\n- Засчитать касание (вернуть штраф 300₽)\n- Подтвердить халтурное касание\n\nВ продакшене → notify РОПа + entry в БД для review`);
   }
 
   // ════ Шаблоны сообщений (в проде хранятся в БД, РОП правит через админку) ════
