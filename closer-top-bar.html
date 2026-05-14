@@ -305,10 +305,10 @@
        остаётся как было (детальный режим, иной язык)
      ════════════════════════════════════════════════════════════════ */
   .top-widget {
-    color: #1a1a1a;
+    color: #f5f5f7;
     transition: background 0.3s;
-    background: #f5f5f7;
-    border-top: 1px solid rgba(0,0,0,0.06);
+    background: #1c1c1e;                            /* dark mode base */
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 
   /* В раскрытом состоянии — возвращаем цвет зоны (для контекстуального
@@ -331,11 +331,11 @@
     position: relative;
     overflow: hidden;
   }
-  .widget-collapsed:hover { background: rgba(0,0,0,0.025); }
+  .widget-collapsed:hover { background: rgba(255,255,255,0.035); }
 
   /* Лёгкий tint справа полосы — намёк на signal, не кричит */
-  .top-widget:not(.expanded).zone-orange .widget-collapsed { background: linear-gradient(90deg, transparent 60%, rgba(255,159,10,0.06) 100%); }
-  .top-widget:not(.expanded).zone-red    .widget-collapsed { background: linear-gradient(90deg, transparent 50%, rgba(255,69,58,0.08) 100%); }
+  .top-widget:not(.expanded).zone-orange .widget-collapsed { background: linear-gradient(90deg, transparent 55%, rgba(255,159,10,0.12) 100%); }
+  .top-widget:not(.expanded).zone-red    .widget-collapsed { background: linear-gradient(90deg, transparent 45%, rgba(255,69,58,0.18) 100%); }
 
   /* Bottom indicator — 2px полоска снизу, дышит при оранжевой/красной зоне */
   .top-widget:not(.expanded) .widget-collapsed::after {
@@ -375,10 +375,10 @@
     gap: 8px;
     font-size: 13px;
     font-weight: 700;
-    padding: 6px 14px 6px 10px;
+    padding: 7px 16px 7px 12px;
     border-radius: 999px;
-    background: #e5e5ea;
-    color: #1a1a1a;
+    background: rgba(255,255,255,0.10);
+    color: #fff;
     letter-spacing: -0.005em;
     position: relative;
     transition: all 0.25s;
@@ -402,29 +402,30 @@
   }
 
   .widget-collapsed .status-text .big {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 900;
-    margin: 0 2px;
-    letter-spacing: -0.01em;
+    margin: 0 3px;
+    letter-spacing: -0.015em;
   }
 
-  /* Раскладка светофора — нейтральная, читаемая */
+  /* Раскладка светофора — КРУПНАЯ для быстрого считывания цифр */
   .widget-collapsed .raskladka {
-    font-size: 13px;
-    font-weight: 600;
-    color: #555;
-    letter-spacing: 0.01em;
+    font-size: 18px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
   }
 
-  /* Эффект на поток лидов — тихий текстовый sub-info */
+  /* Эффект на поток лидов — крупный sub-info */
   .widget-collapsed .effect {
-    font-size: 12.5px;
-    font-weight: 500;
-    color: #777;
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: -0.005em;
   }
-  .zone-orange .widget-collapsed .effect { color: #c2410c; font-weight: 600; }
-  .zone-red    .widget-collapsed .effect { color: #b91c1c; font-weight: 700; }
+  .zone-orange .widget-collapsed .effect { color: #ffb347; }
+  .zone-red    .widget-collapsed .effect { color: #ff8478; }
 
   .widget-collapsed .right {
     display: flex;
@@ -434,42 +435,42 @@
 
   /* Все правые pills нейтральные — не отвлекают от main signal pill */
   .widget-collapsed .pill {
-    background: #ffffff;
-    color: #333;
-    padding: 5px 12px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.92);
+    padding: 6px 14px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.10);
+    border: 1px solid rgba(255,255,255,0.14);
     transition: all 0.15s;
   }
   .widget-collapsed .pill:hover {
-    background: #fafafa;
-    border-color: rgba(0,0,0,0.18);
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.24);
   }
-  .widget-collapsed .pill b { font-weight: 800; color: #1a1a1a; }
+  .widget-collapsed .pill b { font-weight: 800; color: #fff; }
 
   /* Social-badge "ранг в команде" — кликабельный, ведёт в rop-workplace.html */
   .widget-collapsed .rank-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.10);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
     border-radius: 999px;
-    padding: 4px 10px 4px 8px;
+    padding: 5px 12px 5px 10px;
     margin-right: 8px;
     cursor: pointer;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 600;
-    color: #333;
+    color: rgba(255,255,255,0.92);
     transition: all 0.15s;
     letter-spacing: -0.005em;
   }
   .widget-collapsed .rank-badge:hover {
-    background: #fafafa;
-    border-color: rgba(0,0,0,0.18);
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.24);
     transform: translateY(-1px);
   }
   .widget-collapsed .rank-badge .rk {
@@ -498,6 +499,7 @@
   }
 
   .top-widget.expanded .toggle-icon {
+    color: #fff;
     transform: rotate(180deg);
   }
 
