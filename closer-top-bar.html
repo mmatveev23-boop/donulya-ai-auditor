@@ -1147,7 +1147,7 @@
     transition: all 0.15s;
   }
   .modal-foot .btn-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
-  /* ════ Inline-раскрытие сделки + 3 действия ════ */
+  /* ════ Канал-бейдж в плашке сделки ════ */
   .deal-row-c {
     cursor: pointer;
     position: relative;
@@ -1172,30 +1172,6 @@
   .deal-row-c .channel.sms { background: #888; }
   .deal-row-c .channel.vk  { background: #0077FF; }
   .deal-row-c .channel.max { background: #FF7A00; }
-  .deal-row-c.expanded { background: rgba(0,0,0,0.05); }
-
-  .deal-extra {
-    display: none;
-    padding: 8px 10px 4px;
-    grid-column: 1 / -1;
-    border-top: 1px dashed rgba(0,0,0,0.10);
-    margin-top: 6px;
-    animation: slideDownE 0.2s ease;
-  }
-  .deal-row-c.expanded .deal-extra { display: block; }
-  @keyframes slideDownE { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-
-  .deal-history {
-    font-size: 11px;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 8px;
-  }
-  .deal-history .ht { font-weight: 700; color: #333; margin-bottom: 4px; }
-  .deal-history .hr { display: flex; gap: 6px; }
-  .deal-history .hr .icn { width: 14px; text-align: center; }
-  .deal-history .hr .when { color: #888; min-width: 70px; }
-  .deal-history .hr .what { color: #333; }
 
 </style>
 </head>
@@ -1703,11 +1679,10 @@
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
-  // ════ Дополнительные данные сделок: канал + история касаний ════
-  // В проде это пришло бы из API. Здесь — детерминированный mock.
+  // ════ Канал сделки (для бейджа в плашке) ════
+  // В проде придёт из API. Здесь — детерминированный mock по имени.
   const CHANNELS = ['wa', 'tg', 'sms', 'vk', 'max'];
   function getChannel(name) {
-    // Детерминированный выбор канала на основе имени (чтобы при перерендере не прыгало)
     let h = 0;
     for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
     return CHANNELS[h % CHANNELS.length];
@@ -1715,35 +1690,17 @@
   function getChannelLabel(ch) {
     return { wa: 'WhatsApp', tg: 'Telegram', sms: 'SMS', vk: 'ВКонтакте', max: 'MAX' }[ch] || ch.toUpperCase();
   }
-  // Mock-история — 2-3 последних касания
-  function getHistory(name) {
-    const histories = [
-      [{ ic: '📞', when: '3 дня назад', what: 'не дозвон (45 сек)' },
-       { ic: '💬', when: '5 дней назад', what: 'отправил КП' },
-       { ic: '📞', when: '7 дней назад', what: 'говорили 4 мин · тема: цена' }],
-      [{ ic: '💬', when: '2 дня назад', what: 'не ответил' },
-       { ic: '📞', when: '4 дня назад', what: 'дозвонился · 6 мин · возражение времени' }],
-      [{ ic: '📞', when: '5 дней назад', what: 'не дозвон (3 попытки)' },
-       { ic: '💬', when: '7 дней назад', what: 'отправил кейс' }],
-    ];
-    let h = 0;
-    for (let i = 0; i < name.length; i++) h = (h * 17 + name.charCodeAt(i)) & 0xff;
-    return histories[h % histories.length];
-  }
 
   function renderDealsList(elId, items, label, metaFn) {
     const html = items.length > 0
       ? items.map(d => {
           const ch = getChannel(d.name);
           return `
-          <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" id="deal-${cssId(d.name)}" onclick="expandDeal('${d.name}', this)">
+          <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM">
             <span class="name">
               <span class="channel ${ch}" title="${getChannelLabel(ch)}">${ch.toUpperCase()}</span>${d.name}
             </span>
             ${metaFn(d)}
-            <div class="deal-extra" onclick="event.stopPropagation()">
-              ${renderHistory(d.name)}
-            </div>
           </div>
         `;
         }).join('')
@@ -1751,24 +1708,17 @@
     document.getElementById(elId).innerHTML = html;
   }
 
-  function cssId(s) { return s.replace(/[^A-Za-zА-Яа-я0-9]/g, '_'); }
-
-  function renderHistory(name) {
-    const h = getHistory(name);
-    if (!h || !h.length) return '';
-    return `
-      <div class="deal-history">
-        <div class="ht">⏪ Последние касания:</div>
-        ${h.map(x => `<div class="hr"><span class="icn">${x.ic}</span><span class="when">${x.when}</span><span class="what">${x.what}</span></div>`).join('')}
-      </div>`;
+  // Mock deal-id → в проде придёт из API. Здесь — детерминированный по имени.
+  function getDealId(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 7 + name.charCodeAt(i)) & 0xffffff;
+    return 41000000 + (h % 999999);
   }
-
-  let _expandedDeal = null;
-  function expandDeal(name, el) {
-    // Закрыть предыдущую раскрытую (одна открыта одновременно)
-    if (_expandedDeal && _expandedDeal !== el) _expandedDeal.classList.remove('expanded');
-    el.classList.toggle('expanded');
-    _expandedDeal = el.classList.contains('expanded') ? el : null;
+  function getDealUrl(name) {
+    return `https://donula.amocrm.ru/leads/detail/${getDealId(name)}`;
+  }
+  function openDealCard(name) {
+    window.open(getDealUrl(name), '_blank', 'noopener');
   }
 
   function currentZone() {
@@ -1777,10 +1727,6 @@
     if (cls.includes('zone-yellow')) return 'yellow';
     if (cls.includes('zone-orange')) return 'orange';
     return 'red';
-  }
-
-  function openDeal(name) {
-    alert(`📲 Открываем карточку сделки:\n${name}\n\nВ продакшене → /leads/detail/<id>\nа справа сразу виджет «🚦 Светофор сделки» с AI-разбором звонка`);
   }
 
   function jumpToQueue() {
