@@ -578,13 +578,13 @@
     border-radius: 6px;
   }
 
-  /* ── Внутри развёрнутой полоски · 4 колонки ── */
+  /* ── Внутри развёрнутой полоски · большой счётчик + 4 колонки категорий сделок ── */
   .expanded-body {
     padding: 16px;
     border-top: 1px solid rgba(255,255,255,0.15);
     display: grid;
-    grid-template-columns: 200px 1fr 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+    gap: 10px;
   }
 
   .top-widget.zone-yellow .expanded-body {
@@ -702,6 +702,10 @@
   }
 
   /* Цвет колонки по категории · светлые пастельные */
+  .deals-col.col-green {
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+  }
   .deals-col.col-yellow {
     background: #fff8db;
     border: 1px solid #ffe580;
@@ -726,6 +730,7 @@
     align-items: center;
   }
 
+  .col-green  .deals-col-head { color: #2e7d32; }
   .col-yellow .deals-col-head { color: #b8860b; }
   .col-orange .deals-col-head { color: #d97706; }
   .col-red    .deals-col-head { color: #c62828; }
@@ -741,9 +746,22 @@
     font-weight: 800;
   }
 
+  .col-green  .deals-col-head .count { background: #c8e6c9; color: #2e7d32; }
   .col-yellow .deals-col-head .count { background: #fff5b8; color: #b8860b; }
   .col-orange .deals-col-head .count { background: #ffd9ac; color: #d97706; }
   .col-red    .deals-col-head .count { background: #ffcccc; color: #c62828; }
+
+  /* «И ещё N в норме» — подсказка под коротким списком зелёных */
+  .deals-list .more-hint {
+    padding: 8px 10px;
+    text-align: center;
+    color: #2e7d32;
+    font-size: 11px;
+    font-weight: 600;
+    font-style: italic;
+    border-top: 1px dashed rgba(46,125,50,0.30);
+    margin-top: 4px;
+  }
 
   .deals-list {
     display: grid;
@@ -1275,7 +1293,18 @@
           </div>
         </div>
 
-        <!-- ════ КОЛОНКА 2 · ЖЁЛТЫЕ (24-36ч) ════ -->
+        <!-- ════ КОЛОНКА 2 · ЗЕЛЁНЫЕ (<24ч, в норме) ════ -->
+        <div class="deals-col col-green">
+          <div class="deals-col-head">
+            <span><span class="dot-big">🟢</span>Зелёные</span>
+            <span class="count" id="green-count">35</span>
+          </div>
+          <div class="deals-list" id="green-list">
+            <!-- генерируется JS -->
+          </div>
+        </div>
+
+        <!-- ════ КОЛОНКА 3 · ЖЁЛТЫЕ (24-36ч) ════ -->
         <div class="deals-col col-yellow">
           <div class="deals-col-head">
             <span><span class="dot-big">🟡</span>Жёлтые</span>
@@ -1286,7 +1315,7 @@
           </div>
         </div>
 
-        <!-- ════ КОЛОНКА 3 · ОРАНЖЕВЫЕ (36-48ч, скоро 🔴) ════ -->
+        <!-- ════ КОЛОНКА 4 · ОРАНЖЕВЫЕ (36-48ч, скоро 🔴) ════ -->
         <div class="deals-col col-orange">
           <div class="deals-col-head">
             <span><span class="dot-big">🟠</span>Оранжевые</span>
@@ -1297,7 +1326,7 @@
           </div>
         </div>
 
-        <!-- ════ КОЛОНКА 4 · КРАСНЫЕ (>48ч) ════ -->
+        <!-- ════ КОЛОНКА 5 · КРАСНЫЕ (>48ч) ════ -->
         <div class="deals-col col-red">
           <div class="deals-col-head">
             <span><span class="dot-big">🔴</span>Красные</span>
@@ -1311,7 +1340,7 @@
 
       <!-- Футер · нейтральный светлый -->
       <div style="padding: 12px 18px; border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.03);">
-        <span style="font-size: 12px; color: #666;">🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч (скоро 🔴) · 🔴 Красные: уже &gt;48ч</span>
+        <span style="font-size: 12px; color: #666;">🟢 Зелёные: &lt;24ч · 🟡 Жёлтые: 24-36ч · 🟠 Оранжевые: 36-48ч · 🔴 Красные: &gt;48ч</span>
         <button onclick="goDashboard()" style="background: #fff; color: #333; border: 1px solid rgba(0,0,0,0.15); border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">📊 Открыть дашборд →</button>
       </div>
     </div>
@@ -1404,7 +1433,16 @@
       avatar: 'Л',
       name: 'Лим Елена',
       status: '⏰ <span class="big">2%</span> сделок просрочено',
-      greens: 35,
+      greensTotal: 35,
+      greens: [
+        { name: 'Воронин Е.',  hoursLeft: 22, amount: '95к ₽' },
+        { name: 'Дмитриев С.', hoursLeft: 19, amount: '150к ₽' },
+        { name: 'Ершов В.',    hoursLeft: 16, amount: '85к ₽' },
+        { name: 'Зайцева И.',  hoursLeft: 13, amount: '180к ₽' },
+        { name: 'Калинин Д.',  hoursLeft: 10, amount: '120к ₽' },
+        { name: 'Лазарев А.',  hoursLeft:  7, amount: '95к ₽' },
+        { name: 'Мартынов П.', hoursLeft:  4, amount: '180к ₽' },
+      ],
       effect: '✓ +30% к потоку лидов',
       bigEffect: '+30%',
       effectLabel: 'к потоку лидов',
@@ -1434,7 +1472,14 @@
       avatar: 'П',
       name: 'Петрова Д.',
       status: '⏰ <span class="big">12%</span> сделок просрочено',
-      greens: 26,
+      greensTotal: 26,
+      greens: [
+        { name: 'Андреев И.',    hoursLeft: 22, amount: '180к ₽' },
+        { name: 'Борисов П.',    hoursLeft: 18, amount: '95к ₽'  },
+        { name: 'Васильева К.',  hoursLeft: 14, amount: '150к ₽' },
+        { name: 'Григорьева Н.', hoursLeft: 10, amount: '85к ₽'  },
+        { name: 'Денисов М.',    hoursLeft:  6, amount: '120к ₽' },
+      ],
       effect: '⚠ Норма + предупреждение',
       bigEffect: 'норма',
       effectLabel: 'предупреждение',
@@ -1474,7 +1519,14 @@
       avatar: 'М',
       name: 'Мифтахов Р.',
       status: '⏰ <span class="big">22%</span> сделок просрочено',
-      greens: 24,
+      greensTotal: 24,
+      greens: [
+        { name: 'Алексеев Д.', hoursLeft: 20, amount: '180к ₽' },
+        { name: 'Брагин Е.',   hoursLeft: 16, amount: '95к ₽'  },
+        { name: 'Воронов С.',  hoursLeft: 12, amount: '150к ₽' },
+        { name: 'Глазкова А.', hoursLeft:  8, amount: '120к ₽' },
+        { name: 'Драгун В.',   hoursLeft:  4, amount: '85к ₽'  },
+      ],
       effect: '⚠ Поток −50%',
       bigEffect: '−50%',
       effectLabel: 'поток лидов',
@@ -1523,7 +1575,13 @@
       avatar: 'Л',
       name: 'Ляшенко А.',
       status: '⏰ <span class="big">34%</span> сделок просрочено',
-      greens: 18,
+      greensTotal: 18,
+      greens: [
+        { name: 'Беляев Н.',  hoursLeft: 22, amount: '95к ₽'  },
+        { name: 'Городов С.', hoursLeft: 18, amount: '180к ₽' },
+        { name: 'Долгов А.',  hoursLeft: 14, amount: '120к ₽' },
+        { name: 'Жуков М.',   hoursLeft:  9, amount: '150к ₽' },
+      ],
       effect: '🚫 0 новых лидов',
       bigEffect: '0',
       effectLabel: 'новых лидов',
@@ -1618,7 +1676,7 @@
     }
     return {
       cat: 'green',
-      num: z.greens || 0,
+      num: z.greensTotal != null ? z.greensTotal : (z.greens?.length || 0),
       label: '🟢 Все сделки<br/>в норме ✓',
     };
   }
@@ -1648,7 +1706,7 @@
     const nReds    = z.reds.length;
     const nOranges = z.oranges.length;
     const nYellows = z.yellows.length;
-    const nGreens  = z.greens || 0;
+    const nGreens  = z.greensTotal != null ? z.greensTotal : (z.greens?.length || 0);
     document.getElementById('raskladka').textContent =
       `${nReds} 🔴 / ${nOranges} 🟠 / ${nYellows} 🟡 / ${nGreens} 🟢`;
 
@@ -1683,6 +1741,16 @@
     };
     effectEl.querySelector('.effect-hint').textContent = effectHints[z.effectColor] || '';
 
+    // Список ЗЕЛЁНЫХ (<24ч, в норме). Показываем короткий срез + «и ещё N в норме»
+    const greensArr = z.greens || [];
+    const greensTotal = z.greensTotal != null ? z.greensTotal : greensArr.length;
+    const greensMore = Math.max(0, greensTotal - greensArr.length);
+    renderDealsList('green-list', greensArr, 'зелёных', g =>
+      `<span class="meta">⏱ <b>${g.hoursLeft}ч</b> до 🟡 · ${g.amount}</span>`,
+      greensMore
+    );
+    document.getElementById('green-count').textContent = greensTotal;
+
     // Список ЖЁЛТЫХ (24-36ч)
     renderDealsList('yellow-list', z.yellows, 'жёлтых', y =>
       `<span class="meta">⏱ <b>${y.hoursLeft}ч</b> до 🔴 · ${y.amount}</span>`
@@ -1706,8 +1774,8 @@
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
-  function renderDealsList(elId, items, label, metaFn) {
-    const html = items.length > 0
+  function renderDealsList(elId, items, label, metaFn, moreCount = 0) {
+    let html = items.length > 0
       ? items.map(d => `
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM">
             <span class="name">${d.name}</span>
@@ -1715,6 +1783,9 @@
           </div>
         `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
+    if (moreCount > 0) {
+      html += `<div class="more-hint">и ещё ${moreCount} в норме</div>`;
+    }
     document.getElementById(elId).innerHTML = html;
   }
 
