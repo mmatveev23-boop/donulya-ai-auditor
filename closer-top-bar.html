@@ -763,6 +763,154 @@
     margin-top: 4px;
   }
 
+  /* Кнопка «Показать все N →» — открывает модалку со всеми сделками */
+  .deals-list .show-all-btn {
+    display: block;
+    width: 100%;
+    padding: 9px 10px;
+    background: #c8e6c9;
+    border: 1px dashed #66bb6a;
+    border-radius: 6px;
+    color: #1b5e20;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .deals-list .show-all-btn:hover {
+    background: #a5d6a7;
+    border-style: solid;
+    transform: translateY(-1px);
+  }
+
+  /* ════ Модалка «Все зелёные сделки» с AI-оценкой касания ════ */
+  .greens-modal-card {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 720px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.40);
+    overflow: hidden;
+    color: #333;
+    animation: slideUp 0.22s ease;
+  }
+  .greens-modal-head {
+    padding: 16px 20px;
+    background: linear-gradient(180deg, #e8f5e9 0%, #d7ecd9 100%);
+    border-bottom: 1px solid #c8e6c9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .greens-modal-head h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: #1b5e20;
+    letter-spacing: -0.01em;
+  }
+  .greens-modal-head .sub {
+    font-size: 11.5px;
+    color: #2e7d32;
+    margin-top: 3px;
+  }
+  .greens-modal-head .x {
+    background: rgba(46,125,50,0.10);
+    border: none;
+    color: #1b5e20;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .greens-modal-head .x:hover { background: rgba(46,125,50,0.20); }
+
+  .greens-modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 0;
+  }
+  .greens-modal-body::-webkit-scrollbar { width: 6px; }
+  .greens-modal-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+
+  .modal-deal-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 11px 18px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .modal-deal-row:hover { background: #f8fdf8; }
+  .modal-deal-row:last-child { border-bottom: none; }
+
+  .modal-deal-row .name {
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #1a1a1a;
+    letter-spacing: -0.005em;
+  }
+  .modal-deal-row .ai-summary {
+    font-size: 11.5px;
+    color: #666;
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .modal-deal-row .hours {
+    font-size: 11.5px;
+    color: #777;
+    min-width: 72px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .modal-deal-row .hours b { color: #555; font-weight: 700; }
+  .modal-deal-row .amount {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #333;
+    min-width: 64px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* AI-балл — компактный круглый бейдж 1-10, цвет по диапазону */
+  .ai-score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .ai-score-badge.ai-good { background: #c8e6c9; color: #1b5e20; border: 1px solid #81c784; }
+  .ai-score-badge.ai-mid  { background: #fff5b8; color: #8b6500; border: 1px solid #fdd835; }
+  .ai-score-badge.ai-bad  { background: #ffcdd2; color: #b71c1c; border: 1px solid #e57373; }
+  .ai-score-badge .lbl { font-size: 9.5px; font-weight: 700; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .greens-modal-foot {
+    padding: 12px 20px;
+    background: #fafafa;
+    border-top: 1px solid #e0e0e0;
+    font-size: 11.5px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .greens-modal-foot .hint b { color: #1b5e20; font-weight: 800; }
+
   .deals-list {
     display: grid;
     gap: 5px;
@@ -1741,13 +1889,14 @@
     };
     effectEl.querySelector('.effect-hint').textContent = effectHints[z.effectColor] || '';
 
-    // Список ЗЕЛЁНЫХ (<24ч, в норме). Показываем короткий срез + «и ещё N в норме»
+    // Список ЗЕЛЁНЫХ (<24ч, в норме). Показываем короткий срез + кнопку «Показать все N →»
     const greensArr = z.greens || [];
     const greensTotal = z.greensTotal != null ? z.greensTotal : greensArr.length;
     const greensMore = Math.max(0, greensTotal - greensArr.length);
     renderDealsList('green-list', greensArr, 'зелёных', g =>
       `<span class="meta">⏱ <b>${g.hoursLeft}ч</b> до 🟡 · ${g.amount}</span>`,
-      greensMore
+      greensMore,
+      true  // showAllBtn → кнопка «Показать все N» вместо текстовой подсказки
     );
     document.getElementById('green-count').textContent = greensTotal;
 
@@ -1774,7 +1923,7 @@
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
   }
 
-  function renderDealsList(elId, items, label, metaFn, moreCount = 0) {
+  function renderDealsList(elId, items, label, metaFn, moreCount = 0, showAllBtn = false) {
     let html = items.length > 0
       ? items.map(d => `
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM">
@@ -1784,9 +1933,114 @@
         `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
     if (moreCount > 0) {
-      html += `<div class="more-hint">и ещё ${moreCount} в норме</div>`;
+      if (showAllBtn) {
+        const total = items.length + moreCount;
+        html += `<button class="show-all-btn" onclick="openAllGreens()">Показать все ${total} →</button>`;
+      } else {
+        html += `<div class="more-hint">и ещё ${moreCount} в норме</div>`;
+      }
     }
     document.getElementById(elId).innerHTML = html;
+  }
+
+  // ════ AI-оценка касания (mock) ════
+  // В проде: Yandex SpeechKit transcript → YandexGPT 5.1 Pro → 1-10 балл + краткая сводка.
+  // Здесь — детерминированный mock по имени сделки. Без gate/штрафа — только информация для клоузера.
+  function getAIScore(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 37 + name.charCodeAt(i)) & 0xffff;
+    // У зелёных (касания соблюдены) балл в среднем выше — 5-10. Иногда 3-4 (нестандартное касание прошло)
+    const score = 3 + (h % 8);  // 3-10
+    const summaries = [
+      'Затронули цену, клиент согласен подумать',
+      'Назначена встреча в среду, тема ясна',
+      'Тон уверенный, основное возражение снято',
+      'Клиент стал теплее, обещал ответ к пятнице',
+      'Краткий контакт, отправил расчёт',
+      'Предложил рассрочку, ждёт решения',
+      'Уточнил детали долга, КП отправлено',
+      'Обсудили сроки, готов к закрытию',
+      'Без чёткого следующего шага, шаблонный финал',
+      'Тон нейтральный, тема обсуждена поверхностно',
+    ];
+    return { score, summary: summaries[h % summaries.length] };
+  }
+
+  function aiCls(score) {
+    if (score >= 7) return 'ai-good';
+    if (score >= 5) return 'ai-mid';
+    return 'ai-bad';
+  }
+
+  // ════ Пул имён для генерации «остальных зелёных» (когда массив z.greens < z.greensTotal) ════
+  const GREEN_NAMES_POOL = [
+    'Алексеев Д.', 'Беляев Н.', 'Воронов С.', 'Григорьев А.', 'Дмитриев П.',
+    'Ефимов К.', 'Жуков М.', 'Зайцев Р.', 'Иванов В.', 'Климов А.',
+    'Лебедев Е.', 'Мартынов И.', 'Никитин Б.', 'Орлов К.', 'Петров С.',
+    'Романов Н.', 'Сидоров В.', 'Тимофеев А.', 'Уваров Е.', 'Фёдоров П.',
+    'Хохлов М.', 'Цветков К.', 'Чернов А.', 'Шумилов В.', 'Щербаков И.',
+    'Юрков Б.', 'Яковлев Н.', 'Бабушкин Е.', 'Васин С.', 'Гончаров П.',
+    'Дьяков А.', 'Епифанов И.', 'Жилин К.', 'Зорин М.', 'Куликов А.',
+  ];
+  const AMOUNTS_POOL = ['85к ₽', '95к ₽', '110к ₽', '120к ₽', '150к ₽', '180к ₽', '220к ₽'];
+
+  function getAllGreens(z) {
+    const real = z.greens || [];
+    const total = z.greensTotal != null ? z.greensTotal : real.length;
+    if (total <= real.length) return real;
+
+    const usedNames = new Set(real.map(g => g.name));
+    const result = [...real];
+    const seedOffset = z.cls ? z.cls.charCodeAt(z.cls.length - 1) : 0;  // разные имена для разных зон
+
+    for (let i = 0; result.length < total && i < GREEN_NAMES_POOL.length; i++) {
+      const name = GREEN_NAMES_POOL[(i + seedOffset) % GREEN_NAMES_POOL.length];
+      if (usedNames.has(name)) continue;
+      usedNames.add(name);
+      let h = 0;
+      for (let j = 0; j < name.length; j++) h = (h * 31 + name.charCodeAt(j)) & 0xffff;
+      result.push({
+        name,
+        hoursLeft: 1 + (h % 23),  // 1-23ч
+        amount: AMOUNTS_POOL[h % AMOUNTS_POOL.length],
+      });
+    }
+    return result;
+  }
+
+  function openAllGreens() {
+    const z = zones[currentZone()];
+    if (!z) return;
+    const all = getAllGreens(z);
+    // Сортировка: меньше часов слева = ближе к 🟡 (по времени до перехода)
+    all.sort((a, b) => a.hoursLeft - b.hoursLeft);
+
+    document.getElementById('greens-modal-total').textContent = all.length;
+    document.getElementById('greens-modal-list').innerHTML = all.map(g => {
+      const ai = getAIScore(g.name);
+      return `
+        <div class="modal-deal-row" onclick="openDealCard('${g.name}')" title="Открыть в amoCRM">
+          <span class="ai-score-badge ${aiCls(ai.score)}">
+            <span class="lbl">AI</span> ${ai.score}/10
+          </span>
+          <div>
+            <div class="name">${g.name}</div>
+            <div class="ai-summary">${ai.summary}</div>
+          </div>
+          <span class="hours">⏱ <b>${g.hoursLeft}ч</b> до 🟡</span>
+          <span class="amount">${g.amount}</span>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('allGreensModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAllGreens(ev) {
+    if (ev && ev.target.classList && !ev.target.classList.contains('modal-backdrop') && !ev.target.classList.contains('x')) return;
+    document.getElementById('allGreensModal').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   // Mock deal-id → в проде придёт из API. Здесь — детерминированный по имени.
@@ -1862,9 +2116,12 @@
     document.body.style.overflow = '';
   }
 
-  // Esc — закрывает модалку
+  // Esc — закрывает модалки
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLeaderboard();
+    if (e.key === 'Escape') {
+      closeLeaderboard();
+      closeAllGreens();
+    }
   });
 
   // Ранжирование команды по % красных (asc — меньше красных = выше rank)
@@ -1885,6 +2142,27 @@
   // Инициализация: оранжевая (Мифтахов) по умолчанию
   setZone('orange', document.querySelector('.zone-btn.active'));
 </script>
+
+
+<!-- Modal: все зелёные сделки с AI-оценкой касания -->
+<div class="modal-backdrop" id="allGreensModal" onclick="closeAllGreens(event)">
+  <div class="greens-modal-card" onclick="event.stopPropagation()">
+    <div class="greens-modal-head">
+      <div>
+        <h3>🟢 Все зелёные сделки · <span id="greens-modal-total">24</span> в норме</h3>
+        <div class="sub">&lt; 24 ч без касания · AI оценил качество последнего касания (1-10) по всем сделкам</div>
+      </div>
+      <button class="x" onclick="closeAllGreens()">✕</button>
+    </div>
+    <div class="greens-modal-body" id="greens-modal-list">
+      <!-- генерируется JS -->
+    </div>
+    <div class="greens-modal-foot">
+      <span class="hint">AI-оценка касания: <b>≥7</b> — отлично · <b>5-6</b> — норм · <b>&lt;5</b> — слабо. Только информация, без штрафов.</span>
+      <span style="font-size:11px;color:#888;">Esc чтобы закрыть</span>
+    </div>
+  </div>
+</div>
 
 
 <!-- Modal: leaderboard команды (открывается кликом по rank-badge в полосе) -->
