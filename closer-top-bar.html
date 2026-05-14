@@ -797,15 +797,15 @@
     margin-top: 4px;
   }
 
-  /* Кнопка «Показать все N →» — открывает модалку со всеми сделками */
+  /* Кнопка «Показать все N →» / «AI-разбор →» — открывает модалку с фильтром по категории */
   .deals-list .show-all-btn {
     display: block;
     width: 100%;
     padding: 9px 10px;
-    background: #c8e6c9;
-    border: 1px dashed #66bb6a;
+    background: #f5f5f5;
+    border: 1px dashed #aaa;
     border-radius: 6px;
-    color: #1b5e20;
+    color: #555;
     font-size: 11.5px;
     font-weight: 700;
     text-align: center;
@@ -815,10 +815,18 @@
     font-family: inherit;
   }
   .deals-list .show-all-btn:hover {
-    background: #a5d6a7;
     border-style: solid;
     transform: translateY(-1px);
   }
+  /* Цвет кнопки = цвет категории колонки */
+  .col-green  .show-all-btn { background: #c8e6c9; border-color: #66bb6a; color: #1b5e20; }
+  .col-green  .show-all-btn:hover { background: #a5d6a7; }
+  .col-yellow .show-all-btn { background: #fff5b8; border-color: #fbc02d; color: #8b6500; }
+  .col-yellow .show-all-btn:hover { background: #ffe082; }
+  .col-orange .show-all-btn { background: #ffd9ac; border-color: #ff9800; color: #a04a07; }
+  .col-orange .show-all-btn:hover { background: #ffcc80; }
+  .col-red    .show-all-btn { background: #ffcdd2; border-color: #e57373; color: #b71c1c; }
+  .col-red    .show-all-btn:hover { background: #ef9a9a; }
 
   /* ════ Модалка «Все зелёные сделки» с AI-оценкой касания ════ */
   .greens-modal-card {
@@ -1013,6 +1021,33 @@
     margin-top: 4px;
     opacity: 0.70;
   }
+  /* Тренд под средним баллом (vs прошлая неделя) */
+  .greens-modal-summary .avg .trend {
+    margin-top: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+  }
+  .greens-modal-summary .avg .trend.up   { background: #e8f5e9; color: #1b5e20; }
+  .greens-modal-summary .avg .trend.down { background: #ffebee; color: #c62828; }
+  .greens-modal-summary .avg .trend.flat { background: #f0f0f0; color: #666; }
+  .greens-modal-summary .avg .trend-prev { font-size: 9.5px; font-weight: 600; opacity: 0.70; margin-top: 3px; }
+
+  /* Мини-тренд внутри AI-pill в свёрнутой полосе */
+  .widget-collapsed .ai-pill .trend-mini {
+    font-size: 10.5px;
+    font-weight: 700;
+    margin-left: 4px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-variant-numeric: tabular-nums;
+    display: none;
+  }
+  .widget-collapsed .ai-pill .trend-mini.up   { display: inline; background: rgba(46,125,50,0.18); color: #1b5e20; }
+  .widget-collapsed .ai-pill .trend-mini.down { display: inline; background: rgba(198,40,40,0.18); color: #b71c1c; }
 
   .deals-list {
     display: grid;
@@ -1515,6 +1550,7 @@
       <div class="right">
         <span class="ai-pill ai-mid" id="ai-pill" onclick="event.stopPropagation(); openAIDeals('all')" title="AI-оценка качества касаний по всему портфелю · клик = полный список сделок с разбором">
           🤖 <b id="ai-pill-score">—</b><span class="of">/10</span>
+          <span class="trend-mini" id="ai-pill-trend"></span>
         </span>
         <span class="rank-badge" id="rank-badge" onclick="event.stopPropagation(); openLeaderboard()" title="Открыть полный leaderboard команды">
           <span class="rk" id="rank-text">#3 из 4</span>
@@ -1687,6 +1723,7 @@
       avatar: 'Л',
       name: 'Лим Елена',
       status: '⏰ <span class="big">2%</span> сделок просрочено',
+      aiAvgLastWeek: 7.4,  // прошлая неделя — была лучше
       greensTotal: 35,
       greens: [
         { name: 'Воронин Е.',  hoursLeft: 22, amount: '95к ₽' },
@@ -1726,6 +1763,7 @@
       avatar: 'П',
       name: 'Петрова Д.',
       status: '⏰ <span class="big">12%</span> сделок просрочено',
+      aiAvgLastWeek: 6.8,  // прошлая неделя — была хуже, есть рост
       greensTotal: 26,
       greens: [
         { name: 'Андреев И.',    hoursLeft: 22, amount: '180к ₽' },
@@ -1773,6 +1811,7 @@
       avatar: 'М',
       name: 'Мифтахов Р.',
       status: '⏰ <span class="big">22%</span> сделок просрочено',
+      aiAvgLastWeek: 7.1,  // прошлая неделя — была лучше, провал
       greensTotal: 24,
       greens: [
         { name: 'Алексеев Д.', hoursLeft: 20, amount: '180к ₽' },
@@ -1829,6 +1868,7 @@
       avatar: 'Л',
       name: 'Ляшенко А.',
       status: '⏰ <span class="big">34%</span> сделок просрочено',
+      aiAvgLastWeek: 6.3,  // прошлая неделя — была чуть хуже, есть рост
       greensTotal: 18,
       greens: [
         { name: 'Беляев Н.',  hoursLeft: 22, amount: '95к ₽'  },
@@ -1995,32 +2035,35 @@
     };
     effectEl.querySelector('.effect-hint').textContent = effectHints[z.effectColor] || '';
 
-    // Список ЗЕЛЁНЫХ (<24ч, в норме). Показываем короткий срез + кнопку «Показать все N →»
+    // Список ЗЕЛЁНЫХ (<24ч, в норме). Короткий срез + кнопка «Показать все N →»
     const greensArr = z.greens || [];
     const greensTotal = z.greensTotal != null ? z.greensTotal : greensArr.length;
     const greensMore = Math.max(0, greensTotal - greensArr.length);
     renderDealsList('green-list', greensArr, 'зелёных', g =>
       `<span class="meta">⏱ <b>${g.hoursLeft}ч</b> до 🟡 · ${g.amount}</span>`,
-      greensMore,
-      true  // showAllBtn → кнопка «Показать все N» вместо текстовой подсказки
+      greensMore, 'green'
     );
     document.getElementById('green-count').textContent = greensTotal;
 
-    // Список ЖЁЛТЫХ (24-36ч)
+    // Список ЖЁЛТЫХ (24-36ч) + кнопка «AI-разбор →»
     renderDealsList('yellow-list', z.yellows, 'жёлтых', y =>
-      `<span class="meta">⏱ <b>${y.hoursLeft}ч</b> до 🔴 · ${y.amount}</span>`
+      `<span class="meta">⏱ <b>${y.hoursLeft}ч</b> до 🔴 · ${y.amount}</span>`,
+      0, 'yellow'
     );
     document.getElementById('yellow-count').textContent = z.yellows.length;
 
-    // Список ОРАНЖЕВЫХ (36-48ч)
+    // Список ОРАНЖЕВЫХ (36-48ч) + кнопка «AI-разбор →»
     renderDealsList('orange-list', z.oranges, 'оранжевых', o =>
-      `<span class="meta">⏱ <b>${o.hoursLeft}ч</b> до 🔴 · ${o.amount}</span>`
+      `<span class="meta">⏱ <b>${o.hoursLeft}ч</b> до 🔴 · ${o.amount}</span>`,
+      0, 'orange'
     );
     document.getElementById('orange-count').textContent = z.oranges.length;
 
-    // Список КРАСНЫХ (>48ч)
+    // Список КРАСНЫХ (>48ч) + кнопка «AI-разбор →» (тут особенно важна:
+    // «почему касание было, а сделка ушла в красную»)
     renderDealsList('red-list', z.reds, 'красных', r =>
-      `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`
+      `<span class="meta"><b>${r.hours}ч</b> · ${r.amount}</span>`,
+      0, 'red'
     );
     document.getElementById('red-list-count').textContent = z.reds.length;
 
@@ -2028,14 +2071,22 @@
     const { rank, total } = computeRank(zone);
     document.getElementById('rank-text').textContent = `#${rank} из ${total}`;
 
-    // AI-pill: средний балл AI по всему портфелю
+    // AI-pill: средний балл AI по всему портфелю + мини-тренд vs прошл. неделя
     const portfolioAI = computePortfolioAvgAI(z);
     const aiPillEl = document.getElementById('ai-pill');
     aiPillEl.className = `ai-pill ${portfolioAI.cls}`;
     document.getElementById('ai-pill-score').textContent = portfolioAI.avg ? portfolioAI.avg.toFixed(1) : '—';
+    const trend = computeAITrend(portfolioAI.avg, z.aiAvgLastWeek);
+    const trendEl = document.getElementById('ai-pill-trend');
+    trendEl.className = `trend-mini ${trend.cls}`;
+    if (trend.show && trend.cls !== 'flat') {
+      trendEl.innerHTML = `${trend.arrow}${Math.abs(trend.delta).toFixed(1)}`;
+    } else {
+      trendEl.innerHTML = '';
+    }
   }
 
-  function renderDealsList(elId, items, label, metaFn, moreCount = 0, showAllBtn = false) {
+  function renderDealsList(elId, items, label, metaFn, moreCount = 0, filterCat = null) {
     let html = items.length > 0
       ? items.map(d => `
           <div class="deal-row-c ${d.urgent ? 'urgent' : ''}" onclick="openDealCard('${d.name}')" title="Открыть карточку сделки в amoCRM">
@@ -2044,13 +2095,17 @@
           </div>
         `).join('')
       : `<div class="empty-state">✓ Нет ${label}</div>`;
-    if (moreCount > 0) {
-      if (showAllBtn) {
+    // Кнопка «Показать все N →» (если есть скрытый хвост) или «AI-разбор →»
+    // (для категории всё уже видно — кнопка открывает модалку с AI-оценкой касаний)
+    if (filterCat && items.length > 0) {
+      if (moreCount > 0) {
         const total = items.length + moreCount;
-        html += `<button class="show-all-btn" onclick="openAllGreens()">Показать все ${total} →</button>`;
+        html += `<button class="show-all-btn" onclick="openAIDeals('${filterCat}')">Показать все ${total} →</button>`;
       } else {
-        html += `<div class="more-hint">и ещё ${moreCount} в норме</div>`;
+        html += `<button class="show-all-btn" onclick="openAIDeals('${filterCat}')">🤖 AI-разбор →</button>`;
       }
+    } else if (moreCount > 0) {
+      html += `<div class="more-hint">и ещё ${moreCount} в норме</div>`;
     }
     document.getElementById(elId).innerHTML = html;
   }
@@ -2210,8 +2265,27 @@
     document.getElementById('ai-stat-good').textContent = good;
     document.getElementById('ai-stat-mid').textContent = mid;
     document.getElementById('ai-stat-bad').textContent = bad;
-    const avg = items.length > 0 ? (sum / items.length).toFixed(1) : '—';
-    document.getElementById('ai-stat-avg').textContent = avg;
+    const avgNum = items.length > 0 ? sum / items.length : 0;
+    document.getElementById('ai-stat-avg').textContent = items.length > 0 ? avgNum.toFixed(1) : '—';
+
+    // Тренд vs прошлая неделя — показываем только для filter='all', где есть сравнение
+    const trendEl = document.getElementById('ai-stat-trend');
+    const prevEl = document.getElementById('ai-stat-prev');
+    if (filter === 'all' && items.length > 0 && z.aiAvgLastWeek != null) {
+      const tr = computeAITrend(avgNum, z.aiAvgLastWeek);
+      trendEl.style.display = 'inline-block';
+      prevEl.style.display = 'block';
+      trendEl.className = `trend ${tr.cls}`;
+      if (tr.cls === 'flat') {
+        trendEl.textContent = `→ без изменений`;
+      } else {
+        trendEl.textContent = `${tr.arrow} ${tr.delta > 0 ? '+' : '−'}${Math.abs(tr.delta).toFixed(1)}`;
+      }
+      prevEl.textContent = `неделю назад: ${z.aiAvgLastWeek.toFixed(1)}`;
+    } else {
+      trendEl.style.display = 'none';
+      prevEl.style.display = 'none';
+    }
 
     document.getElementById('allGreensModal').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -2234,6 +2308,20 @@
     items.forEach(d => { sum += getAIScore(d.name).score; });
     const avg = sum / items.length;
     return { avg, cls: aiCls(avg) };
+  }
+
+  // ════ Тренд AI vs прошлая неделя ════
+  // Возвращает { delta, arrow, cls } где delta = avg - prev, cls = up/down/flat
+  function computeAITrend(currentAvg, prevAvg) {
+    if (prevAvg == null) return { delta: 0, arrow: '', cls: 'flat', show: false };
+    const delta = currentAvg - prevAvg;
+    if (Math.abs(delta) < 0.05) return { delta: 0, arrow: '→', cls: 'flat', show: true };
+    return {
+      delta,
+      arrow: delta > 0 ? '↑' : '↓',
+      cls: delta > 0 ? 'up' : 'down',
+      show: true,
+    };
   }
 
   // Mock deal-id → в проде придёт из API. Здесь — детерминированный по имени.
@@ -2367,6 +2455,8 @@
       <div class="avg">
         <div class="num" id="ai-stat-avg">—</div>
         <div class="lbl">средний балл</div>
+        <div class="trend flat" id="ai-stat-trend" style="display:none;">—</div>
+        <div class="trend-prev" id="ai-stat-prev" style="display:none;">vs прошл. неделя</div>
       </div>
     </div>
     <div class="greens-modal-body" id="greens-modal-list">
