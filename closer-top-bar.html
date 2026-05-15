@@ -1262,6 +1262,8 @@
   .demo-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
   .demo-btn.primary { background: rgba(255,77,77,0.20); border-color: rgba(255,77,77,0.50); color: #ff8a8a; }
   .demo-btn.primary:hover { background: rgba(255,77,77,0.30); color: #fff; }
+  .demo-btn.sipuni { background: rgba(46,125,50,0.20); border-color: rgba(46,125,50,0.50); color: #81c784; }
+  .demo-btn.sipuni:hover { background: rgba(46,125,50,0.30); color: #fff; }
 
   .deals-list {
     display: grid;
@@ -1732,10 +1734,11 @@
 <div class="demo-controls">
   <span class="lbl">🧪 Демо роутера:</span>
   <button class="demo-btn primary" onclick="simulateNewLead()">🔥 Новый лид (push)</button>
+  <button class="demo-btn sipuni" onclick="simulateSipuniCall()" title="Симулирует webhook Sipuni call_initiated — единственный способ сбросить таймер">📞 Sipuni: позвонил</button>
   <button class="demo-btn" onclick="simulateQueueAdd(1)">+1 в очередь (pull)</button>
   <button class="demo-btn" onclick="simulateQueueAdd(3)">+3 в очередь</button>
   <button class="demo-btn" onclick="resetRouterDemo()">↺ Сброс</button>
-  <span style="margin-left:auto;opacity:0.5;font-size:11px;">push = моментальное назначение · pull = клоузер сам берёт из очереди</span>
+  <span style="margin-left:auto;opacity:0.5;font-size:11px;">клик на 🔥 pill = открыть карточку (без сброса таймера) · только Sipuni-звонок сбрасывает</span>
 </div>
 
 <!-- ═══════════════════════════════════════════ amoCRM Window ═══════════════════════════════════════════ -->
@@ -1795,8 +1798,10 @@
     <div class="widget-router-bar" id="routerBar" onclick="event.stopPropagation()">
       <div class="rb-label">🤖 Роутер · входящие лиды</div>
       <div class="rb-items">
-        <!-- 🔥 Активное назначение: новый лид с обратным таймером 5:00 -->
-        <span class="lead-pill" id="lead-pill" onclick="takeLead()" title="Кликни чтобы взять — таймер сбрасывается, ставится статус ENGAGED">
+        <!-- 🔥 Активное назначение: новый лид с обратным таймером 5:00.
+             Клик = открыть карточку amoCRM (новая вкладка). Таймер НЕ сбрасывается —
+             это просто навигация. Сброс только реальным Sipuni call_initiated. -->
+        <span class="lead-pill" id="lead-pill" onclick="onLeadPillClick()" title="Открыть карточку сделки в amoCRM. Таймер сбросится ТОЛЬКО когда наберёшь номер через Sipuni — защита от лайфхака.">
           <span class="fire">🔥</span>
           <span class="nm" id="lead-pill-name">—</span>
           <span class="tm" id="lead-pill-timer">5:00</span>
@@ -2745,7 +2750,31 @@
     }
   }
 
-  function takeLead() {
+  // Клик по 🔥 pill = открыть карточку сделки в amoCRM (новая вкладка).
+  // Таймер НЕ сбрасывается — это просто навигация. Сброс только Sipuni-звонком.
+  // По фидбеку директора 2026-05-15: иначе клоузер может «нажать кнопку = таймер сброшен»
+  // без реального действия (лайфхак). См. spec §11.C.
+  function onLeadPillClick() {
+    if (!_routerState.activeLead) return;
+    openDealCard(_routerState.activeLead.name);
+    // НЕТ classList.add('taken'), НЕТ clearInterval — таймер продолжает тикать
+  }
+
+  // Симуляция webhook Sipuni call_initiated.
+  // В проде это будет POST от Sipuni на /api/v1/triggers/sipuni → роутер
+  // находит активный Assignment(user=X, lead=Y) → переводит в ENGAGED.
+  // Здесь — кнопка в демо-панели для проверки сценария.
+  function simulateSipuniCall() {
+    if (!_routerState.activeLead) {
+      alert('Нет активного лида. Сначала симулируй "🔥 Новый лид (push)".');
+      return;
+    }
+    acceptLead();
+  }
+
+  // Внутренний хелпер: реальный приём лида (вызывается из Sipuni-симуляции).
+  // Это эквивалент того что бекенд сделает на webhook от Sipuni.
+  function acceptLead() {
     if (!_routerState.activeLead) return;
     const pill = document.getElementById('lead-pill');
     pill.classList.remove('urgent');
@@ -2754,7 +2783,6 @@
     document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' принят';
     clearInterval(_routerState.timerInterval);
     _routerState.timerInterval = null;
-    // Через 2 сек pill исчезает
     setTimeout(() => {
       pill.classList.remove('active', 'taken');
       _routerState.activeLead = null;
