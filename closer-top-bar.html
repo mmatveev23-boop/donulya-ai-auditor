@@ -1058,19 +1058,75 @@
   .widget-collapsed .ai-pill .trend-mini.down { display: inline; background: rgba(198,40,40,0.18); color: #b71c1c; }
 
   /* ════════════════════════════════════════════════════════════════
-     РОУТЕР: 🔥 pill «Новый лид» + статус клоузера + очередь
+     РОУТЕР: подполоса под основной — видна только при событии
      ════════════════════════════════════════════════════════════════ */
 
-  /* 🔥 Pill активного назначения — самая важная плашка в свёрнутой полосе */
-  .widget-collapsed .lead-pill {
+  /* Подполоса роутера. Скрыта по умолчанию, появляется когда есть
+     активный лид или очередь pull (через class .active в JS). */
+  .widget-router-bar {
+    display: none;
+    padding: 9px 16px;
+    background: linear-gradient(180deg, rgba(255,77,77,0.05) 0%, rgba(255,77,77,0.10) 100%);
+    border-top: 1px solid rgba(255,77,77,0.20);
+    align-items: center;
+    gap: 14px;
+  }
+  .widget-router-bar.active {
+    display: flex;
+    animation: routerBarFadeIn 0.25s ease-out;
+  }
+  @keyframes routerBarFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .widget-router-bar .rb-label {
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(120,20,20,0.55);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .widget-router-bar .rb-items {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* В подполосе — pill'ы крупнее и заметнее чем в основной */
+  .widget-router-bar .lead-pill {
+    padding: 7px 14px 7px 12px;
+    font-size: 13px;
+  }
+  .widget-router-bar .lead-pill .fire { font-size: 15px; }
+  .widget-router-bar .lead-pill .tm {
+    padding: 3px 9px;
+    font-size: 12.5px;
+  }
+  .widget-router-bar .queue-pull {
+    padding: 6px 13px;
+    font-size: 13px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     РОУТЕР: pill-элементы (используются в widget-router-bar)
+     ════════════════════════════════════════════════════════════════ */
+
+  /* 🔥 Pill активного назначения — главная плашка в подполосе роутера */
+  .lead-pill {
     display: none;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     background: linear-gradient(135deg, #ff4d4d 0%, #d63031 100%);
     color: #fff;
-    padding: 5px 11px 5px 10px;
+    padding: 6px 12px 6px 11px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
     border: 2px solid rgba(255,255,255,0.55);
@@ -1080,30 +1136,28 @@
     transition: transform 0.15s, background 0.3s;
     white-space: nowrap;
   }
-  .widget-collapsed .lead-pill.active { display: inline-flex; }
-  .widget-collapsed .lead-pill:hover { transform: translateY(-1px) scale(1.02); }
-  .widget-collapsed .lead-pill .fire { font-size: 13px; }
-  .widget-collapsed .lead-pill .nm { font-weight: 800; }
-  .widget-collapsed .lead-pill .tm {
+  .lead-pill.active { display: inline-flex; }
+  .lead-pill:hover { transform: translateY(-1px) scale(1.02); }
+  .lead-pill .fire { font-size: 14px; }
+  .lead-pill .nm { font-weight: 800; }
+  .lead-pill .tm {
     background: rgba(0,0,0,0.30);
-    padding: 2px 7px;
+    padding: 2px 8px;
     border-radius: 999px;
-    font-size: 11.5px;
+    font-size: 12px;
     font-variant-numeric: tabular-nums;
     font-weight: 800;
     letter-spacing: 0.02em;
   }
   /* Последняя минута — таймер мигает быстрее, фон темнеет */
-  .widget-collapsed .lead-pill.urgent { animation: leadPulseUrgent 0.7s ease-in-out infinite; }
-  .widget-collapsed .lead-pill.urgent .tm { background: rgba(0,0,0,0.55); }
-  /* Принято — pill становится зелёным на 2 сек, потом исчезает */
-  .widget-collapsed .lead-pill.taken {
+  .lead-pill.urgent { animation: leadPulseUrgent 0.7s ease-in-out infinite; }
+  .lead-pill.urgent .tm { background: rgba(0,0,0,0.55); }
+  .lead-pill.taken {
     background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
     animation: none;
     box-shadow: 0 2px 8px rgba(46,125,50,0.45);
   }
-  /* Истёк таймер — pill серая на 2 сек, потом исчезает */
-  .widget-collapsed .lead-pill.expired {
+  .lead-pill.expired {
     background: linear-gradient(135deg, #757575 0%, #424242 100%);
     animation: none;
     box-shadow: none;
@@ -1119,25 +1173,25 @@
   }
 
   /* Pull-кнопка «🔥 Взять из очереди N →» (утренняя ночная очередь) */
-  .widget-collapsed .queue-pull {
+  .queue-pull {
     display: none;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     background: #fff5b8;
     color: #8b6500;
     border: 1.5px solid #fbc02d;
-    padding: 4px 10px;
+    padding: 5px 11px;
     border-radius: 999px;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
-  .widget-collapsed .queue-pull.active { display: inline-flex; }
-  .widget-collapsed .queue-pull:hover { background: #ffe082; transform: translateY(-1px); }
-  .widget-collapsed .queue-pull b { font-weight: 900; }
+  .queue-pull.active { display: inline-flex; }
+  .queue-pull:hover { background: #ffe082; transform: translateY(-1px); }
+  .queue-pull b { font-weight: 900; }
 
   /* Toggle статуса клоузера: иконки 🟢 / 📞 / ☕ (текст в tooltip) */
   .widget-collapsed .status-toggle {
@@ -1718,18 +1772,8 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
-        <!-- 🔥 Активное назначение: новый лид с обратным таймером 5:00 -->
-        <span class="lead-pill" id="lead-pill" onclick="event.stopPropagation(); takeLead()" title="Кликни чтобы взять — таймер сбрасывается, ставится статус ENGAGED">
-          <span class="fire">🔥</span>
-          <span class="nm" id="lead-pill-name">—</span>
-          <span class="tm" id="lead-pill-timer">5:00</span>
-        </span>
-        <!-- Pull-кнопка: ночная/выходная очередь — компактная -->
-        <span class="queue-pull" id="queue-pull" onclick="event.stopPropagation(); takeFromQueue()" title="Утренняя раздача отложенной очереди — клик = взять следующего лида">
-          🔥 <b id="queue-pull-count">0</b> →
-        </span>
-        <!-- Toggle статуса клоузера (иконки, текст в tooltip) -->
-        <span class="status-toggle" id="status-toggle" onclick="event.stopPropagation()">
+        <!-- Toggle статуса клоузера (иконки, текст в tooltip). Всегда виден чтобы можно было быстро поменять. -->
+        <span class="status-toggle" id="status-toggle" onclick="event.stopPropagation()" title="Статус для роутера">
           <button class="st-btn s-available active" onclick="setSelfStatus('available')" title="Свободен — принимаю лиды">🟢</button>
           <button class="st-btn s-oncall"           onclick="setSelfStatus('on_call')"   title="На линии — занят разговором">📞</button>
           <button class="st-btn s-break"            onclick="setSelfStatus('break')"     title="Перерыв — не назначайте мне">☕</button>
@@ -1744,6 +1788,23 @@
         </span>
         <span class="pill" onclick="event.stopPropagation(); jumpToQueue()" title="Очередь сделок к разбору">📋 <b id="queue-count">5</b></span>
         <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+
+    <!-- ═══ Подполоса роутера · видна только когда есть активный лид или очередь ═══ -->
+    <div class="widget-router-bar" id="routerBar" onclick="event.stopPropagation()">
+      <div class="rb-label">🤖 Роутер · входящие лиды</div>
+      <div class="rb-items">
+        <!-- 🔥 Активное назначение: новый лид с обратным таймером 5:00 -->
+        <span class="lead-pill" id="lead-pill" onclick="takeLead()" title="Кликни чтобы взять — таймер сбрасывается, ставится статус ENGAGED">
+          <span class="fire">🔥</span>
+          <span class="nm" id="lead-pill-name">—</span>
+          <span class="tm" id="lead-pill-timer">5:00</span>
+        </span>
+        <!-- Pull-кнопка: ночная/выходная очередь -->
+        <span class="queue-pull" id="queue-pull" onclick="takeFromQueue()" title="Утренняя раздача отложенной очереди — клик = взять следующего лида">
+          🔥 <b id="queue-pull-count">0</b> →
+        </span>
       </div>
     </div>
 
@@ -2624,6 +2685,15 @@
     timerInterval: null,
   };
 
+  // Подполоса роутера видна только когда есть событие: активный лид или очередь.
+  // Это позволяет основной полосе быть стабильной, а роутер появляется по требованию.
+  function updateRouterBar() {
+    const bar = document.getElementById('routerBar');
+    const shouldShow = !!_routerState.activeLead || _routerState.queuedCount > 0;
+    if (shouldShow) bar.classList.add('active');
+    else bar.classList.remove('active');
+  }
+
   // Пул mock-имён для симуляции новых лидов
   const NEW_LEAD_POOL = [
     'Иванов А.', 'Петров К.', 'Сидоров Р.', 'Васильева М.', 'Кузнецов Д.',
@@ -2648,6 +2718,7 @@
     const pill = document.getElementById('lead-pill');
     pill.classList.remove('taken', 'expired', 'urgent');
     pill.classList.add('active');
+    updateRouterBar();
     startReactionTimer();
   }
 
@@ -2687,6 +2758,7 @@
     setTimeout(() => {
       pill.classList.remove('active', 'taken');
       _routerState.activeLead = null;
+      updateRouterBar();
     }, 2000);
   }
 
@@ -2702,6 +2774,7 @@
     setTimeout(() => {
       pill.classList.remove('active', 'expired');
       _routerState.activeLead = null;
+      updateRouterBar();
     }, 3000);
   }
 
@@ -2709,6 +2782,7 @@
   function simulateQueueAdd(n) {
     _routerState.queuedCount += n;
     renderQueuePull();
+    updateRouterBar();
   }
 
   function takeFromQueue() {
@@ -2723,6 +2797,7 @@
     }
     _routerState.queuedCount -= 1;
     renderQueuePull();
+    updateRouterBar();
     // Имитируем что роутер выдал нам следующего из очереди
     simulateNewLead();
   }
@@ -2755,6 +2830,7 @@
     document.getElementById('lead-pill').classList.remove('active', 'taken', 'expired', 'urgent');
     renderQueuePull();
     setSelfStatus('available');
+    updateRouterBar();
   }
 
   // Инициализация: оранжевая (Мифтахов) по умолчанию
