@@ -427,6 +427,32 @@
     letter-spacing: -0.005em;
     white-space: nowrap;
   }
+
+  /* Warning о фейк-таках за день (открыл pill, не позвонил). См. spec §11.P */
+  .widget-collapsed .fake-take-warning {
+    display: none;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fff5b8;
+    color: #8b6500;
+    border: 1px solid #fbc02d;
+    white-space: nowrap;
+    cursor: help;
+    letter-spacing: -0.005em;
+  }
+  .widget-collapsed .fake-take-warning.active { display: inline-flex; }
+  .widget-collapsed .fake-take-warning.critical {
+    background: #ffcdd2;
+    color: #b71c1c;
+    border-color: #e57373;
+    animation: fakeTakeCriticalPulse 2s ease-in-out infinite;
+  }
+  @keyframes fakeTakeCriticalPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229,115,115,0); }
+    50%      { box-shadow: 0 0 0 4px rgba(229,115,115,0.30); }
+  }
   .zone-orange .widget-collapsed .effect { color: #c2410c; }
   .zone-red    .widget-collapsed .effect { color: #b91c1c; }
 
@@ -1773,6 +1799,7 @@
         <span class="status-text" id="status-text">⏰ <span class="big">22%</span> сделок просрочено</span>
         <span class="raskladka" id="raskladka">8 🔴 / 5 🟡 / 24 🟢</span>
         <span class="effect" id="effect">⚠ Поток −50%</span>
+        <span class="fake-take-warning" id="fake-take-warning" title="Открыл карточку, не позвонил"></span>
       </div>
       <div class="right">
         <!-- Toggle статуса клоузера (иконки, текст в tooltip). Всегда виден чтобы можно было быстро поменять. -->
@@ -2684,10 +2711,11 @@
   const URGENT_THRESHOLD_SEC = 60;   // последняя минута = urgent (мигаем быстрее)
 
   let _routerState = {
-    activeLead: null,      // { name, expiresAt: ts }
+    activeLead: null,      // { name, expiresAt: ts, pillClickedAt: ts | null }
     queuedCount: 0,        // лидов в утренней очереди
     selfStatus: 'available', // 'available' | 'on_call' | 'break'
     timerInterval: null,
+    fakeTakeCount: 0,      // счётчик «фейк-таков» за сегодня (см. spec §11.P)
   };
 
   // Подполоса роутера видна только когда есть событие: активный лид или очередь.
@@ -2754,8 +2782,13 @@
   // Таймер НЕ сбрасывается — это просто навигация. Сброс только Sipuni-звонком.
   // По фидбеку директора 2026-05-15: иначе клоузер может «нажать кнопку = таймер сброшен»
   // без реального действия (лайфхак). См. spec §11.C.
+  //
+  // Фиксируем факт клика для детекции «фейк-така» (spec §11.P):
+  // если в течение таймера не было реального звонка, но был клик — будет санкция.
   function onLeadPillClick() {
     if (!_routerState.activeLead) return;
+    _routerState.activeLead.pillClickedAt = Date.now();
+    // В проде это POST /api/v1/widget/pill-click → роутер пишет в pill_click_events
     openDealCard(_routerState.activeLead.name);
     // НЕТ classList.add('taken'), НЕТ clearInterval — таймер продолжает тикать
   }
@@ -2795,8 +2828,22 @@
     const pill = document.getElementById('lead-pill');
     pill.classList.remove('urgent');
     pill.classList.add('expired');
-    document.getElementById('lead-pill-timer').textContent = '⏱ упустил';
-    document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' →';
+
+    // Был ли клик на pill? Если был — это «фейк-так» (видела задачу, не позвонила).
+    // В проде роутер сам это детектит (см. spec §11.P): worker через 30 сек
+    // после таймаута проверяет события pill_click_events vs sipuni_call_initiated.
+    const wasFakeTake = !!_routerState.activeLead.pillClickedAt;
+    if (wasFakeTake) {
+      _routerState.fakeTakeCount += 1;
+      document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' — фейк-так →';
+      // Через 30 сек реальный бекенд послал бы алерт РОПу и инкремент счётчика
+      console.log(`[demo] Фейк-так! Счётчик за день: ${_routerState.fakeTakeCount}. Через 30 сек реальный бекенд отправил бы алерт РОПу.`);
+      renderFakeTakeWarning();
+    } else {
+      document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' →';
+    }
+    document.getElementById('lead-pill-timer').textContent = wasFakeTake ? '⚠ упустил' : '⏱ упустил';
+
     clearInterval(_routerState.timerInterval);
     _routerState.timerInterval = null;
     setTimeout(() => {
@@ -2804,6 +2851,28 @@
       _routerState.activeLead = null;
       updateRouterBar();
     }, 3000);
+  }
+
+  // Рендер warning «N фейк-таков сегодня» в основной полосе.
+  // На 3+ — красный (зона светофора будет автоматически понижена бекендом).
+  function renderFakeTakeWarning() {
+    const el = document.getElementById('fake-take-warning');
+    if (!el) return;
+    const n = _routerState.fakeTakeCount;
+    if (n === 0) {
+      el.classList.remove('active', 'critical');
+      return;
+    }
+    el.classList.add('active');
+    if (n >= 3) {
+      el.classList.add('critical');
+      el.textContent = `⚠ ${n} фейк-така · зона понижена`;
+      el.title = 'Накопил 3 фейк-така за день. Зона светофора автоматически понижена на ступень до 09:00 завтра — поток новых лидов сократился.';
+    } else {
+      el.classList.remove('critical');
+      el.textContent = `⚠ ${n} фейк-так${n === 1 ? '' : 'а'} сегодня`;
+      el.title = `Открыл карточку, не позвонил ${n} раз сегодня. На 3-м зона автоматически понизится — режется поток.`;
+    }
   }
 
   // ════ Pull-режим: утренняя очередь ════
@@ -2855,10 +2924,12 @@
     _routerState.activeLead = null;
     _routerState.queuedCount = 0;
     _routerState.timerInterval = null;
+    _routerState.fakeTakeCount = 0;
     document.getElementById('lead-pill').classList.remove('active', 'taken', 'expired', 'urgent');
     renderQueuePull();
     setSelfStatus('available');
     updateRouterBar();
+    renderFakeTakeWarning();
   }
 
   // Инициализация: оранжевая (Мифтахов) по умолчанию
