@@ -1049,6 +1049,156 @@
   .widget-collapsed .ai-pill .trend-mini.up   { display: inline; background: rgba(46,125,50,0.18); color: #1b5e20; }
   .widget-collapsed .ai-pill .trend-mini.down { display: inline; background: rgba(198,40,40,0.18); color: #b71c1c; }
 
+  /* ════════════════════════════════════════════════════════════════
+     РОУТЕР: 🔥 pill «Новый лид» + статус клоузера + очередь
+     ════════════════════════════════════════════════════════════════ */
+
+  /* 🔥 Pill активного назначения — самая важная плашка в свёрнутой полосе */
+  .widget-collapsed .lead-pill {
+    display: none;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #ff4d4d 0%, #d63031 100%);
+    color: #fff;
+    padding: 6px 14px 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.55);
+    box-shadow: 0 2px 8px rgba(214,48,49,0.45);
+    margin-right: 10px;
+    animation: leadPulse 1.4s ease-in-out infinite;
+    letter-spacing: -0.005em;
+    transition: transform 0.15s, background 0.3s;
+  }
+  .widget-collapsed .lead-pill.active { display: inline-flex; }
+  .widget-collapsed .lead-pill:hover { transform: translateY(-1px) scale(1.02); }
+  .widget-collapsed .lead-pill .fire { font-size: 15px; }
+  .widget-collapsed .lead-pill .nm { font-weight: 800; }
+  .widget-collapsed .lead-pill .tm {
+    background: rgba(0,0,0,0.30);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  /* Последняя минута — таймер мигает быстрее, фон темнеет */
+  .widget-collapsed .lead-pill.urgent { animation: leadPulseUrgent 0.7s ease-in-out infinite; }
+  .widget-collapsed .lead-pill.urgent .tm { background: rgba(0,0,0,0.55); }
+  /* Принято — pill становится зелёным на 2 сек, потом исчезает */
+  .widget-collapsed .lead-pill.taken {
+    background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+    animation: none;
+    box-shadow: 0 2px 8px rgba(46,125,50,0.45);
+  }
+  /* Истёк таймер — pill серая на 2 сек, потом исчезает */
+  .widget-collapsed .lead-pill.expired {
+    background: linear-gradient(135deg, #757575 0%, #424242 100%);
+    animation: none;
+    box-shadow: none;
+    opacity: 0.85;
+  }
+  @keyframes leadPulse {
+    0%, 100% { box-shadow: 0 2px 8px rgba(214,48,49,0.45), 0 0 0 0 rgba(255,77,77,0); }
+    50%      { box-shadow: 0 2px 8px rgba(214,48,49,0.45), 0 0 0 8px rgba(255,77,77,0.30); }
+  }
+  @keyframes leadPulseUrgent {
+    0%, 100% { box-shadow: 0 2px 8px rgba(214,48,49,0.55), 0 0 0 0 rgba(255,77,77,0); }
+    50%      { box-shadow: 0 2px 8px rgba(214,48,49,0.55), 0 0 0 10px rgba(255,77,77,0.40); }
+  }
+
+  /* Pull-кнопка «🔥 Взять из очереди N →» (утренняя ночная очередь) */
+  .widget-collapsed .queue-pull {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: #fff5b8;
+    color: #8b6500;
+    border: 1.5px solid #fbc02d;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: all 0.15s;
+    font-variant-numeric: tabular-nums;
+  }
+  .widget-collapsed .queue-pull.active { display: inline-flex; }
+  .widget-collapsed .queue-pull:hover { background: #ffe082; transform: translateY(-1px); }
+  .widget-collapsed .queue-pull b { font-weight: 900; }
+
+  /* Toggle статуса клоузера: 🟢 Свободен / 📞 На линии / ☕ Перерыв */
+  .widget-collapsed .status-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 999px;
+    padding: 2px;
+    margin-right: 8px;
+    gap: 0;
+  }
+  .widget-collapsed .status-toggle .st-btn {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #888;
+    border: none;
+    background: transparent;
+    transition: all 0.15s;
+    letter-spacing: -0.005em;
+    font-family: inherit;
+  }
+  .widget-collapsed .status-toggle .st-btn:hover { color: #333; }
+  .widget-collapsed .status-toggle .st-btn.active.s-available { background: #c8e6c9; color: #1b5e20; }
+  .widget-collapsed .status-toggle .st-btn.active.s-oncall    { background: #ffcdd2; color: #b71c1c; }
+  .widget-collapsed .status-toggle .st-btn.active.s-break     { background: #fff5b8; color: #8b6500; }
+
+  /* Демо-кнопки симуляции (только для мокапа) */
+  .demo-controls {
+    max-width: 1280px;
+    margin: 12px auto 0;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.55);
+  }
+  .demo-controls .lbl {
+    font-weight: 700;
+    color: rgba(255,255,255,0.50);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 10.5px;
+    margin-right: 4px;
+  }
+  .demo-btn {
+    padding: 5px 11px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.20);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .demo-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .demo-btn.primary { background: rgba(255,77,77,0.20); border-color: rgba(255,77,77,0.50); color: #ff8a8a; }
+  .demo-btn.primary:hover { background: rgba(255,77,77,0.30); color: #fff; }
+
   .deals-list {
     display: grid;
     gap: 5px;
@@ -1514,6 +1664,16 @@
   </div>
 </div>
 
+<!-- Демо-контролы роутера (только для мокапа — в проде их не будет) -->
+<div class="demo-controls">
+  <span class="lbl">🧪 Демо роутера:</span>
+  <button class="demo-btn primary" onclick="simulateNewLead()">🔥 Новый лид (push)</button>
+  <button class="demo-btn" onclick="simulateQueueAdd(1)">+1 в очередь (pull)</button>
+  <button class="demo-btn" onclick="simulateQueueAdd(3)">+3 в очередь</button>
+  <button class="demo-btn" onclick="resetRouterDemo()">↺ Сброс</button>
+  <span style="margin-left:auto;opacity:0.5;font-size:11px;">push = моментальное назначение · pull = клоузер сам берёт из очереди</span>
+</div>
+
 <!-- ═══════════════════════════════════════════ amoCRM Window ═══════════════════════════════════════════ -->
 <div class="amocrm-window">
 
@@ -1548,6 +1708,22 @@
         <span class="effect" id="effect">⚠ Поток −50%</span>
       </div>
       <div class="right">
+        <!-- 🔥 Активное назначение: новый лид с обратным таймером 5:00 -->
+        <span class="lead-pill" id="lead-pill" onclick="event.stopPropagation(); takeLead()" title="Кликни чтобы взять — таймер сбрасывается, ставится статус ENGAGED">
+          <span class="fire">🔥</span>
+          <span><span class="nm" id="lead-pill-name">—</span> → Взять</span>
+          <span class="tm" id="lead-pill-timer">5:00</span>
+        </span>
+        <!-- Pull-кнопка: ночная/выходная очередь -->
+        <span class="queue-pull" id="queue-pull" onclick="event.stopPropagation(); takeFromQueue()" title="Утренняя раздача отложенной очереди — клик = взять следующего лида">
+          🔥 В очереди для тебя: <b id="queue-pull-count">0</b> → Взять
+        </span>
+        <!-- Toggle статуса клоузера (ручной, MVP без телефонии) -->
+        <span class="status-toggle" id="status-toggle" onclick="event.stopPropagation()" title="Твой статус для роутера: свободен / на линии / перерыв">
+          <button class="st-btn s-available active" onclick="setSelfStatus('available')">🟢 Свободен</button>
+          <button class="st-btn s-oncall"           onclick="setSelfStatus('on_call')">📞 На линии</button>
+          <button class="st-btn s-break"            onclick="setSelfStatus('break')">☕ Перерыв</button>
+        </span>
         <span class="ai-pill ai-mid" id="ai-pill" onclick="event.stopPropagation(); openAIDeals('all')" title="AI-оценка качества касаний по всему портфелю · клик = полный список сделок с разбором">
           🤖 <b id="ai-pill-score">—</b><span class="of">/10</span>
           <span class="trend-mini" id="ai-pill-trend"></span>
@@ -2418,6 +2594,155 @@
 
   function goDashboard() {
     window.location.href = 'rop-workplace.html';
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // РОУТЕР · симуляция входящих лидов с обратным таймером
+  // В проде это всё придёт через WebSocket / Server-Sent Events от
+  // donulya-router. Здесь — мокап с setTimeout/setInterval.
+  // ════════════════════════════════════════════════════════════════
+
+  const REACTION_WINDOW_SEC = 300;   // 5 минут на реакцию
+  const URGENT_THRESHOLD_SEC = 60;   // последняя минута = urgent (мигаем быстрее)
+
+  let _routerState = {
+    activeLead: null,      // { name, expiresAt: ts }
+    queuedCount: 0,        // лидов в утренней очереди
+    selfStatus: 'available', // 'available' | 'on_call' | 'break'
+    timerInterval: null,
+  };
+
+  // Пул mock-имён для симуляции новых лидов
+  const NEW_LEAD_POOL = [
+    'Иванов А.', 'Петров К.', 'Сидоров Р.', 'Васильева М.', 'Кузнецов Д.',
+    'Соколов В.', 'Лебедев Н.', 'Козлов С.', 'Новикова Е.', 'Морозов П.',
+  ];
+
+  function simulateNewLead() {
+    if (_routerState.activeLead) {
+      alert('У тебя уже есть активный лид. Возьми его (клик по 🔥 pill) или дождись истечения таймера.');
+      return;
+    }
+    if (_routerState.selfStatus !== 'available') {
+      alert(`Ты в статусе "${labelForStatus(_routerState.selfStatus)}" — роутер бы тебя пропустил. Сними статус для симуляции.`);
+      return;
+    }
+    const name = NEW_LEAD_POOL[Math.floor(Math.random() * NEW_LEAD_POOL.length)];
+    _routerState.activeLead = {
+      name,
+      expiresAt: Date.now() + REACTION_WINDOW_SEC * 1000,
+    };
+    document.getElementById('lead-pill-name').textContent = name;
+    const pill = document.getElementById('lead-pill');
+    pill.classList.remove('taken', 'expired', 'urgent');
+    pill.classList.add('active');
+    startReactionTimer();
+  }
+
+  function startReactionTimer() {
+    if (_routerState.timerInterval) clearInterval(_routerState.timerInterval);
+    tickReactionTimer();
+    _routerState.timerInterval = setInterval(tickReactionTimer, 1000);
+  }
+
+  function tickReactionTimer() {
+    if (!_routerState.activeLead) return;
+    const remainMs = _routerState.activeLead.expiresAt - Date.now();
+    const remainSec = Math.max(0, Math.ceil(remainMs / 1000));
+    const min = Math.floor(remainSec / 60);
+    const sec = remainSec % 60;
+    document.getElementById('lead-pill-timer').textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+
+    const pill = document.getElementById('lead-pill');
+    if (remainSec <= URGENT_THRESHOLD_SEC) {
+      pill.classList.add('urgent');
+    }
+    if (remainSec <= 0) {
+      expireLead();
+    }
+  }
+
+  function takeLead() {
+    if (!_routerState.activeLead) return;
+    const pill = document.getElementById('lead-pill');
+    pill.classList.remove('urgent');
+    pill.classList.add('taken');
+    document.getElementById('lead-pill-timer').textContent = '✓';
+    document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' принят';
+    clearInterval(_routerState.timerInterval);
+    _routerState.timerInterval = null;
+    // Через 2 сек pill исчезает
+    setTimeout(() => {
+      pill.classList.remove('active', 'taken');
+      _routerState.activeLead = null;
+    }, 2000);
+  }
+
+  function expireLead() {
+    if (!_routerState.activeLead) return;
+    const pill = document.getElementById('lead-pill');
+    pill.classList.remove('urgent');
+    pill.classList.add('expired');
+    document.getElementById('lead-pill-timer').textContent = '⏱ упустил';
+    document.getElementById('lead-pill-name').textContent = _routerState.activeLead.name + ' →';
+    clearInterval(_routerState.timerInterval);
+    _routerState.timerInterval = null;
+    setTimeout(() => {
+      pill.classList.remove('active', 'expired');
+      _routerState.activeLead = null;
+    }, 3000);
+  }
+
+  // ════ Pull-режим: утренняя очередь ════
+  function simulateQueueAdd(n) {
+    _routerState.queuedCount += n;
+    renderQueuePull();
+  }
+
+  function takeFromQueue() {
+    if (_routerState.queuedCount <= 0) return;
+    if (_routerState.activeLead) {
+      alert('Сначала возьми текущий лид (🔥 pill).');
+      return;
+    }
+    if (_routerState.selfStatus !== 'available') {
+      alert(`Ты в статусе "${labelForStatus(_routerState.selfStatus)}". Pull недоступен.`);
+      return;
+    }
+    _routerState.queuedCount -= 1;
+    renderQueuePull();
+    // Имитируем что роутер выдал нам следующего из очереди
+    simulateNewLead();
+  }
+
+  function renderQueuePull() {
+    const el = document.getElementById('queue-pull');
+    document.getElementById('queue-pull-count').textContent = _routerState.queuedCount;
+    if (_routerState.queuedCount > 0) el.classList.add('active');
+    else el.classList.remove('active');
+  }
+
+  // ════ Self-status toggle ════
+  function setSelfStatus(status) {
+    _routerState.selfStatus = status;
+    document.querySelectorAll('.status-toggle .st-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.status-toggle .s-${status === 'on_call' ? 'oncall' : status}`).classList.add('active');
+    // В проде: POST /api/v1/widget/self-status
+  }
+
+  function labelForStatus(s) {
+    return { available: 'Свободен', on_call: 'На линии', break: 'Перерыв' }[s] || s;
+  }
+
+  // ════ Сброс демо ════
+  function resetRouterDemo() {
+    if (_routerState.timerInterval) clearInterval(_routerState.timerInterval);
+    _routerState.activeLead = null;
+    _routerState.queuedCount = 0;
+    _routerState.timerInterval = null;
+    document.getElementById('lead-pill').classList.remove('active', 'taken', 'expired', 'urgent');
+    renderQueuePull();
+    setSelfStatus('available');
   }
 
   // Инициализация: оранжевая (Мифтахов) по умолчанию
